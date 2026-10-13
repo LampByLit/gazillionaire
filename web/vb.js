@@ -267,11 +267,16 @@ function Beep() {
 
 // ============================================================================ files (saved games live in localStorage)
 
+function migrateRecord(item) {
+    if (!item || typeof item !== "object" || Array.isArray(item)) return item;
+    return Object.fromEntries(Object.entries(item).map(([k, v]) => [LEGACY_FIELDS[k] || k, v]));
+}
+
 const VFS = {
     prefix: "gazfull:",
     rel(path) { return String(path).replace(/\\/g, "/").replace(/^[a-z]:/i, "").replace(/^\/+/, "").toLowerCase(); },
     key(path) { return this.prefix + this.rel(path); },
-    read(path) { const s = localStorage.getItem(this.key(path)); return s === null ? null : JSON.parse(s); },
+    read(path) { const s = localStorage.getItem(this.key(path)); return s === null ? null : JSON.parse(s).map(migrateRecord); },
     write(path, items) { localStorage.setItem(this.key(path), JSON.stringify(items)); },
     exists(path) { return localStorage.getItem(this.key(path)) !== null; },
     list(dir, pattern) {

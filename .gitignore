@@ -8,4 +8,6 @@
 !/tools/
 /tools/*
 !/tools/vb2js.py
+!/tools/rename.py
+!/tools/names.json
 !/tools/assets.ps1
