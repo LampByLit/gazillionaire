@@ -19,11 +19,11 @@ VB.form("frm_Box1Rect",
 function (me) {
     const { b_Container, b_Sound, b_ImageContainer, b_ImageLable, Image1, VSElastic3, b_No, b_Yes } = me.controls;
     const { b_OK, b_Message } = me.controls;
-    const mc001A = 11;
-    const mc0064 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
 
     function b_No_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         me.Tag = "NO";
         b_Container.Visible = 0;
         me.Hide();
@@ -38,7 +38,7 @@ function (me) {
     }
 
     async function b_OK_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         b_Container.Visible = 0;
         await Unload(me);
     }
@@ -52,7 +52,7 @@ function (me) {
     }
 
     function b_Yes_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         me.Tag = "YES";
         b_Container.Visible = 0;
         me.Hide();
@@ -67,7 +67,6 @@ function (me) {
     }
 
     async function Form_KeyPress(KeyAscii) {
-        const mc0064 = 1;
         if (KeyAscii == 13 || KeyAscii == 27 || KeyAscii == 32) {
             if (b_OK.Visible == -1) {
                 await b_OK_Click();
@@ -76,13 +75,13 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         me.Tag = "NO";
-        me.MousePointer = mc0064;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function Form_QueryUnload(Cancel, UnloadMode) {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
     }
 
     return {

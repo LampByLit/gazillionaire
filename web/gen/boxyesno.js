@@ -9,45 +9,45 @@ VB.form("frm_BoxYesNo",
   ]],
 function (me) {
     const { FillElastic, b_Yes, b_No } = me.controls;
-    const mc001A = 11;
-    const mc002E = 16777215;
-    const mc0040 = 12632256;
-    const mc005A = 1;
+    const HOURGLASS = 11;
+    const WHITE = 16777215;
+    const LIGHT_GRAY = 12632256;
+    const ARROW_CURSOR = 1;
 
     function b_No_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         me.Tag = "NO";
         me.Hide();
     }
 
     function b_No_MouseDown(Button, Shift, X, Y) {
-        b_No.BackColor = mc002E;
+        b_No.BackColor = WHITE;
     }
 
     function b_No_MouseUp(Button, Shift, X, Y) {
-        b_No.BackColor = mc0040;
+        b_No.BackColor = LIGHT_GRAY;
     }
 
     function b_Yes_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         me.Tag = "YES";
         me.Hide();
     }
 
     function b_Yes_MouseDown(Button, Shift, X, Y) {
-        b_Yes.BackColor = mc002E;
+        b_Yes.BackColor = WHITE;
     }
 
     function b_Yes_MouseUp(Button, Shift, X, Y) {
-        b_Yes.BackColor = mc0040;
+        b_Yes.BackColor = LIGHT_GRAY;
     }
 
     function Form_Activate() {
-        me.MousePointer = mc005A;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function Form_Load() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (me.WindowState == 0) {
             me.Move((Screen.Width - me.Width) / 2, (Screen.Height - me.Height) / 2);
         }

@@ -10,13 +10,13 @@ VB.form("frm_Travel0",
   ]],
 function (me) {
     const { FillElastic, Timer1, Image1, b_Sound } = me.controls;
-    const mc0022 = 11;
-    const mc004E = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
     let m001A = 0;
 
     async function sub050F() {
         me.BackColor = m001A;
-        me.MousePointer = mc0022;
+        me.MousePointer = HOURGLASS;
         Image1.Left = Add(Screen.Width, 1000);
         Timer1.Enabled = 0;
         if (settings.soundOn == -1) {
@@ -33,7 +33,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc004E;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -42,7 +42,7 @@ function (me) {
 
     function Form_Load() {
         FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "STARS5.BMP");
-        me.MousePointer = mc0022;
+        me.MousePointer = HOURGLASS;
         Image1.Left = -2000;
         Image1.Top = Screen.Height / 3;
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ship" + Trim(Str(game.shipType[game.currentPlayer])) + "a.bmp");
@@ -78,7 +78,7 @@ function (me) {
         Timer1.Interval = 1;
         Image1.Left = Add(Add(Image1.Left, (game.engineSpeed[game.currentPlayer] * 50)), 150);
         if (Image1.Left >= (Add(Screen.Width, 8000))) {
-            me.MousePointer = mc0022;
+            me.MousePointer = HOURGLASS;
             Image1.Visible = 0;
             Timer1.Enabled = 0;
             if (settings.soundOn == -1) {

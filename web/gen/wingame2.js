@@ -17,11 +17,11 @@ VB.form("frm_WinGame2",
 function (me) {
     const { VSElastic1, b_Sound, b_ImageContainer, b_ImageLable, Image1, b_ContinueGame, b_NewGame, b_Message } = me.controls;
     const { b_QuitGame } = me.controls;
-    const mc001A = 11;
-    const mc0068 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
 
     async function b_ContinueGame_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (game.goalNetWorth == 900000000) {
             if (settings.soundOn == -1) {
                 Beep();
@@ -44,7 +44,7 @@ function (me) {
     }
 
     function b_NewGame_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         VSElastic1.Visible = 0;
         me.Tag = "NEW";
         me.Hide();
@@ -59,7 +59,7 @@ function (me) {
     }
 
     function b_QuitGame_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         VSElastic1.Visible = 0;
         End();
     }
@@ -73,7 +73,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0068;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {

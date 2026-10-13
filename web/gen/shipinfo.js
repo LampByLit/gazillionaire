@@ -44,16 +44,16 @@ function (me) {
     const { VSElastic4, b_FuelTankButton, b_CrewButton, b_ShipSizeButton, b_PurchaseButton, b_Exit, VSElastic14, b_Speed } = me.controls;
     const { b_ShipName, b_Passengers, b_CargoCapacity, b_ShipTons, Image1, VSElastic3, b_TankSize, b_Consumption } = me.controls;
     const { b_Employee, b_Pilot, b_Navigator, b_Engineer, b_Crew, b_EmployeeSalary } = me.controls;
-    const mc001A = 11;
-    const mc002A = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
 
     async function b_CargoCapacityButton_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         await Load(frm_ShipInfoBox);
         frm_ShipInfoBox.Caption = "Cargo Capacity";
         frm_ShipInfoBox.b_Message.Caption = "The amount of cargo your ship can carry depends on the size and type of your ship. The ship you own now can hold up to " + Format(player.cargoCapacity, "#,#0") + " tons of cargo. That means you can buy up to " + Format(player.cargoCapacity, "#,#0") + " tons of commodities and transport them to another planet. Generally, the larger your ship, the more tons of cargo you can carry.";
         await frm_ShipInfoBox.Show(1);
-        me.MousePointer = mc002A;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_CargoCapacityButton_MouseDown(Button, Shift, X, Y) {
@@ -65,12 +65,12 @@ function (me) {
     }
 
     async function b_CrewButton_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         await Load(frm_ShipInfoBox);
         frm_ShipInfoBox.Caption = "Crew";
         frm_ShipInfoBox.b_Message.Caption = "The number of employees you have depends on the size and type of your ship. Your company currently employs " + Format(player.crewSize, "#,#0") + " crew members. You must pay each employee a weekly salary of " + Format(player.crewSalary, "#,#0") + " kubars. You will not be required to hire any additional employees until you purchase a larger ship.";
         await frm_ShipInfoBox.Show(1);
-        me.MousePointer = mc002A;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_CrewButton_MouseDown(Button, Shift, X, Y) {
@@ -82,7 +82,7 @@ function (me) {
     }
 
     async function b_Exit_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await Unload(me);
     }
@@ -96,12 +96,12 @@ function (me) {
     }
 
     async function b_FuelTankButton_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         await Load(frm_ShipInfoBox);
         frm_ShipInfoBox.Caption = "Fuel Tank Size";
         frm_ShipInfoBox.b_Message.Caption = "The fuel tank size (fuel capacity) for your ship is " + Format(player.fuelCapacity, "#,#0") + " tons. This is the maximum amount of fuel your ship can carry. The advantage of a larger fuel tank is that if fuel prices are high on one planet, you can usually afford to wait until you reach another planet before filling up your tank.";
         await frm_ShipInfoBox.Show(1);
-        me.MousePointer = mc002A;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_FuelTankButton_MouseDown(Button, Shift, X, Y) {
@@ -113,12 +113,12 @@ function (me) {
     }
 
     async function b_FuelUsageButton_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         await Load(frm_ShipInfoBox);
         frm_ShipInfoBox.Caption = "Fuel Usage";
         frm_ShipInfoBox.b_Message.Caption = "Every time you travel to a planet, your ship consumes between 2 and " + Format((game.shipSize[game.currentPlayer] / 100) + 11, "#,#0") + " tons of fuel. On average, the longer the distance travelled and the larger the ship, the more fuel is used. If you want to save fuel, a good idea is to travel to a nearby planet, rather than one on the other side of Kukubia.";
         await frm_ShipInfoBox.Show(1);
-        me.MousePointer = mc002A;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_FuelUsageButton_MouseDown(Button, Shift, X, Y) {
@@ -130,7 +130,7 @@ function (me) {
     }
 
     async function b_Help_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             frm_Money.b_Sound.Command = "Close";
             b_Sound.Command = "Close";
@@ -154,7 +154,7 @@ function (me) {
     async function b_PassengerButton_Click() {
         let l00D4 = 0;
         let l00D6 = 0;
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         await Load(frm_ShipInfoBox);
         frm_ShipInfoBox.Caption = "Passenger Capacity";
         if (player.passengersBoarded == -1) {
@@ -166,7 +166,7 @@ function (me) {
         }
         frm_ShipInfoBox.b_Message.Caption = "The number of passengers a ship can carry depends on its size and type. The ship you own now can accommodate up to " + Format(player.passengerCapacity, "#,#0") + " passengers. The more you spend on passenger advertising, the more people will want to travel on your ship. On the other hand, the more you charge for tickets, the fewer passengers you'll get. At this time you have " + Format(l00D4, "#,#0") + " passenger(s) on your ship and " + Format(l00D6, "#,#0") + " passenger(s) waiting to buy tickets.";
         await frm_ShipInfoBox.Show(1);
-        me.MousePointer = mc002A;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_PassengerButton_MouseDown(Button, Shift, X, Y) {
@@ -178,12 +178,12 @@ function (me) {
     }
 
     async function b_PurchaseButton_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         await Load(frm_ShipInfoBox);
         frm_ShipInfoBox.Caption = "Purchase Larger Ship";
         frm_ShipInfoBox.b_Message.Caption = "You cannot buy or sell your ship whenever you feel like it. The Trader's Union strictly regulates the sale of all commercial ships. This helps to maintain a trade balance between the planets and prevents the larger companies from monopolizing the market. By virtue of being a member of the Trader's Union, your name is automatically entered in a lottery. If your name comes up, you will be given the chance to trade in your old ship and purchase a new, larger ship.";
         await frm_ShipInfoBox.Show(1);
-        me.MousePointer = mc002A;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_PurchaseButton_MouseDown(Button, Shift, X, Y) {
@@ -195,11 +195,11 @@ function (me) {
     }
 
     async function b_ShipSizeButton_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         frm_ShipInfoBox.Caption = "Ship Size";
         frm_ShipInfoBox.b_Message.Caption = "You currently own a " + Format(game.shipSize[game.currentPlayer], "#,#0") + "-ton ship. This does not mean you can carry " + Format(game.shipSize[game.currentPlayer], "#,#0") + " tons of cargo. The ship's engine room, bridge, passenger seating area, crew living quarters, life support systems, and fuel tanks take up approximately " + Format(game.shipSize[game.currentPlayer] - player.cargoCapacity, "#,#0") + " tons. The remaining " + Format(player.cargoCapacity, "#,#0") + " tons can be used to haul cargo.";
         await frm_ShipInfoBox.Show(1);
-        me.MousePointer = mc002A;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_ShipSizeButton_MouseDown(Button, Shift, X, Y) {
@@ -211,12 +211,12 @@ function (me) {
     }
 
     async function b_ShipSpeedButton_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         await Load(frm_ShipInfoBox);
         frm_ShipInfoBox.Caption = "Engine";
         frm_ShipInfoBox.b_Message.Caption = "Your ship has a " + Format(game.engineSpeed[game.currentPlayer], "#,#0") + " kuarp engine. The higher the kuarp value, the faster your ship can travel. This is an advantage if you are trying to beat another player to a planet in order to buy up all the best commodities. You can roughly compute the time it will take you to travel to a planet by dividing the total DISTANCE by the ENGINE SPEED. You can purchase a faster engine by going to Pyke and clicking on EXPLORE PLANET, then PLANET SPECIAL.";
         await frm_ShipInfoBox.Show(1);
-        me.MousePointer = mc002A;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_ShipSpeedButton_MouseDown(Button, Shift, X, Y) {
@@ -282,7 +282,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc002A;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -292,7 +292,7 @@ function (me) {
     }
 
     async function Form_Load() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ship" + Trim(Str(game.shipType[game.currentPlayer])) + ".bmp");
         if (game.tutorialMode == -1) {
             frm_Box1.FillElastic.Caption = "Tutorial";

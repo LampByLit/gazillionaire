@@ -17,57 +17,57 @@ VB.form("frm_BoxPort",
 function (me) {
     const { FillElastic, b_Sound, b_OK, VSElastic2, b_No, b_Yes, b_Title, b_Image } = me.controls;
     const { b_Message } = me.controls;
-    const mc001A = 11;
-    const mc0034 = 16777215;
-    const mc0046 = 12632256;
-    const mc0076 = 1;
+    const HOURGLASS = 11;
+    const WHITE = 16777215;
+    const LIGHT_GRAY = 12632256;
+    const ARROW_CURSOR = 1;
 
     function b_No_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         me.Tag = "NO";
         me.Hide();
     }
 
     function b_No_MouseDown(Button, Shift, X, Y) {
-        b_No.BackColor = mc0034;
+        b_No.BackColor = WHITE;
     }
 
     function b_No_MouseUp(Button, Shift, X, Y) {
-        b_No.BackColor = mc0046;
+        b_No.BackColor = LIGHT_GRAY;
     }
 
     async function b_OK_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await Unload(me);
     }
 
     function b_OK_MouseDown(Button, Shift, X, Y) {
-        b_OK.BackColor = mc0034;
+        b_OK.BackColor = WHITE;
     }
 
     function b_OK_MouseUp(Button, Shift, X, Y) {
-        b_OK.BackColor = mc0046;
+        b_OK.BackColor = LIGHT_GRAY;
     }
 
     function b_Yes_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         me.Tag = "YES";
         me.Hide();
     }
 
     function b_Yes_MouseDown(Button, Shift, X, Y) {
-        b_Yes.BackColor = mc0034;
+        b_Yes.BackColor = WHITE;
     }
 
     function b_Yes_MouseUp(Button, Shift, X, Y) {
-        b_Yes.BackColor = mc0046;
+        b_Yes.BackColor = LIGHT_GRAY;
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0076;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -80,12 +80,12 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         me.Tag = "NO";
     }
 
     function Form_QueryUnload(Cancel, UnloadMode) {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
     }
 
     function Form_Unload(Cancel) {

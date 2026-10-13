@@ -23,14 +23,14 @@ VB.form("frm_History",
 function (me) {
     const { FillElastic, b_Sound, VSElastic4, VSElastic3, Image1, b_Help, b_Next, b_Previous } = me.controls;
     const { b_Container, b_Page, b_Message, b_Title, b_Exit } = me.controls;
-    const mc0022 = 11;
-    const mc0076 = 1;
-    const mc00AA = 16777215;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
+    const WHITE = 16777215;
     let m001A = 0;
     let m001E = 0;
 
     async function b_Exit_Click() {
-        me.MousePointer = mc0022;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -47,7 +47,7 @@ function (me) {
     }
 
     async function b_Help_Click() {
-        me.MousePointer = mc0022;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -68,7 +68,7 @@ function (me) {
     }
 
     function b_Next_Click() {
-        me.MousePointer = mc0022;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -80,7 +80,7 @@ function (me) {
             m001A = m001E;
         }
         sub3022();
-        me.MousePointer = mc0076;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_Next_MouseDown(Button, Shift, X, Y) {
@@ -92,7 +92,7 @@ function (me) {
     }
 
     function b_Previous_Click() {
-        me.MousePointer = mc0022;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -104,7 +104,7 @@ function (me) {
             m001A = m001E;
         }
         sub3022();
-        me.MousePointer = mc0076;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_Previous_MouseDown(Button, Shift, X, Y) {
@@ -170,14 +170,14 @@ function (me) {
             b_Previous.ForeColor = 0x808080;
             b_Previous.Enabled = 0;
         } else {
-            b_Previous.ForeColor = mc00AA;
+            b_Previous.ForeColor = WHITE;
             b_Previous.Enabled = -1;
         }
         if (m001A == m001E) {
             b_Next.ForeColor = 0x808080;
             b_Next.Enabled = 0;
         } else {
-            b_Next.ForeColor = mc00AA;
+            b_Next.ForeColor = WHITE;
             b_Next.Enabled = -1;
         }
         if (game.planetNames[game.planet[game.currentPlayer]] == "Vexx") {
@@ -418,7 +418,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0076;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {

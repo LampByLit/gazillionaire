@@ -32,11 +32,11 @@ function (me) {
     const { b_Sound, FillElastic, VSElastic1, VSElastic8, VSElastic4, b_Off, b_On, b_Help } = me.controls;
     const { b_Exit, VSElastic3, b_Deposit, b_Warehouse, b_Buy, b_Bank, b_Borrow, b_Insurance } = me.controls;
     const { b_Tax, b_Passengers, b_Journey, b_Fuel, b_Crew, b_Advertising } = me.controls;
-    const mc001A = 11;
-    const mc00E4 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
 
     async function b_Exit_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (b_Warehouse.Value == -1) {
             player.quickWarehouse = -1;
         } else {
@@ -110,7 +110,7 @@ function (me) {
     }
 
     async function b_Help_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -198,7 +198,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc00E4;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -208,7 +208,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (player.quickWarehouse == -1) {
             b_Warehouse.Value = -1;
         } else {
@@ -269,7 +269,7 @@ function (me) {
         } else {
             b_Insurance.Value = 0;
         }
-        me.MousePointer = mc00E4;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     return {

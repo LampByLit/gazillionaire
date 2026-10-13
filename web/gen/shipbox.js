@@ -11,26 +11,26 @@ VB.form("frm_ShipInfoBox",
   ]],
 function (me) {
     const { FillElastic, b_Container, b_Message, b_OK } = me.controls;
-    const mc001A = 11;
-    const mc002E = 16777215;
-    const mc0040 = 12632256;
-    const mc0044 = 1;
+    const HOURGLASS = 11;
+    const WHITE = 16777215;
+    const LIGHT_GRAY = 12632256;
+    const ARROW_CURSOR = 1;
 
     async function b_OK_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         await Unload(me);
     }
 
     function b_OK_MouseDown(Button, Shift, X, Y) {
-        b_OK.BackColor = mc002E;
+        b_OK.BackColor = WHITE;
     }
 
     function b_OK_MouseUp(Button, Shift, X, Y) {
-        b_OK.BackColor = mc0040;
+        b_OK.BackColor = LIGHT_GRAY;
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0044;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {

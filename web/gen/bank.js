@@ -32,8 +32,8 @@ function (me) {
     const { b_Timer, FillElastic, b_Sound, VSElastic1, Image1, Label1, VSElastic4, b_Help1 } = me.controls;
     const { b_Help2, b_ExitBank, b_Deposit, b_DepositAll, b_WithdrawAll, b_Withdraw, VSElastic2, b_Interest } = me.controls;
     const { b_InterestRate, b_Cash, b_Bank, VSElastic3 } = me.controls;
-    const mc0020 = 11;
-    const mc0048 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
     let m001A = 0;
     let m001C = 0;
     let m001E = 0;
@@ -41,8 +41,8 @@ function (me) {
 
     async function b_Deposit_Click() {
         let l0028 = 0;
-        const mc0048 = 1;
-        me.MousePointer = mc0020;
+        const ARROW_CURSOR = 1;
+        me.MousePointer = HOURGLASS;
         if (player.cash == 0) {
             if (settings.soundOn == -1) {
                 Beep();
@@ -52,7 +52,7 @@ function (me) {
             await frm_Box0.Show(1);
             l0028 = 0;
         } else {
-            l0028 = await fn01A0(0, "", 0.25 * player.cash, player.cash, "Enter the amount you wish to deposit:", "Deposit Money");
+            l0028 = await askNumber(0, "", 0.25 * player.cash, player.cash, "Enter the amount you wish to deposit:", "Deposit Money");
         }
         if (l0028 == 0) {
         } else if (l0028 == -3333) {
@@ -76,7 +76,7 @@ function (me) {
             }
         }
         sub0CA5();
-        me.MousePointer = mc0048;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_Deposit_MouseDown(Button, Shift, X, Y) {
@@ -88,7 +88,7 @@ function (me) {
     }
 
     async function b_DepositAll_Click() {
-        me.MousePointer = mc0020;
+        me.MousePointer = HOURGLASS;
         if (player.cash == 0) {
             if (settings.soundOn == -1) {
                 Beep();
@@ -109,7 +109,7 @@ function (me) {
             }
         }
         sub0CA5();
-        me.MousePointer = mc0048;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_DepositAll_MouseDown(Button, Shift, X, Y) {
@@ -121,7 +121,7 @@ function (me) {
     }
 
     async function b_ExitBank_Click() {
-        me.MousePointer = mc0020;
+        me.MousePointer = HOURGLASS;
         b_Timer.Enabled = 0;
         me.BackColor = m0076;
         FillElastic.Visible = 0;
@@ -193,7 +193,7 @@ function (me) {
 
     async function b_Withdraw_Click() {
         let l00CA = 0;
-        me.MousePointer = mc0020;
+        me.MousePointer = HOURGLASS;
         if (player.bankBalance == 0) {
             if (settings.soundOn == -1) {
                 Beep();
@@ -203,7 +203,7 @@ function (me) {
             await frm_Box0.Show(1);
             l00CA = 0;
         } else {
-            l00CA = await fn01A0(0, "", 0.25 * player.bankBalance, player.bankBalance, "Enter the amount you wish to withdraw:", "Withdraw Money");
+            l00CA = await askNumber(0, "", 0.25 * player.bankBalance, player.bankBalance, "Enter the amount you wish to withdraw:", "Withdraw Money");
         }
         if (l00CA == 0) {
         } else if (l00CA == -3333) {
@@ -227,7 +227,7 @@ function (me) {
             }
         }
         sub0CA5();
-        me.MousePointer = mc0048;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_Withdraw_MouseDown(Button, Shift, X, Y) {
@@ -239,7 +239,7 @@ function (me) {
     }
 
     async function b_WithdrawAll_Click() {
-        me.MousePointer = mc0020;
+        me.MousePointer = HOURGLASS;
         if (player.bankBalance == 0) {
             if (settings.soundOn == -1) {
                 Beep();
@@ -260,7 +260,7 @@ function (me) {
             }
         }
         sub0CA5();
-        me.MousePointer = mc0048;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_WithdrawAll_MouseDown(Button, Shift, X, Y) {
@@ -279,7 +279,7 @@ function (me) {
     }
 
     async function sub0AFB() {
-        me.MousePointer = mc0020;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -292,7 +292,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0048;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -302,7 +302,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc0020;
+        me.MousePointer = HOURGLASS;
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "BANK.BMP");
         m001C = 0;
         m001A = 1;

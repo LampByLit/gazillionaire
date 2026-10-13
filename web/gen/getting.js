@@ -15,11 +15,11 @@ VB.form("frm_GettingStarted",
   ]],
 function (me) {
     const { VSElastic1, VSElastic2, VSElastic3, Label3, Label5, Label4, Label2, b_Exit } = me.controls;
-    const mc001A = 11;
-    const mc0040 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
 
     async function b_Exit_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         await frm_MainMenu.Show();
         await Unload(me);
     }
@@ -33,7 +33,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0040;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -43,7 +43,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         Label3.Caption = "1)  Your goal is to build a successful business trading commodities between the 7 planets of Kukubia.";
         Label2.Caption = "2)  To begin with, you must go to the MARKETPLACE and buy the commodities which are at a low price.";
         Label4.Caption = "3)  Once your ship is filled with cargo, you are ready to leave.  Go to JOURNEY and click on the planet you wish to travel to.";

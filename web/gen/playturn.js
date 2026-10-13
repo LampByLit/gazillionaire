@@ -26,13 +26,13 @@ VB.form("frm_PlayerTurn",
 function (me) {
     const { FillElastic, VSElastic1, b_Ranking, b_SaveGame, b_BeginTurn, b_QuitGame, b_NewGame, b_Sound } = me.controls;
     const { VSElastic3, VSElastic2, Image1, b_bankrupt, b_Title, b_Status, b_Week, b_Message } = me.controls;
-    const mc001E = 11;
-    const mc004E = 16777215;
-    const mc0060 = 12632256;
-    const mc0116 = 1;
+    const HOURGLASS = 11;
+    const WHITE = 16777215;
+    const LIGHT_GRAY = 12632256;
+    const ARROW_CURSOR = 1;
 
     async function b_BeginTurn_Click() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -57,15 +57,15 @@ function (me) {
     }
 
     function b_BeginTurn_MouseDown(Button, Shift, X, Y) {
-        b_BeginTurn.BackColor = mc004E;
+        b_BeginTurn.BackColor = WHITE;
     }
 
     function b_BeginTurn_MouseUp(Button, Shift, X, Y) {
-        b_BeginTurn.BackColor = mc0060;
+        b_BeginTurn.BackColor = LIGHT_GRAY;
     }
 
     async function b_NewGame_Click() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -75,30 +75,30 @@ function (me) {
     }
 
     function b_NewGame_MouseDown(Button, Shift, X, Y) {
-        b_NewGame.BackColor = mc004E;
+        b_NewGame.BackColor = WHITE;
     }
 
     function b_NewGame_MouseUp(Button, Shift, X, Y) {
-        b_NewGame.BackColor = mc0060;
+        b_NewGame.BackColor = LIGHT_GRAY;
     }
 
     function b_QuitGame_Click() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         End();
     }
 
     function b_QuitGame_MouseDown(Button, Shift, X, Y) {
-        b_QuitGame.BackColor = mc004E;
+        b_QuitGame.BackColor = WHITE;
     }
 
     function b_QuitGame_MouseUp(Button, Shift, X, Y) {
-        b_QuitGame.BackColor = mc0060;
+        b_QuitGame.BackColor = LIGHT_GRAY;
     }
 
     async function b_Ranking_Click() {
         let l0094 = "";
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -150,15 +150,15 @@ function (me) {
     }
 
     function b_Ranking_MouseDown(Button, Shift, X, Y) {
-        b_Ranking.BackColor = mc004E;
+        b_Ranking.BackColor = WHITE;
     }
 
     function b_Ranking_MouseUp(Button, Shift, X, Y) {
-        b_Ranking.BackColor = mc0060;
+        b_Ranking.BackColor = LIGHT_GRAY;
     }
 
     async function b_SaveGame_Click() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -169,11 +169,11 @@ function (me) {
     }
 
     function b_SaveGame_MouseDown(Button, Shift, X, Y) {
-        b_SaveGame.BackColor = mc004E;
+        b_SaveGame.BackColor = WHITE;
     }
 
     function b_SaveGame_MouseUp(Button, Shift, X, Y) {
-        b_SaveGame.BackColor = mc0060;
+        b_SaveGame.BackColor = LIGHT_GRAY;
     }
 
     async function sub2B86() {
@@ -229,7 +229,7 @@ function (me) {
                 }
                 await frm_Box1Rect.Show(1);
                 if (game.currentPlayer == game.lastAuctionWinner) {
-                    await sub015C(game.lastAuctionTopBid, -1);
+                    await spend(game.lastAuctionTopBid, -1);
                 }
             } else {
                 await Load(frm_Box1Port);
@@ -320,7 +320,7 @@ function (me) {
                 }
                 await frm_Box1Rect.Show(1);
                 if (game.currentPlayer == game.lastAuctionWinner) {
-                    await sub015C(game.lastAuctionTopBid, -1);
+                    await spend(game.lastAuctionTopBid, -1);
                 }
             } else {
                 await Load(frm_Box1Port);
@@ -577,7 +577,7 @@ function (me) {
         let ret = 0;
         l00F4 = DimArray([6], 0);
         l00FA = DimArray([6], 0);
-        sub00F9();
+        updateRivalNetWorth();
         l00F2 = "";
         for (l00EA = 1; l00EA <= 6; l00EA++) {
             if (game.graphShowCompany[l00EA] == -1 || l00EA > game.numPlayers) {
@@ -736,7 +736,7 @@ function (me) {
 
     function Form_Activate() {
         let l010E = "";
-        const mc0116 = 1;
+        const ARROW_CURSOR = 1;
         if (game.skillLevel == 1) {
             l010E = "Tutorial";
         } else if (game.skillLevel == 2) {
@@ -799,7 +799,7 @@ function (me) {
                 }
             }
         }
-        me.MousePointer = mc0116;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_Load() {
@@ -807,8 +807,8 @@ function (me) {
         let l011A = 0;
         let l011C = "";
         let l011E = 0;
-        const mc013E = 4;
-        me.MousePointer = mc001E;
+        const ICON_CURSOR = 4;
+        me.MousePointer = HOURGLASS;
         l011E = 0;
         l011A = 0;
         for (l0118 = 0; l0118 <= 6; l0118++) {
@@ -956,9 +956,9 @@ function (me) {
             l011E = -1;
             if (Trim(game.emailFileName) == "") {
             } else {
-                me.MousePointer = mc013E;
-                await sub00BE("STARTTURN");
-                me.MousePointer = mc0116;
+                me.MousePointer = ICON_CURSOR;
+                await saveEmailGame("STARTTURN");
+                me.MousePointer = ARROW_CURSOR;
             }
         }
     }

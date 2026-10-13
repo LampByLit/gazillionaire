@@ -12,12 +12,12 @@ VB.form("frm_BuySell",
   ]],
 function (me) {
     const { VSElastic1, b_Buy, b_BuyMax, b_Sell, b_SellMax, b_Cancel } = me.controls;
-    const mc001E = 11;
-    const mc0076 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
 
     function b_Buy_Click() {
         me.Tag = "BUY";
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         me.Hide();
     }
 
@@ -31,7 +31,7 @@ function (me) {
 
     function b_BuyMax_Click() {
         me.Tag = "BUYMAX";
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         me.Hide();
     }
 
@@ -45,7 +45,7 @@ function (me) {
 
     function b_Cancel_Click() {
         me.Tag = "CANCEL";
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         me.Hide();
     }
 
@@ -59,7 +59,7 @@ function (me) {
 
     function b_Sell_Click() {
         me.Tag = "SELL";
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         me.Hide();
     }
 
@@ -73,7 +73,7 @@ function (me) {
 
     function b_SellMax_Click() {
         me.Tag = "SELLMAX";
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         me.Hide();
     }
 
@@ -86,7 +86,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0076;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function Form_KeyPress(KeyAscii) {

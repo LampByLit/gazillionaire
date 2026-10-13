@@ -10,11 +10,11 @@ VB.form("frm_YesNoBox",
   ]],
 function (me) {
     const { VSElastic1, b_No, b_Yes, b_Message } = me.controls;
-    const mc001A = 11;
-    const mc0052 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
 
     function b_No_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         me.Tag = "NO";
         me.Hide();
     }
@@ -28,7 +28,7 @@ function (me) {
     }
 
     function b_Yes_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         me.Tag = "YES";
         me.Hide();
     }
@@ -42,7 +42,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0052;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function Form_Load() {

@@ -21,12 +21,12 @@ VB.form("frm_Planets",
   ]],
 function (me) {
     const { FillElastic, b_Planet, b_Sound, VSElastic1, b_Randomize, b_Continue, Label2, Label1 } = me.controls;
-    const mc001A = 11;
-    const mc0072 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
     let m004A = 0;
 
     async function b_Continue_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (game.numPlayers != 1) {
             frm_NameCompany.Tag = "Next Player";
         }
@@ -44,7 +44,7 @@ function (me) {
     }
 
     async function b_Planet_Click(Index) {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "ping2.wav";
@@ -60,12 +60,12 @@ function (me) {
         let l0064 = 0;
         let l0066 = 0;
         let l0068 = "";
-        const mc0072 = 1;
-        me.MousePointer = mc001A;
+        const ARROW_CURSOR = 1;
+        me.MousePointer = HOURGLASS;
         for (l0066 = 1; l0066 <= 6; l0066++) {
             for (l0062 = 0; l0062 <= 6; l0062++) {
                 {
-                    const sel = fn01AE(0, 13);
+                    const sel = randomBetween(0, 13);
                     if (sel == 0) {
                         l0068 = "Vexx";
                     } else if (sel == 1) {
@@ -117,7 +117,7 @@ function (me) {
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
-        me.MousePointer = mc0072;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_Randomize_MouseDown(Button, Shift, X, Y) {
@@ -140,7 +140,7 @@ function (me) {
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
-        me.MousePointer = mc0072;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -150,7 +150,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "STARS2.BMP");
     }
 

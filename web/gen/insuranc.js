@@ -31,9 +31,9 @@ function (me) {
     const { b_Timer, FillElastic, b_Sound, VSElastic4, b_Help, b_BuyInsurance, b_BuyInsurance_Image2, b_BuyInsurance_Image } = me.controls;
     const { b_ExitInsurance, VSElastic1, Image1, Label1, VSElastic3, b_Message, VSElastic2, b_Insurance } = me.controls;
     const { b_Cash, b_Cost } = me.controls;
-    const mc0054 = 11;
-    const mc00C2 = 255;
-    const mc00C6 = 1;
+    const HOURGLASS = 11;
+    const RED = 255;
+    const ARROW_CURSOR = 1;
     let m001A = 0;
     let m001C = 0;
 
@@ -74,7 +74,7 @@ function (me) {
     }
 
     async function b_ExitInsurance_Click() {
-        me.MousePointer = mc0054;
+        me.MousePointer = HOURGLASS;
         b_Timer.Enabled = 0;
         me.BackColor = 0x404040;
         FillElastic.Visible = 0;
@@ -91,7 +91,7 @@ function (me) {
     }
 
     async function b_Help_Click() {
-        me.MousePointer = mc0054;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -134,7 +134,7 @@ function (me) {
     }
 
     async function sub1794() {
-        me.MousePointer = mc0054;
+        me.MousePointer = HOURGLASS;
         if (player.insured == -1) {
             if (settings.soundOn == -1) {
                 Beep();
@@ -169,11 +169,11 @@ function (me) {
                 b_Sound.Command = "Play";
             }
             b_Message.Caption = "You just bought Voyager's Insurance for your next journey!";
-            b_Message.ForeColor = mc00C2;
+            b_Message.ForeColor = RED;
             player.cash = player.cash - player.insuranceCost;
         }
         sub18F0();
-        me.MousePointer = mc00C6;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function sub190A() {
@@ -205,7 +205,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc00C6;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {

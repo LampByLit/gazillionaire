@@ -7,7 +7,7 @@ VB.form("frm_AAA",
   ]],
 function (me) {
     const { VSElastic1, b_Test } = me.controls;
-    const mc0024 = 1;
+    const ARROW_CURSOR = 1;
 
     async function sub4244() {
         FileOpen(8, Trim(paths.configDir) + "CONFIG.DAT");
@@ -35,7 +35,7 @@ function (me) {
     async function Form_Activate() {
         let l002C = 0;
         try {
-            me.MousePointer = mc0024;
+            me.MousePointer = ARROW_CURSOR;
             l002C = 0;
             Randomize();
             paths.saveDir = FixStr(CurDir() + "\\savegame\\", 128);

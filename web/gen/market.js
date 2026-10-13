@@ -31,12 +31,12 @@ function (me) {
     const mc004E = 1;
     const mc0050 = 2;
     const mc0052 = 3;
-    const mc0054 = 11;
-    const mc009A = 1;
-    const mc00F6 = 16777215;
-    const mc0152 = 65280;
-    const mc0158 = 16776960;
-    const mc015C = 16711935;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
+    const WHITE = 16777215;
+    const GREEN = 65280;
+    const CYAN = 16776960;
+    const MAGENTA = 16711935;
     let m001A = 0;
     let m001C = 0;
     let m0020 = DimArray([18], 0);
@@ -44,7 +44,7 @@ function (me) {
     let m004C = 0;
 
     async function b_Exit_Click() {
-        me.MousePointer = mc0054;
+        me.MousePointer = HOURGLASS;
         me.Tag = " ";
         await frm_MainMenu.Show();
         await Unload(frm_Warehouse);
@@ -62,8 +62,8 @@ function (me) {
 
     function b_GoodsOnShip_Click() {
         let l0082 = 0;
-        const mc009A = 1;
-        me.MousePointer = mc0054;
+        const ARROW_CURSOR = 1;
+        me.MousePointer = HOURGLASS;
         if (m001A == mc0050) {
             m001A = mc004E;
             b_GoodsOnShip.Caption = "Show Cargo";
@@ -83,7 +83,7 @@ function (me) {
         }
         sub1E85();
         sub1E9C();
-        me.MousePointer = mc009A;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_GoodsOnShip_MouseDown(Button, Shift, X, Y) {
@@ -99,7 +99,6 @@ function (me) {
     }
 
     async function b_Grid_MouseUp(Button, Shift, X, Y) {
-        const mc00F6 = 16777215;
         if (Button != 2 && Button != 4 && b_Grid.Row != m001C + 1 && b_Grid.Row > 0 && m004C == 0) {
             await sub1EB2((b_Grid.Row));
         }
@@ -107,7 +106,7 @@ function (me) {
     }
 
     async function b_Help_Click() {
-        me.MousePointer = mc0054;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -138,7 +137,7 @@ function (me) {
     }
 
     function b_Quick_MouseDown(Button, Shift, X, Y) {
-        b_Quick.BackColor = mc00F6;
+        b_Quick.BackColor = WHITE;
     }
 
     function b_Quick_MouseUp(Button, Shift, X, Y) {
@@ -147,7 +146,7 @@ function (me) {
 
     async function b_Supply_Click() {
         let l0102 = 0;
-        me.MousePointer = mc0054;
+        me.MousePointer = HOURGLASS;
         for (l0102 = m001C; l0102 >= 1; l0102--) {
             if (l0102 == m001C) {
                 b_Grid.AddItem(" ");
@@ -166,7 +165,7 @@ function (me) {
     }
 
     async function b_Warehouse_Click() {
-        me.MousePointer = mc0054;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -248,10 +247,10 @@ function (me) {
         let l0146 = 0;
         let l0148 = 0;
         p013E = CInt(p013E);
-        const mc0152 = 65280;
-        const mc0158 = 16776960;
-        const mc015C = 16711935;
-        me.MousePointer = mc0054;
+        const GREEN = 65280;
+        const CYAN = 16776960;
+        const MAGENTA = 16711935;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             {
@@ -329,7 +328,7 @@ function (me) {
                 l0140 = "BUYMAX";
             }
         }
-        b_Message.ForeColor = mc0152;
+        b_Message.ForeColor = GREEN;
         b_Message.Caption = "";
         if (l0140 == "BUY") {
             l0142 = -6666;
@@ -376,11 +375,11 @@ function (me) {
                 }
                 if (game.available[game.planet[game.currentPlayer]][m0020[p013E]][m0036[p013E]] == 1) {
                     b_TitleBar.Tag = "Call Input Box Function";
-                    l0142 = await fn01A0(0, Str(l0148), 0.25 * l0148, l0148, "There is " + Format(game.available[game.planet[game.currentPlayer]][m0020[p013E]][m0036[p013E]], "#,#0") + " ton of " + Trim(game.commodityNames[m0020[p013E]][m0036[p013E]]) + " for sale.", "Buy " + Trim(game.commodityNames[m0020[p013E]][m0036[p013E]]));
+                    l0142 = await askNumber(0, Str(l0148), 0.25 * l0148, l0148, "There is " + Format(game.available[game.planet[game.currentPlayer]][m0020[p013E]][m0036[p013E]], "#,#0") + " ton of " + Trim(game.commodityNames[m0020[p013E]][m0036[p013E]]) + " for sale.", "Buy " + Trim(game.commodityNames[m0020[p013E]][m0036[p013E]]));
                     b_TitleBar.Tag = "";
                 } else {
                     b_TitleBar.Tag = "Call Input Box Function";
-                    l0142 = await fn01A0(0, Str(l0148), 0.25 * l0148, l0148, "There are " + Format(game.available[game.planet[game.currentPlayer]][m0020[p013E]][m0036[p013E]], "#,#0") + " tons of " + Trim(game.commodityNames[m0020[p013E]][m0036[p013E]]) + " for sale.", "Buy " + Trim(game.commodityNames[m0020[p013E]][m0036[p013E]]));
+                    l0142 = await askNumber(0, Str(l0148), 0.25 * l0148, l0148, "There are " + Format(game.available[game.planet[game.currentPlayer]][m0020[p013E]][m0036[p013E]], "#,#0") + " tons of " + Trim(game.commodityNames[m0020[p013E]][m0036[p013E]]) + " for sale.", "Buy " + Trim(game.commodityNames[m0020[p013E]][m0036[p013E]]));
                     b_TitleBar.Tag = "";
                 }
             }
@@ -425,7 +424,7 @@ function (me) {
                     b_Message.Caption = "You can't buy " + Format(l0142, "#,#0") + " tons of " + Trim(game.commodityNames[m0020[p013E]][m0036[p013E]]) + " because you only have space for " + Format(player.cargoCapacity - player.cargoTotal, "#,#0") + " tons.";
                 }
             } else {
-                b_Message.ForeColor = mc0158;
+                b_Message.ForeColor = CYAN;
                 player.cargoAvgCost[m0020[p013E]][m0036[p013E]] = CLng((player.cargoAvgCost[m0020[p013E]][m0036[p013E]] * player.cargo[m0020[p013E]][m0036[p013E]] + game.prices[game.planet[game.currentPlayer]][m0020[p013E]][m0036[p013E]] * l0142) / (player.cargo[m0020[p013E]][m0036[p013E]] + l0142));
                 player.cash = player.cash - (l0142 * game.prices[game.planet[game.currentPlayer]][m0020[p013E]][m0036[p013E]]);
                 player.cargoTotal = player.cargoTotal + l0142;
@@ -479,7 +478,7 @@ function (me) {
                 await frm_Box0.Show(1);
                 b_Message.Caption = "You cannot buy " + Trim(game.commodityNames[m0020[p013E]][m0036[p013E]]) + " because your ship is already full of cargo.";
             } else {
-                b_Message.ForeColor = mc0158;
+                b_Message.ForeColor = CYAN;
                 player.cargoAvgCost[m0020[p013E]][m0036[p013E]] = CLng((player.cargoAvgCost[m0020[p013E]][m0036[p013E]] * player.cargo[m0020[p013E]][m0036[p013E]] + game.prices[game.planet[game.currentPlayer]][m0020[p013E]][m0036[p013E]] * l0142) / (player.cargo[m0020[p013E]][m0036[p013E]] + l0142));
                 player.cash = player.cash - (l0142 * game.prices[game.planet[game.currentPlayer]][m0020[p013E]][m0036[p013E]]);
                 player.cargoTotal = player.cargoTotal + l0142;
@@ -511,11 +510,11 @@ function (me) {
                 b_Message.Caption = "There are zero tons of " + Trim(game.commodityNames[m0020[p013E]][m0036[p013E]]) + " on your ship.";
             } else if (player.cargo[m0020[p013E]][m0036[p013E]] == 1) {
                 b_TitleBar.Tag = "Call Input Box Function";
-                l0142 = await fn01A0(0, Str(player.cargo[m0020[p013E]][m0036[p013E]]), 0.25 * player.cargo[m0020[p013E]][m0036[p013E]], player.cargo[m0020[p013E]][m0036[p013E]], "You have " + Format(player.cargo[m0020[p013E]][m0036[p013E]], "#,#0") + " ton of " + Trim(game.commodityNames[m0020[p013E]][m0036[p013E]]) + " on your ship.", "Sell " + Trim(game.commodityNames[m0020[p013E]][m0036[p013E]]));
+                l0142 = await askNumber(0, Str(player.cargo[m0020[p013E]][m0036[p013E]]), 0.25 * player.cargo[m0020[p013E]][m0036[p013E]], player.cargo[m0020[p013E]][m0036[p013E]], "You have " + Format(player.cargo[m0020[p013E]][m0036[p013E]], "#,#0") + " ton of " + Trim(game.commodityNames[m0020[p013E]][m0036[p013E]]) + " on your ship.", "Sell " + Trim(game.commodityNames[m0020[p013E]][m0036[p013E]]));
                 b_TitleBar.Tag = "";
             } else {
                 b_TitleBar.Tag = "Call Input Box Function";
-                l0142 = await fn01A0(0, Str(player.cargo[m0020[p013E]][m0036[p013E]]), 0.25 * player.cargo[m0020[p013E]][m0036[p013E]], player.cargo[m0020[p013E]][m0036[p013E]], "You have " + Format(player.cargo[m0020[p013E]][m0036[p013E]], "#,#0") + " tons of " + Trim(game.commodityNames[m0020[p013E]][m0036[p013E]]) + " on your ship.", "Sell " + Trim(game.commodityNames[m0020[p013E]][m0036[p013E]]));
+                l0142 = await askNumber(0, Str(player.cargo[m0020[p013E]][m0036[p013E]]), 0.25 * player.cargo[m0020[p013E]][m0036[p013E]], player.cargo[m0020[p013E]][m0036[p013E]], "You have " + Format(player.cargo[m0020[p013E]][m0036[p013E]], "#,#0") + " tons of " + Trim(game.commodityNames[m0020[p013E]][m0036[p013E]]) + " on your ship.", "Sell " + Trim(game.commodityNames[m0020[p013E]][m0036[p013E]]));
                 b_TitleBar.Tag = "";
             }
             if (l0142 == -6666) {
@@ -550,7 +549,7 @@ function (me) {
                         b_Sound.Command = "Play";
                     }
                 }
-                b_Message.ForeColor = mc015C;
+                b_Message.ForeColor = MAGENTA;
                 if (l0142 == 1) {
                     b_Message.Caption = "You just made " + Format((game.prices[game.planet[game.currentPlayer]][m0020[p013E]][m0036[p013E]] * l0142) - (player.cargoAvgCost[m0020[p013E]][m0036[p013E]] * l0142), "#,#0") + " kubars profit selling " + Format(l0142, "#,#0") + " ton of " + Trim(game.commodityNames[m0020[p013E]][m0036[p013E]]) + ".";
                 } else {
@@ -599,7 +598,7 @@ function (me) {
                         b_Sound.Command = "Play";
                     }
                 }
-                b_Message.ForeColor = mc015C;
+                b_Message.ForeColor = MAGENTA;
                 if (player.cargo[m0020[p013E]][m0036[p013E]] == 1) {
                     b_Message.Caption = "You just made " + Format((game.prices[game.planet[game.currentPlayer]][m0020[p013E]][m0036[p013E]] * player.cargo[m0020[p013E]][m0036[p013E]]) - (player.cargoAvgCost[m0020[p013E]][m0036[p013E]] * player.cargo[m0020[p013E]][m0036[p013E]]), "#,#0") + " kubars profit selling " + Format(player.cargo[m0020[p013E]][m0036[p013E]], "#,#0") + " ton of " + Trim(game.commodityNames[m0020[p013E]][m0036[p013E]]) + ".";
                 } else {
@@ -628,7 +627,7 @@ function (me) {
         }
         sub1E85();
         sub1E9C();
-        me.MousePointer = mc009A;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function sub1E85() {
@@ -807,7 +806,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0054;
+        me.MousePointer = HOURGLASS;
         if (player.quickMarket == -1) {
             b_Quick.Caption = "Shortcut = on";
         } else {
@@ -823,7 +822,7 @@ function (me) {
             sub1E85();
             sub1E9C();
         }
-        me.MousePointer = mc009A;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {

@@ -42,8 +42,8 @@ function (me) {
     const { b_Container1, b_SoundBox, b_SoundHelp, b_Sound, b_supportBox, b_supportHelp, b_support, b_GraphicsBox } = me.controls;
     const { b_GraphicsHelp, b_Graphics, b_CD, VSElastic3, Combo1, b_ColorBox, b_ColorHelp, b_Color } = me.controls;
     const { b_Test, Image1 } = me.controls;
-    const mc0052 = 11;
-    const mc0078 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
     let m001A = 0;
 
     async function b_ColorHelp_Click() {
@@ -62,8 +62,6 @@ function (me) {
         let l0032 = "";
         let l0034 = 0;
         let l0036 = 0;
-        const mc0052 = 11;
-        const mc0078 = 1;
         l0034 = CInt(Screen.Width / Screen.TwipsPerPixelX);
         l0036 = CInt(Screen.Height / Screen.TwipsPerPixelY);
         if (l0034 == 640 && l0036 == 480) {
@@ -84,7 +82,7 @@ function (me) {
 
     async function b_OK_Click() {
         try {
-            me.MousePointer = mc0052;
+            me.MousePointer = HOURGLASS;
             settings.cdDrive = FixStr(Left(Combo1.Text, 2), 2);
             paths.imageDir = FixStr(settings.cdDrive + "\\lavamind\\gaz2\\graphics\\", 128);
             paths.soundDir = FixStr(settings.cdDrive + "\\lavamind\\gaz2\\sound\\", 128);
@@ -101,15 +99,15 @@ function (me) {
             }
             if (m001A == 1) {
                 await MsgBox("There has been an error reading your CD-ROM drive." + "\n" + "\n" + "Either the Gazillionaire CD-ROM is not in the CD-ROM drive or you selected the wrong CD-ROM drive letter." + "\n" + "\n" + "In order to play Gazillionaire, the Gazillionaire CD-ROM must be in the CD-ROM drive at all times." + "\n" + "\n" + "Also, please make sure that you selected the correct CD-ROM drive letter on the System Configuration Menu.", 64, "Error Reading CD-ROM Drive");
-                me.MousePointer = mc0078;
+                me.MousePointer = ARROW_CURSOR;
                 return;
             } else if (m001A == 2) {
                 await MsgBox("There has been another error reading your CD-ROM drive." + "\n" + "\n" + "Either the Gazillionaire CD-ROM is not in the CD-ROM drive or you selected the wrong CD-ROM drive letter." + "\n" + "\n" + "In order to play Gazillionaire, the Gazillionaire CD-ROM must be in the CD-ROM drive at all times." + "\n" + "\n" + "Also, please make sure that you selected the correct CD-ROM drive letter on the System Configuration Menu.", 32, "Error Reading CD-ROM Drive");
-                me.MousePointer = mc0078;
+                me.MousePointer = ARROW_CURSOR;
                 return;
             } else {
                 await MsgBox("There has been another error reading your CD-ROM drive." + "\n" + "\n" + "We will now exit the program." + "\n" + "\n" + "Please make sure your CD-ROM drive is functioning properly.", 16, "Error Reading CD-ROM Drive");
-                me.MousePointer = mc0078;
+                me.MousePointer = ARROW_CURSOR;
                 End();
             }
         }
@@ -162,11 +160,11 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0078;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function Form_Load() {
-        me.MousePointer = mc0052;
+        me.MousePointer = HOURGLASS;
         m001A = 0;
         Combo1.Text = settings.cdDrive;
         Combo1.AddItem("A:");

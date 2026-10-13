@@ -20,20 +20,20 @@ VB.form("frm_LoadGame",
 function (me) {
     const { b_Sound, FillElastic, b_Exit, b_Help, VSElastic3, b_Game1, b_Game2, b_Game3 } = me.controls;
     const { b_Game4, b_Game5, Label2, Label1 } = me.controls;
-    const mc004E = 11;
-    const mc0074 = 12632256;
+    const HOURGLASS = 11;
+    const LIGHT_GRAY = 12632256;
     const m00A0 = 16711680;
     const m00BA = 12582912;
     const m00D4 = 8388608;
     const m0104 = 4194304;
-    const mc0136 = 1;
+    const ARROW_CURSOR = 1;
     let m001C = Space(23);
     let m0036 = DimArray([5], () => Space(20));
     let m004C = 0;
     let m0086 = 0;
 
     async function b_Exit_Click() {
-        me.MousePointer = mc004E;
+        me.MousePointer = HOURGLASS;
         game.saveSlot = m004C;
         if (me.Tag == "BeginGame") {
             me.Tag = "";
@@ -48,7 +48,7 @@ function (me) {
     }
 
     function b_Exit_MouseDown(Button, Shift, X, Y) {
-        b_Exit.BackColor = mc0074;
+        b_Exit.BackColor = LIGHT_GRAY;
     }
 
     function b_Exit_MouseUp(Button, Shift, X, Y) {
@@ -56,13 +56,13 @@ function (me) {
     }
 
     async function b_Game1_Click() {
-        me.MousePointer = mc004E;
+        me.MousePointer = HOURGLASS;
         game.saveSlot = 1;
         await sub2652();
     }
 
     function b_Game1_MouseDown(Button, Shift, X, Y) {
-        b_Game1.BackColor = mc0074;
+        b_Game1.BackColor = LIGHT_GRAY;
     }
 
     function b_Game1_MouseUp(Button, Shift, X, Y) {
@@ -70,13 +70,13 @@ function (me) {
     }
 
     async function b_Game2_Click() {
-        me.MousePointer = mc004E;
+        me.MousePointer = HOURGLASS;
         game.saveSlot = 2;
         await sub2652();
     }
 
     function b_Game2_MouseDown(Button, Shift, X, Y) {
-        b_Game2.BackColor = mc0074;
+        b_Game2.BackColor = LIGHT_GRAY;
     }
 
     function b_Game2_MouseUp(Button, Shift, X, Y) {
@@ -84,13 +84,13 @@ function (me) {
     }
 
     async function b_Game3_Click() {
-        me.MousePointer = mc004E;
+        me.MousePointer = HOURGLASS;
         game.saveSlot = 3;
         await sub2652();
     }
 
     function b_Game3_MouseDown(Button, Shift, X, Y) {
-        b_Game3.BackColor = mc0074;
+        b_Game3.BackColor = LIGHT_GRAY;
     }
 
     function b_Game3_MouseUp(Button, Shift, X, Y) {
@@ -98,13 +98,13 @@ function (me) {
     }
 
     async function b_Game4_Click() {
-        me.MousePointer = mc004E;
+        me.MousePointer = HOURGLASS;
         game.saveSlot = 4;
         await sub2652();
     }
 
     function b_Game4_MouseDown(Button, Shift, X, Y) {
-        b_Game4.BackColor = mc0074;
+        b_Game4.BackColor = LIGHT_GRAY;
     }
 
     function b_Game4_MouseUp(Button, Shift, X, Y) {
@@ -112,13 +112,13 @@ function (me) {
     }
 
     async function b_Game5_Click() {
-        me.MousePointer = mc004E;
+        me.MousePointer = HOURGLASS;
         game.saveSlot = 5;
         await sub2652();
     }
 
     function b_Game5_MouseDown(Button, Shift, X, Y) {
-        b_Game5.BackColor = mc0074;
+        b_Game5.BackColor = LIGHT_GRAY;
     }
 
     function b_Game5_MouseUp(Button, Shift, X, Y) {
@@ -126,7 +126,7 @@ function (me) {
     }
 
     async function b_Help_Click() {
-        me.MousePointer = mc004E;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -139,7 +139,7 @@ function (me) {
     }
 
     function b_Help_MouseDown(Button, Shift, X, Y) {
-        b_Help.BackColor = mc0074;
+        b_Help.BackColor = LIGHT_GRAY;
     }
 
     function b_Help_MouseUp(Button, Shift, X, Y) {
@@ -154,12 +154,12 @@ function (me) {
             frm_MsgBox.FillElastic.Caption = "\n" + "You cannot load an empty file. Before you can load a game, you must first save the game.";
             await frm_MsgBox.Show(1);
             game.saveSlot = m004C;
-            me.MousePointer = mc0136;
+            me.MousePointer = ARROW_CURSOR;
         } else {
-            me.MousePointer = mc004E;
+            me.MousePointer = HOURGLASS;
             await sub276D();
             if (m001C != "GAZ DELUXE NORMAL GAME ") {
-                me.MousePointer = mc0136;
+                me.MousePointer = ARROW_CURSOR;
                 return;
             }
             FillElastic.Visible = 0;
@@ -198,24 +198,24 @@ function (me) {
             rivals = FileGet(2, null, rivals);
             for (l013E = 1; l013E <= game.numPlayers; l013E++) {
                 player = FileGet(2, null, player);
-                sub014C(l013E);
+                storePlayer(l013E);
             }
             FileClose(2);
-            sub013C(game.currentPlayer);
+            loadPlayer(game.currentPlayer);
             return;
         } catch (e) {
             Err.Catch(e);
-            await sub012D(Err.Number);
+            await reportFileError(Err.Number);
             return;
         }
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0136;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function Form_Load() {
-        me.MousePointer = mc004E;
+        me.MousePointer = HOURGLASS;
         m004C = game.saveSlot;
         m001C = FixStr("", 23);
         FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "STARS5.BMP");

@@ -28,12 +28,12 @@ function (me) {
     const mc004E = 1;
     const mc0050 = 2;
     const mc0052 = 3;
-    const mc0054 = 11;
-    const mc00E8 = 16777215;
-    const mc014A = 16711935;
-    const mc015A = 65280;
-    const mc015E = 16776960;
-    const mc0162 = 1;
+    const HOURGLASS = 11;
+    const WHITE = 16777215;
+    const MAGENTA = 16711935;
+    const GREEN = 65280;
+    const CYAN = 16776960;
+    const ARROW_CURSOR = 1;
     let m001A = 0;
     let m001C = 0;
     let m0020 = DimArray([18], 0);
@@ -41,7 +41,7 @@ function (me) {
     let m004C = 0;
 
     async function b_Exit_Click() {
-        me.MousePointer = mc0054;
+        me.MousePointer = HOURGLASS;
         await frm_MainMenu.Show();
         await Unload(frm_Market);
         await Unload(frm_Supply);
@@ -61,7 +61,6 @@ function (me) {
     }
 
     async function b_Grid_MouseUp(Button, Shift, X, Y) {
-        const mc00E8 = 16777215;
         if (Button != 2 && Button != 4 && b_Grid.Row != m001C + 1 && b_Grid.Row > 0 && m004C == 0) {
             await sub1AA8();
         }
@@ -69,7 +68,7 @@ function (me) {
     }
 
     async function b_Help_Click() {
-        me.MousePointer = mc0054;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -90,7 +89,7 @@ function (me) {
     }
 
     async function b_Marketplace_Click() {
-        me.MousePointer = mc0054;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -117,7 +116,7 @@ function (me) {
     }
 
     function b_Quick_MouseDown(Button, Shift, X, Y) {
-        b_Quick.BackColor = mc00E8;
+        b_Quick.BackColor = WHITE;
     }
 
     function b_Quick_MouseUp(Button, Shift, X, Y) {
@@ -297,11 +296,11 @@ function (me) {
         let l0140 = 0;
         let l0142 = 0;
         let l0144 = 0;
-        const mc014A = 16711935;
-        const mc015A = 65280;
-        const mc015E = 16776960;
-        const mc0162 = 1;
-        me.MousePointer = mc0054;
+        const MAGENTA = 16711935;
+        const GREEN = 65280;
+        const CYAN = 16776960;
+        const ARROW_CURSOR = 1;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             {
@@ -365,7 +364,7 @@ function (me) {
                 l013E = "STOREMAX";
             }
         }
-        b_Message.ForeColor = mc014A;
+        b_Message.ForeColor = MAGENTA;
         b_Message.Caption = "";
         if (l013E == "TAKE") {
             l0140 = -6666;
@@ -392,9 +391,9 @@ function (me) {
                     l0144 = player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]];
                 }
                 if (player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 1) {
-                    l0140 = await fn01A0(0, Str(l0144), 0.25 * l0144, l0144, "There is " + Format(player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.", "Take Goods Out of Warehouse");
+                    l0140 = await askNumber(0, Str(l0144), 0.25 * l0144, l0144, "There is " + Format(player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.", "Take Goods Out of Warehouse");
                 } else {
-                    l0140 = await fn01A0(0, Str(l0144), 0.25 * l0144, l0144, "There are " + Format(player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.", "Take Goods Out of Warehouse");
+                    l0140 = await askNumber(0, Str(l0144), 0.25 * l0144, l0144, "There are " + Format(player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.", "Take Goods Out of Warehouse");
                 }
             }
             if (l0140 == -6666) {
@@ -438,7 +437,7 @@ function (me) {
                 if (player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
                     player.warehouseAvgCost[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = 0;
                 }
-                b_Message.ForeColor = mc015A;
+                b_Message.ForeColor = GREEN;
                 if (l0140 == 1) {
                     b_Message.Caption = "You transferred " + Format(l0140, "#,#0") + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " from the warehouse to your ship.";
                 } else {
@@ -476,7 +475,7 @@ function (me) {
                 if (player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
                     player.warehouseAvgCost[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = 0;
                 }
-                b_Message.ForeColor = mc015A;
+                b_Message.ForeColor = GREEN;
                 if (l0140 == 1) {
                     b_Message.Caption = "You just transferred " + Format(l0140, "#,#0") + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " from the warehouse to your ship.";
                 } else {
@@ -516,9 +515,9 @@ function (me) {
                     l0144 = player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]];
                 }
                 if (player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 1) {
-                    l0140 = await fn01A0(0, Str(l0144), 0.25 * l0144, l0144, "You have " + Format(player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " on your ship.", "Store Goods in Warehouse");
+                    l0140 = await askNumber(0, Str(l0144), 0.25 * l0144, l0144, "You have " + Format(player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " on your ship.", "Store Goods in Warehouse");
                 } else {
-                    l0140 = await fn01A0(0, Str(l0144), 0.25 * l0144, l0144, "You have " + Format(player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " on your ship.", "Store Goods in Warehouse");
+                    l0140 = await askNumber(0, Str(l0144), 0.25 * l0144, l0144, "You have " + Format(player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " on your ship.", "Store Goods in Warehouse");
                 }
             }
             if (l0140 == -6666) {
@@ -557,7 +556,7 @@ function (me) {
                 }
             } else {
                 player.warehouseAvgCost[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = CLng((player.warehouseAvgCost[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] * player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] + player.cargoAvgCost[m0020[b_Grid.Row]][m0036[b_Grid.Row]] * l0140) / (l0140 + player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]]));
-                b_Message.ForeColor = mc015E;
+                b_Message.ForeColor = CYAN;
                 if (l0140 == 1) {
                     b_Message.Caption = "You just stored " + Format(l0140) + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
                 } else {
@@ -609,7 +608,7 @@ function (me) {
                 b_Message.Caption = "You didn't store any " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
             } else {
                 player.warehouseAvgCost[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = CLng((player.warehouseAvgCost[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] * player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] + player.cargoAvgCost[m0020[b_Grid.Row]][m0036[b_Grid.Row]] * l0140) / (l0140 + player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]]));
-                b_Message.ForeColor = mc015E;
+                b_Message.ForeColor = CYAN;
                 if (l0140 == 1) {
                     b_Message.Caption = "You just stored " + Format(l0140) + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
                 } else {
@@ -638,11 +637,11 @@ function (me) {
         }
         sub1B77();
         sub1B91();
-        me.MousePointer = mc0162;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0162;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -652,7 +651,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc0054;
+        me.MousePointer = HOURGLASS;
         if (player.quickWarehouse == -1) {
             b_Quick.Caption = "Shortcut = on";
         } else {

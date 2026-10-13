@@ -37,8 +37,8 @@ function (me) {
     const { FillElastic, b_Sound, b_Status, b_CurrentNetworth, b_GameLevel, VSElastic2, b_PlayerHistory1, b_PlayerHistory2 } = me.controls;
     const { b_ShipInfo1, b_ShipInfo2, b_ComputerPlayer1, b_ComputerPlayer2, b_NetworthGraphs1, b_NetworthGraphs2, b_Help1, b_Help2 } = me.controls;
     const { b_ExitMoney1, b_ExitMoney2, b_MarketStrength1, b_MarketStrength2, Image1 } = me.controls;
-    const mc0124 = 11;
-    const mc0162 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
 
     async function b_ComputerPlayer1_Click() {
         await sub1135();
@@ -209,14 +209,14 @@ function (me) {
     }
 
     async function sub050F() {
-        me.MousePointer = mc0124;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await frm_MainMenu.Show();
         await Unload(me);
     }
 
     async function sub0AFB() {
-        me.MousePointer = mc0124;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -224,26 +224,26 @@ function (me) {
             b_Sound.Command = "Play";
         }
         frm_Box1.FillElastic.Caption = "Help (Money)";
-        frm_Box1.b_Message.Caption = "The standard currency in Kukubia is the kubar. In order to win the game, your company must attain a NET WORTH of " + Format(fn016E(), "#,#0") + " kubars. Your NET WORTH is computed by adding together your cash, savings and stock, then subtracting any money you owe the Trader's Union and Mr. Zinn.";
+        frm_Box1.b_Message.Caption = "The standard currency in Kukubia is the kubar. In order to win the game, your company must attain a NET WORTH of " + Format(nextGoal(), "#,#0") + " kubars. Your NET WORTH is computed by adding together your cash, savings and stock, then subtracting any money you owe the Trader's Union and Mr. Zinn.";
         await frm_Box1.Show(1);
     }
 
     async function sub13FE() {
-        me.MousePointer = mc0124;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await frm_LineGraph.Show(1);
         FillElastic.Visible = -1;
     }
 
     async function sub1281() {
-        me.MousePointer = mc0124;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await frm_PieChart.Show(1);
         FillElastic.Visible = -1;
     }
 
     async function sub1343() {
-        me.MousePointer = mc0124;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         frm_BarGraph.Tag = "MONEY";
         await frm_BarGraph.Show(1);
@@ -251,7 +251,7 @@ function (me) {
     }
 
     async function sub1135() {
-        me.MousePointer = mc0124;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -262,7 +262,7 @@ function (me) {
     }
 
     async function sub14AE() {
-        me.MousePointer = mc0124;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await Load(frm_ShipInfo);
         await frm_ShipInfo.Show(1);
@@ -270,9 +270,9 @@ function (me) {
     }
 
     async function Form_Activate() {
-        me.MousePointer = mc0124;
+        me.MousePointer = HOURGLASS;
         await sub1531();
-        me.MousePointer = mc0162;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -282,7 +282,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc0124;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             if (game.shipType[game.currentPlayer] <= 6) {
@@ -411,7 +411,7 @@ function (me) {
             return;
         } catch (e) {
             Err.Catch(e);
-            await sub012D(Err.Number);
+            await reportFileError(Err.Number);
             return;
         }
     }

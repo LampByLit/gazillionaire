@@ -31,14 +31,14 @@ function (me) {
     const { b_Timer, FillElastic, b_Sound, Image1Container, Image1, Label1, VSElastic4, b_Help1 } = me.controls;
     const { b_Help2, b_ExitZinnLoan, b_PayBack, b_PayBackMax, VSElastic2, b_Cash, b_Interest, b_InterestRate } = me.controls;
     const { b_Credit, b_Loan, VSElastic3 } = me.controls;
-    const mc001E = 11;
-    const mc0096 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
     let m001A = 0;
     let m001C = 0;
     let m002C = 0;
 
     async function b_ExitZinnLoan_Click() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         b_Timer.Enabled = 0;
         me.BackColor = m002C;
         FillElastic.Visible = 0;
@@ -81,8 +81,8 @@ function (me) {
     async function b_PayBack_Click() {
         let l007A = 0;
         let l007C = 0;
-        const mc0096 = 1;
-        me.MousePointer = mc001E;
+        const ARROW_CURSOR = 1;
+        me.MousePointer = HOURGLASS;
         if (player.cash == 0) {
             if (settings.soundOn == -1) {
                 Beep();
@@ -105,7 +105,7 @@ function (me) {
             } else {
                 l007C = player.zinnLoan;
             }
-            l007A = await fn01A0(0, "", 0.25 * l007C, l007C, "Enter the amount you wish to pay back:", "Pay Back Zinn Loan");
+            l007A = await askNumber(0, "", 0.25 * l007C, l007C, "Enter the amount you wish to pay back:", "Pay Back Zinn Loan");
         }
         if (l007A == 0) {
         } else if (l007A == -3333) {
@@ -138,7 +138,7 @@ function (me) {
             player.cash = player.cash - l007A;
         }
         sub0C5C();
-        me.MousePointer = mc0096;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_PayBack_MouseDown(Button, Shift, X, Y) {
@@ -150,7 +150,7 @@ function (me) {
     }
 
     async function b_PayBackMax_Click() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         if (player.cash == 0) {
             if (settings.soundOn == -1) {
                 Beep();
@@ -187,7 +187,7 @@ function (me) {
             player.cash = 0;
         }
         sub0C5C();
-        me.MousePointer = mc0096;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_PayBackMax_MouseDown(Button, Shift, X, Y) {
@@ -228,7 +228,7 @@ function (me) {
     }
 
     async function sub0AFB() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -249,7 +249,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0096;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -259,7 +259,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         m001A = 1;
         m001C = 1;
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ZINN.BMP");

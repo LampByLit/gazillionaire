@@ -33,18 +33,18 @@ function (me) {
     const mc0022 = 2;
     const mc0024 = 3;
     const mc0026 = 4;
-    const mc0028 = 11;
-    const mc0068 = 1;
-    const mc0092 = 65535;
-    const mc009C = 255;
-    const mc00DA = 65280;
-    const mc00DE = 16711935;
-    const mc011C = 16776960;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
+    const YELLOW = 65535;
+    const RED = 255;
+    const GREEN = 65280;
+    const MAGENTA = 16711935;
+    const CYAN = 16776960;
     let m001A = 0;
     let m001C = 0;
 
     async function b_ExitSupply_Click() {
-        me.MousePointer = mc0028;
+        me.MousePointer = HOURGLASS;
         frm_Market.Tag = " ";
         await frm_MainMenu.Show();
         await Unload(frm_Market);
@@ -62,8 +62,8 @@ function (me) {
 
     function b_GoodsOnShip_Click() {
         let l0050 = 0;
-        const mc0068 = 1;
-        me.MousePointer = mc0028;
+        const ARROW_CURSOR = 1;
+        me.MousePointer = HOURGLASS;
         if (m001A == mc0022) {
             m001A = mc0026;
             frm_Market.Tag = "Marketplace";
@@ -83,7 +83,7 @@ function (me) {
         }
         sub1C28();
         sub1C3F();
-        me.MousePointer = mc0068;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_GoodsOnShip_MouseDown(Button, Shift, X, Y) {
@@ -98,8 +98,8 @@ function (me) {
         let l0082 = 0;
         let l0084 = 0;
         let l0086 = 0;
-        const mc0092 = 65535;
-        const mc009C = 255;
+        const YELLOW = 65535;
+        const RED = 255;
         if (Button != 2 && Button != 4) {
             player.supplyChartPlanet = -1;
             l0082 = CLng(b_Grid.Col);
@@ -116,18 +116,18 @@ function (me) {
             if ((l0082 - 1) != game.planet[game.currentPlayer]) {
                 player.supplyChartPlanet = CInt(b_Grid.Col - 1);
                 b_Grid.Picture = Image3.Picture;
-                b_Message.ForeColor = mc0092;
+                b_Message.ForeColor = YELLOW;
                 l0084 = CLng(Sqr(((game.planetX[game.planet[game.currentPlayer]] - game.planetX[player.supplyChartPlanet])) ** (2) + ((game.planetY[game.planet[game.currentPlayer]] - game.planetY[player.supplyChartPlanet])) ** (2)));
                 b_Message.Caption = "The distance from " + UCase(Trim(game.planetNames[game.planet[game.currentPlayer]])) + " to " + UCase(Trim(game.planetNames[player.supplyChartPlanet])) + " is " + Format(l0084, "#,#0") + " million kuters.";
             } else if ((l0082 - 1) == game.planet[game.currentPlayer]) {
-                b_Message.ForeColor = mc009C;
+                b_Message.ForeColor = RED;
                 b_Message.Caption = "You are currently on planet " + UCase(Trim(game.planetNames[game.planet[game.currentPlayer]])) + ".";
             }
         }
     }
 
     async function b_Help_Click() {
-        me.MousePointer = mc0028;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -149,7 +149,7 @@ function (me) {
 
     async function b_Market_Click() {
         let l00C2 = 0;
-        me.MousePointer = mc0028;
+        me.MousePointer = HOURGLASS;
         for (l00C2 = m001C; l00C2 >= 1; l00C2--) {
             if (l00C2 == m001C) {
                 b_Grid.AddItem(" ");
@@ -174,8 +174,8 @@ function (me) {
         let l00D4 = 0;
         let l00D6 = 0;
         let l00D8 = 0;
-        const mc00DA = 65280;
-        const mc00DE = 16711935;
+        const GREEN = 65280;
+        const MAGENTA = 16711935;
         player.supplyChartPlanet = -1;
         l00D4 = CLng(b_Grid.Col);
         b_Grid.Row = 0;
@@ -191,11 +191,11 @@ function (me) {
         if ((l00D4 - 1) != game.planet[game.currentPlayer]) {
             player.supplyChartPlanet = CInt(b_Grid.Col - 1);
             b_Grid.Picture = Image3.Picture;
-            b_Message.ForeColor = mc00DA;
+            b_Message.ForeColor = GREEN;
             l00D6 = CLng(Sqr(((game.planetX[game.planet[game.currentPlayer]] - game.planetX[player.supplyChartPlanet])) ** (2) + ((game.planetY[game.planet[game.currentPlayer]] - game.planetY[player.supplyChartPlanet])) ** (2)));
             b_Message.Caption = "The distance from " + UCase(Trim(game.planetNames[game.planet[game.currentPlayer]])) + " to " + UCase(Trim(game.planetNames[player.supplyChartPlanet])) + " is " + Format(l00D6, "#,#0") + " million kuters.";
         } else if ((l00D4 - 1) == game.planet[game.currentPlayer]) {
-            b_Message.ForeColor = mc00DE;
+            b_Message.ForeColor = MAGENTA;
             b_Message.Caption = "You are currently on planet " + UCase(Trim(game.planetNames[game.planet[game.currentPlayer]])) + ".";
         }
     }
@@ -411,7 +411,6 @@ function (me) {
         let l010E = 0;
         let l0112 = 0;
         let l0116 = 0;
-        const mc011C = 16776960;
         if (m001C >= 13) {
             b_Grid.ScrollBars = 3;
         } else {
@@ -434,7 +433,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0028;
+        me.MousePointer = HOURGLASS;
         if (frm_Market.Tag == "Show Cargo") {
             m001A = mc0022;
             b_GoodsOnShip.Caption = "Show All";
@@ -446,13 +445,13 @@ function (me) {
         }
         sub1C28();
         sub1C3F();
-        b_Message.ForeColor = mc011C;
+        b_Message.ForeColor = CYAN;
         if (player.cargoTotal == 0) {
             b_Message.Caption = "ADVICE: First buy a commodity with a low Market Price before looking at this chart.";
         } else {
             b_Message.Caption = "If the % is low, the goods are rare on the planet, and the price tends to be higher.";
         }
-        me.MousePointer = mc0068;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {

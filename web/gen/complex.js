@@ -24,12 +24,12 @@ VB.form("frm_Complexity",
 function (me) {
     const { VSElastic1, VSElastic7, b_More, b_NoChange, b_Percent, Label3, Label1, b_Container } = me.controls;
     const { VSElastic3, b_Message, VSElastic2, Label5, Label4 } = me.controls;
-    const mc001A = 11;
-    const mc005C = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
     let m0026 = 0;
 
     function b_More_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         me.Tag = "MORE COMPLEX";
         me.BackColor = m0026;
         VSElastic1.Visible = 0;
@@ -45,7 +45,7 @@ function (me) {
     }
 
     function b_NoChange_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         me.Tag = "NO CHANGE";
         me.BackColor = m0026;
         VSElastic1.Visible = 0;
@@ -61,7 +61,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc005C;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function Form_KeyPress(KeyAscii) {

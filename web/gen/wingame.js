@@ -15,18 +15,17 @@ VB.form("frm_WinGame",
   ]],
 function (me) {
     const { VSElastic1, b_Sound, VSElastic3, VSElastic2, Image1, b_Continue, b_Company } = me.controls;
-    const mc001A = 11;
-    const mc0052 = 192;
-    const mc0056 = 255;
-    const mc0080 = 1;
+    const HOURGLASS = 11;
+    const DARK_RED = 192;
+    const RED = 255;
+    const ARROW_CURSOR = 1;
 
     async function b_Continue_Click() {
         let l0022 = "";
         let l0024 = "";
-        const mc0052 = 192;
-        const mc0056 = 255;
-        const mc0080 = 1;
-        me.MousePointer = mc001A;
+        const DARK_RED = 192;
+        const RED = 255;
+        me.MousePointer = HOURGLASS;
         if (game.winner <= 6) {
             l0022 = UCase(Trim(game.companyNames[game.winner]));
         } else {
@@ -112,11 +111,11 @@ function (me) {
             frm_WinGame2.b_Message.Caption = "Winner's Choice";
             await frm_WinGame2.Show(1);
         } else if (game.goalNetWorth < 1000000000) {
-            frm_WinGame2.VSElastic1.BackColor = mc0052;
-            frm_WinGame2.b_Message.BackColor = mc0056;
-            frm_WinGame2.b_ContinueGame.ForeColor = mc0056;
-            frm_WinGame2.b_NewGame.ForeColor = mc0056;
-            frm_WinGame2.b_QuitGame.ForeColor = mc0056;
+            frm_WinGame2.VSElastic1.BackColor = DARK_RED;
+            frm_WinGame2.b_Message.BackColor = RED;
+            frm_WinGame2.b_ContinueGame.ForeColor = RED;
+            frm_WinGame2.b_NewGame.ForeColor = RED;
+            frm_WinGame2.b_QuitGame.ForeColor = RED;
             if (game.winner <= 6) {
                 frm_WinGame2.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ship" + Trim(Str(game.shipType[game.winner])) + ".bmp");
                 frm_WinGame2.b_ImageLable.Caption = l0022 + " wins the game!";
@@ -179,7 +178,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0080;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -189,7 +188,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (game.winner <= 6) {
             b_Company.Caption = Trim(game.companyNames[game.winner]) + " Wins!!!";
         } else {

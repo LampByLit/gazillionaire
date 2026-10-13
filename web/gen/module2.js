@@ -1,91 +1,91 @@
 // Originally translated from src/Module2.BAS by tools/vb2js.py; this JavaScript is now the source.
 
 
-async function sub00A2() {
+async function autoSave() {
     if (game.isEmailGame == 0) {
         if (game.saveSlot == 0) {
         } else {
-            await sub00B0();
+            await saveGame();
         }
     } else if (game.isEmailGame == -1) {
         if (Trim(game.emailFileName) == "") {
         } else {
-            await sub00BE("MAIN MENU");
+            await saveEmailGame("MAIN MENU");
         }
     }
 }
 
-function sub00CD() {
-    let l000C = 0;
-    let l000E = 0;
-    let l0010 = 0;
-    let l0012 = 0;
-    let l0014 = 0;
-    for (l000C = 1; l000C <= game.numRivals; l000C++) {
-        if (((rivals.shipSize[l000C] / 4) - 100) > 0) {
-            game.planetSupplyBoost[rivals.planet[l000C]] = CLng(game.planetSupplyBoost[rivals.planet[l000C]] + ((rivals.shipSize[l000C] / 4) - 100));
+function restockPlanets() {
+    let i = 0;
+    let item = 0;
+    let planet = 0;
+    let low = 0;
+    let high = 0;
+    for (i = 1; i <= game.numRivals; i++) {
+        if (((rivals.shipSize[i] / 4) - 100) > 0) {
+            game.planetSupplyBoost[rivals.planet[i]] = CLng(game.planetSupplyBoost[rivals.planet[i]] + ((rivals.shipSize[i] / 4) - 100));
         }
     }
-    for (l0010 = 0; l0010 <= 6; l0010++) {
-        for (l000C = 0; l000C <= 2; l000C++) {
-            for (l000E = 0; l000E <= 5; l000E++) {
-                l0012 = CLng(0.2 * game.supplyPercent[l0010][l000C][l000E]);
-                l0014 = game.supplyPercent[l0010][l000C][l000E];
-                game.available[l0010][l000C][l000E] = fn01AE(l0012, l0014);
-                l0012 = CLng(0.2 * game.planetSupplyBoost[l0010] * (game.supplyPercent[l0010][l000C][l000E] / 100));
-                l0014 = CLng(game.planetSupplyBoost[l0010] * (game.supplyPercent[l0010][l000C][l000E] / 100));
-                game.available[l0010][l000C][l000E] = game.available[l0010][l000C][l000E] + fn01AE(l0012, l0014);
-                if (fn01AE(0, 130) >= game.supplyPercent[l0010][l000C][l000E]) {
-                    game.available[l0010][l000C][l000E] = 0;
+    for (planet = 0; planet <= 6; planet++) {
+        for (i = 0; i <= 2; i++) {
+            for (item = 0; item <= 5; item++) {
+                low = CLng(0.2 * game.supplyPercent[planet][i][item]);
+                high = game.supplyPercent[planet][i][item];
+                game.available[planet][i][item] = randomBetween(low, high);
+                low = CLng(0.2 * game.planetSupplyBoost[planet] * (game.supplyPercent[planet][i][item] / 100));
+                high = CLng(game.planetSupplyBoost[planet] * (game.supplyPercent[planet][i][item] / 100));
+                game.available[planet][i][item] = game.available[planet][i][item] + randomBetween(low, high);
+                if (randomBetween(0, 130) >= game.supplyPercent[planet][i][item]) {
+                    game.available[planet][i][item] = 0;
                 }
             }
         }
     }
-    for (l000C = 0; l000C <= 6; l000C++) {
-        game.planetSupplyBoost[l000C] = 0;
+    for (i = 0; i <= 6; i++) {
+        game.planetSupplyBoost[i] = 0;
     }
 }
 
-function sub00E5() {
-    let l001C = 0;
-    let l001E = 0;
-    let l0020 = 0;
-    let l0022 = 0;
-    let l0024 = 0;
-    let l0026 = 0;
-    for (l0020 = 0; l0020 <= 6; l0020++) {
-        l0022 = 0;
-        l0024 = 0;
-        for (l001C = 0; l001C <= 2; l001C++) {
-            for (l001E = 0; l001E <= 5; l001E++) {
-                l0022 = l0022 + 5;
-                l0026 = (game.marketDifficulty + 1) * l0022;
-                l0024 = l0024 + 40;
-                game.prices[l0020][l001C][l001E] = CInt(((l0024 - l0026) * (100 - game.supplyPercent[l0020][l001C][l001E]) / 100) + l0026);
+function updatePrices() {
+    let category = 0;
+    let item = 0;
+    let planet = 0;
+    let step = 0;
+    let maxPrice = 0;
+    let minPrice = 0;
+    for (planet = 0; planet <= 6; planet++) {
+        step = 0;
+        maxPrice = 0;
+        for (category = 0; category <= 2; category++) {
+            for (item = 0; item <= 5; item++) {
+                step = step + 5;
+                minPrice = (game.marketDifficulty + 1) * step;
+                maxPrice = maxPrice + 40;
+                game.prices[planet][category][item] = CInt(((maxPrice - minPrice) * (100 - game.supplyPercent[planet][category][item]) / 100) + minPrice);
             }
         }
     }
 }
 
-function sub00F9() {
-    let l0028 = 0;
-    let l002A = 0;
-    for (l0028 = 1; l0028 <= game.numRivals; l0028++) {
-        rivals.netWorth[l0028] = rivals.cash[l0028];
-        for (l002A = 0; l002A <= 6; l002A++) {
+function updateRivalNetWorth() {
+    let rival = 0;
+    let planet = 0;
+    for (rival = 1; rival <= game.numRivals; rival++) {
+        rivals.netWorth[rival] = rivals.cash[rival];
+        for (planet = 0; planet <= 6; planet++) {
             if (game.turn <= 15) {
-                rivals.netWorth[l0028] = rivals.netWorth[l0028] + (rivals.shares[l0028][l002A] * game.stockPrices[l002A][game.turn]);
+                rivals.netWorth[rival] = rivals.netWorth[rival] + (rivals.shares[rival][planet] * game.stockPrices[planet][game.turn]);
             } else {
-                rivals.netWorth[l0028] = rivals.netWorth[l0028] + (rivals.shares[l0028][l002A] * game.stockPrices[l002A][15]);
+                rivals.netWorth[rival] = rivals.netWorth[rival] + (rivals.shares[rival][planet] * game.stockPrices[planet][15]);
             }
         }
     }
 }
 
-function sub0116() {
+function generatePassengers() {
     player.passengersBoarded = 0;
     player.ticketPrice = player.nextTicketPrice;
-    player.passengersWaiting = fn01AE(0, player.passengerCapacity) + fn01AE(player.adExtraPassengers / 4, player.adExtraPassengers);
+    player.passengersWaiting = randomBetween(0, player.passengerCapacity) + randomBetween(player.adExtraPassengers / 4, player.adExtraPassengers);
     if (player.ticketPrice < 100) {
         player.ticketPrice = 100;
     }
@@ -112,14 +112,14 @@ function sub0116() {
     }
 }
 
-async function sub012D(pv0030) {
-    let l0032 = "";
-    pv0030 = CInt(pv0030);
-    l0032 = "\n" + "\n" + "Please check the following:" + "\n" + "\n" + "1) The Gazillionaire CD-ROM must be in the CD-ROM drive at all times, otherwise the game will not function." + "\n" + "\n" + "2) If you are saving your email game to a floppy disk, the disk must be in your floppy drive at all times." + "\n" + "\n" + "3) If you are trying to load an email game, make sure it is the correct file type.";
+async function reportFileError(errorNumber) {
+    let checklist = "";
+    errorNumber = CInt(errorNumber);
+    checklist = "\n" + "\n" + "Please check the following:" + "\n" + "\n" + "1) The Gazillionaire CD-ROM must be in the CD-ROM drive at all times, otherwise the game will not function." + "\n" + "\n" + "2) If you are saving your email game to a floppy disk, the disk must be in your floppy drive at all times." + "\n" + "\n" + "3) If you are trying to load an email game, make sure it is the correct file type.";
     if (settings.soundOn == -1) {
         Beep();
     }
-    if (pv0030 == 6) {
+    if (errorNumber == 6) {
         frm_Box1Port.b_Yes.Visible = 0;
         frm_Box1Port.b_No.Visible = 0;
         frm_Box1Port.b_OK.Visible = -1;
@@ -131,34 +131,34 @@ async function sub012D(pv0030) {
         await MsgBox("Thanks for playing with us. We will now exit the program.", 64, "Goodbye");
         End();
     } else {
-        if (ErrorText(pv0030) == "") {
-            await MsgBox("Gazillionaire has encountered a CRITICAL ERROR." + l0032, 16, "Error Detected");
+        if (ErrorText(errorNumber) == "") {
+            await MsgBox("Gazillionaire has encountered a CRITICAL ERROR." + checklist, 16, "Error Detected");
         } else {
-            await MsgBox("Gazillionaire has encountered the following ERROR:  " + UCase(ErrorText(pv0030)) + l0032, 16, "Error Detected");
+            await MsgBox("Gazillionaire has encountered the following ERROR:  " + UCase(ErrorText(errorNumber)) + checklist, 16, "Error Detected");
         }
     }
 }
 
-function sub013C(pv0040) {
-    pv0040 = CInt(pv0040);
-    FileOpen(10, Trim(paths.configDir) + "PLAYER" + Trim(Format(pv0040, "#0")));
+function loadPlayer(index) {
+    index = CInt(index);
+    FileOpen(10, Trim(paths.configDir) + "PLAYER" + Trim(Format(index, "#0")));
     player = FileGet(10, 1, player);
     FileClose(10);
 }
 
-async function sub00BE(p0042) {
-    let l0044 = 0;
-    let l0048 = Space(23);
-    let l004C = Space(9);
-    let l004E = 0;
+async function saveEmailGame(screenName) {
+    let i = 0;
+    let header = Space(23);
+    let screenTag = Space(9);
+    let dot = 0;
     try {
-        l004C = FixStr(p0042, 9);
-        sub014C(game.currentPlayer);
-        l004E = InStr(1, Trim(game.emailFileName), ".");
-        if (l004E > 0 && l004E >= 8) {
-            game.emailFileName = FixStr(Mid(Trim(game.emailFileName), 1, 8) + Mid(Trim(game.emailFileName), l004E, 4), 12);
-        } else if (l004E > 0 && l004E < 8) {
-            game.emailFileName = FixStr(Mid(Trim(game.emailFileName), 1, l004E - 1) + Mid(Trim(game.emailFileName), l004E, 4), 12);
+        screenTag = FixStr(screenName, 9);
+        storePlayer(game.currentPlayer);
+        dot = InStr(1, Trim(game.emailFileName), ".");
+        if (dot > 0 && dot >= 8) {
+            game.emailFileName = FixStr(Mid(Trim(game.emailFileName), 1, 8) + Mid(Trim(game.emailFileName), dot, 4), 12);
+        } else if (dot > 0 && dot < 8) {
+            game.emailFileName = FixStr(Mid(Trim(game.emailFileName), 1, dot - 1) + Mid(Trim(game.emailFileName), dot, 4), 12);
         } else {
             game.emailFileName = FixStr(Mid(Trim(game.emailFileName), 1, 8), 12);
         }
@@ -166,81 +166,81 @@ async function sub00BE(p0042) {
         if (Right(Trim(settings.emailDir), 1) != "\\") {
             settings.emailDir = FixStr(Trim(settings.emailDir) + "\\", 128);
         }
-        l0048 = FixStr("GAZ DELUXE EMAIL GAME  ", 23);
+        header = FixStr("GAZ DELUXE EMAIL GAME  ", 23);
         FileOpen(3, Trim(settings.emailDir) + Trim(game.emailFileName));
-        FilePut(3, 1, l0048);
-        FilePut(3, null, l004C);
+        FilePut(3, 1, header);
+        FilePut(3, null, screenTag);
         FilePut(3, null, game);
         FilePut(3, null, rivals);
-        for (l0044 = 1; l0044 <= game.numPlayers; l0044++) {
-            sub013C(l0044);
+        for (i = 1; i <= game.numPlayers; i++) {
+            loadPlayer(i);
             FilePut(3, null, player);
         }
         FileClose(3);
-        sub013C(game.currentPlayer);
+        loadPlayer(game.currentPlayer);
         return;
     } catch (e) {
         Err.Catch(e);
-        await sub012D(Err.Number);
+        await reportFileError(Err.Number);
         return;
     }
 }
 
-async function sub00B0() {
-    let l0050 = 0;
-    let l0054 = Space(23);
+async function saveGame() {
+    let i = 0;
+    let header = Space(23);
     try {
-        l0054 = FixStr("GAZ DELUXE NORMAL GAME ", 23);
-        sub014C(game.currentPlayer);
+        header = FixStr("GAZ DELUXE NORMAL GAME ", 23);
+        storePlayer(game.currentPlayer);
         FileOpen(1, Trim(paths.saveDir) + "GAME" + Trim(Format(game.saveSlot, "#0")) + ".DAT");
-        FilePut(1, 1, l0054);
+        FilePut(1, 1, header);
         FilePut(1, null, game);
         FilePut(1, null, rivals);
-        for (l0050 = 1; l0050 <= game.numPlayers; l0050++) {
-            sub013C(l0050);
+        for (i = 1; i <= game.numPlayers; i++) {
+            loadPlayer(i);
             FilePut(1, null, player);
         }
         FileClose(1);
-        sub013C(game.currentPlayer);
+        loadPlayer(game.currentPlayer);
         return;
     } catch (e) {
         Err.Catch(e);
-        await sub012D(Err.Number);
+        await reportFileError(Err.Number);
         return;
     }
 }
 
-function sub014C(pv0056) {
-    pv0056 = CInt(pv0056);
-    FileOpen(9, Trim(paths.configDir) + "PLAYER" + Trim(Format(pv0056, "#0")));
+function storePlayer(index) {
+    index = CInt(index);
+    FileOpen(9, Trim(paths.configDir) + "PLAYER" + Trim(Format(index, "#0")));
     FilePut(9, 1, player);
     FileClose(9);
 }
 
-async function sub015C(p0058, p005A) {
-    p0058 = CLng(p0058);
-    p005A = CInt(p005A);
-    if (player.cash >= p0058) {
-        player.cash = player.cash - p0058;
-        p0058 = 0;
+async function spend(amount, showNotice) {
+    amount = CLng(amount);
+    showNotice = CInt(showNotice);
+    if (player.cash >= amount) {
+        player.cash = player.cash - amount;
+        amount = 0;
     } else {
-        p0058 = p0058 - player.cash;
+        amount = amount - player.cash;
         player.cash = 0;
-        if (player.bankBalance >= p0058) {
-            player.bankBalance = player.bankBalance - p0058;
-            p0058 = 0;
+        if (player.bankBalance >= amount) {
+            player.bankBalance = player.bankBalance - amount;
+            amount = 0;
         } else {
-            p0058 = p0058 - player.bankBalance;
+            amount = amount - player.bankBalance;
             player.bankBalance = 0;
-            player.loan = player.loan + p0058;
-            if (p005A == -1) {
+            player.loan = player.loan + amount;
+            if (showNotice == -1) {
                 frm_Box1Port.b_Yes.Visible = 0;
                 frm_Box1Port.b_No.Visible = 0;
                 frm_Box1Port.b_OK.Visible = -1;
                 frm_Box1Port.b_Container.BackColor = 0x4000;
                 frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "loan1.bmp");
                 frm_Box1Port.b_ImageLable.Caption = "Trader's Union Official";
-                frm_Box1Port.b_Message.Caption = "Sorry, but you are out of money." + "\n" + "\n" + "Fortunately, the Trader's Union steps in and loans you " + Format(p0058, "#,#0") + " kubars to cover the costs. Don't forget to pay them back!";
+                frm_Box1Port.b_Message.Caption = "Sorry, but you are out of money." + "\n" + "\n" + "Fortunately, the Trader's Union steps in and loans you " + Format(amount, "#,#0") + " kubars to cover the costs. Don't forget to pay them back!";
                 if (settings.soundOn == -1) {
                     frm_Box1Port.b_Sound.Command = "Close";
                     frm_Box1Port.b_Sound.FileName = Trim(paths.soundDir) + "loan.wav";
@@ -253,7 +253,7 @@ async function sub015C(p0058, p005A) {
     }
 }
 
-function fn016E() {
+function nextGoal() {
     let ret = 0;
     if (game.winner != 0) {
         if (game.goalNetWorth == 1000000) {

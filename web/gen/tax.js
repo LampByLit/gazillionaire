@@ -26,15 +26,15 @@ VB.form("frm_Tax",
 function (me) {
     const { b_Timer, FillElastic, b_Sound, VSElastic5, b_Tax, b_Tariff, b_Total, b_Cash } = me.controls;
     const { VSElastic3, Image1, Label1, b_Message, VSElastic4, b_PayAll, b_ExitTax, b_Help1 } = me.controls;
-    const mc001E = 11;
-    const mc007C = 16777215;
-    const mc0094 = 1;
-    const mc00C6 = 255;
+    const HOURGLASS = 11;
+    const WHITE = 16777215;
+    const ARROW_CURSOR = 1;
+    const RED = 255;
     let m001A = 0;
     let m001C = 0;
 
     async function b_ExitTax_Click() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         b_Timer.Enabled = 0;
         me.BackColor = 0x404040;
         FillElastic.Visible = 0;
@@ -51,7 +51,7 @@ function (me) {
     }
 
     async function b_Help1_Click() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -72,8 +72,8 @@ function (me) {
     }
 
     async function b_PayAll_Click() {
-        me.MousePointer = mc001E;
-        b_Message.ForeColor = mc007C;
+        me.MousePointer = HOURGLASS;
+        b_Message.ForeColor = WHITE;
         if ((player.passengerTaxOwed + player.tariffsOwed) == 0) {
             if (settings.soundOn == -1) {
                 Beep();
@@ -113,7 +113,7 @@ function (me) {
             player.tariffsOwed = 0;
         }
         sub15B2();
-        me.MousePointer = mc0094;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_PayAll_MouseDown(Button, Shift, X, Y) {
@@ -151,18 +151,17 @@ function (me) {
 
     function Form_Activate() {
         sub15B2();
-        me.MousePointer = mc0094;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
-        const mc00C6 = 255;
         if (KeyAscii == 13 || KeyAscii == 27 || KeyAscii == 32) {
             await b_ExitTax_Click();
         }
     }
 
     function Form_Load() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         m001C = 1;
         m001A = 1;
         if (player.passengerTaxOwed + player.tariffsOwed > 0) {
@@ -173,7 +172,7 @@ function (me) {
             b_Timer.Enabled = 0;
         }
         if ((player.tariffsOwed + player.passengerTaxOwed) >= (35 * game.shipSize[game.currentPlayer])) {
-            b_Message.ForeColor = mc00C6;
+            b_Message.ForeColor = RED;
             b_Message.Caption = "The Tax Auditor warns you to pay your taxes immediately.";
         } else if ((25 * game.shipSize[game.currentPlayer]) <= (player.tariffsOwed + player.passengerTaxOwed) && (player.tariffsOwed + player.passengerTaxOwed) < (35 * game.shipSize[game.currentPlayer])) {
             b_Message.Caption = "The Tax Auditor reminds you not to wait until the last minute to pay your taxes.";

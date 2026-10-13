@@ -28,13 +28,13 @@ function (me) {
     const { b_Sound, FillElastic, VSElastic3, b_Exit, b_Help, VSElastic1, b_Quit, b_Save } = me.controls;
     const { b_Load, b_Email, VSElastic2, b_ShortCuts, b_Configure, b_AboutGame, b_New, Label2 } = me.controls;
     const { Label1 } = me.controls;
-    const mc001C = 11;
-    const mc003E = 12632256;
-    const mc0054 = 1;
+    const HOURGLASS = 11;
+    const LIGHT_GRAY = 12632256;
+    const ARROW_CURSOR = 1;
     let m00AC = 0;
 
     async function b_AboutGame_Click() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         frm_BoxPort.b_Yes.Visible = 0;
         frm_BoxPort.b_No.Visible = 0;
@@ -92,7 +92,7 @@ function (me) {
     }
 
     function b_AboutGame_MouseDown(Button, Shift, X, Y) {
-        b_AboutGame.BackColor = mc003E;
+        b_AboutGame.BackColor = LIGHT_GRAY;
     }
 
     function b_AboutGame_MouseUp(Button, Shift, X, Y) {
@@ -100,13 +100,13 @@ function (me) {
     }
 
     async function b_Configure_Click() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         await frm_Config.Show(1);
-        me.MousePointer = mc0054;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_Configure_MouseDown(Button, Shift, X, Y) {
-        b_Configure.BackColor = mc003E;
+        b_Configure.BackColor = LIGHT_GRAY;
     }
 
     function b_Configure_MouseUp(Button, Shift, X, Y) {
@@ -114,7 +114,7 @@ function (me) {
     }
 
     async function b_Email_Click() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         if (game.isEmailGame == 0) {
             if (game.saveSlot == 0) {
                 frm_BoxYesNo.FillElastic.Caption = "\n" + "WARNING:  This game has not been saved yet. If you load a new game now, you will lose the current game's data. Are you sure you want to load a new game?";
@@ -129,7 +129,7 @@ function (me) {
                     return;
                 }
             } else {
-                await sub00B0();
+                await saveGame();
                 frm_LoadEmail.Tag = "";
                 await frm_LoadEmail.Show();
                 await Unload(me);
@@ -148,7 +148,7 @@ function (me) {
                     return;
                 }
             } else {
-                await sub00BE("MAIN MENU");
+                await saveEmailGame("MAIN MENU");
                 frm_LoadEmail.Tag = "";
                 await frm_LoadEmail.Show();
                 await Unload(me);
@@ -157,7 +157,7 @@ function (me) {
     }
 
     function b_Email_MouseDown(Button, Shift, X, Y) {
-        b_Email.BackColor = mc003E;
+        b_Email.BackColor = LIGHT_GRAY;
     }
 
     function b_Email_MouseUp(Button, Shift, X, Y) {
@@ -165,14 +165,14 @@ function (me) {
     }
 
     async function b_Exit_Click() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await frm_MainMenu.Show();
         await Unload(me);
     }
 
     function b_Exit_MouseDown(Button, Shift, X, Y) {
-        b_Exit.BackColor = mc003E;
+        b_Exit.BackColor = LIGHT_GRAY;
     }
 
     function b_Exit_MouseUp(Button, Shift, X, Y) {
@@ -180,7 +180,7 @@ function (me) {
     }
 
     async function b_Help_Click() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -193,7 +193,7 @@ function (me) {
     }
 
     function b_Help_MouseDown(Button, Shift, X, Y) {
-        b_Help.BackColor = mc003E;
+        b_Help.BackColor = LIGHT_GRAY;
     }
 
     function b_Help_MouseUp(Button, Shift, X, Y) {
@@ -201,7 +201,7 @@ function (me) {
     }
 
     async function b_Load_Click() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         if (game.isEmailGame == 0) {
             if (game.saveSlot == 0) {
                 frm_BoxYesNo.FillElastic.Caption = "\n" + "WARNING:  This game has not been saved yet. If you load a new game now, you will lose the current game's data. Are you sure you want to load a new game?";
@@ -217,7 +217,7 @@ function (me) {
                     return;
                 }
             } else {
-                await sub00B0();
+                await saveGame();
                 frm_LoadGame.Tag = "";
                 FillElastic.Visible = 0;
                 await frm_LoadGame.Show();
@@ -238,7 +238,7 @@ function (me) {
                     return;
                 }
             } else {
-                await sub00BE("MAIN MENU");
+                await saveEmailGame("MAIN MENU");
                 frm_LoadGame.Tag = "";
                 FillElastic.Visible = 0;
                 await frm_LoadGame.Show();
@@ -248,7 +248,7 @@ function (me) {
     }
 
     function b_Load_MouseDown(Button, Shift, X, Y) {
-        b_Load.BackColor = mc003E;
+        b_Load.BackColor = LIGHT_GRAY;
     }
 
     function b_Load_MouseUp(Button, Shift, X, Y) {
@@ -256,7 +256,7 @@ function (me) {
     }
 
     async function b_New_Click() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         if (game.isEmailGame == 0) {
             if (game.saveSlot == 0) {
                 frm_BoxYesNo.FillElastic.Caption = "\n" + "WARNING:  This game has not been saved yet. If you start a new game now, you will lose the current game's data. Are you sure you want to start a new game?";
@@ -271,7 +271,7 @@ function (me) {
                     return;
                 }
             } else {
-                await sub00B0();
+                await saveGame();
                 FillElastic.Visible = 0;
                 await frm_BeginGame.Show();
                 await Unload(me);
@@ -290,7 +290,7 @@ function (me) {
                     return;
                 }
             } else {
-                await sub00BE("MAIN MENU");
+                await saveEmailGame("MAIN MENU");
                 FillElastic.Visible = 0;
                 await frm_BeginGame.Show();
                 await Unload(me);
@@ -299,7 +299,7 @@ function (me) {
     }
 
     function b_New_MouseDown(Button, Shift, X, Y) {
-        b_New.BackColor = mc003E;
+        b_New.BackColor = LIGHT_GRAY;
     }
 
     function b_New_MouseUp(Button, Shift, X, Y) {
@@ -320,7 +320,7 @@ function (me) {
                     return;
                 }
             } else {
-                await sub00B0();
+                await saveGame();
                 FillElastic.Visible = 0;
                 End();
             }
@@ -337,7 +337,7 @@ function (me) {
                     return;
                 }
             } else {
-                await sub00BE("MAIN MENU");
+                await saveEmailGame("MAIN MENU");
                 FillElastic.Visible = 0;
                 End();
             }
@@ -345,7 +345,7 @@ function (me) {
     }
 
     function b_Quit_MouseDown(Button, Shift, X, Y) {
-        b_Quit.BackColor = mc003E;
+        b_Quit.BackColor = LIGHT_GRAY;
     }
 
     function b_Quit_MouseUp(Button, Shift, X, Y) {
@@ -353,7 +353,7 @@ function (me) {
     }
 
     async function b_Save_Click() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         if (game.isEmailGame == 0) {
             if (game.saveSlot == 0) {
                 frm_Box1.FillElastic.Caption = "Auto Save";
@@ -363,7 +363,7 @@ function (me) {
                 await frm_SaveGame.Show();
                 await Unload(me);
             } else {
-                await sub00B0();
+                await saveGame();
                 FillElastic.Visible = 0;
                 await frm_MainMenu.Show();
                 await Unload(me);
@@ -375,7 +375,7 @@ function (me) {
                 await frm_SaveEmail.Show();
                 await Unload(me);
             } else {
-                await sub00BE("MAIN MENU");
+                await saveEmailGame("MAIN MENU");
                 FillElastic.Visible = 0;
                 await frm_MainMenu.Show();
                 await Unload(me);
@@ -384,7 +384,7 @@ function (me) {
     }
 
     function b_Save_MouseDown(Button, Shift, X, Y) {
-        b_Save.BackColor = mc003E;
+        b_Save.BackColor = LIGHT_GRAY;
     }
 
     function b_Save_MouseUp(Button, Shift, X, Y) {
@@ -392,7 +392,7 @@ function (me) {
     }
 
     async function b_ShortCuts_Click() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         if (game.complexity >= game.unlockExplore || game.tutorialMode == 0) {
             await frm_Quick.Show();
             await Unload(me);
@@ -404,7 +404,7 @@ function (me) {
     }
 
     function b_ShortCuts_MouseDown(Button, Shift, X, Y) {
-        b_ShortCuts.BackColor = mc003E;
+        b_ShortCuts.BackColor = LIGHT_GRAY;
     }
 
     function b_ShortCuts_MouseUp(Button, Shift, X, Y) {
@@ -412,7 +412,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0054;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -422,7 +422,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "STARS3.BMP");
     }
 

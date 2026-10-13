@@ -25,15 +25,15 @@ VB.form("frm_Time",
 function (me) {
     const { b_Timer, FillElastic, b_Sound, VSElastic4, VSElastic3, Label1, Image1, b_Help } = me.controls;
     const { b_Next, b_Previous, b_Container, b_Page, b_Message, VSElastic2, b_Exit } = me.controls;
-    const mc0024 = 11;
-    const mc007A = 1;
-    const mc00AE = 16777215;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
+    const WHITE = 16777215;
     let m001A = 0;
     let m001C = 0;
     let m0020 = 0;
 
     async function b_Exit_Click() {
-        me.MousePointer = mc0024;
+        me.MousePointer = HOURGLASS;
         b_Timer.Enabled = 0;
         FillElastic.Visible = 0;
         if (settings.soundOn == -1) {
@@ -51,7 +51,7 @@ function (me) {
     }
 
     async function b_Help_Click() {
-        me.MousePointer = mc0024;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -72,7 +72,7 @@ function (me) {
     }
 
     function b_Next_Click() {
-        me.MousePointer = mc0024;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -84,7 +84,7 @@ function (me) {
             m001C = m0020;
         }
         sub2F85();
-        me.MousePointer = mc007A;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_Next_MouseDown(Button, Shift, X, Y) {
@@ -96,7 +96,7 @@ function (me) {
     }
 
     function b_Previous_Click() {
-        me.MousePointer = mc0024;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -108,7 +108,7 @@ function (me) {
             m001C = m0020;
         }
         sub2F85();
-        me.MousePointer = mc007A;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_Previous_MouseDown(Button, Shift, X, Y) {
@@ -142,14 +142,14 @@ function (me) {
             b_Previous.ForeColor = 0x808080;
             b_Previous.Enabled = 0;
         } else {
-            b_Previous.ForeColor = mc00AE;
+            b_Previous.ForeColor = WHITE;
             b_Previous.Enabled = -1;
         }
         if (m001C == m0020) {
             b_Next.ForeColor = 0x808080;
             b_Next.Enabled = 0;
         } else {
-            b_Next.ForeColor = mc00AE;
+            b_Next.ForeColor = WHITE;
             b_Next.Enabled = -1;
         }
         b_Page.Caption = "Page " + Format(m001C, "#,#0") + " of " + Format(m0020, "#,#0");
@@ -167,7 +167,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc007A;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {

@@ -85,10 +85,10 @@ function (me) {
     const { b_ZinnLoan_Image, b_Loan, b_Loan_Image, b_Money, b_Money_Image, VSElastic7, b_LeavePlanet1, b_LeavePlanet2 } = me.controls;
     const { b_CompanyName } = me.controls;
     const m0180 = 0;
-    const mc0338 = 11;
-    const mc0360 = 1;
-    const mc03A2 = 255;
-    const mc03A6 = 16777215;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
+    const RED = 255;
+    const WHITE = 16777215;
 
     function b_Advertising_Image_MouseDown(Button, Shift, X, Y) {
         b_Advertising.BackColor = 0xFF00;
@@ -523,9 +523,9 @@ function (me) {
 
     async function sub3799(pv0336) {
         pv0336 = CInt(pv0336);
-        const mc0338 = 11;
-        const mc0360 = 1;
-        me.MousePointer = mc0338;
+        const HOURGLASS = 11;
+        const ARROW_CURSOR = 1;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -570,13 +570,13 @@ function (me) {
                 player.cash = player.cash - player.adSpendTotal;
             }
             sub4157();
-            me.MousePointer = mc0360;
+            me.MousePointer = ARROW_CURSOR;
         }
     }
 
     async function sub3810(pv0362) {
         pv0362 = CInt(pv0362);
-        me.MousePointer = mc0338;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -617,7 +617,7 @@ function (me) {
                 }
             }
             sub4157();
-            me.MousePointer = mc0360;
+            me.MousePointer = ARROW_CURSOR;
         }
     }
 
@@ -683,7 +683,7 @@ function (me) {
 
     async function sub387A(pv036C) {
         pv036C = CInt(pv036C);
-        me.MousePointer = mc0338;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -717,12 +717,12 @@ function (me) {
                 }
             }
             sub4157();
-            me.MousePointer = mc0360;
+            me.MousePointer = ARROW_CURSOR;
         }
     }
 
     async function sub38EE() {
-        me.MousePointer = mc0338;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -733,7 +733,7 @@ function (me) {
     async function sub3959(pv0376) {
         let l037C = 0;
         pv0376 = CInt(pv0376);
-        me.MousePointer = mc0338;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -769,12 +769,12 @@ function (me) {
                 player.cash = player.cash - (l037C * game.fuelPrice[game.planet[game.currentPlayer]]);
             }
             sub4157();
-            me.MousePointer = mc0360;
+            me.MousePointer = ARROW_CURSOR;
         }
     }
 
     async function sub3A11() {
-        me.MousePointer = mc0338;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -783,7 +783,7 @@ function (me) {
     }
 
     async function sub0AFB() {
-        me.MousePointer = mc0338;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -803,7 +803,7 @@ function (me) {
 
     async function sub3B01(pv038A) {
         pv038A = CInt(pv038A);
-        me.MousePointer = mc0338;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -844,12 +844,12 @@ function (me) {
                 player.cash = player.cash - player.insuranceCost;
             }
             sub4157();
-            me.MousePointer = mc0360;
+            me.MousePointer = ARROW_CURSOR;
         }
     }
 
     async function sub3B58() {
-        me.MousePointer = mc0338;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -861,7 +861,7 @@ function (me) {
     async function sub3C1F(pv0398) {
         let l039A = 0;
         pv0398 = CInt(pv0398);
-        me.MousePointer = mc0338;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -922,33 +922,33 @@ function (me) {
                 }
             }
             sub4157();
-            me.MousePointer = mc0360;
+            me.MousePointer = ARROW_CURSOR;
         }
     }
 
     function sub4157() {
         let l03A0 = 0;
-        const mc03A2 = 255;
-        const mc03A6 = 16777215;
+        const RED = 255;
+        const WHITE = 16777215;
         if (player.loan > player.creditLimit) {
-            b_Loan.ForeColor = mc03A2;
+            b_Loan.ForeColor = RED;
         } else {
-            b_Loan.ForeColor = mc03A6;
+            b_Loan.ForeColor = WHITE;
         }
         if (player.zinnLoan > player.zinnCreditLimit) {
-            b_ZinnLoan.ForeColor = mc03A2;
+            b_ZinnLoan.ForeColor = RED;
         } else {
-            b_ZinnLoan.ForeColor = mc03A6;
+            b_ZinnLoan.ForeColor = WHITE;
         }
         if (player.wagesOwed >= player.crewSize * player.crewSalary * 4) {
             b_Employee.ForeColor = 0xC0;
         } else {
-            b_Employee.ForeColor = mc03A6;
+            b_Employee.ForeColor = WHITE;
         }
         if ((player.tariffsOwed + player.passengerTaxOwed) >= (35 * game.shipSize[game.currentPlayer])) {
             b_Tax.ForeColor = 0xC0;
         } else {
-            b_Tax.ForeColor = mc03A6;
+            b_Tax.ForeColor = WHITE;
         }
         b_CompanyName.Caption = Trim(game.companyNames[game.currentPlayer]);
         if (game.tutorialMode == -1 && game.complexity < game.unlockSupply) {
@@ -1004,7 +1004,7 @@ function (me) {
             } else {
                 b_Passengers.Caption = "                  Pickup Passengers:  " + Format(player.passengersWaiting, "#,#0");
             }
-            l03A0 = fn01AE(1, 2);
+            l03A0 = randomBetween(1, 2);
             if (player.passengersBoarded == -1 || player.passengersWaiting == 0) {
                 if (l03A0 == 1) {
                     b_Passengers_Image.Picture = LoadPicture(Trim(paths.imageDir) + "MAN.ICO");
@@ -1090,7 +1090,7 @@ function (me) {
     }
 
     async function sub3C4F() {
-        me.MousePointer = mc0338;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -1099,7 +1099,7 @@ function (me) {
     }
 
     async function sub3CBA() {
-        me.MousePointer = mc0338;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -1109,7 +1109,7 @@ function (me) {
 
     async function sub3D76(pv0408) {
         pv0408 = CInt(pv0408);
-        me.MousePointer = mc0338;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -1150,12 +1150,12 @@ function (me) {
                 frm_Box0.b_Message.Caption = "\n" + "There are no passengers waiting to be picked up.";
                 await frm_Box0.Show(1);
             }
-            me.MousePointer = mc0360;
+            me.MousePointer = ARROW_CURSOR;
         }
     }
 
     async function sub3DC9() {
-        me.MousePointer = mc0338;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -1164,7 +1164,7 @@ function (me) {
     }
 
     async function sub3E47() {
-        me.MousePointer = mc0338;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -1174,7 +1174,7 @@ function (me) {
 
     async function sub3ED1(pv0416) {
         pv0416 = CInt(pv0416);
-        me.MousePointer = mc0338;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -1216,12 +1216,12 @@ function (me) {
                 player.tariffsOwed = 0;
             }
             sub4157();
-            me.MousePointer = mc0360;
+            me.MousePointer = ARROW_CURSOR;
         }
     }
 
     async function sub3F13() {
-        me.MousePointer = mc0338;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -1231,7 +1231,7 @@ function (me) {
     }
 
     async function sub3FBD() {
-        me.MousePointer = mc0338;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -1244,7 +1244,7 @@ function (me) {
     }
 
     async function sub404D() {
-        me.MousePointer = mc0338;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -1253,7 +1253,7 @@ function (me) {
     }
 
     async function sub40C7() {
-        me.MousePointer = mc0338;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -1262,10 +1262,10 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0338;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = -1;
         sub4157();
-        me.MousePointer = mc0360;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function Form_KeyPress(KeyAscii) {
@@ -1279,7 +1279,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc0338;
+        me.MousePointer = HOURGLASS;
         b_LeavePlanet2.Picture = LoadPicture(Trim(paths.imageDir) + game.planetNames[game.planet[game.currentPlayer]] + "2.bmp");
     }
 

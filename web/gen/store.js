@@ -12,12 +12,12 @@ VB.form("frm_Store",
   ]],
 function (me) {
     const { VSElastic1, b_Take, b_TakeMax, b_Store, b_StoreMax, b_Cancel } = me.controls;
-    const mc001E = 11;
-    const mc0094 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
 
     function b_Cancel_Click() {
         me.Tag = "CANCEL";
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         me.Hide();
     }
 
@@ -31,7 +31,7 @@ function (me) {
 
     function b_Store_Click() {
         me.Tag = "STORE";
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         me.Hide();
     }
 
@@ -45,7 +45,7 @@ function (me) {
 
     function b_StoreMax_Click() {
         me.Tag = "STOREMAX";
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         me.Hide();
     }
 
@@ -59,7 +59,7 @@ function (me) {
 
     function b_Take_Click() {
         me.Tag = "TAKE";
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         me.Hide();
     }
 
@@ -73,7 +73,7 @@ function (me) {
 
     function b_TakeMax_Click() {
         me.Tag = "TAKEMAX";
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         me.Hide();
     }
 
@@ -86,7 +86,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0094;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function Form_KeyPress(KeyAscii) {

@@ -17,12 +17,12 @@ VB.form("frm_Bankrupt2",
 function (me) {
     const { VSElastic1, b_Sound, b_ImageContainer, b_ImageLable, Image1, b_QuitGame, b_Message, b_NewGame } = me.controls;
     const { Label1 } = me.controls;
-    const mc001A = 11;
-    const mc004E = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
     let m0022 = 0;
 
     async function b_NewGame_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         me.VSElastic1.BackColor = m0022;
         me.BackColor = m0022;
         me.VSElastic1.Visible = 0;
@@ -39,7 +39,7 @@ function (me) {
     }
 
     async function b_QuitGame_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         me.VSElastic1.BackColor = m0022;
         me.BackColor = m0022;
         me.VSElastic1.Visible = 0;
@@ -55,7 +55,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc004E;
+        me.MousePointer = ARROW_CURSOR;
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ship" + Trim(Str(game.shipType[game.currentPlayer])) + ".bmp");
         b_ImageLable.Caption = Trim(game.companyNames[game.currentPlayer]);
         b_Message.Caption = Trim(game.companyNames[game.currentPlayer]) + " Bankrupts!!!";

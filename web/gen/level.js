@@ -18,23 +18,23 @@ VB.form("frm_Level",
 function (me) {
     const { FillElastic, b_Sound, VSElastic1, b_Novice, b_Expert, b_Beginner, b_Tutorial, b_Master } = me.controls;
     const { b_Intermediate, Label1 } = me.controls;
-    const mc001A = 11;
-    const mc002E = 12632256;
+    const HOURGLASS = 11;
+    const LIGHT_GRAY = 12632256;
     const m0040 = 8388608;
     const m005A = 4194304;
     const m00A4 = 12582912;
     const m00BE = 16711680;
-    const mc00E4 = 1;
+    const ARROW_CURSOR = 1;
     let m008A = 0;
 
     async function b_Beginner_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         game.skillLevel = 3;
         await sub050F();
     }
 
     function b_Beginner_MouseDown(Button, Shift, X, Y) {
-        b_Beginner.BackColor = mc002E;
+        b_Beginner.BackColor = LIGHT_GRAY;
     }
 
     function b_Beginner_MouseUp(Button, Shift, X, Y) {
@@ -42,13 +42,13 @@ function (me) {
     }
 
     async function b_Expert_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         game.skillLevel = 5;
         await sub050F();
     }
 
     function b_Expert_MouseDown(Button, Shift, X, Y) {
-        b_Expert.BackColor = mc002E;
+        b_Expert.BackColor = LIGHT_GRAY;
     }
 
     function b_Expert_MouseUp(Button, Shift, X, Y) {
@@ -56,13 +56,13 @@ function (me) {
     }
 
     async function b_Intermediate_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         game.skillLevel = 4;
         await sub050F();
     }
 
     function b_Intermediate_MouseDown(Button, Shift, X, Y) {
-        b_Intermediate.BackColor = mc002E;
+        b_Intermediate.BackColor = LIGHT_GRAY;
     }
 
     function b_Intermediate_MouseUp(Button, Shift, X, Y) {
@@ -70,13 +70,13 @@ function (me) {
     }
 
     async function b_Master_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         game.skillLevel = 6;
         await sub050F();
     }
 
     function b_Master_MouseDown(Button, Shift, X, Y) {
-        b_Master.BackColor = mc002E;
+        b_Master.BackColor = LIGHT_GRAY;
     }
 
     function b_Master_MouseUp(Button, Shift, X, Y) {
@@ -84,13 +84,13 @@ function (me) {
     }
 
     async function b_Novice_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         game.skillLevel = 2;
         await sub050F();
     }
 
     function b_Novice_MouseDown(Button, Shift, X, Y) {
-        b_Novice.BackColor = mc002E;
+        b_Novice.BackColor = LIGHT_GRAY;
     }
 
     function b_Novice_MouseUp(Button, Shift, X, Y) {
@@ -98,13 +98,13 @@ function (me) {
     }
 
     async function b_Tutorial_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         game.skillLevel = 1;
         await sub050F();
     }
 
     function b_Tutorial_MouseDown(Button, Shift, X, Y) {
-        b_Tutorial.BackColor = mc002E;
+        b_Tutorial.BackColor = LIGHT_GRAY;
     }
 
     function b_Tutorial_MouseUp(Button, Shift, X, Y) {
@@ -113,8 +113,7 @@ function (me) {
 
     async function sub050F() {
         let l00C2 = 0;
-        const mc00E4 = 1;
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -181,11 +180,11 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc00E4;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function Form_Load() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "STARS5.BMP");
         if (game.isEmailGame == -1) {
             b_Tutorial.Enabled = 0;

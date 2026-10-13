@@ -25,10 +25,10 @@ VB.form("frm_LoadEmail",
 function (me) {
     const { FillElastic, b_Sound, VSElastic1, b_Help, b_Cancel, b_LoadEmailGame, b_Box1, textbox1 } = me.controls;
     const { b_Message4, file1, b_Message2, drive1, dir1, b_Message1 } = me.controls;
-    const mc00D2 = 11;
-    const mc00F6 = 16777215;
-    const mc0108 = 12632256;
-    const mc013C = 1;
+    const HOURGLASS = 11;
+    const WHITE = 16777215;
+    const LIGHT_GRAY = 12632256;
+    const ARROW_CURSOR = 1;
     let m001C = Space(23);
     let m0036 = Space(9);
     let m0042 = Space(12);
@@ -37,11 +37,9 @@ function (me) {
     async function b_Cancel_Click() {
         let l00D0 = 0;
         try {
-            const mc00D2 = 11;
-            const mc00F6 = 16777215;
-            const mc0108 = 12632256;
+            const HOURGLASS = 11;
             l00D0 = -1;
-            me.MousePointer = mc00D2;
+            me.MousePointer = HOURGLASS;
             FileClose();
             game.emailFileName = FixStr(m0042, 12);
             settings.emailDir = FixStr(m0050, 128);
@@ -58,7 +56,7 @@ function (me) {
         } catch (e) {
             Err.Catch(e);
             if (l00D0 == -1) {
-                await sub012D(Err.Number);
+                await reportFileError(Err.Number);
                 l00D0 = 0;
                 return;
             } else {
@@ -69,15 +67,15 @@ function (me) {
     }
 
     function b_Cancel_MouseDown(Button, Shift, X, Y) {
-        b_Cancel.BackColor = mc00F6;
+        b_Cancel.BackColor = WHITE;
     }
 
     function b_Cancel_MouseUp(Button, Shift, X, Y) {
-        b_Cancel.BackColor = mc0108;
+        b_Cancel.BackColor = LIGHT_GRAY;
     }
 
     async function b_Help_Click() {
-        me.MousePointer = mc00D2;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -93,25 +91,25 @@ function (me) {
     }
 
     function b_Help_MouseDown(Button, Shift, X, Y) {
-        b_Help.BackColor = mc00F6;
+        b_Help.BackColor = WHITE;
     }
 
     function b_Help_MouseUp(Button, Shift, X, Y) {
-        b_Help.BackColor = mc0108;
+        b_Help.BackColor = LIGHT_GRAY;
     }
 
     async function b_LoadEmailGame_Click() {
         let l0134 = 0;
         try {
-            const mc013C = 1;
+            const ARROW_CURSOR = 1;
             l0134 = -1;
-            me.MousePointer = mc00D2;
+            me.MousePointer = HOURGLASS;
             if (Trim(textbox1.Text) == "") {
                 if (settings.soundOn == -1) {
                     Beep();
                 }
                 await MsgBox("Invalid File Name. Please enter a new File Name a try again.", 16, "Invalid File Name");
-                me.MousePointer = mc013C;
+                me.MousePointer = ARROW_CURSOR;
             } else {
                 game.emailFileName = FixStr(Trim(textbox1.Text), 12);
                 settings.emailDir = FixStr(Trim(dir1.Path), 128);
@@ -119,7 +117,7 @@ function (me) {
                 await sub44B2();
                 game.emailFileName = FixStr(Trim(textbox1.Text), 12);
                 if (m001C != "GAZ DELUXE EMAIL GAME  ") {
-                    me.MousePointer = mc013C;
+                    me.MousePointer = ARROW_CURSOR;
                     game.emailFileName = FixStr(m0042, 12);
                     settings.emailDir = FixStr(m0050, 128);
                     sub4254();
@@ -157,7 +155,7 @@ function (me) {
         } catch (e) {
             Err.Catch(e);
             if (l0134 == -1) {
-                await sub012D(Err.Number);
+                await reportFileError(Err.Number);
                 l0134 = 0;
                 return;
             } else {
@@ -168,11 +166,11 @@ function (me) {
     }
 
     function b_LoadEmailGame_MouseDown(Button, Shift, X, Y) {
-        b_LoadEmailGame.BackColor = mc00F6;
+        b_LoadEmailGame.BackColor = WHITE;
     }
 
     function b_LoadEmailGame_MouseUp(Button, Shift, X, Y) {
-        b_LoadEmailGame.BackColor = mc0108;
+        b_LoadEmailGame.BackColor = LIGHT_GRAY;
     }
 
     async function dir1_Change() {
@@ -185,7 +183,7 @@ function (me) {
         } catch (e) {
             Err.Catch(e);
             if (l0162 == -1) {
-                await sub012D(Err.Number);
+                await reportFileError(Err.Number);
                 l0162 = 0;
                 return;
             } else {
@@ -205,7 +203,7 @@ function (me) {
         } catch (e) {
             Err.Catch(e);
             if (l0170 == -1) {
-                await sub012D(Err.Number);
+                await reportFileError(Err.Number);
                 l0170 = 0;
                 return;
             } else {
@@ -234,15 +232,15 @@ function (me) {
             rivals = FileGet(4, null, rivals);
             for (l0174 = 1; l0174 <= game.numPlayers; l0174++) {
                 player = FileGet(4, null, player);
-                sub014C(l0174);
+                storePlayer(l0174);
             }
             FileClose(4);
-            sub013C(game.currentPlayer);
+            loadPlayer(game.currentPlayer);
             return;
         } catch (e) {
             Err.Catch(e);
             if (l0172 == -1) {
-                await sub012D(Err.Number);
+                await reportFileError(Err.Number);
                 l0172 = 0;
                 return;
             } else {
@@ -267,7 +265,7 @@ function (me) {
         } catch (e) {
             Err.Catch(e);
             if (l0180 == -1) {
-                await sub012D(Err.Number);
+                await reportFileError(Err.Number);
                 l0180 = 0;
                 return;
             } else {
@@ -287,7 +285,7 @@ function (me) {
         } catch (e) {
             Err.Catch(e);
             if (l0182 == -1) {
-                await sub012D(Err.Number);
+                await reportFileError(Err.Number);
                 l0182 = 0;
                 return;
             } else {
@@ -300,7 +298,7 @@ function (me) {
     function Form_Activate() {
         textbox1.SelStart = 0;
         textbox1.SelLength = Len(textbox1.Text);
-        me.MousePointer = mc013C;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -326,7 +324,7 @@ function (me) {
         let l0188 = 0;
         try {
             l0186 = -1;
-            me.MousePointer = mc00D2;
+            me.MousePointer = HOURGLASS;
             m001C = FixStr("", 23);
             m0042 = FixStr(game.emailFileName, 12);
             m0050 = FixStr(settings.emailDir, 128);
@@ -358,7 +356,7 @@ function (me) {
     }
 
     function Form_QueryUnload(Cancel, UnloadMode) {
-        me.MousePointer = mc00D2;
+        me.MousePointer = HOURGLASS;
     }
 
     return {

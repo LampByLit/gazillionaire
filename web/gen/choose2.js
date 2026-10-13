@@ -20,13 +20,13 @@ VB.form("frm_ChooseShip2",
 function (me) {
     const { b_Container, b_Timer, b_Sound, b_ImageContainer, b_ImageLable, Image1, VSElastic3, b_No } = me.controls;
     const { b_Yes, b_OK, b_Message } = me.controls;
-    const mc001E = 11;
-    const mc0070 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
     let m001A = 0;
     let m001C = 0;
 
     function b_No_Click() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         me.Tag = "NO";
         b_Container.Visible = 0;
         me.Hide();
@@ -41,7 +41,7 @@ function (me) {
     }
 
     async function b_OK_Click() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         b_Timer.Enabled = 0;
         b_Container.Visible = 0;
         await Unload(me);
@@ -85,7 +85,7 @@ function (me) {
     }
 
     function b_Yes_Click() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         me.Tag = "YES";
         b_Container.Visible = 0;
         me.Hide();
@@ -100,7 +100,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0070;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -112,7 +112,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         m001A = 1;
         m001C = 1;
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ZINN.BMP");

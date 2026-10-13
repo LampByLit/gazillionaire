@@ -21,9 +21,9 @@ VB.form("frm_SaveGame",
 function (me) {
     const { FillElastic, VSElastic3, b_Game5, b_Game4, b_Game3, b_Game2, b_Game1, b_Help } = me.controls;
     const { b_Exit, Label3, Label2, Label1, b_Sound } = me.controls;
-    const mc0032 = 11;
-    const mc0050 = 12632256;
-    const mc006E = 1;
+    const HOURGLASS = 11;
+    const LIGHT_GRAY = 12632256;
+    const ARROW_CURSOR = 1;
     const m0086 = 16711680;
     const m00A0 = 12582912;
     const m00BA = 8388608;
@@ -32,14 +32,14 @@ function (me) {
     let m0062 = 0;
 
     async function b_Exit_Click() {
-        me.MousePointer = mc0032;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await frm_File.Show();
         await Unload(me);
     }
 
     function b_Exit_MouseDown(Button, Shift, X, Y) {
-        b_Exit.BackColor = mc0050;
+        b_Exit.BackColor = LIGHT_GRAY;
     }
 
     function b_Exit_MouseUp(Button, Shift, X, Y) {
@@ -47,16 +47,16 @@ function (me) {
     }
 
     async function b_Game1_Click() {
-        me.MousePointer = mc0032;
+        me.MousePointer = HOURGLASS;
         me.Tag = Str(game.saveSlot);
         game.saveSlot = 1;
         await frm_SaveBox.Show();
         sub277B();
-        me.MousePointer = mc006E;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_Game1_MouseDown(Button, Shift, X, Y) {
-        b_Game1.BackColor = mc0050;
+        b_Game1.BackColor = LIGHT_GRAY;
     }
 
     function b_Game1_MouseUp(Button, Shift, X, Y) {
@@ -64,16 +64,16 @@ function (me) {
     }
 
     async function b_Game2_Click() {
-        me.MousePointer = mc0032;
+        me.MousePointer = HOURGLASS;
         me.Tag = Str(game.saveSlot);
         game.saveSlot = 2;
         await frm_SaveBox.Show();
         sub277B();
-        me.MousePointer = mc006E;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_Game2_MouseDown(Button, Shift, X, Y) {
-        b_Game2.BackColor = mc0050;
+        b_Game2.BackColor = LIGHT_GRAY;
     }
 
     function b_Game2_MouseUp(Button, Shift, X, Y) {
@@ -81,16 +81,16 @@ function (me) {
     }
 
     async function b_Game3_Click() {
-        me.MousePointer = mc0032;
+        me.MousePointer = HOURGLASS;
         me.Tag = Str(game.saveSlot);
         game.saveSlot = 3;
         await frm_SaveBox.Show();
         sub277B();
-        me.MousePointer = mc006E;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_Game3_MouseDown(Button, Shift, X, Y) {
-        b_Game3.BackColor = mc0050;
+        b_Game3.BackColor = LIGHT_GRAY;
     }
 
     function b_Game3_MouseUp(Button, Shift, X, Y) {
@@ -98,16 +98,16 @@ function (me) {
     }
 
     async function b_Game4_Click() {
-        me.MousePointer = mc0032;
+        me.MousePointer = HOURGLASS;
         me.Tag = Str(game.saveSlot);
         game.saveSlot = 4;
         await frm_SaveBox.Show();
         sub277B();
-        me.MousePointer = mc006E;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_Game4_MouseDown(Button, Shift, X, Y) {
-        b_Game4.BackColor = mc0050;
+        b_Game4.BackColor = LIGHT_GRAY;
     }
 
     function b_Game4_MouseUp(Button, Shift, X, Y) {
@@ -115,16 +115,16 @@ function (me) {
     }
 
     async function b_Game5_Click() {
-        me.MousePointer = mc0032;
+        me.MousePointer = HOURGLASS;
         me.Tag = Str(game.saveSlot);
         game.saveSlot = 5;
         await frm_SaveBox.Show();
         sub277B();
-        me.MousePointer = mc006E;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_Game5_MouseDown(Button, Shift, X, Y) {
-        b_Game5.BackColor = mc0050;
+        b_Game5.BackColor = LIGHT_GRAY;
     }
 
     function b_Game5_MouseUp(Button, Shift, X, Y) {
@@ -132,7 +132,7 @@ function (me) {
     }
 
     async function b_Help_Click() {
-        me.MousePointer = mc0032;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -145,7 +145,7 @@ function (me) {
     }
 
     function b_Help_MouseDown(Button, Shift, X, Y) {
-        b_Help.BackColor = mc0050;
+        b_Help.BackColor = LIGHT_GRAY;
     }
 
     function b_Help_MouseUp(Button, Shift, X, Y) {
@@ -180,11 +180,11 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc006E;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function Form_Load() {
-        me.MousePointer = mc0032;
+        me.MousePointer = HOURGLASS;
         FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "STARS4.BMP");
         sub2792();
         sub277B();

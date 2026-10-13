@@ -27,13 +27,13 @@ VB.form("frm_DistanceChart",
 function (me) {
     const { FillElastic, VSElastic1, b_Planet, b_Sound, VSElastic2, b_Grid, VSElastic3, b_Exit } = me.controls;
     const { b_Help, b_MainMenu, b_Message } = me.controls;
-    const mc0022 = 11;
-    const mc0076 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
     let m001A = 0;
     let m001E = 0;
 
     async function b_Exit_Click() {
-        me.MousePointer = mc0022;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await frm_LeavePlanet.Show();
         await Unload(me);
@@ -48,7 +48,7 @@ function (me) {
     }
 
     async function b_Help_Click() {
-        me.MousePointer = mc0022;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -69,7 +69,7 @@ function (me) {
     }
 
     async function b_MainMenu_Click() {
-        me.MousePointer = mc0076;
+        me.MousePointer = ARROW_CURSOR;
         FillElastic.Visible = 0;
         await frm_MainMenu.Show();
         await Unload(me);
@@ -84,11 +84,11 @@ function (me) {
     }
 
     function b_Planet_Click(Index) {
-        me.MousePointer = mc0022;
+        me.MousePointer = HOURGLASS;
         m001A = CLng(Index);
         sub348F();
         sub34AD();
-        me.MousePointer = mc0076;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function sub348F() {
@@ -216,7 +216,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0076;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -227,7 +227,7 @@ function (me) {
 
     function Form_Load() {
         let l00C2 = 0;
-        me.MousePointer = mc0022;
+        me.MousePointer = HOURGLASS;
         b_Sound.Tag = "First Sound = False";
         m001A = 7;
         for (l00C2 = 0; l00C2 <= 6; l00C2++) {

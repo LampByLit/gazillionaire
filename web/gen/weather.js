@@ -22,12 +22,12 @@ VB.form("frm_Weather",
 function (me) {
     const { b_Timer, FillElastic, b_Button, b_Sound, VSElastic4, VSElastic3, Image1, b_Container } = me.controls;
     const { b_Message, b_Help, VSElastic2, b_Exit } = me.controls;
-    const mc001C = 11;
-    const mc0086 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
     let m001A = 0;
 
     async function b_Button_Click() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         b_Timer.Enabled = 0;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -38,7 +38,7 @@ function (me) {
     }
 
     async function b_Exit_Click() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         b_Timer.Enabled = 0;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -56,7 +56,7 @@ function (me) {
     }
 
     async function b_Help_Click() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -225,7 +225,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0086;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -235,7 +235,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         m001A = 1;
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "WEATHER.BMP");
         sub2F02();

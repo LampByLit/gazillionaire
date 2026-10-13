@@ -26,14 +26,14 @@ VB.form("frm_LeavePlanet",
 function (me) {
     const { FillElastic, b_Planet, b_Sound, VSElastic9, b_Facility, b_Help, b_DistanceChart, b_Exit } = me.controls;
     const { Label4, Label3, Label2, Label1 } = me.controls;
-    const mc001A = 11;
-    const mc00C2 = 65535;
-    const mc00DA = 1;
-    const mc00E6 = 255;
+    const HOURGLASS = 11;
+    const YELLOW = 65535;
+    const ARROW_CURSOR = 1;
+    const RED = 255;
     let m00C6 = 0;  // Static in sub3B58
 
     async function b_DistanceChart_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await frm_DistanceChart.Show();
         await Unload(me);
@@ -48,7 +48,7 @@ function (me) {
     }
 
     async function b_Exit_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await frm_MainMenu.Show();
         await Unload(me);
@@ -63,7 +63,7 @@ function (me) {
     }
 
     async function b_Facility_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await frm_Facility.Show();
         await Unload(me);
@@ -78,7 +78,7 @@ function (me) {
     }
 
     async function b_Help_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -99,7 +99,7 @@ function (me) {
     }
 
     async function b_Planet_Click(Index) {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (game.planet[game.currentPlayer] == Index) {
             if (settings.soundOn == -1) {
                 Beep();
@@ -119,9 +119,8 @@ function (me) {
         let l00B8 = "";
         pv00AC = CInt(pv00AC);
         try {
-            const mc00C2 = 65535;
-            const mc00DA = 1;
-            me.MousePointer = mc001A;
+            const YELLOW = 65535;
+            me.MousePointer = HOURGLASS;
             l00B6 = 0;
             l00B8 = "";
             FillElastic.Visible = 0;
@@ -138,14 +137,14 @@ function (me) {
             } else {
                 game.netWorth[game.currentPlayer] = 0;
             }
-            await sub00A2();
+            await autoSave();
             if (player.zinnLoan > player.zinnCreditLimit || player.loan > player.creditLimit) {
                 frm_Box1Port.b_Yes.Caption = "Go To Main Menu";
                 frm_Box1Port.b_No.Caption = "Bankrupt Me!";
                 frm_Box1Port.b_Yes.Visible = -1;
                 frm_Box1Port.b_No.Visible = -1;
                 frm_Box1Port.b_OK.Visible = 0;
-                frm_Box1Port.b_Container.BackColor = mc00C2;
+                frm_Box1Port.b_Container.BackColor = YELLOW;
                 frm_Box1Port.b_Message.ForeColor = m00C6;
                 if (player.zinnLoan > player.zinnCreditLimit) {
                     frm_Box1Port.b_Message.Caption = "If you leave the planet now you will go bankrupt and lose the game! You cannot owe more than " + Format(player.zinnCreditLimit, "#,#0") + " kubars to Mr. Zinn." + "\n" + "\n" + "Do you want to return to the Main Menu and try to straighten out your finances?" + "\n" + "\n" + "If you click on BANKRUPT ME, you will leave the planet and lose the game. If you click on GO TO MAIN MENU, you will return to the Main Menu.";
@@ -169,7 +168,7 @@ function (me) {
                     }
                 }
                 await frm_Box1Port.Show(1);
-                me.MousePointer = mc001A;
+                me.MousePointer = HOURGLASS;
                 if (frm_Box1Port.Tag == "YES") {
                     await Unload(frm_Box1Port);
                     l00B6 = -1;
@@ -197,7 +196,7 @@ function (me) {
                     player.cash = 0;
                 }
                 if (player.quickTravel == 0) {
-                    me.MousePointer = mc001A;
+                    me.MousePointer = HOURGLASS;
                     game.previousPlanet[game.currentPlayer] = game.planet[game.currentPlayer];
                     game.planet[game.currentPlayer] = pv00AC;
                     if (game.auctionType == 1 || game.auctionType == 2) {
@@ -208,7 +207,7 @@ function (me) {
                     }
                     await Unload(me);
                 } else {
-                    me.MousePointer = mc001A;
+                    me.MousePointer = HOURGLASS;
                     game.previousPlanet[game.currentPlayer] = game.planet[game.currentPlayer];
                     game.planet[game.currentPlayer] = pv00AC;
                     await Load(frm_Travel1);
@@ -225,7 +224,7 @@ function (me) {
             return;
         } catch (e) {
             Err.Catch(e);
-            await sub012D(Err.Number);
+            await reportFileError(Err.Number);
             return;
         }
     }
@@ -234,7 +233,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc00DA;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -245,8 +244,8 @@ function (me) {
 
     function Form_Load() {
         let l00DE = 0;
-        const mc00E6 = 255;
-        me.MousePointer = mc001A;
+        const RED = 255;
+        me.MousePointer = HOURGLASS;
         FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "STARS2.BMP");
         for (l00DE = 0; l00DE <= 6; l00DE++) {
             b_Planet[l00DE].Picture = LoadPicture(Trim(paths.imageDir) + game.planetNames[l00DE] + "1.bmp");
@@ -259,9 +258,9 @@ function (me) {
             b_DistanceChart.Visible = 0;
         }
         if (player.supplyChartPlanet >= 0 && player.supplyChartPlanet <= 6) {
-            b_Planet[player.supplyChartPlanet].ForeColor = mc00C2;
+            b_Planet[player.supplyChartPlanet].ForeColor = YELLOW;
         }
-        b_Planet[game.planet[game.currentPlayer]].ForeColor = mc00E6;
+        b_Planet[game.planet[game.currentPlayer]].ForeColor = RED;
     }
 
     function Label1_Click() {

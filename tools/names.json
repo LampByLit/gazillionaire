@@ -10,16 +10,13 @@
     "gv0BF2": "player",
     "gv11CE": "game",
     "gv1EB2": "rivals",
-
     "M4BE9": "configDir",
     "M4BF5": "imageDir",
     "M4C05": "saveDir",
     "M4C15": "soundDir",
-
     "M4C30": "cdDrive",
     "M4C3B": "emailDir",
     "M4C47": "soundOn",
-
     "M4C63": "passengerAdSpend",
     "M4C76": "commodityAdSpend",
     "M4C89": "adSpendTotal",
@@ -84,7 +81,6 @@
     "M4FC9": "zinnCreditLimit",
     "M4FD4": "zinnRate",
     "M4FE0": "zinnInterest",
-
     "M4FFC": "complexity",
     "M500C": "unlockZinnLoan",
     "M501C": "unlockSupply",
@@ -173,7 +169,6 @@
     "M553E": "weatherPlanet",
     "M554F": "winner",
     "M5559": "goalNetWorth",
-
     "M5579": "companyNames",
     "M5588": "cargoCategory",
     "M5593": "cargoItem",
@@ -181,8 +176,669 @@
     "M55A4": "netWorthHistory",
     "M55AF": "facilitiesOwned",
     "M55BB": "facilityFees",
-    "M55CA": "facilityRevenue"
+    "M55CA": "facilityRevenue",
+    "sub00A2": "autoSave",
+    "sub00CD": "restockPlanets",
+    "sub00E5": "updatePrices",
+    "sub00F9": "updateRivalNetWorth",
+    "sub0116": "generatePassengers",
+    "sub012D": "reportFileError",
+    "sub013C": "loadPlayer",
+    "sub00BE": "saveEmailGame",
+    "sub00B0": "saveGame",
+    "sub014C": "storePlayer",
+    "sub015C": "spend",
+    "fn016E": "nextGoal",
+    "fn01A0": "askNumber",
+    "fn01AE": "randomBetween",
+    "fn01B7": "randomInt"
   },
-  "files": {},
-  "locals": {}
+  "files": {
+    "aaa.js": {
+      "mc0024": "ARROW_CURSOR"
+    },
+    "advert.js": {
+      "mc001C": "HOURGLASS",
+      "mc00EA": "ARROW_CURSOR"
+    },
+    "auction.js": {
+      "mc001C": "HOURGLASS",
+      "mc0054": "LIGHT_GRAY",
+      "mc0066": "DARK_GRAY",
+      "mc006E": "ARROW_CURSOR"
+    },
+    "bank.js": {
+      "mc0020": "HOURGLASS",
+      "mc0048": "ARROW_CURSOR"
+    },
+    "bankrpt1.js": {
+      "mc0020": "HOURGLASS",
+      "mc0072": "ARROW_CURSOR"
+    },
+    "bankrpt2.js": {
+      "mc001A": "HOURGLASS",
+      "mc004E": "ARROW_CURSOR"
+    },
+    "bankrpt3.js": {
+      "mc001C": "HOURGLASS",
+      "mc0068": "ARROW_CURSOR"
+    },
+    "begin.js": {
+      "mc001A": "HOURGLASS",
+      "mc004E": "LIGHT_GRAY",
+      "mc00FE": "ARROW_CURSOR"
+    },
+    "box0.js": {
+      "mc001A": "HOURGLASS",
+      "mc002E": "WHITE",
+      "mc0040": "LIGHT_GRAY",
+      "mc0044": "ARROW_CURSOR"
+    },
+    "box1.js": {
+      "mc001A": "HOURGLASS",
+      "mc002E": "WHITE",
+      "mc0040": "LIGHT_GRAY",
+      "mc0044": "ARROW_CURSOR"
+    },
+    "box1port.js": {
+      "mc001A": "HOURGLASS",
+      "mc005C": "ARROW_CURSOR"
+    },
+    "box1rect.js": {
+      "mc001A": "HOURGLASS",
+      "mc0064": "ARROW_CURSOR"
+    },
+    "box1sqr.js": {
+      "mc001A": "HOURGLASS",
+      "mc0064": "ARROW_CURSOR"
+    },
+    "box2.js": {
+      "mc001A": "HOURGLASS",
+      "mc002E": "WHITE",
+      "mc0040": "LIGHT_GRAY",
+      "mc0044": "ARROW_CURSOR"
+    },
+    "box3.js": {
+      "mc001A": "HOURGLASS",
+      "mc002E": "WHITE",
+      "mc0040": "LIGHT_GRAY"
+    },
+    "boxcol1.js": {
+      "mc001A": "HOURGLASS",
+      "mc002E": "WHITE",
+      "mc0040": "LIGHT_GRAY",
+      "mc0044": "ARROW_CURSOR"
+    },
+    "boxinput.js": {
+      "mc001A": "HOURGLASS",
+      "mc0034": "WHITE",
+      "mc0046": "ARROW_CURSOR",
+      "mc0050": "LIGHT_GRAY",
+      "mc00C0": "IBEAM_CURSOR"
+    },
+    "boxmsg.js": {
+      "mc001A": "HOURGLASS",
+      "mc0034": "WHITE",
+      "mc0046": "LIGHT_GRAY",
+      "mc004A": "ARROW_CURSOR"
+    },
+    "boxport.js": {
+      "mc001A": "HOURGLASS",
+      "mc0034": "WHITE",
+      "mc0046": "LIGHT_GRAY",
+      "mc0076": "ARROW_CURSOR"
+    },
+    "boxyesno.js": {
+      "mc001A": "HOURGLASS",
+      "mc002E": "WHITE",
+      "mc0040": "LIGHT_GRAY",
+      "mc005A": "ARROW_CURSOR"
+    },
+    "buysell.js": {
+      "mc001E": "HOURGLASS",
+      "mc0076": "ARROW_CURSOR"
+    },
+    "choose.js": {
+      "mc0020": "HOURGLASS",
+      "mc0056": "ARROW_CURSOR"
+    },
+    "choose2.js": {
+      "mc001E": "HOURGLASS",
+      "mc0070": "ARROW_CURSOR"
+    },
+    "complex.js": {
+      "mc001A": "HOURGLASS",
+      "mc005C": "ARROW_CURSOR"
+    },
+    "config.js": {
+      "mc0052": "HOURGLASS",
+      "mc0078": "ARROW_CURSOR"
+    },
+    "distance.js": {
+      "mc0022": "HOURGLASS",
+      "mc0076": "ARROW_CURSOR"
+    },
+    "emailnfo.js": {
+      "mc001A": "HOURGLASS",
+      "mc002A": "ARROW_CURSOR"
+    },
+    "emaiload.js": {
+      "mc00D2": "HOURGLASS",
+      "mc00F6": "WHITE",
+      "mc0108": "LIGHT_GRAY",
+      "mc013C": "ARROW_CURSOR"
+    },
+    "emailsav.js": {
+      "mc001A": "HOURGLASS",
+      "mc0032": "WHITE",
+      "mc0044": "LIGHT_GRAY",
+      "mc007C": "ARROW_CURSOR"
+    },
+    "employee.js": {
+      "mc001E": "HOURGLASS",
+      "mc00DC": "WHITE",
+      "mc00EA": "ARROW_CURSOR",
+      "mc00F2": "RED"
+    },
+    "explore.js": {
+      "mc001A": "HOURGLASS",
+      "mc0100": "ARROW_CURSOR"
+    },
+    "facility.js": {
+      "mc0022": "HOURGLASS",
+      "mc0076": "ARROW_CURSOR"
+    },
+    "file.js": {
+      "mc001C": "HOURGLASS",
+      "mc003E": "LIGHT_GRAY",
+      "mc0054": "ARROW_CURSOR"
+    },
+    "fuel.js": {
+      "mc001A": "HOURGLASS",
+      "mc00B4": "ARROW_CURSOR"
+    },
+    "getting.js": {
+      "mc001A": "HOURGLASS",
+      "mc0040": "ARROW_CURSOR"
+    },
+    "graph1.js": {
+      "mc001A": "HOURGLASS",
+      "mc007A": "ARROW_CURSOR",
+      "mc007C": "RED"
+    },
+    "graph2.js": {
+      "mc0030": "HOURGLASS",
+      "mc004C": "ARROW_CURSOR",
+      "mc00D4": "RED"
+    },
+    "graph3.js": {
+      "mc001A": "HOURGLASS",
+      "mc007A": "ARROW_CURSOR",
+      "mc007C": "RED"
+    },
+    "help.js": {
+      "mc001A": "HOURGLASS",
+      "mc0034": "WHITE",
+      "mc0046": "LIGHT_GRAY"
+    },
+    "history.js": {
+      "mc0022": "HOURGLASS",
+      "mc0076": "ARROW_CURSOR",
+      "mc00AA": "WHITE"
+    },
+    "howmany.js": {
+      "mc001A": "HOURGLASS",
+      "mc004A": "LIGHT_GRAY",
+      "mc0060": "ARROW_CURSOR"
+    },
+    "insuranc.js": {
+      "mc0054": "HOURGLASS",
+      "mc00C2": "RED",
+      "mc00C6": "ARROW_CURSOR"
+    },
+    "intro.js": {
+      "mc001A": "HOURGLASS",
+      "mc003E": "ARROW_CURSOR"
+    },
+    "lavamind.js": {
+      "mc001A": "HOURGLASS",
+      "mc0044": "WHITE",
+      "mc0056": "LIGHT_GRAY",
+      "mc00B0": "ARROW_CURSOR"
+    },
+    "leave.js": {
+      "mc001A": "HOURGLASS",
+      "mc00C2": "YELLOW",
+      "mc00DA": "ARROW_CURSOR",
+      "mc00E6": "RED"
+    },
+    "level.js": {
+      "mc001A": "HOURGLASS",
+      "mc002E": "LIGHT_GRAY",
+      "mc00E4": "ARROW_CURSOR"
+    },
+    "loadgame.js": {
+      "mc004E": "HOURGLASS",
+      "mc0074": "LIGHT_GRAY",
+      "mc0136": "ARROW_CURSOR"
+    },
+    "loan.js": {
+      "mc001E": "HOURGLASS",
+      "mc0046": "ARROW_CURSOR"
+    },
+    "mainmenu.js": {
+      "mc0338": "HOURGLASS",
+      "mc0360": "ARROW_CURSOR",
+      "mc03A2": "RED",
+      "mc03A6": "WHITE"
+    },
+    "market.js": {
+      "mc0054": "HOURGLASS",
+      "mc009A": "ARROW_CURSOR",
+      "mc00F6": "WHITE",
+      "mc0152": "GREEN",
+      "mc0158": "CYAN",
+      "mc015C": "MAGENTA"
+    },
+    "money.js": {
+      "mc0124": "HOURGLASS",
+      "mc0162": "ARROW_CURSOR"
+    },
+    "nameco.js": {
+      "mc0028": "ARROW_CURSOR",
+      "mc0036": "HOURGLASS",
+      "mc0082": "IBEAM_CURSOR"
+    },
+    "news.js": {
+      "mc001C": "HOURGLASS",
+      "mc0094": "ARROW_CURSOR"
+    },
+    "opponent.js": {
+      "mc001E": "HOURGLASS",
+      "mc0106": "ARROW_CURSOR"
+    },
+    "passengr.js": {
+      "mc001A": "HOURGLASS",
+      "mc00EC": "ARROW_CURSOR"
+    },
+    "planets.js": {
+      "mc001A": "HOURGLASS",
+      "mc0072": "ARROW_CURSOR"
+    },
+    "planets2.js": {
+      "mc0046": "HOURGLASS",
+      "mc005E": "ARROW_CURSOR"
+    },
+    "playturn.js": {
+      "mc001E": "HOURGLASS",
+      "mc004E": "WHITE",
+      "mc0060": "LIGHT_GRAY",
+      "mc0116": "ARROW_CURSOR"
+    },
+    "quick.js": {
+      "mc001A": "HOURGLASS",
+      "mc00E4": "ARROW_CURSOR"
+    },
+    "savebox.js": {
+      "mc0032": "HOURGLASS",
+      "mc004E": "LIGHT_GRAY",
+      "mc0068": "IBEAM_CURSOR",
+      "mc00A2": "ARROW_CURSOR"
+    },
+    "savegame.js": {
+      "mc0032": "HOURGLASS",
+      "mc0050": "LIGHT_GRAY",
+      "mc006E": "ARROW_CURSOR"
+    },
+    "shipbox.js": {
+      "mc001A": "HOURGLASS",
+      "mc002E": "WHITE",
+      "mc0040": "LIGHT_GRAY",
+      "mc0044": "ARROW_CURSOR"
+    },
+    "shipinfo.js": {
+      "mc001A": "HOURGLASS",
+      "mc002A": "ARROW_CURSOR"
+    },
+    "special.js": {
+      "mc001E": "HOURGLASS",
+      "mc0030": "ARROW_CURSOR",
+      "mc00D6": "RED"
+    },
+    "stock.js": {
+      "mc002A": "WHITE",
+      "mc003C": "LIGHT_GRAY",
+      "mc0046": "HOURGLASS",
+      "mc0126": "ARROW_CURSOR",
+      "mc012C": "GREEN",
+      "mc0136": "CYAN",
+      "mc013A": "RED",
+      "mc013E": "MAGENTA",
+      "mc0142": "YELLOW"
+    },
+    "store.js": {
+      "mc001E": "HOURGLASS",
+      "mc0094": "ARROW_CURSOR"
+    },
+    "supply.js": {
+      "mc0028": "HOURGLASS",
+      "mc0068": "ARROW_CURSOR",
+      "mc0092": "YELLOW",
+      "mc009C": "RED",
+      "mc00DA": "GREEN",
+      "mc00DE": "MAGENTA",
+      "mc011C": "CYAN"
+    },
+    "tax.js": {
+      "mc001E": "HOURGLASS",
+      "mc007C": "WHITE",
+      "mc0094": "ARROW_CURSOR",
+      "mc00C6": "RED"
+    },
+    "time.js": {
+      "mc0024": "HOURGLASS",
+      "mc007A": "ARROW_CURSOR",
+      "mc00AE": "WHITE"
+    },
+    "title.js": {
+      "mc001A": "HOURGLASS",
+      "mc0030": "ARROW_CURSOR"
+    },
+    "travel0.js": {
+      "mc0022": "HOURGLASS",
+      "mc004E": "ARROW_CURSOR"
+    },
+    "travel1.js": {
+      "mc0022": "HOURGLASS"
+    },
+    "travel2.js": {
+      "mc0094": "ICON_CURSOR",
+      "mc00A0": "HOURGLASS"
+    },
+    "travel3.js": {
+      "mc0086": "HOURGLASS",
+      "mc008E": "ICON_CURSOR"
+    },
+    "travel4.js": {
+      "mc001A": "HOURGLASS",
+      "mc00AC": "ARROW_CURSOR"
+    },
+    "tutorial.js": {
+      "mc001A": "HOURGLASS",
+      "mc0042": "ARROW_CURSOR"
+    },
+    "warehous.js": {
+      "mc0054": "HOURGLASS",
+      "mc00E8": "WHITE",
+      "mc014A": "MAGENTA",
+      "mc015A": "GREEN",
+      "mc015E": "CYAN",
+      "mc0162": "ARROW_CURSOR"
+    },
+    "weather.js": {
+      "mc001C": "HOURGLASS",
+      "mc0086": "ARROW_CURSOR"
+    },
+    "wingame.js": {
+      "mc001A": "HOURGLASS",
+      "mc0052": "DARK_RED",
+      "mc0056": "RED",
+      "mc0080": "ARROW_CURSOR"
+    },
+    "wingame2.js": {
+      "mc001A": "HOURGLASS",
+      "mc0068": "ARROW_CURSOR"
+    },
+    "yesnobox.js": {
+      "mc001A": "HOURGLASS",
+      "mc0052": "ARROW_CURSOR"
+    },
+    "zinnloan.js": {
+      "mc001E": "HOURGLASS",
+      "mc0096": "ARROW_CURSOR"
+    }
+  },
+  "locals": {
+    "bank.js": {
+      "b_Deposit_Click": {
+        "mc0048": "ARROW_CURSOR"
+      }
+    },
+    "bankrpt1.js": {
+      "b_Continue_Click": {
+        "mc0020": "HOURGLASS"
+      }
+    },
+    "bankrpt3.js": {
+      "b_ContinueGame_Click": {
+        "mc001C": "HOURGLASS"
+      }
+    },
+    "box3.js": {
+      "Form_Load": {
+        "mc004A": "ARROW_CURSOR"
+      }
+    },
+    "choose.js": {
+      "b_Image_Click": {
+        "mc0020": "HOURGLASS"
+      },
+      "sub314A": {
+        "mc0056": "ARROW_CURSOR"
+      }
+    },
+    "emaiload.js": {
+      "b_Cancel_Click": {
+        "mc00D2": "HOURGLASS"
+      },
+      "b_LoadEmailGame_Click": {
+        "mc013C": "ARROW_CURSOR"
+      }
+    },
+    "emailsav.js": {
+      "b_SaveEmailGame_Click": {
+        "mc007C": "ARROW_CURSOR"
+      }
+    },
+    "fuel.js": {
+      "sub0E72": {
+        "mc00B4": "ARROW_CURSOR"
+      }
+    },
+    "graph1.js": {
+      "sub1CF9": {
+        "mc007A": "ARROW_CURSOR"
+      }
+    },
+    "graph2.js": {
+      "b_Computer_Click": {
+        "mc004C": "ARROW_CURSOR"
+      }
+    },
+    "graph3.js": {
+      "sub204D": {
+        "mc007A": "ARROW_CURSOR"
+      }
+    },
+    "help.js": {
+      "Form_Activate": {
+        "mc004A": "ARROW_CURSOR"
+      }
+    },
+    "leave.js": {
+      "sub3B58": {
+        "mc00C2": "YELLOW"
+      },
+      "Form_Load": {
+        "mc00E6": "RED"
+      }
+    },
+    "loan.js": {
+      "b_Borrow_Click": {
+        "mc0046": "ARROW_CURSOR"
+      }
+    },
+    "mainmenu.js": {
+      "sub3799": {
+        "mc0338": "HOURGLASS",
+        "mc0360": "ARROW_CURSOR"
+      },
+      "sub4157": {
+        "mc03A2": "RED",
+        "mc03A6": "WHITE"
+      }
+    },
+    "market.js": {
+      "b_GoodsOnShip_Click": {
+        "mc009A": "ARROW_CURSOR"
+      },
+      "sub1EB2": {
+        "mc0152": "GREEN",
+        "mc0158": "CYAN",
+        "mc015C": "MAGENTA"
+      }
+    },
+    "planets.js": {
+      "b_Randomize_Click": {
+        "mc0072": "ARROW_CURSOR"
+      }
+    },
+    "playturn.js": {
+      "Form_Activate": {
+        "mc0116": "ARROW_CURSOR"
+      },
+      "Form_Load": {
+        "mc013E": "ICON_CURSOR"
+      }
+    },
+    "special.js": {
+      "sub04C9": {
+        "mc00D6": "RED"
+      }
+    },
+    "stock.js": {
+      "b_Buy_Click": {
+        "mc0046": "HOURGLASS"
+      },
+      "sub49B2": {
+        "mc0126": "ARROW_CURSOR"
+      },
+      "sub3022": {
+        "mc012C": "GREEN",
+        "mc0136": "CYAN",
+        "mc013A": "RED",
+        "mc013E": "MAGENTA",
+        "mc0142": "YELLOW"
+      }
+    },
+    "supply.js": {
+      "b_GoodsOnShip_Click": {
+        "mc0068": "ARROW_CURSOR"
+      },
+      "b_Grid_MouseUp": {
+        "mc0092": "YELLOW",
+        "mc009C": "RED"
+      },
+      "sub1CC5": {
+        "mc00DA": "GREEN",
+        "mc00DE": "MAGENTA"
+      }
+    },
+    "travel1.js": {
+      "Form_Load": {
+        "mc0022": "HOURGLASS"
+      }
+    },
+    "travel3.js": {
+      "sub2BBF": {
+        "mc0086": "HOURGLASS",
+        "mc008E": "ICON_CURSOR"
+      }
+    },
+    "warehous.js": {
+      "sub1AA8": {
+        "mc014A": "MAGENTA",
+        "mc015A": "GREEN",
+        "mc015E": "CYAN",
+        "mc0162": "ARROW_CURSOR"
+      }
+    },
+    "wingame.js": {
+      "b_Continue_Click": {
+        "mc0052": "DARK_RED",
+        "mc0056": "RED"
+      }
+    },
+    "zinnloan.js": {
+      "b_PayBack_Click": {
+        "mc0096": "ARROW_CURSOR"
+      }
+    },
+    "module2.js": {
+      "sub00CD": {
+        "l000C": "i",
+        "l000E": "item",
+        "l0010": "planet",
+        "l0012": "low",
+        "l0014": "high"
+      },
+      "sub00E5": {
+        "l001C": "category",
+        "l001E": "item",
+        "l0020": "planet",
+        "l0022": "step",
+        "l0024": "maxPrice",
+        "l0026": "minPrice"
+      },
+      "sub00F9": {
+        "l0028": "rival",
+        "l002A": "planet"
+      },
+      "sub012D": {
+        "pv0030": "errorNumber",
+        "l0032": "checklist"
+      },
+      "sub013C": {
+        "pv0040": "index"
+      },
+      "sub00BE": {
+        "p0042": "screenName",
+        "l0044": "i",
+        "l0048": "header",
+        "l004C": "screenTag",
+        "l004E": "dot"
+      },
+      "sub00B0": {
+        "l0050": "i",
+        "l0054": "header"
+      },
+      "sub014C": {
+        "pv0056": "index"
+      },
+      "sub015C": {
+        "p0058": "amount",
+        "p005A": "showNotice"
+      }
+    },
+    "module3.js": {
+      "fn01A0": {
+        "pv000E": "position",
+        "p0010": "defaultText",
+        "p0012": "min",
+        "p0014": "max",
+        "p0016": "message",
+        "p0018": "title",
+        "l001A": "value",
+        "l001C": "mid"
+      },
+      "fn01AE": {
+        "p0032": "low",
+        "p0034": "high"
+      },
+      "fn01B7": {
+        "p0038": "low",
+        "p003A": "high"
+      }
+    }
+  }
 }

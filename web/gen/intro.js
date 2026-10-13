@@ -14,11 +14,11 @@ VB.form("frm_Intro",
   ]],
 function (me) {
     const { FillElastic, b_Sound, Label6, Label3, Label5, Label4, Label2, Label1 } = me.controls;
-    const mc001A = 11;
-    const mc003E = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
 
     async function sub050F() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await frm_BeginGame.Show();
         await Unload(me);
@@ -29,7 +29,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "mira.wav";
@@ -37,7 +37,7 @@ function (me) {
             b_Sound.Command = "Play";
         }
         FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "planets.bmp");
-        me.MousePointer = mc003E;
+        me.MousePointer = ARROW_CURSOR;
         Label2.Caption = "For the first time in 700 years, Emperor Dred Nicolson has granted you and a handful of other newly formed trading companies permission to operate inside the Kukubian Colonies.";
         Label1.Caption = "As president of a trading company, you must make a profit transporting essential commodities between the seven planets of Kukubia.";
         Label4.Caption = "Your goal is to build a trade empire by investing in larger ships, buying warehouses and skillfully out-maneuvering your competitors.";

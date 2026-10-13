@@ -11,8 +11,8 @@ function (me) {
     const mc005E = 40;
     const mc0060 = 10;
     const mc007E = 40;
-    const mc0094 = 4;
-    const mc00A0 = 11;
+    const ICON_CURSOR = 4;
+    const HOURGLASS = 11;
 
     async function sub3324() {
         let l001A = 0;
@@ -29,7 +29,7 @@ function (me) {
         const mc0030 = 8;
         l002C = 0;
         l0032 = 0;
-        if (fn01AE(1, mc002E) == 1 && game.tutorialMode == 0 || game.complexity >= game.unlockTaxes) {
+        if (randomBetween(1, mc002E) == 1 && game.tutorialMode == 0 || game.complexity >= game.unlockTaxes) {
             l0032 = -1;
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
@@ -37,7 +37,7 @@ function (me) {
             frm_Box1Port.b_Container.BackColor = 0xC0;
             frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "DRED.BMP");
             frm_Box1Port.b_ImageLable.Caption = "Emperor Dred Nicolson";
-            l0020 = fn01AE(15, 50) * game.shipSize[game.currentPlayer];
+            l0020 = randomBetween(15, 50) * game.shipSize[game.currentPlayer];
             frm_Box1Port.b_Message.Caption = "Supreme Commander Dred Nicolson, Emperor of the New Realm, pays a visit to your company. He praises your hard work and loyal support of the New Realm. At the end of his speech, he asks you to make a small donation of " + Format(l0020, "#,#0") + " kubars to the Imperial Trust Fund. Do you donate the money?";
             if (settings.soundOn == -1) {
                 frm_Box1Port.b_Sound.Command = "Close";
@@ -48,7 +48,7 @@ function (me) {
             await frm_Box1Port.Show(1);
             if (frm_Box1Port.Tag == "YES") {
                 await Unload(frm_Box1Port);
-                await sub015C(l0020, -1);
+                await spend(l0020, -1);
             } else {
                 await Unload(frm_Box1Port);
                 frm_Box1Rect.b_Yes.Visible = 0;
@@ -69,9 +69,9 @@ function (me) {
             }
         }
         if (game.tutorialMode == 0 || game.complexity >= game.unlockWarehouse) {
-            if (fn01AE(1, mc002E) == 1) {
+            if (randomBetween(1, mc002E) == 1) {
                 l0032 = -1;
-                l0020 = fn01AE(0, 6);
+                l0020 = randomBetween(0, 6);
                 await Load(frm_Box1Rect);
                 frm_Box1Rect.b_Yes.Visible = 0;
                 frm_Box1Rect.b_No.Visible = 0;
@@ -121,7 +121,7 @@ function (me) {
             }
         }
         if (game.tutorialMode == 0 || game.complexity >= game.unlockInsurance) {
-            if (fn01AE(1, mc0030) == 1) {
+            if (randomBetween(1, mc0030) == 1) {
                 l0032 = -1;
                 frm_Box1Port.b_Yes.Visible = 0;
                 frm_Box1Port.b_No.Visible = 0;
@@ -138,10 +138,10 @@ function (me) {
                 }
                 await frm_Box1Port.Show(1);
                 player.insuranceRate = player.insuranceRate + 5;
-                player.insuranceCost = player.insuranceRate * 1000 - fn01AE(0, 1000);
+                player.insuranceCost = player.insuranceRate * 1000 - randomBetween(0, 1000);
             }
         }
-        if (fn01AE(1, mc002E) == 1 && player.zinnLoan > 0 && game.tutorialMode == 0 || game.complexity >= game.unlockZinnLoan) {
+        if (randomBetween(1, mc002E) == 1 && player.zinnLoan > 0 && game.tutorialMode == 0 || game.complexity >= game.unlockZinnLoan) {
             l0032 = -1;
             frm_Box1Port.b_Yes.Visible = 0;
             frm_Box1Port.b_No.Visible = 0;
@@ -175,7 +175,7 @@ function (me) {
                 await frm_Box1Port.Show(1);
             }
         }
-        if (fn01AE(1, mc002E) == 1 && player.loan > 0) {
+        if (randomBetween(1, mc002E) == 1 && player.loan > 0) {
             l0032 = -1;
             frm_Box1Port.b_Yes.Visible = 0;
             frm_Box1Port.b_No.Visible = 0;
@@ -210,9 +210,9 @@ function (me) {
             }
         }
         if (game.tutorialMode == 0 || game.complexity >= game.unlockCrew) {
-            if (fn01AE(1, mc002E) == 1) {
+            if (randomBetween(1, mc002E) == 1) {
                 l0032 = -1;
-                l0020 = fn01AE(25, 75) * game.shipSize[game.currentPlayer];
+                l0020 = randomBetween(25, 75) * game.shipSize[game.currentPlayer];
                 frm_Box1Port.b_Yes.Visible = 0;
                 frm_Box1Port.b_No.Visible = 0;
                 frm_Box1Port.b_OK.Visible = -1;
@@ -243,12 +243,12 @@ function (me) {
                     }
                     await frm_Box1Port.Show(1);
                 } else {
-                    await sub015C(l0020, -1);
+                    await spend(l0020, -1);
                 }
             }
         }
         if (game.tutorialMode == 0 || game.complexity >= game.unlockCrew) {
-            if (fn01AE(1, mc002E) == 1) {
+            if (randomBetween(1, mc002E) == 1) {
                 l0032 = -1;
                 frm_Box1Port.b_Yes.Visible = -1;
                 frm_Box1Port.b_No.Visible = -1;
@@ -264,7 +264,7 @@ function (me) {
                     frm_Box1Port.b_Sound.Command = "Play";
                 }
                 await frm_Box1Port.Show(1);
-                l0022 = fn01AE(1, 5);
+                l0022 = randomBetween(1, 5);
                 if (frm_Box1Port.Tag == "YES") {
                     await Unload(frm_Box1Port);
                     player.crewSalary = player.crewSalary + 100;
@@ -293,7 +293,7 @@ function (me) {
             }
         }
         if (game.tutorialMode == 0 || game.complexity >= game.unlockZinnLoan && (player.zinnLoan / 2) < (player.creditLimit - player.loan) && player.zinnLoan > 10000) {
-            if (fn01AE(1, mc002E) == 1) {
+            if (randomBetween(1, mc002E) == 1) {
                 l0032 = -1;
                 frm_Box1Port.b_Yes.Visible = 0;
                 frm_Box1Port.b_No.Visible = 0;
@@ -309,7 +309,7 @@ function (me) {
                     frm_Box1Port.b_Sound.Command = "Play";
                 }
                 await frm_Box1Port.Show(1);
-                await sub015C(player.zinnLoan / 2, -1);
+                await spend(player.zinnLoan / 2, -1);
                 player.zinnLoan = CLng(player.zinnLoan / 2);
                 if (player.insured == -1) {
                     await Load(frm_Box1Port);
@@ -330,7 +330,7 @@ function (me) {
                 }
             }
         }
-        if (fn01AE(1, 10) == 1 || game.newsEvent <= 10 || game.newsEvent >= 39 && game.newsEvent <= 48 && game.newsPlanet == game.planet[game.currentPlayer] || game.newsPlanet == game.previousPlanet[game.currentPlayer]) {
+        if (randomBetween(1, 10) == 1 || game.newsEvent <= 10 || game.newsEvent >= 39 && game.newsEvent <= 48 && game.newsPlanet == game.planet[game.currentPlayer] || game.newsPlanet == game.previousPlanet[game.currentPlayer]) {
             if (game.newsEvent >= 39 && game.newsEvent <= 48) {
                 l0028 = game.newsEvent - 38;
             } else if (game.newsEvent <= 10) {
@@ -338,7 +338,7 @@ function (me) {
             } else if (game.newsEvent >= 115 && game.newsEvent <= 124) {
                 l0028 = game.newsEvent - 114;
             } else {
-                l0028 = fn01AE(1, 10);
+                l0028 = randomBetween(1, 10);
             }
             if (game.tutorialMode == 0 || game.complexity >= game.unlockExplore) {
                 l0032 = -1;
@@ -346,7 +346,7 @@ function (me) {
                 frm_Box1Port.b_No.Visible = 0;
                 frm_Box1Port.b_OK.Visible = -1;
                 frm_Box1Port.b_Container.BackColor = 0xC0;
-                l0020 = fn01AE(game.shipSize[game.currentPlayer] * 10, game.shipSize[game.currentPlayer] * 50);
+                l0020 = randomBetween(game.shipSize[game.currentPlayer] * 10, game.shipSize[game.currentPlayer] * 50);
                 if (l0028 == 1) {
                     frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "rebels.bmp");
                     frm_Box1Port.b_ImageLable.Caption = "Chichi Bobo Rebels!";
@@ -470,7 +470,7 @@ function (me) {
                     await frm_Box1Port.Show(1);
                 } else {
                     if (l0022 == 1) {
-                        await sub015C(l0020, -1);
+                        await spend(l0020, -1);
                     } else if (l0022 == 2) {
                         player.cargoTotal = 0;
                         for (l001A = 0; l001A <= 2; l001A++) {
@@ -487,7 +487,7 @@ function (me) {
                                 player.cargoAvgCost[l001A][l001C] = 0;
                             }
                         }
-                        await sub015C(l0020, -1);
+                        await spend(l0020, -1);
                     }
                 }
                 game.travelDelay[game.currentPlayer] = game.travelDelay[game.currentPlayer] + 1;
@@ -506,7 +506,7 @@ function (me) {
                 frm_Box1Rect.b_No.Visible = 0;
                 frm_Box1Rect.b_OK.Visible = -1;
                 frm_Box1Rect.b_Container.BackColor = 0xC0;
-                l0020 = fn01AE(game.shipSize[game.currentPlayer] * 10, game.shipSize[game.currentPlayer] * 50);
+                l0020 = randomBetween(game.shipSize[game.currentPlayer] * 10, game.shipSize[game.currentPlayer] * 50);
                 if (l002A == 1) {
                     frm_Box1Rect.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "METEOR.BMP");
                     frm_Box1Rect.b_ImageLable.Caption = "Meteor Storm!";
@@ -591,13 +591,13 @@ function (me) {
                     }
                     await frm_Box1Port.Show(1);
                 } else {
-                    await sub015C(l0020, -1);
+                    await spend(l0020, -1);
                 }
                 l002C = l002C + 1;
                 game.travelDelay[game.currentPlayer] = game.travelDelay[game.currentPlayer] + 1;
             }
         }
-        if (fn01AE(1, mc002E) == 1 && player.cargoTotal > 0) {
+        if (randomBetween(1, mc002E) == 1 && player.cargoTotal > 0) {
             l0032 = -1;
             frm_Box1Rect.b_Yes.Visible = 0;
             frm_Box1Rect.b_No.Visible = 0;
@@ -650,9 +650,9 @@ function (me) {
                 player.cargo[l0020][l0022] = CLng((player.cargo[l0020][l0022] / 2) - 0.5);
                 player.cargoTotal = player.cargoTotal - l0024;
             }
-        } else if (fn01AE(1, mc002E) == 1) {
+        } else if (randomBetween(1, mc002E) == 1) {
             l0032 = -1;
-            l0020 = fn01AE(25, 75) * game.shipSize[game.currentPlayer];
+            l0020 = randomBetween(25, 75) * game.shipSize[game.currentPlayer];
             await Load(frm_Box1Rect);
             frm_Box1Rect.b_Yes.Visible = 0;
             frm_Box1Rect.b_No.Visible = 0;
@@ -684,11 +684,11 @@ function (me) {
                 }
                 await frm_Box1Port.Show(1);
             } else {
-                await sub015C(l0020, -1);
+                await spend(l0020, -1);
             }
             game.travelDelay[game.currentPlayer] = game.travelDelay[game.currentPlayer] + 1;
             l002C = l002C + 1;
-        } else if (player.fuel > 1 && fn01AE(1, mc002E) == 1 && game.tutorialMode == 0 || game.complexity >= game.unlockFuel) {
+        } else if (player.fuel > 1 && randomBetween(1, mc002E) == 1 && game.tutorialMode == 0 || game.complexity >= game.unlockFuel) {
             l0032 = -1;
             frm_Box1Port.b_Yes.Visible = 0;
             frm_Box1Port.b_No.Visible = 0;
@@ -724,9 +724,9 @@ function (me) {
             }
             game.travelDelay[game.currentPlayer] = game.travelDelay[game.currentPlayer] + 1;
             l002C = l002C + 1;
-        } else if (fn01AE(1, mc002E) == 1) {
+        } else if (randomBetween(1, mc002E) == 1) {
             l0032 = -1;
-            l0020 = fn01AE(25, 75) * game.shipSize[game.currentPlayer];
+            l0020 = randomBetween(25, 75) * game.shipSize[game.currentPlayer];
             frm_Box1Rect.b_Yes.Visible = 0;
             frm_Box1Rect.b_No.Visible = 0;
             frm_Box1Rect.b_OK.Visible = -1;
@@ -757,11 +757,11 @@ function (me) {
                 }
                 await frm_Box1Port.Show(1);
             } else {
-                await sub015C(l0020, -1);
+                await spend(l0020, -1);
             }
             game.travelDelay[game.currentPlayer] = game.travelDelay[game.currentPlayer] + 1;
             l002C = l002C + 1;
-        } else if (fn01AE(1, mc002E) == 1 && player.cargoTotal > 0) {
+        } else if (randomBetween(1, mc002E) == 1 && player.cargoTotal > 0) {
             l0032 = -1;
             frm_Box1Rect.b_Yes.Visible = 0;
             frm_Box1Rect.b_No.Visible = 0;
@@ -801,10 +801,10 @@ function (me) {
                     }
                 }
             }
-        } else if (fn01AE(1, mc002E) == 1) {
+        } else if (randomBetween(1, mc002E) == 1) {
             l0032 = -1;
             do {
-                l0022 = fn01AE(0, 6);
+                l0022 = randomBetween(0, 6);
             } while (l0022 == game.planet[game.currentPlayer] || l0022 == game.previousPlanet[game.currentPlayer]);
             game.planet[game.currentPlayer] = l0022;
             frm_Box1Port.b_Yes.Visible = 0;
@@ -839,8 +839,8 @@ function (me) {
                 await frm_Box1Port.Show(1);
             }
             player.adExtraPassengers = 0;
-            sub0116();
-        } else if (fn01AE(1, mc002E) == 1) {
+            generatePassengers();
+        } else if (randomBetween(1, mc002E) == 1) {
             l0032 = -1;
             frm_Box1Port.b_Yes.Visible = 0;
             frm_Box1Port.b_No.Visible = 0;
@@ -905,7 +905,7 @@ function (me) {
             frm_Box1Port.b_Sound.Command = "Play";
         }
         await frm_Box1Port.Show(1);
-        await sub015C(player.wagesOwed, -1);
+        await spend(player.wagesOwed, -1);
         player.wagesOwed = 0;
         player.crewSalary = player.crewSalary + 500;
         if (player.insured == -1) {
@@ -970,7 +970,7 @@ function (me) {
             }
             await frm_Box1Port.Show(1);
         }
-        await sub015C(l004E, -1);
+        await spend(l004E, -1);
         game.travelDelay[game.currentPlayer] = game.travelDelay[game.currentPlayer] + 1;
         player.luck = player.luck - 5;
         if (player.luck < 15) {
@@ -993,14 +993,14 @@ function (me) {
         const mc0060 = 10;
         l0062 = 0;
         if (game.tutorialMode == 0 || game.complexity >= game.unlockPassengers) {
-            if (fn01AE(1, mc0060) == 1) {
+            if (randomBetween(1, mc0060) == 1) {
                 l0062 = -1;
                 frm_Box1Rect.b_Yes.Visible = -1;
                 frm_Box1Rect.b_No.Visible = -1;
                 frm_Box1Rect.b_OK.Visible = 0;
                 frm_Box1Rect.b_Container.BackColor = 0x400000;
                 frm_Box1Rect.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ship" + Trim(Str(game.shipType[game.currentPlayer])) + ".bmp");
-                l0058 = fn01AE(25000, 100000);
+                l0058 = randomBetween(25000, 100000);
                 frm_Box1Rect.b_ImageLable.Caption = "New Ship For Sale";
                 frm_Box1Rect.b_Message.Caption = "You receive a one-time offer from the Trader's Union to trade in your " + Format(game.shipSize[game.currentPlayer], "#,#0") + "-ton ship for a " + Format(game.shipSize[game.currentPlayer] + 200, "#,#0") + "-ton ship. This will only cost you " + Format(l0058, "#,#0") + " kubars, and the Trader's Union is even willing to raise your credit limit by 25,000 kubars in case you run into financial trouble. Do you want to do it?";
                 if (settings.soundOn == -1) {
@@ -1012,7 +1012,7 @@ function (me) {
                 await frm_Box1Rect.Show(1);
                 if (frm_Box1Rect.Tag == "YES") {
                     await Unload(frm_Box1Rect);
-                    await sub015C(l0058, -1);
+                    await spend(l0058, -1);
                     if (player.commodityAdChoice == 0) {
                         player.commodityAdChoice = 0;
                     } else if (player.commodityAdChoice == 1000 * (game.shipSize[game.currentPlayer] / 400)) {
@@ -1130,15 +1130,15 @@ function (me) {
                         player.crewSize = player.crewSize + 3;
                         player.insuranceRate = player.insuranceRate + 6;
                     }
-                    sub0116();
+                    generatePassengers();
                 }
                 await Unload(frm_Box1Rect);
             }
         }
         if (game.tutorialMode == 0 || game.complexity >= game.unlockWarehouse) {
-            if (fn01AE(1, mc0060) == 1) {
+            if (randomBetween(1, mc0060) == 1) {
                 l0062 = -1;
-                l0058 = fn01AE(15000, 50000);
+                l0058 = randomBetween(15000, 50000);
                 frm_Box1Rect.b_Yes.Visible = -1;
                 frm_Box1Rect.b_No.Visible = -1;
                 frm_Box1Rect.b_OK.Visible = 0;
@@ -1155,7 +1155,7 @@ function (me) {
                 await frm_Box1Rect.Show(1);
                 if (frm_Box1Rect.Tag == "YES") {
                     await Unload(frm_Box1Rect);
-                    await sub015C(l0058, -1);
+                    await spend(l0058, -1);
                     player.warehouseCapacity = player.warehouseCapacity + 50;
                     player.insuranceRate = player.insuranceRate + 5;
                 }
@@ -1163,7 +1163,7 @@ function (me) {
             }
         }
         if (game.tutorialMode == 0 || game.complexity >= game.unlockCrew && player.wagesOwed > 0) {
-            if (fn01AE(1, mc0060) == 1) {
+            if (randomBetween(1, mc0060) == 1) {
                 l0062 = -1;
                 frm_Box1Port.b_Yes.Visible = 0;
                 frm_Box1Port.b_No.Visible = 0;
@@ -1171,7 +1171,7 @@ function (me) {
                 frm_Box1Port.b_Container.BackColor = 0x400000;
                 frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "crew.bmp");
                 frm_Box1Port.b_ImageLable.Caption = "Union Boss Isn't Happy";
-                l0056 = fn01AE(1, 3);
+                l0056 = randomBetween(1, 3);
                 if (l0056 == 1) {
                     frm_Box1Port.b_Message.Caption = "Because you have been complaining so much about how difficult it is to run a business and how the competition is driving you under, your crew reluctantly agrees to forget about any money you owe them. That means you don't have to pay " + Format(player.wagesOwed, "#,#0") + " kubars in employee wages! You now owe your crew 0 kubars.";
                 } else if (l0056 == 2) {
@@ -1190,7 +1190,7 @@ function (me) {
             }
         }
         if (game.tutorialMode == 0 || game.complexity >= game.unlockTaxes && (player.passengerTaxOwed + player.tariffsOwed) > 0) {
-            if (fn01AE(1, mc0060) == 1) {
+            if (randomBetween(1, mc0060) == 1) {
                 l0062 = -1;
                 await Load(frm_Box1Port);
                 frm_Box1Port.b_Yes.Visible = 0;
@@ -1211,7 +1211,7 @@ function (me) {
                 player.tariffsOwed = 0;
             }
         }
-        if (fn01AE(1, mc005E) == 1) {
+        if (randomBetween(1, mc005E) == 1) {
             l0062 = -1;
             frm_Box1Port.b_Yes.Visible = 0;
             frm_Box1Port.b_No.Visible = 0;
@@ -1230,7 +1230,7 @@ function (me) {
             game.engineSpeed[game.currentPlayer] = game.engineSpeed[game.currentPlayer] + 1;
         }
         if (game.tutorialMode == 0 || game.complexity >= game.unlockInsurance && player.insuranceRate >= 6) {
-            if (fn01AE(1, mc005E) == 1) {
+            if (randomBetween(1, mc005E) == 1) {
                 l0062 = -1;
                 frm_Box1Port.b_Yes.Visible = 0;
                 frm_Box1Port.b_No.Visible = 0;
@@ -1247,10 +1247,10 @@ function (me) {
                 }
                 await frm_Box1Port.Show(1);
                 player.insuranceRate = player.insuranceRate - 5;
-                player.insuranceCost = player.insuranceRate + fn01AE(0, 1000);
+                player.insuranceCost = player.insuranceRate + randomBetween(0, 1000);
             }
         }
-        if (fn01AE(1, mc005E) == 1 && player.zinnRate >= 0.02 && game.tutorialMode == 0 || game.complexity >= game.unlockZinnLoan) {
+        if (randomBetween(1, mc005E) == 1 && player.zinnRate >= 0.02 && game.tutorialMode == 0 || game.complexity >= game.unlockZinnLoan) {
             l0062 = -1;
             frm_Box1Port.b_Yes.Visible = 0;
             frm_Box1Port.b_No.Visible = 0;
@@ -1268,7 +1268,7 @@ function (me) {
             await frm_Box1Port.Show(1);
             player.zinnRate = player.zinnRate - 0.01;
         }
-        if (fn01AE(1, mc005E) == 1 && player.loanRate >= 0.04 || player.loanRate >= 0.02 && (player.cash + player.bankBalance - player.loan - player.zinnLoan) > 5000000) {
+        if (randomBetween(1, mc005E) == 1 && player.loanRate >= 0.04 || player.loanRate >= 0.02 && (player.cash + player.bankBalance - player.loan - player.zinnLoan) > 5000000) {
             l0062 = -1;
             frm_Box1Port.b_Yes.Visible = 0;
             frm_Box1Port.b_No.Visible = 0;
@@ -1287,7 +1287,7 @@ function (me) {
             player.loanRate = player.loanRate - 0.01;
         }
         if (game.tutorialMode == 0 || game.complexity >= game.unlockBank) {
-            if (fn01AE(1, mc005E) == 1 && player.bankRate == 0.01) {
+            if (randomBetween(1, mc005E) == 1 && player.bankRate == 0.01) {
                 l0062 = -1;
                 frm_Box1Port.b_Yes.Visible = 0;
                 frm_Box1Port.b_No.Visible = 0;
@@ -1306,7 +1306,7 @@ function (me) {
                 player.bankRate = player.bankRate + 0.01;
             }
         }
-        if (fn01AE(1, mc005E) == 1 && game.tutorialMode == 0 || game.complexity >= game.unlockZinnLoan) {
+        if (randomBetween(1, mc005E) == 1 && game.tutorialMode == 0 || game.complexity >= game.unlockZinnLoan) {
             l0062 = -1;
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
@@ -1331,7 +1331,7 @@ function (me) {
             await Unload(frm_Box1Port);
         }
         if (game.tutorialMode == 0 || game.complexity >= game.unlockZinnLoan && player.zinnLoan > 0) {
-            if (fn01AE(1, mc005E) == 1) {
+            if (randomBetween(1, mc005E) == 1) {
                 l0062 = -1;
                 frm_Box1Port.b_Yes.Visible = 0;
                 frm_Box1Port.b_No.Visible = 0;
@@ -1351,7 +1351,7 @@ function (me) {
             }
         }
         if (game.tutorialMode == 0 || game.complexity >= game.unlockLoan && player.loan > 0) {
-            if (fn01AE(1, mc005E) == 1) {
+            if (randomBetween(1, mc005E) == 1) {
                 l0062 = -1;
                 frm_Box1Port.b_Yes.Visible = 0;
                 frm_Box1Port.b_No.Visible = 0;
@@ -1370,9 +1370,9 @@ function (me) {
                 player.creditLimit = player.creditLimit + 50000;
             }
         }
-        if (fn01AE(1, mc005E) == 1) {
+        if (randomBetween(1, mc005E) == 1) {
             l0062 = -1;
-            l0056 = fn01AE(25, 75) * (game.shipSize[game.currentPlayer]);
+            l0056 = randomBetween(25, 75) * (game.shipSize[game.currentPlayer]);
             frm_Box1Port.b_Yes.Visible = 0;
             frm_Box1Port.b_No.Visible = 0;
             frm_Box1Port.b_OK.Visible = -1;
@@ -1389,9 +1389,9 @@ function (me) {
             await frm_Box1Port.Show(1);
             player.cash = player.cash + l0056;
         }
-        if (fn01AE(1, mc005E) == 1) {
+        if (randomBetween(1, mc005E) == 1) {
             l0062 = -1;
-            l0056 = fn01AE(25, 75) * game.shipSize[game.currentPlayer];
+            l0056 = randomBetween(25, 75) * game.shipSize[game.currentPlayer];
             frm_Box1Port.b_Yes.Visible = 0;
             frm_Box1Port.b_No.Visible = 0;
             frm_Box1Port.b_OK.Visible = -1;
@@ -1409,7 +1409,7 @@ function (me) {
             player.cash = player.cash + l0056;
         }
         if (game.tutorialMode == 0 || game.complexity >= game.unlockWarehouse) {
-            if (fn01AE(1, mc005E) == 1) {
+            if (randomBetween(1, mc005E) == 1) {
                 l0062 = -1;
                 frm_Box1Rect.b_Yes.Visible = 0;
                 frm_Box1Rect.b_No.Visible = 0;
@@ -1429,7 +1429,7 @@ function (me) {
                 player.insuranceRate = player.insuranceRate + 5;
             }
         }
-        if (fn01AE(1, mc005E) == 1 && player.cargoTotal > 0) {
+        if (randomBetween(1, mc005E) == 1 && player.cargoTotal > 0) {
             l0062 = -1;
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
@@ -1464,7 +1464,7 @@ function (me) {
                         player.cargoAvgCost[l0050][l0052] = 0;
                     }
                 }
-                l0058 = fn01AE(1, 5);
+                l0058 = randomBetween(1, 5);
                 if (l0058 == 1) {
                     await Load(frm_Box1Port);
                     frm_Box1Port.b_Yes.Visible = 0;
@@ -1481,13 +1481,13 @@ function (me) {
                         frm_Box1Port.b_Sound.Command = "Play";
                     }
                     await frm_Box1Port.Show(1);
-                    await sub015C(7 * l0056, -1);
+                    await spend(7 * l0056, -1);
                     player.luck = 45;
                 }
             }
             await Unload(frm_Box1Port);
         }
-        if (fn01AE(1, mc005E) == 1 && player.cargoTotal > 0) {
+        if (randomBetween(1, mc005E) == 1 && player.cargoTotal > 0) {
             l0062 = -1;
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
@@ -1513,7 +1513,7 @@ function (me) {
                 }
                 player.cargoTotal = player.cargoCapacity;
                 player.cargo[2][5] = player.cargoCapacity;
-                l0058 = fn01AE(1, 5);
+                l0058 = randomBetween(1, 5);
                 if (l0058 == 1) {
                     frm_Box1Port.b_Yes.Visible = 0;
                     frm_Box1Port.b_No.Visible = 0;
@@ -1529,7 +1529,7 @@ function (me) {
                         frm_Box1Port.b_Sound.Command = "Play";
                     }
                     await frm_Box1Port.Show(1);
-                    await sub015C(50000, -1);
+                    await spend(50000, -1);
                     player.cargoTotal = 0;
                     for (l0050 = 0; l0050 <= 2; l0050++) {
                         for (l0052 = 0; l0052 <= 5; l0052++) {
@@ -1542,7 +1542,7 @@ function (me) {
             }
             await Unload(frm_Box1Port);
         }
-        if (fn01AE(1, mc005E) == 1) {
+        if (randomBetween(1, mc005E) == 1) {
             l0062 = -1;
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
@@ -1550,7 +1550,7 @@ function (me) {
             frm_Box1Port.b_Container.BackColor = 0x400000;
             frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "CURTIS.BMP");
             frm_Box1Port.b_ImageLable.Caption = "Curtonian Plus";
-            l0056 = fn01AE(15, 35) * game.shipSize[game.currentPlayer];
+            l0056 = randomBetween(15, 35) * game.shipSize[game.currentPlayer];
             frm_Box1Port.b_Message.Caption = "You are stopped by a broken-down spaceship flashing a distress signal. The captain, Curtonian Plus, asks if you will loan him " + Format(l0056, "#,#0") + " kubars to repair his ship so he can return to " + game.planetNames[5] + ". He promises to pay you back just as soon as he arrives home. Do you want to loan him the money?";
             if (settings.soundOn == -1) {
                 frm_Box1Port.b_Sound.Command = "Close";
@@ -1561,8 +1561,8 @@ function (me) {
             await frm_Box1Port.Show(1);
             if (frm_Box1Port.Tag == "YES") {
                 await Unload(frm_Box1Port);
-                await sub015C(l0056, -1);
-                l0058 = fn01AE(1, 4);
+                await spend(l0056, -1);
+                l0058 = randomBetween(1, 4);
                 if (l0058 == 1) {
                     frm_Box1Port.b_Yes.Visible = 0;
                     frm_Box1Port.b_No.Visible = 0;
@@ -1583,7 +1583,7 @@ function (me) {
             }
             await Unload(frm_Box1Port);
         }
-        if (fn01AE(1, mc005E) == 1) {
+        if (randomBetween(1, mc005E) == 1) {
             l0062 = -1;
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
@@ -1591,7 +1591,7 @@ function (me) {
             frm_Box1Port.b_Container.BackColor = 0x400000;
             frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "quist.bmp");
             frm_Box1Port.b_ImageLable.Caption = "Quist";
-            l0056 = fn01AE(25, 75) * game.shipSize[game.currentPlayer];
+            l0056 = randomBetween(25, 75) * game.shipSize[game.currentPlayer];
             frm_Box1Port.b_Message.Caption = "Quist, a high flying financier, says he has cooked up a sure fire scheme for making millions. If you invest " + Format(l0056, "#,#0") + " kubars with him, he guarantees you'll see a tenfold profit within a month or two. Do you want to invest your money?";
             if (settings.soundOn == -1) {
                 frm_Box1Port.b_Sound.Command = "Close";
@@ -1602,11 +1602,11 @@ function (me) {
             await frm_Box1Port.Show(1);
             if (frm_Box1Port.Tag == "YES") {
                 await Unload(frm_Box1Port);
-                await sub015C(l0056, -1);
+                await spend(l0056, -1);
             }
             await Unload(frm_Box1Port);
         }
-        if (fn01AE(1, mc005E) == 1) {
+        if (randomBetween(1, mc005E) == 1) {
             l0062 = -1;
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
@@ -1614,7 +1614,7 @@ function (me) {
             frm_Box1Port.b_Container.BackColor = 0x400000;
             frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "wobbler.bmp");
             frm_Box1Port.b_ImageLable.Caption = "The Wobbler";
-            l0056 = fn01AE(15, 35) * game.shipSize[game.currentPlayer];
+            l0056 = randomBetween(15, 35) * game.shipSize[game.currentPlayer];
             frm_Box1Port.b_Message.Caption = "Your company is approached by The Wobbler, a starving artist. The Wobbler asks you to sponsor his next avant-garde theatrical production. It will cost " + Format(l0056, "#,#0") + " kubars and probably won't make any money. However, it will be an artistic masterpiece that will go down in history. Do you give him the money?";
             if (settings.soundOn == -1) {
                 frm_Box1Port.b_Sound.Command = "Close";
@@ -1625,8 +1625,8 @@ function (me) {
             await frm_Box1Port.Show(1);
             if (frm_Box1Port.Tag == "YES") {
                 await Unload(frm_Box1Port);
-                await sub015C(l0056, -1);
-                l0058 = fn01AE(1, 3);
+                await spend(l0056, -1);
+                l0058 = randomBetween(1, 3);
                 if (l0058 == 1) {
                     frm_Box1Port.b_Yes.Visible = 0;
                     frm_Box1Port.b_No.Visible = 0;
@@ -1663,7 +1663,7 @@ function (me) {
             }
             await Unload(frm_Box1Port);
         }
-        if (fn01AE(1, mc005E) == 1) {
+        if (randomBetween(1, mc005E) == 1) {
             l0062 = -1;
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
@@ -1671,7 +1671,7 @@ function (me) {
             frm_Box1Port.b_Container.BackColor = 0x400000;
             frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "sabotage.bmp");
             frm_Box1Port.b_ImageLable.Caption = "Brow";
-            l0058 = fn01AE(10, 50) * game.shipSize[game.currentPlayer];
+            l0058 = randomBetween(10, 50) * game.shipSize[game.currentPlayer];
             frm_Box1Port.b_Message.Caption = "Brow, an industrial spy, offers to do a little dirty work on your behalf. If you pay him " + Format(l0058, "#,#0") + " kubars, he will sabotage your competitors' companies. Brow assures you that he is an expert at nasty tricks. Do you want to accept this offer?";
             if (settings.soundOn == -1) {
                 frm_Box1Port.b_Sound.Command = "Close";
@@ -1682,8 +1682,8 @@ function (me) {
             await frm_Box1Port.Show(1);
             if (frm_Box1Port.Tag == "YES") {
                 await Unload(frm_Box1Port);
-                await sub015C(l0058, -1);
-                if (fn01AE(1, 5) == 1) {
+                await spend(l0058, -1);
+                if (randomBetween(1, 5) == 1) {
                     l0056 = l0058 * 4;
                     await Load(frm_Box1Port);
                     frm_Box1Port.b_Yes.Visible = 0;
@@ -1700,11 +1700,11 @@ function (me) {
                         frm_Box1Port.b_Sound.Command = "Play";
                     }
                     await frm_Box1Port.Show(1);
-                    await sub015C(l0056, -1);
+                    await spend(l0056, -1);
                     player.luck = 45;
                 } else {
                     for (l0050 = 1; l0050 <= game.numRivals; l0050++) {
-                        l0056 = fn01AE(l0058, 4 * l0058);
+                        l0056 = randomBetween(l0058, 4 * l0058);
                         rivals.cash[l0050] = rivals.cash[l0050] - l0056;
                         frm_Box1Rect.b_Yes.Visible = 0;
                         frm_Box1Rect.b_No.Visible = 0;
@@ -1713,7 +1713,7 @@ function (me) {
                         frm_Box1Rect.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "op" + Trim(Str((l0050))) + ".bmp");
                         frm_Box1Rect.b_ImageLable.Caption = Trim(rivals.companyNames[l0050]);
                         {
-                            const sel = fn01AE(1, 6);
+                            const sel = randomBetween(1, 6);
                             if (sel == 1) {
                                 frm_Box1Rect.b_Message.Caption = Trim(rivals.companyNames[l0050]) + " suffers a major financial loss as important trade secrets are leaked to the press. The company's net worth falls " + Format(l0056, "#,#0") + " kubars overnight.";
                             } else if (sel == 2) {
@@ -1721,9 +1721,9 @@ function (me) {
                             } else if (sel == 3) {
                                 frm_Box1Rect.b_Message.Caption = Trim(rivals.companyNames[l0050]) + " loses a critical law suit. The company must pay " + Format(l0056, "#,#0") + " kubars in damages and legal fees.";
                             } else if (sel == 4) {
-                                frm_Box1Rect.b_Message.Caption = "After receiving an anonymous tip, local officials on " + game.planetNames[fn01AE(0, 6)] + " find contraband stored in " + Trim(rivals.companyNames[l0050]) + "'s warehouse. As a result, " + Trim(rivals.companyNames[l0050]) + " must pay a fine of " + Format(l0056, "#,#0") + " kubars.";
+                                frm_Box1Rect.b_Message.Caption = "After receiving an anonymous tip, local officials on " + game.planetNames[randomBetween(0, 6)] + " find contraband stored in " + Trim(rivals.companyNames[l0050]) + "'s warehouse. As a result, " + Trim(rivals.companyNames[l0050]) + " must pay a fine of " + Format(l0056, "#,#0") + " kubars.";
                             } else if (sel == 5) {
-                                frm_Box1Rect.b_Message.Caption = Trim(rivals.companyNames[l0050]) + "'s warehouse on " + game.planetNames[fn01AE(0, 6)] + " catches on fire and burns to the ground. The fire destroys " + Format(l0056, "#,#0") + " kubars worth of commodities.";
+                                frm_Box1Rect.b_Message.Caption = Trim(rivals.companyNames[l0050]) + "'s warehouse on " + game.planetNames[randomBetween(0, 6)] + " catches on fire and burns to the ground. The fire destroys " + Format(l0056, "#,#0") + " kubars worth of commodities.";
                             } else if (sel == 6) {
                                 frm_Box1Rect.b_Message.Caption = Trim(rivals.companyNames[l0050]) + "'s cargo hold overheats, and " + Format(l0056, "#,#0") + " kubars worth of goods are destroyed. The cause of the accident is still undetermined.";
                             }
@@ -1737,11 +1737,11 @@ function (me) {
                         }
                         await frm_Box1Rect.Show(1);
                     }
-                    sub014C(game.currentPlayer);
+                    storePlayer(game.currentPlayer);
                     l005A = game.currentPlayer;
                     for (l0050 = 1; l0050 <= game.numPlayers; l0050++) {
                         if (l0050 != l005A && game.graphShowCompany[l0050] == 0) {
-                            l0056 = fn01AE(l0058, 4 * l0058);
+                            l0056 = randomBetween(l0058, 4 * l0058);
                             frm_Box1Rect.b_Yes.Visible = 0;
                             frm_Box1Rect.b_No.Visible = 0;
                             frm_Box1Rect.b_OK.Visible = -1;
@@ -1749,7 +1749,7 @@ function (me) {
                             frm_Box1Rect.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ship" + Trim(Str(game.shipType[l0050])) + ".bmp");
                             frm_Box1Rect.b_ImageLable.Caption = Trim(game.companyNames[l0050]);
                             {
-                                const sel = fn01AE(1, 6);
+                                const sel = randomBetween(1, 6);
                                 if (sel == 1) {
                                     frm_Box1Rect.b_Message.Caption = Trim(game.companyNames[l0050]) + " suffers mysterious engine troubles. As a result, " + Trim(game.companyNames[l0050]) + " is forced to borrow " + Format(l0056, "#,#0") + " kubars from the Trader's Union to pay for the repairs.";
                                 } else if (sel == 2) {
@@ -1776,17 +1776,17 @@ function (me) {
                                 frm_Box1Rect.b_Sound.Command = "Play";
                             }
                             await frm_Box1Rect.Show(1);
-                            sub013C(l0050);
-                            await sub015C(l0056, 0);
-                            sub014C(l0050);
+                            loadPlayer(l0050);
+                            await spend(l0056, 0);
+                            storePlayer(l0050);
                         }
                     }
-                    sub013C(l005A);
+                    loadPlayer(l005A);
                 }
             }
             await Unload(frm_Box1Port);
         }
-        if (fn01AE(1, mc005E) == 1) {
+        if (randomBetween(1, mc005E) == 1) {
             l0062 = -1;
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
@@ -1794,7 +1794,7 @@ function (me) {
             frm_Box1Port.b_Container.BackColor = 0x400000;
             frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "yoyo.bmp");
             frm_Box1Port.b_ImageLable.Caption = "Yoyo";
-            l0056 = fn01AE(1, 35) * game.shipSize[game.currentPlayer];
+            l0056 = randomBetween(1, 35) * game.shipSize[game.currentPlayer];
             frm_Box1Port.b_Message.Caption = "Your ship is stopped by Yoyo, a notorious gambler. Yoyo offers to make you a wager. He will flip a coin. If it comes up tails, he will pay you " + Format(l0056, "#,#0") + " kubars. If it comes up heads, you will pay him " + Format(l0056 / 2, "#,#0") + " kubars. Do you accept Yoyo's offer?";
             if (settings.soundOn == -1) {
                 frm_Box1Port.b_Sound.Command = "Close";
@@ -1818,11 +1818,11 @@ function (me) {
                 }
                 frm_Box1Port.b_Message.Caption = "Sorry, you lose. You should know by now that it never pays to gamble with a pro!";
                 await frm_Box1Port.Show(1);
-                await sub015C(l0056 / 2, -1);
+                await spend(l0056 / 2, -1);
             }
             await Unload(frm_Box1Port);
         }
-        if (fn01AE(1, mc005E) == 1 && player.cargoTotal > 0) {
+        if (randomBetween(1, mc005E) == 1 && player.cargoTotal > 0) {
             l0062 = -1;
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
@@ -1867,7 +1867,7 @@ function (me) {
             }
             await Unload(frm_Box1Port);
         }
-        if (fn01AE(1, mc005E) == 1 && game.engineSpeed[game.currentPlayer] >= 5) {
+        if (randomBetween(1, mc005E) == 1 && game.engineSpeed[game.currentPlayer] >= 5) {
             l0062 = -1;
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
@@ -1891,7 +1891,7 @@ function (me) {
             }
             await Unload(frm_Box1Port);
         }
-        if (fn01AE(1, mc005E) == 1) {
+        if (randomBetween(1, mc005E) == 1) {
             l0062 = -1;
             frm_Box1Port.b_Yes.Visible = 0;
             frm_Box1Port.b_No.Visible = 0;
@@ -1921,9 +1921,9 @@ function (me) {
         let l007C = 0;
         pv006E = CInt(pv006E);
         const mc007E = 40;
-        if (fn01AE(1, mc007E) == 1) {
+        if (randomBetween(1, mc007E) == 1) {
             pv006E = -1;
-            l0076 = fn01AE(25, 75) * game.shipSize[game.currentPlayer];
+            l0076 = randomBetween(25, 75) * game.shipSize[game.currentPlayer];
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
             frm_Box1Port.b_OK.Visible = 0;
@@ -1950,7 +1950,7 @@ function (me) {
                 l0076 = CLng(l0070);
             }
         }
-        if (l0076 != -555 && fn01AE(1, mc007E) == 1 && game.tutorialMode == 0 || game.complexity >= game.unlockStocks) {
+        if (l0076 != -555 && randomBetween(1, mc007E) == 1 && game.tutorialMode == 0 || game.complexity >= game.unlockStocks) {
             pv006E = -1;
             if (game.turn < 15) {
                 l0078 = game.stockPrices[l0076][game.turn];
@@ -1984,7 +1984,7 @@ function (me) {
         } else {
             l0076 = CLng(0.8 * game.stockPrices[game.previousPlanet[game.currentPlayer]][15]);
         }
-        if ((player.cash + player.bankBalance) > (2 * l0076) && fn01AE(1, mc007E) == 1 && game.tutorialMode == 0 || game.complexity >= game.unlockStocks) {
+        if ((player.cash + player.bankBalance) > (2 * l0076) && randomBetween(1, mc007E) == 1 && game.tutorialMode == 0 || game.complexity >= game.unlockStocks) {
             pv006E = -1;
             if ((0.25 * (player.cash + player.bankBalance)) > 2000000) {
                 l0078 = CLng(2000000 / l0076);
@@ -2007,13 +2007,13 @@ function (me) {
             await frm_Box1Port.Show(1);
             if (frm_Box1Port.Tag == "YES") {
                 await Unload(frm_Box1Port);
-                await sub015C((l0076 * l0078), -1);
+                await spend((l0076 * l0078), -1);
                 player.shareAvgCost[game.previousPlanet[game.currentPlayer]] = CLng(((player.shareAvgCost[game.previousPlanet[game.currentPlayer]] * player.shares[game.previousPlanet[game.currentPlayer]]) + (l0076 * l0078)) / (player.shares[game.previousPlanet[game.currentPlayer]] + l0078));
                 player.shares[game.previousPlanet[game.currentPlayer]] = player.shares[game.previousPlanet[game.currentPlayer]] + l0078;
             }
             await Unload(frm_Box1Port);
         }
-        if (fn01AE(1, mc007E) == 1 && player.passengerCapacity > player.passengersAboard && game.tutorialMode == 0 || game.complexity >= game.unlockPassengers) {
+        if (randomBetween(1, mc007E) == 1 && player.passengerCapacity > player.passengersAboard && game.tutorialMode == 0 || game.complexity >= game.unlockPassengers) {
             pv006E = -1;
             l0076 = (player.passengerCapacity - player.passengersAboard) * 5000;
             frm_Box1Port.b_Yes.Visible = -1;
@@ -2037,7 +2037,7 @@ function (me) {
             }
             await Unload(frm_Box1Port);
         }
-        if (player.fuel > 1 && fn01AE(1, mc007E) == 1 && game.tutorialMode == 0 || game.complexity >= game.unlockFuel) {
+        if (player.fuel > 1 && randomBetween(1, mc007E) == 1 && game.tutorialMode == 0 || game.complexity >= game.unlockFuel) {
             pv006E = -1;
             l0076 = CLng((player.fuel / 2) * 3500);
             frm_Box1Port.b_Yes.Visible = -1;
@@ -2061,7 +2061,7 @@ function (me) {
             }
             await Unload(frm_Box1Port);
         }
-        if (fn01AE(1, mc007E) == 1 && player.cargoTotal > 0) {
+        if (randomBetween(1, mc007E) == 1 && player.cargoTotal > 0) {
             pv006E = -1;
             l0076 = 0;
             for (l0070 = 0; l0070 <= 2; l0070++) {
@@ -2099,7 +2099,7 @@ function (me) {
             }
             await Unload(frm_Box1Port);
         }
-        if (fn01AE(1, mc007E) == 1 && player.cargoTotal < player.cargoCapacity && player.cargo[2][5] == 0) {
+        if (randomBetween(1, mc007E) == 1 && player.cargoTotal < player.cargoCapacity && player.cargo[2][5] == 0) {
             pv006E = -1;
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
@@ -2117,16 +2117,16 @@ function (me) {
             await frm_Box1Port.Show(1);
             if (frm_Box1Port.Tag == "YES") {
                 await Unload(frm_Box1Port);
-                await sub015C(100 * (player.cargoCapacity - player.cargoTotal), -1);
+                await spend(100 * (player.cargoCapacity - player.cargoTotal), -1);
                 player.cargo[2][5] = (player.cargoCapacity - player.cargoTotal);
                 player.cargoAvgCost[2][5] = 100;
                 player.cargoTotal = player.cargoCapacity;
             }
             await Unload(frm_Box1Port);
         }
-        l007A = fn01AE(0, 2);
-        l007C = fn01AE(0, 5);
-        if (fn01AE(1, mc007E) == 1 && player.cargoTotal > 0 && player.cargo[l007A][l007C] == 0) {
+        l007A = randomBetween(0, 2);
+        l007C = randomBetween(0, 5);
+        if (randomBetween(1, mc007E) == 1 && player.cargoTotal > 0 && player.cargo[l007A][l007C] == 0) {
             pv006E = -1;
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
@@ -2155,7 +2155,7 @@ function (me) {
             }
             await Unload(frm_Box1Port);
         }
-        if (fn01AE(1, mc007E) == 1 && player.cargoTotal > 0) {
+        if (randomBetween(1, mc007E) == 1 && player.cargoTotal > 0) {
             pv006E = -1;
             l0076 = 0;
             for (l0070 = 0; l0070 <= 2; l0070++) {
@@ -2193,7 +2193,7 @@ function (me) {
             }
             await Unload(frm_Box1Port);
         }
-        if (fn01AE(1, mc007E) == 1) {
+        if (randomBetween(1, mc007E) == 1) {
             pv006E = -1;
             frm_Box1Port.b_Yes.Visible = 0;
             frm_Box1Port.b_No.Visible = 0;
@@ -2202,7 +2202,7 @@ function (me) {
             frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "mulls.bmp");
             frm_Box1Port.b_ImageLable.Caption = "Mulls";
             {
-                const sel = fn01AE(1, 20);
+                const sel = randomBetween(1, 20);
                 if (sel == 1) {
                     l0074 = "Never invest in the stock market until you've paid off all your debts.";
                 } else if (sel == 2) {
@@ -2254,7 +2254,7 @@ function (me) {
             }
             await frm_Box1Port.Show(1);
         }
-        if (fn01AE(1, mc007E) == 1) {
+        if (randomBetween(1, mc007E) == 1) {
             pv006E = -1;
             l0076 = (CLng(player.arrivalRoll) * CLng(game.weeklyRoll)) * 6;
             {
@@ -2285,7 +2285,7 @@ function (me) {
             await frm_Box1Port.Show(1);
             if (frm_Box1Port.Tag == "YES") {
                 await Unload(frm_Box1Port);
-                await sub015C(l0076, -1);
+                await spend(l0076, -1);
                 {
                     const sel = ((Mod(player.arrivalRoll, 4)) + 1);
                     if (sel == 1) {
@@ -2305,7 +2305,7 @@ function (me) {
                 frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "teeter.bmp");
                 frm_Box1Port.b_ImageLable.Caption = "Teeter";
                 {
-                    const sel = fn01AE(1, 3);
+                    const sel = randomBetween(1, 3);
                     if (sel == 1) {
                         frm_Box1Port.b_Message.Caption = "Teeter may not look like a genius, but he manages to " + l0074 + " in record time.";
                     } else if (sel == 2) {
@@ -2324,9 +2324,9 @@ function (me) {
             }
             await Unload(frm_Box1Port);
         }
-        if (fn01AE(1, mc007E) == 1 && player.crewSize > 2) {
+        if (randomBetween(1, mc007E) == 1 && player.crewSize > 2) {
             pv006E = -1;
-            l0076 = fn01AE(5, 25) * 1000;
+            l0076 = randomBetween(5, 25) * 1000;
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
             frm_Box1Port.b_OK.Visible = 0;
@@ -2343,7 +2343,7 @@ function (me) {
             await frm_Box1Port.Show(1);
             if (frm_Box1Port.Tag == "YES") {
                 await Unload(frm_Box1Port);
-                if (fn01AE(1, 2) == 1) {
+                if (randomBetween(1, 2) == 1) {
                     frm_Box1Port.b_Yes.Visible = 0;
                     frm_Box1Port.b_No.Visible = 0;
                     frm_Box1Port.b_OK.Visible = -1;
@@ -2360,7 +2360,7 @@ function (me) {
                     await frm_Box1Port.Show(1);
                     game.travelDelay[game.currentPlayer] = game.travelDelay[game.currentPlayer] + 1;
                     player.luck = 45;
-                    await sub015C(2 * l0076, -1);
+                    await spend(2 * l0076, -1);
                     if (player.insured == -1) {
                         frm_Box1Port.b_Yes.Visible = 0;
                         frm_Box1Port.b_No.Visible = 0;
@@ -2393,14 +2393,14 @@ function (me) {
                     }
                     await frm_Box1Port.Show(1);
                     player.crewSize = player.crewSize - 1;
-                    await sub015C(l0076, -1);
+                    await spend(l0076, -1);
                 }
             }
             await Unload(frm_Box1Port);
         }
-        if (fn01AE(1, mc007E) == 1) {
+        if (randomBetween(1, mc007E) == 1) {
             pv006E = -1;
-            l0076 = fn01AE(15, 50) * (game.shipSize[game.currentPlayer]);
+            l0076 = randomBetween(15, 50) * (game.shipSize[game.currentPlayer]);
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
             frm_Box1Port.b_OK.Visible = 0;
@@ -2424,7 +2424,7 @@ function (me) {
                 frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "spike.bmp");
                 frm_Box1Port.b_ImageLable.Caption = "Spike";
                 frm_Box1Port.b_Message.Caption = "Spike the Space Mutt turns out to be a real pain in the neck. He runs wild on your ship, harassing your passengers, chewing holes in your new seats, tearing apart your wiring, and relieving himself on your bed. You finally end up dumping Spike on a passing asteroid, but not before he inflicts " + Format(l0076, "#,#0") + " kubars worth of damage on your ship.";
-                await sub015C(l0076, -1);
+                await spend(l0076, -1);
                 if (settings.soundOn == -1) {
                     frm_Box1Port.b_Sound.Command = "Close";
                     frm_Box1Port.b_Sound.FileName = Trim(paths.soundDir) + "spike2.wav";
@@ -2453,9 +2453,9 @@ function (me) {
             }
             await Unload(frm_Box1Port);
         }
-        if (fn01AE(1, mc007E) == 1 && player.crewSalary >= 1500 && game.tutorialMode == 0 || game.complexity >= game.unlockCrew) {
+        if (randomBetween(1, mc007E) == 1 && player.crewSalary >= 1500 && game.tutorialMode == 0 || game.complexity >= game.unlockCrew) {
             pv006E = -1;
-            l0076 = fn01AE(15, 50) * (game.shipSize[game.currentPlayer]);
+            l0076 = randomBetween(15, 50) * (game.shipSize[game.currentPlayer]);
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
             frm_Box1Port.b_OK.Visible = 0;
@@ -2472,8 +2472,8 @@ function (me) {
             await frm_Box1Port.Show(1);
             if (frm_Box1Port.Tag == "YES") {
                 await Unload(frm_Box1Port);
-                await sub015C(l0076, -1);
-                if (fn01AE(1, 5) == 1) {
+                await spend(l0076, -1);
+                if (randomBetween(1, 5) == 1) {
                     frm_Box1Port.b_Yes.Visible = 0;
                     frm_Box1Port.b_No.Visible = 0;
                     frm_Box1Port.b_OK.Visible = -1;
@@ -2492,7 +2492,7 @@ function (me) {
                         frm_Box1Port.b_Sound.Command = "Play";
                     }
                     await frm_Box1Port.Show(1);
-                    await sub015C(player.wagesOwed, -1);
+                    await spend(player.wagesOwed, -1);
                     player.wagesOwed = 0;
                     player.crewSalary = player.crewSalary + 100;
                     player.luck = 45;
@@ -2516,9 +2516,9 @@ function (me) {
             }
             await Unload(frm_Box1Port);
         }
-        if (fn01AE(1, mc007E) == 1) {
+        if (randomBetween(1, mc007E) == 1) {
             pv006E = -1;
-            l0076 = fn01AE(25, 125) * (game.shipSize[game.currentPlayer]);
+            l0076 = randomBetween(25, 125) * (game.shipSize[game.currentPlayer]);
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
             frm_Box1Port.b_OK.Visible = 0;
@@ -2536,7 +2536,7 @@ function (me) {
             if (frm_Box1Port.Tag == "YES") {
                 await Unload(frm_Box1Port);
                 player.cash = player.cash + l0076;
-                if (fn01AE(1, 4) == 1) {
+                if (randomBetween(1, 4) == 1) {
                     frm_Box1Port.b_Yes.Visible = 0;
                     frm_Box1Port.b_No.Visible = 0;
                     frm_Box1Port.b_OK.Visible = -1;
@@ -2551,7 +2551,7 @@ function (me) {
                         frm_Box1Port.b_Sound.Command = "Play";
                     }
                     await frm_Box1Port.Show(1);
-                    await sub015C(l0076 * 2, -1);
+                    await spend(l0076 * 2, -1);
                     if (player.insured == -1) {
                         frm_Box1Port.b_Yes.Visible = 0;
                         frm_Box1Port.b_No.Visible = 0;
@@ -2574,7 +2574,7 @@ function (me) {
             }
             await Unload(frm_Box1Port);
         }
-        if (fn01AE(1, mc007E) == 1) {
+        if (randomBetween(1, mc007E) == 1) {
             pv006E = -1;
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
@@ -2582,7 +2582,7 @@ function (me) {
             frm_Box1Port.b_Container.BackColor = 0x400000;
             frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "hapa.bmp");
             frm_Box1Port.b_ImageLable.Caption = "A Hapa Jillo Mafioso";
-            l0078 = fn01AE(20, 70) * game.shipSize[game.currentPlayer];
+            l0078 = randomBetween(20, 70) * game.shipSize[game.currentPlayer];
             frm_Box1Port.b_Message.Caption = "The Hapa Jillo Crime Syndicate approaches you with a devious proposal. They are willing to make life extremely difficult for your competitors if you pay them " + Format(l0078, "#,#0") + " kubars. Do you want to accept this evil offer?";
             if (settings.soundOn == -1) {
                 frm_Box1Port.b_Sound.Command = "Close";
@@ -2593,8 +2593,8 @@ function (me) {
             await frm_Box1Port.Show(1);
             if (frm_Box1Port.Tag == "YES") {
                 await Unload(frm_Box1Port);
-                await sub015C(l0078, -1);
-                if (fn01AE(1, 5) == 1) {
+                await spend(l0078, -1);
+                if (randomBetween(1, 5) == 1) {
                     l0076 = l0078 * 4;
                     await Load(frm_Box1Port);
                     frm_Box1Port.b_Yes.Visible = 0;
@@ -2611,12 +2611,12 @@ function (me) {
                         frm_Box1Port.b_Sound.Command = "Play";
                     }
                     await frm_Box1Port.Show(1);
-                    await sub015C(l0076, -1);
+                    await spend(l0076, -1);
                     game.travelDelay[game.currentPlayer] = game.travelDelay[game.currentPlayer] + 1;
                     player.luck = 45;
                 } else {
                     for (l0070 = 1; l0070 <= game.numRivals; l0070++) {
-                        l0076 = fn01AE(l0078, 4 * l0078);
+                        l0076 = randomBetween(l0078, 4 * l0078);
                         rivals.cash[l0070] = rivals.cash[l0070] - l0076;
                         frm_Box1Rect.b_Yes.Visible = 0;
                         frm_Box1Rect.b_No.Visible = 0;
@@ -2625,7 +2625,7 @@ function (me) {
                         frm_Box1Rect.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "op" + Trim(Str((l0070))) + ".bmp");
                         frm_Box1Rect.b_ImageLable.Caption = Trim(rivals.companyNames[l0070]);
                         {
-                            const sel = fn01AE(1, 6);
+                            const sel = randomBetween(1, 6);
                             if (sel == 1) {
                                 frm_Box1Rect.b_Message.Caption = "A gang of Hapa Jillo street thugs vandalize " + Trim(rivals.companyNames[l0070]) + ", causing " + Format(l0076, "#,#0") + " kubars worth of damage.";
                             } else if (sel == 2) {
@@ -2635,7 +2635,7 @@ function (me) {
                             } else if (sel == 4) {
                                 frm_Box1Rect.b_Message.Caption = "A remote control droid sent from the Hapa Jillo empire intercepts " + Trim(rivals.companyNames[l0070]) + " and explodes, causing " + Format(l0076, "#,#0") + " kubars worth of damage.";
                             } else if (sel == 5) {
-                                frm_Box1Rect.b_Message.Caption = "A group of Hapa Jillos attack " + Trim(rivals.companyNames[l0070]) + "'s warehouse on " + game.planetNames[fn01AE(0, 6)] + ", causing " + Format(l0076, "#,#0") + " kubars worth of damage.";
+                                frm_Box1Rect.b_Message.Caption = "A group of Hapa Jillos attack " + Trim(rivals.companyNames[l0070]) + "'s warehouse on " + game.planetNames[randomBetween(0, 6)] + ", causing " + Format(l0076, "#,#0") + " kubars worth of damage.";
                             } else if (sel == 6) {
                                 frm_Box1Rect.b_Message.Caption = Trim(rivals.companyNames[l0070]) + " loses " + Format(l0076, "#,#0") + " kubars when a corrupt Hapa Jillo merchant sells the company defective goods.";
                             }
@@ -2649,11 +2649,11 @@ function (me) {
                         }
                         await frm_Box1Rect.Show(1);
                     }
-                    sub014C(game.currentPlayer);
+                    storePlayer(game.currentPlayer);
                     l007A = game.currentPlayer;
                     for (l0070 = 1; l0070 <= game.numPlayers; l0070++) {
                         if (l0070 != l007A && game.graphShowCompany[l0070] == 0) {
-                            l0076 = fn01AE(l0078, 4 * l0078);
+                            l0076 = randomBetween(l0078, 4 * l0078);
                             frm_Box1Rect.b_Yes.Visible = 0;
                             frm_Box1Rect.b_No.Visible = 0;
                             frm_Box1Rect.b_OK.Visible = -1;
@@ -2661,7 +2661,7 @@ function (me) {
                             frm_Box1Rect.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ship" + Trim(Str(game.shipType[l0070])) + ".bmp");
                             frm_Box1Rect.b_ImageLable.Caption = Trim(game.companyNames[l0070]);
                             {
-                                const sel = fn01AE(1, 6);
+                                const sel = randomBetween(1, 6);
                                 if (sel == 1) {
                                     frm_Box1Rect.b_Message.Caption = "A mob of Hapa Jillos attacks " + Trim(game.companyNames[l0070]) + ". Several of the crew members wind up in the hospital, and this costs the company " + Format(l0076, "#,#0") + " kubars.";
                                 } else if (sel == 2) {
@@ -2688,17 +2688,17 @@ function (me) {
                                 frm_Box1Rect.b_Sound.Command = "Play";
                             }
                             await frm_Box1Rect.Show(1);
-                            sub013C(l0070);
-                            await sub015C(l0076, 0);
-                            sub014C(l0070);
+                            loadPlayer(l0070);
+                            await spend(l0076, 0);
+                            storePlayer(l0070);
                         }
                     }
-                    sub013C(l007A);
+                    loadPlayer(l007A);
                 }
             }
             await Unload(frm_Box1Port);
         }
-        if (fn01AE(1, mc007E) == 1) {
+        if (randomBetween(1, mc007E) == 1) {
             pv006E = -1;
             frm_Box1Port.b_Yes.Visible = 0;
             frm_Box1Port.b_No.Visible = 0;
@@ -2715,11 +2715,11 @@ function (me) {
             }
             await frm_Box1Port.Show(1);
             game.travelDelay[game.currentPlayer] = game.travelDelay[game.currentPlayer] / 2;
-        } else if (fn01AE(1, mc007E) == 1) {
+        } else if (randomBetween(1, mc007E) == 1) {
             pv006E = -1;
-            l0076 = fn01AE(25, 125) * (game.shipSize[game.currentPlayer]);
+            l0076 = randomBetween(25, 125) * (game.shipSize[game.currentPlayer]);
             do {
-                l0078 = fn01AE(0, 6);
+                l0078 = randomBetween(0, 6);
             } while (l0078 == game.planet[game.currentPlayer] || l0078 == game.previousPlanet[game.currentPlayer]);
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
@@ -2741,11 +2741,11 @@ function (me) {
                 game.planet[game.currentPlayer] = l0078;
             }
             await Unload(frm_Box1Port);
-        } else if (fn01AE(1, mc007E) == 1) {
+        } else if (randomBetween(1, mc007E) == 1) {
             pv006E = -1;
-            l0076 = fn01AE(100, 150) * (game.shipSize[game.currentPlayer]);
+            l0076 = randomBetween(100, 150) * (game.shipSize[game.currentPlayer]);
             do {
-                l0078 = fn01AE(0, 6);
+                l0078 = randomBetween(0, 6);
             } while (l0078 == game.planet[game.currentPlayer] || l0078 == game.previousPlanet[game.currentPlayer]);
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
@@ -2764,7 +2764,7 @@ function (me) {
             if (frm_Box1Port.Tag == "YES") {
                 await Unload(frm_Box1Port);
                 game.planet[game.currentPlayer] = l0078;
-                if (fn01AE(1, 4) != 1) {
+                if (randomBetween(1, 4) != 1) {
                     frm_Box1Port.b_Yes.Visible = 0;
                     frm_Box1Port.b_No.Visible = 0;
                     frm_Box1Port.b_OK.Visible = -1;
@@ -2798,12 +2798,12 @@ function (me) {
                 }
             }
             await Unload(frm_Box1Port);
-        } else if (fn01AE(1, mc007E) == 1) {
+        } else if (randomBetween(1, mc007E) == 1) {
             pv006E = -1;
             do {
-                l0078 = fn01AE(0, 6);
+                l0078 = randomBetween(0, 6);
             } while (l0078 == game.planet[game.currentPlayer] || l0078 == game.previousPlanet[game.currentPlayer]);
-            l0076 = fn01AE(25, 125) * (game.shipSize[game.currentPlayer]);
+            l0076 = randomBetween(25, 125) * (game.shipSize[game.currentPlayer]);
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
             frm_Box1Port.b_OK.Visible = 0;
@@ -2838,9 +2838,9 @@ function (me) {
                 player.cash = player.cash + l0076;
             }
             await Unload(frm_Box1Port);
-        } else if (fn01AE(1, mc007E) == 1) {
+        } else if (randomBetween(1, mc007E) == 1) {
             pv006E = -1;
-            l0076 = fn01AE(25, 75) * (game.shipSize[game.currentPlayer]);
+            l0076 = randomBetween(25, 75) * (game.shipSize[game.currentPlayer]);
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
             frm_Box1Port.b_OK.Visible = 0;
@@ -2858,9 +2858,9 @@ function (me) {
             if (frm_Box1Port.Tag == "YES") {
                 await Unload(frm_Box1Port);
                 player.cash = player.cash + l0076;
-                if (fn01AE(1, 4) == 1) {
+                if (randomBetween(1, 4) == 1) {
                     do {
-                        l0078 = fn01AE(0, 6);
+                        l0078 = randomBetween(0, 6);
                     } while (l0078 == game.planet[game.currentPlayer] || l0078 == game.previousPlanet[game.currentPlayer]);
                     frm_Box1Port.b_Yes.Visible = 0;
                     frm_Box1Port.b_No.Visible = 0;
@@ -2901,7 +2901,7 @@ function (me) {
         let l0088 = 0;
         let l008A = 0;
         try {
-            player.arrivalRoll = fn01AE(1, 100);
+            player.arrivalRoll = randomBetween(1, 100);
             game.planetSupplyBoost[game.planet[game.currentPlayer]] = CLng(game.planetSupplyBoost[game.planet[game.currentPlayer]] + (player.commodityAdSpend / 50));
             if ((player.cargoCapacity - 100) > 0) {
                 game.planetSupplyBoost[game.planet[game.currentPlayer]] = game.planetSupplyBoost[game.planet[game.currentPlayer]] + (player.cargoCapacity - 100);
@@ -2932,11 +2932,11 @@ function (me) {
                 l0088 = CLng(Sqr(((game.planetX[game.planet[game.currentPlayer]] - game.planetX[game.previousPlanet[game.currentPlayer]])) ** (2) + ((game.planetY[game.planet[game.currentPlayer]] - game.planetY[game.previousPlanet[game.currentPlayer]])) ** (2)));
                 l0088 = CLng(l0088 / 2);
                 l008A = CLng(game.shipSize[game.currentPlayer] / 100);
-                player.fuel = player.fuel - fn01AE(1, l0088) - fn01AE(1, l008A);
+                player.fuel = player.fuel - randomBetween(1, l0088) - randomBetween(1, l008A);
             }
             if (game.tutorialMode == 0 || game.complexity >= game.unlockCrew) {
                 if (player.wagesOwed >= CLng(player.crewSize) * player.crewSalary * 5) {
-                    l0088 = fn01AE(1, 3);
+                    l0088 = randomBetween(1, 3);
                     if (l0088 == 1) {
                         await sub3333();
                     }
@@ -2949,7 +2949,7 @@ function (me) {
             }
             if (game.tutorialMode == 0 || game.complexity >= game.unlockTaxes) {
                 if ((player.tariffsOwed + player.passengerTaxOwed) >= (35 * game.shipSize[game.currentPlayer])) {
-                    l0088 = fn01AE(1, 3);
+                    l0088 = randomBetween(1, 3);
                     if (l0088 == 1) {
                         await sub3395();
                     }
@@ -2962,10 +2962,10 @@ function (me) {
             }
             if (game.tutorialMode == 0 || game.complexity >= game.unlockInsurance) {
                 l0088 = player.insuranceRate * 1000;
-                player.insuranceCost = fn01AE(player.insuranceRate, l0088);
+                player.insuranceCost = randomBetween(player.insuranceRate, l0088);
             }
             if (game.tutorialMode == 0 || game.complexity >= game.unlockPassengers) {
-                sub0116();
+                generatePassengers();
             }
             if (game.tutorialMode == 0 || game.complexity >= game.unlockInsurance) {
                 player.insured = 0;
@@ -2990,7 +2990,7 @@ function (me) {
                 game.netWorth[game.currentPlayer] = 0;
             }
             game.turnDone[game.currentPlayer] = -1;
-            sub014C(game.currentPlayer);
+            storePlayer(game.currentPlayer);
             l0088 = game.turnOrder[game.turnOrderPos];
             do {
                 if (game.turnOrderPos < game.numPlayers) {
@@ -3003,17 +3003,15 @@ function (me) {
             return;
         } catch (e) {
             Err.Catch(e);
-            await sub012D(Err.Number);
+            await reportFileError(Err.Number);
             return;
         }
     }
 
     async function sub3383() {
         let l0092 = 0;
-        const mc0094 = 4;
-        const mc00A0 = 11;
-        l0092 = fn01AE(0, 6);
-        if (fn01AE(1, 40) == 1 && game.planet[game.currentPlayer] != l0092) {
+        l0092 = randomBetween(0, 6);
+        if (randomBetween(1, 40) == 1 && game.planet[game.currentPlayer] != l0092) {
             frm_Box1Port.b_Yes.Visible = -1;
             frm_Box1Port.b_No.Visible = -1;
             frm_Box1Port.b_OK.Visible = 0;
@@ -3034,7 +3032,7 @@ function (me) {
                 player.luckIsTemporary = -1;
                 game.planet[game.currentPlayer] = l0092;
                 player.adExtraPassengers = 0;
-                sub0116();
+                generatePassengers();
                 await sub3355();
             } else {
                 await Unload(frm_Box1Port);
@@ -3043,7 +3041,7 @@ function (me) {
                 await sub3324();
             }
         } else {
-            if (fn01AE(1, 100) <= player.luck) {
+            if (randomBetween(1, 100) <= player.luck) {
                 await sub3355();
             } else {
                 await sub3324();
@@ -3073,7 +3071,7 @@ function (me) {
             frm_Box1Rect.b_Sound.Command = "Play";
         }
         await frm_Box1Rect.Show(1);
-        await sub015C((player.passengerTaxOwed + player.tariffsOwed) * 3, -1);
+        await spend((player.passengerTaxOwed + player.tariffsOwed) * 3, -1);
         player.passengerTaxOwed = 0;
         player.tariffsOwed = 0;
         if (player.insured == -1) {
@@ -3104,17 +3102,17 @@ function (me) {
     }
 
     async function Form_Activate() {
-        me.MousePointer = mc0094;
+        me.MousePointer = ICON_CURSOR;
         await Unload(me);
     }
 
     async function Form_Load() {
-        me.MousePointer = mc00A0;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         await sub3376();
-        me.MousePointer = mc0094;
+        me.MousePointer = ICON_CURSOR;
         await Load(frm_Travel3);
         await frm_Travel3.Show();
     }

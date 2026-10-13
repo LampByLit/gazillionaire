@@ -23,21 +23,21 @@ VB.form("frm_Special",
 function (me) {
     const { FillElastic, b_Timer, b_Sound, b_Exit, VSElastic2, b_Help, b_Container, b_Message } = me.controls;
     const { VSElastic4, VSElastic3, Image1, Label1, b_Button } = me.controls;
-    const mc001E = 11;
-    const mc0030 = 1;
-    const mc00D6 = 255;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
+    const RED = 255;
     const m00E4 = 16711680;
     let m001A = 0;
     let m001C = 0;
 
     async function b_Button_Click() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         if (b_Button.Caption == "Return to Main Menu") {
             frm_Explore.Tag = "RETURN TO MAIN MENU";
             await b_Exit_Click();
         } else {
             await sub03A7();
-            me.MousePointer = mc0030;
+            me.MousePointer = ARROW_CURSOR;
         }
     }
 
@@ -50,7 +50,7 @@ function (me) {
     }
 
     async function b_Exit_Click() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         b_Timer.Enabled = 0;
         FillElastic.Visible = 0;
         if (settings.soundOn == -1) {
@@ -68,7 +68,7 @@ function (me) {
     }
 
     async function b_Help_Click() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             frm_Explore.b_Sound.Command = "Close";
             b_Sound.Command = "Close";
@@ -338,7 +338,7 @@ function (me) {
                 } else if (sel == 2) {
                     b_Message.Caption = "Your broker agrees to meet with you, but she is in a rush. Her only advice is to invest for the long term.";
                 } else if (sel == 3) {
-                    b_Message.Caption = "When you enter your broker's office, she is in tears. Apparently, her husband just left her for the " + Format(fn01AE(4, 8), "#,#0") + "th time this month, and she can't handle it. You spend the next two hours trying to console her.";
+                    b_Message.Caption = "When you enter your broker's office, she is in tears. Apparently, her husband just left her for the " + Format(randomBetween(4, 8), "#,#0") + "th time this month, and she can't handle it. You spend the next two hours trying to console her.";
                 } else if (sel == 4) {
                     b_Message.Caption = "When you sit down with your broker, she goes into a tirade about the high taxes she is forced to pay! She is so obsessed over this tax issue that she can't talk about anything else.";
                 } else if (sel == 5) {
@@ -396,7 +396,7 @@ function (me) {
         b_Timer.Enabled = -1;
         l00AC = CLng(player.arrivalRoll) * player.cargoCapacity * 4;
         {
-            const sel = fn01AE(1, 30);
+            const sel = randomBetween(1, 30);
             if (sel == 1) {
                 if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
@@ -473,7 +473,7 @@ function (me) {
                     }
                     b_Message.Caption = "The insurance company informs you that they are short on capital and must raise your rates an average of " + Format((((player.insuranceRate + 5) / player.insuranceRate) - 1) * 100, "#,#0") + "%.";
                     player.insuranceRate = player.insuranceRate + 5;
-                    player.insuranceCost = (player.insuranceRate * 1000) - fn01AE(1, 1000);
+                    player.insuranceCost = (player.insuranceRate * 1000) - randomBetween(1, 1000);
                 }
             } else if (sel == 12) {
                 if (settings.soundOn == -1) {
@@ -484,7 +484,7 @@ function (me) {
                 }
                 b_Message.Caption = "The insurance company reviews your records and informs you that your rates are in fact too low and must be raised an average of " + Format((((player.insuranceRate + 5) / player.insuranceRate) - 1) * 100, "#,#0") + "%.";
                 player.insuranceRate = player.insuranceRate + 5;
-                player.insuranceCost = (player.insuranceRate * 1000) - fn01AE(1, 1000);
+                player.insuranceCost = (player.insuranceRate * 1000) - randomBetween(1, 1000);
             } else if (sel == 13 || sel == 14 || sel == 15) {
                 if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
@@ -533,7 +533,7 @@ function (me) {
                     b_Sound.Command = "Play";
                 }
                 b_Message.Caption = "Your Insurance Agent explains to you that he has found a grave mistake. For the past few months, Voyager's Insurance has been under-charging you. In fact, you owe them " + Format(l00AC, "#,#0") + " kubars.";
-                await sub015C(l00AC, 0);
+                await spend(l00AC, 0);
             } else if (sel == 21) {
                 if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
@@ -570,7 +570,7 @@ function (me) {
                     }
                     b_Message.Caption = "Your Insurance Agent is not in a good mood. In fact, he says that after reviewing your records, he has no choice but to raise your rates by an average of " + Format((((player.insuranceRate + 5) / player.insuranceRate) - 1) * 100, "#,#0") + "%. He's sorry, but there is nothing he can do about this.";
                     player.insuranceRate = player.insuranceRate + 5;
-                    player.insuranceCost = (player.insuranceRate * 1000) - fn01AE(1, 1000);
+                    player.insuranceCost = (player.insuranceRate * 1000) - randomBetween(1, 1000);
                 }
             } else if (sel == 27) {
                 if (settings.soundOn == -1) {
@@ -581,7 +581,7 @@ function (me) {
                 }
                 b_Message.Caption = "Your meeting with your Insurance Agent goes well. He promises to lower you rates. That is why you are surprised to receive a note in the mail the next day indicating that your premiums have been raised an average of " + Format((((player.insuranceRate + 5) / player.insuranceRate) - 1) * 100, "#,#0") + "%. Sorry, but there is nothing you can do about this.";
                 player.insuranceRate = player.insuranceRate + 5;
-                player.insuranceCost = (player.insuranceRate * 1000) - fn01AE(1, 1000);
+                player.insuranceCost = (player.insuranceRate * 1000) - randomBetween(1, 1000);
             } else if (sel == 28 || sel == 29 || sel == 30) {
                 if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
@@ -600,9 +600,9 @@ function (me) {
         let l00AE = 0;
         let l00B0 = "";
         b_Timer.Enabled = 0;
-        l00AE = fn01AE(25, 75) * game.shipSize[game.currentPlayer];
+        l00AE = randomBetween(25, 75) * game.shipSize[game.currentPlayer];
         {
-            const sel = fn01AE(1, 3);
+            const sel = randomBetween(1, 3);
             if (sel == 1) {
                 {
                     const sel2 = ((Mod(player.arrivalRoll, 10)) + 1);
@@ -654,7 +654,7 @@ function (me) {
                         l00B0 = "agent.wav";
                     } else if (sel2 == 3) {
                         b_Message.Caption = "You end up at a charity sports benefit batting around Borly Balls with Kukubia's most famous sports star. After fifteen minutes, you get slammed in the head with a Borly Ball and have to be rushed to the hospital. You aren't seriously injured, but the ambulance bill comes to " + Format(l00AE, "#,#0") + " kubars.";
-                        await sub015C(l00AE, 0);
+                        await spend(l00AE, 0);
                         l00B0 = "bad7.wav";
                     } else if (sel2 == 4) {
                         b_Message.Caption = "Your agent books you on an interplanetary TV show with the Ministry of Travel. The only problem is that the topic of discussion is smuggling illegal aliens. The Ministry accuses you of engaging in smuggling operations, and the show winds up doing more harm than good to your public image.";
@@ -732,7 +732,7 @@ function (me) {
     async function sub046F() {
         let l00B2 = 0;
         {
-            const sel = fn01AE(1, 30);
+            const sel = randomBetween(1, 30);
             if (sel == 1) {
                 if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
@@ -772,9 +772,9 @@ function (me) {
                     b_Sound.Command = "Open";
                     b_Sound.Command = "Play";
                 }
-                l00B2 = fn01AE(500, 2000) * player.crewSize;
+                l00B2 = randomBetween(500, 2000) * player.crewSize;
                 b_Message.Caption = "Your crew gets into a fight with a rowdy bunch of Lepro Ulps and winds up in jail. It costs you " + Format(l00B2, "#,#0") + " kubars to bail them out. What a vacation!";
-                await sub015C(l00B2, 0);
+                await spend(l00B2, 0);
             } else if (sel == 6 || sel == 7) {
                 if (player.crewSalary > 1000) {
                     if (settings.soundOn == -1) {
@@ -860,9 +860,9 @@ function (me) {
                     b_Sound.Command = "Open";
                     b_Sound.Command = "Play";
                 }
-                l00B2 = fn01AE(500, 2000) * player.crewSize;
+                l00B2 = randomBetween(500, 2000) * player.crewSize;
                 b_Message.Caption = "Two of your crew members get carried away while having fun at a beach side resort and manage to sink a 30 foot sun bathing raft. You can't imagine how they did this, but it ends up costing you " + Format(l00B2, "#,#0") + " kubars.";
-                await sub015C(l00B2, 0);
+                await spend(l00B2, 0);
             } else if (sel == 21 || sel == 22) {
                 if (player.crewSalary > 1000) {
                     if (settings.soundOn == -1) {
@@ -918,7 +918,7 @@ function (me) {
     function sub0479() {
         b_Timer.Enabled = -1;
         {
-            const sel = fn01AE(1, 30);
+            const sel = randomBetween(1, 30);
             if (sel == 1) {
                 if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
@@ -1250,7 +1250,7 @@ function (me) {
                 b_Sound.Command = "Play";
             }
             b_Message.Caption = "Zobrok fills up your tank, saving you a total of " + Format((player.fuelCapacity - player.fuel) * (game.fuelPrice[game.planet[game.currentPlayer]] - l00B4), "#,#0") + " kubars.";
-            await sub015C((l00B4 * (player.fuelCapacity - player.fuel)), 0);
+            await spend((l00B4 * (player.fuelCapacity - player.fuel)), 0);
             player.fuel = player.fuelCapacity;
         }
         b_Button.Caption = "Return to Main Menu";
@@ -1304,7 +1304,7 @@ function (me) {
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
-            await sub015C(l00B6, 0);
+            await spend(l00B6, 0);
             if (player.luck <= 20) {
                 b_Message.Caption = "The Soothsayer lays his sticky yellow fingers against your forehead and starts screaming wildly! Breaking away, the Soothsayer falls to the ground, then shouts out that you are cursed. You are headed for death and destruction. If you value your life, you must seek out a blessing right away before something terrible happens.";
             } else if (player.luck <= 25) {
@@ -1324,35 +1324,35 @@ function (me) {
             } else if (player.luck <= 60) {
                 b_Message.Caption = "The Soothsayer rubs her elbows in your face while singing to herself. It seems like she's having fun, but you definitely are not. Finally, after what feels like an eternity, she says she couldn't detect much of anything. Your energy level is slightly positive, which is good, but it's nothing to write home about.";
             } else if (player.luck <= 65) {
-                if (fn01AE(1, 2) == 1) {
+                if (randomBetween(1, 2) == 1) {
                     b_Message.Caption = "The Soothsayer performs the standard reading and comes back with good news. Your aura is positive. In fact, it's well above average. You can rest assured the odds are in your favor.";
                 } else {
                     b_Message.Caption = "The Soothsayer explains that your aura is positive and may lead to some good fortune. As luck would have it, on your way home from the Soothsayer, you find a wallet stuffed with " + Format(l00B6 * 5, "#,#0") + " kubars and no ID. When you take this to the local police, they tell you that no one has reported a lost wallet, so you can keep the money.";
                     player.cash = player.cash + (l00B6 * 5);
                 }
             } else if (player.luck <= 70) {
-                if (fn01AE(1, 2) == 1) {
+                if (randomBetween(1, 2) == 1) {
                     b_Message.Caption = "The Soothsayer sits on your back and begins pulling out small hairs with a tweezers. This doesn't hurt, but you find it rather strange. After examining these hairs for several hours, the Soothsayer says things are looking up. Your energy levels are on the rise. You aren't the most blessed person ever, but you don't have anything to worry about.";
                 } else {
                     b_Message.Caption = "The Soothsayer explains that your aura is above average and good fortune is bound to come your way. That night, when you return to your ship, you find out that one of your passengers was a wealthy foreign monarch, and he was so impressed with your company that he has given you a gift of " + Format(l00B6 * 10, "#,#0") + " kubars.";
                     player.cash = player.cash + (l00B6 * 10);
                 }
             } else if (player.luck <= 75) {
-                if (fn01AE(1, 2) == 1) {
+                if (randomBetween(1, 2) == 1) {
                     b_Message.Caption = "The Soothsayer reads your aura, then congratulates you on a fine showing. Your aura is very positive, and you should expect good fortune in the next few weeks. At least, the odds are stacked in your favor.";
                 } else {
                     b_Message.Caption = "The Soothsayer explains that your aura is very positive, and the chance of bad luck occurring is rather remote. This is why you aren't surprised when a reckless driver slams into your taxi on the way home, then offers to pay you " + Format(l00B6 * 15, "#,#0") + " kubars if you promise not to sue him. To make matters better, you aren't even injured in the accident.";
                     player.cash = player.cash + (l00B6 * 15);
                 }
             } else if (player.luck <= 80) {
-                if (fn01AE(1, 2) == 1) {
+                if (randomBetween(1, 2) == 1) {
                     b_Message.Caption = "The Soothsayer wraps your entire body up in wet rags, which smell like vinegar. After several hours, he returns with a big grin on his face. Your energy levels are fantastic. In fact, you are radiating such positive energy that you can expect good things to come in the near future.";
                 } else {
                     b_Message.Caption = "The Soothsayer explains that you have an extremely positive aura and should encounter a string of good luck. It just so happens that only minutes later you receive a phone call from the Governor of Ooom, pledging to give your company " + Format(l00B6 * 20, "#,#0") + " kubars in financial aid with no strings attached!";
                     player.cash = player.cash + (l00B6 * 20);
                 }
             } else {
-                if (fn01AE(1, 2) == 1) {
+                if (randomBetween(1, 2) == 1) {
                     b_Message.Caption = "The Soothsayer asks you to stand in a bucket of mouth wash. This lasts only two minutes, then the Soothsayer jumps up and hysterically hugs you. Your energy levels are off the charts! Falling to his knees the Soothsayer begins kissing your toes, which now smell like peppermint. You have the most positive energy levels the Soothsayer has seen in the past 10 months!!! You are truly blessed.";
                 } else {
                     b_Message.Caption = "The Soothsayer explains that you have an extraordinarily positive aura and are truly blessed. The next day, you are fortunate enough to receive a " + Format(l00B6 * 25, "#,#0") + " kubar refund from the Imperial Tax Office. They explain that they made a mistake in your taxes and have refunded you the difference plus compensation.";
@@ -1401,7 +1401,7 @@ function (me) {
             if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
                 {
-                    const sel = fn01AE(1, 2);
+                    const sel = randomBetween(1, 2);
                     if (sel == 1) {
                         b_Sound.FileName = Trim(paths.soundDir) + "engine.wav";
                     } else if (sel == 2) {
@@ -1412,7 +1412,7 @@ function (me) {
                 b_Sound.Command = "Play";
             }
             {
-                const sel = fn01AE(1, 15);
+                const sel = randomBetween(1, 15);
                 if (sel == 1) {
                     l00B8 = "This should help speed things up!";
                 } else if (sel == 2) {
@@ -1446,7 +1446,7 @@ function (me) {
                 }
             }
             b_Message.Caption = "You just purchased L-Tech's super " + Format(game.engineSpeed[game.currentPlayer] + 1, "#,#0") + " kuarp engine for " + Format(((CLng(player.arrivalRoll) * CLng(game.weeklyRoll)) * 6), "#,#0") + " kubars. " + l00B8;
-            await sub015C(((CLng(player.arrivalRoll) * CLng(game.weeklyRoll)) * 6), 0);
+            await spend(((CLng(player.arrivalRoll) * CLng(game.weeklyRoll)) * 6), 0);
             game.engineSpeed[game.currentPlayer] = game.engineSpeed[game.currentPlayer] + 1;
         }
         b_Button.Caption = "Return to Main Menu";
@@ -1545,7 +1545,7 @@ function (me) {
             }
             b_Message.Caption = "You just purchased " + Format(l00BE, "#,#0") + " tons of " + Trim(game.commodityNames[l00BA][l00BC]) + " at " + Format(l00C0, "#,#0") + " kubars/ton." + "\n" + "\n" + "You spent a total of " + Format(l00BE * l00C0, "#,#0") + " kubars." + "\n" + "\n" + "Have fun with the " + Trim(game.commodityNames[l00BA][l00BC]) + ".";
             player.cargoAvgCost[l00BA][l00BC] = CLng((player.cargoAvgCost[l00BA][l00BC] * player.cargo[l00BA][l00BC] + (l00C0 * l00BE)) / (player.cargo[l00BA][l00BC] + l00BE));
-            await sub015C(l00BE * l00C0, 0);
+            await spend(l00BE * l00C0, 0);
             player.cargoTotal = player.cargoTotal + l00BE;
             player.cargo[l00BA][l00BC] = player.cargo[l00BA][l00BC] + l00BE;
         }
@@ -1615,7 +1615,7 @@ function (me) {
     function sub04B5() {
         b_Timer.Enabled = -1;
         {
-            const sel = fn01AE(1, 31);
+            const sel = randomBetween(1, 31);
             if (sel == 1) {
                 if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
@@ -1958,7 +1958,7 @@ function (me) {
     async function sub04C9() {
         let l00D0 = 0;
         let l00D2 = 0;
-        const mc00D6 = 255;
+        const RED = 255;
         const m00E4 = 16711680;
         if (((Mod(game.weeklyRoll, 6)) + 1) == 1) {
             m001C = 0;
@@ -1993,7 +1993,7 @@ function (me) {
         } else {
             m001C = 0;
             b_Timer.Enabled = -1;
-            l00D0 = await fn01A0(0, Format((0.05 * player.cash), "##0"), 0.25 * (0.05 * player.cash), (0.05 * player.cash), "The Casino" + "\n" + "\n" + "Enter the amount you'd like to wager.", " ");
+            l00D0 = await askNumber(0, Format((0.05 * player.cash), "##0"), 0.25 * (0.05 * player.cash), (0.05 * player.cash), "The Casino" + "\n" + "\n" + "Enter the amount you'd like to wager.", " ");
             l00D2 = l00D0;
             if (l00D0 <= 0) {
                 if (settings.soundOn == -1) {
@@ -2032,7 +2032,7 @@ function (me) {
                 b_Message.Caption = "Under Kukubian Law, you cannot place a bet greater than 5% of your total cash in any one week. The Casino Dealer politely informs you that the casino would love to take all of your money, but unfortunately, that would mean breaking the law.";
                 player.specialDone = 0;
             } else {
-                if (fn01AE(1, 2) == 1) {
+                if (randomBetween(1, 2) == 1) {
                     if (settings.soundOn == -1) {
                         frm_Explore.b_Sound.Command = "Close";
                     }
@@ -2042,9 +2042,9 @@ function (me) {
                         b_Sound.Command = "Open";
                         b_Sound.Command = "Play";
                     }
-                    b_Container.BackColor = mc00D6;
+                    b_Container.BackColor = RED;
                     b_Message.Caption = "Sorry, but you lose. The Casino Dealer takes your " + Format(l00D0, "#,#0") + " kubars and informs you that if you want to continue gambling, you'll have to come back another time.";
-                    await sub015C(l00D0, 0);
+                    await spend(l00D0, 0);
                 } else {
                     L182D4: while (true) {
                         if (settings.soundOn == -1) {
@@ -2067,7 +2067,7 @@ function (me) {
                         if (frm_Box1Port.Tag == "YES") {
                             await Unload(frm_Box1Port);
                             l00D0 = l00D0 * 2;
-                            if (fn01B7(1, 2) == 1) {
+                            if (randomInt(1, 2) == 1) {
                                 continue L182D4;
                             } else {
                                 m001C = 0;
@@ -2078,9 +2078,9 @@ function (me) {
                                     b_Sound.Command = "Open";
                                     b_Sound.Command = "Play";
                                 }
-                                b_Container.BackColor = mc00D6;
+                                b_Container.BackColor = RED;
                                 b_Message.Caption = "Sorry, but you lose it all. The Casino Dealer politely takes your money and informs you that if you want to continue gambling, you'll have to come back next week.";
-                                await sub015C(l00D2, 0);
+                                await spend(l00D2, 0);
                             }
                         } else {
                             await Unload(frm_Box1Port);
@@ -2106,7 +2106,7 @@ function (me) {
     function sub04AB() {
         b_Timer.Enabled = -1;
         {
-            const sel = fn01AE(1, 30);
+            const sel = randomBetween(1, 30);
             if (sel == 1) {
                 if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
@@ -2400,7 +2400,7 @@ function (me) {
                 l00EA = "expand your ship's fuel tank capacity by 5 tons";
             }
         }
-        if (fn01AE(1, 3) == 1) {
+        if (randomBetween(1, 3) == 1) {
             if (settings.soundOn == -1) {
                 frm_Explore.b_Sound.Command = "Close";
             }
@@ -2411,7 +2411,7 @@ function (me) {
                 b_Sound.Command = "Play";
             }
             {
-                const sel = fn01AE(1, 15);
+                const sel = randomBetween(1, 15);
                 if (sel == 1) {
                     b_Message.Caption = "As luck would have it, your brilliant mechanic isn't quite as smart as he thought he was. After taking apart your ship and making a big mess, he discovers it's impossible to " + l00EA + ".";
                 } else if (sel == 2) {
@@ -2454,7 +2454,7 @@ function (me) {
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
-            await sub015C(l00EC, 0);
+            await spend(l00EC, 0);
             {
                 const sel = ((Mod(player.arrivalRoll, 4)) + 1);
                 if (sel == 1) {
@@ -2479,7 +2479,7 @@ function (me) {
                 }
             }
             {
-                const sel = fn01AE(1, 3);
+                const sel = randomBetween(1, 3);
                 if (sel == 1) {
                     b_Message.Caption = "With a few spare parts and some hard work, your mechanic manages to " + l00EA + ".";
                 } else if (sel == 2) {
@@ -2495,7 +2495,7 @@ function (me) {
     function sub04BF() {
         b_Timer.Enabled = -1;
         {
-            const sel = fn01AE(1, 31);
+            const sel = randomBetween(1, 31);
             if (sel == 1) {
                 if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
@@ -2732,7 +2732,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0030;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {

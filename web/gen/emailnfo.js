@@ -20,26 +20,26 @@ VB.form("frm_EmailInfo",
 function (me) {
     const { FillElastic, b_OK, b_Box3, b_TextBox3, b_Message3, b_Box2, b_TextBox2, b_Message2 } = me.controls;
     const { b_TextBox1, b_Image, b_Title } = me.controls;
-    const mc001A = 11;
-    const mc002A = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
 
     async function b_OK_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (Trim(me.b_TextBox1.Caption) == "") {
             frm_Box0.FillElastic.Caption = "Company Name?";
             frm_Box0.b_Message.Caption = "\n" + "You must enter the COMPANY NAME before you can continue.";
             await frm_Box0.Show(1);
-            me.MousePointer = mc002A;
+            me.MousePointer = ARROW_CURSOR;
         } else if (Trim(me.b_TextBox2.Text) == "") {
             frm_Box0.FillElastic.Caption = "Player's Name?";
             frm_Box0.b_Message.Caption = "\n" + "You must enter the PLAYER'S NAME before you can continue.";
             await frm_Box0.Show(1);
-            me.MousePointer = mc002A;
+            me.MousePointer = ARROW_CURSOR;
         } else if (Trim(me.b_TextBox3.Text) == "") {
             frm_Box0.FillElastic.Caption = "Email Address?";
             frm_Box0.b_Message.Caption = "\n" + "You must enter the PLAYER'S EMAIL ADDRESS before you can continue.";
             await frm_Box0.Show(1);
-            me.MousePointer = mc002A;
+            me.MousePointer = ARROW_CURSOR;
         } else {
             FillElastic.Visible = 0;
             me.Hide();
@@ -82,15 +82,15 @@ function (me) {
         b_TextBox1.Visible = -1;
         b_TextBox2.Visible = -1;
         b_TextBox3.Visible = -1;
-        me.MousePointer = mc002A;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function Form_Load() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
     }
 
     function Form_QueryUnload(Cancel, UnloadMode) {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
     }
 
     return {

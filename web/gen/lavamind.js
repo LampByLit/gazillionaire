@@ -16,13 +16,13 @@ VB.form("frm_LavaMind",
   ]],
 function (me) {
     const { FillElastic, b_Image, b_Sound, VSElastic1, b_BeginGame, b_QuickStart, b_Configuration, b_LavaMind } = me.controls;
-    const mc001A = 11;
-    const mc0044 = 16777215;
-    const mc0056 = 12632256;
-    const mc00B0 = 1;
+    const HOURGLASS = 11;
+    const WHITE = 16777215;
+    const LIGHT_GRAY = 12632256;
+    const ARROW_CURSOR = 1;
 
     async function b_BeginGame_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         b_Image.Visible = 0;
         FillElastic.Visible = 0;
         b_Sound.Command = "Close";
@@ -31,15 +31,15 @@ function (me) {
     }
 
     function b_BeginGame_MouseDown(Button, Shift, X, Y) {
-        b_BeginGame.BackColor = mc0044;
+        b_BeginGame.BackColor = WHITE;
     }
 
     function b_BeginGame_MouseUp(Button, Shift, X, Y) {
-        b_BeginGame.BackColor = mc0056;
+        b_BeginGame.BackColor = LIGHT_GRAY;
     }
 
     async function b_Configuration_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         await frm_Config.Show(1);
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -50,15 +50,15 @@ function (me) {
     }
 
     function b_Configuration_MouseDown(Button, Shift, X, Y) {
-        b_Configuration.BackColor = mc0044;
+        b_Configuration.BackColor = WHITE;
     }
 
     function b_Configuration_MouseUp(Button, Shift, X, Y) {
-        b_Configuration.BackColor = mc0056;
+        b_Configuration.BackColor = LIGHT_GRAY;
     }
 
     async function b_Image_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         b_Image.Visible = 0;
         FillElastic.Visible = 0;
         b_Sound.Command = "Close";
@@ -67,7 +67,7 @@ function (me) {
     }
 
     async function b_LavaMind_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -108,15 +108,15 @@ function (me) {
     }
 
     function b_LavaMind_MouseDown(Button, Shift, X, Y) {
-        b_LavaMind.BackColor = mc0044;
+        b_LavaMind.BackColor = WHITE;
     }
 
     function b_LavaMind_MouseUp(Button, Shift, X, Y) {
-        b_LavaMind.BackColor = mc0056;
+        b_LavaMind.BackColor = LIGHT_GRAY;
     }
 
     async function b_QuickStart_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         b_Image.Visible = 0;
         FillElastic.Visible = 0;
         b_Sound.Command = "Close";
@@ -125,15 +125,15 @@ function (me) {
     }
 
     function b_QuickStart_MouseDown(Button, Shift, X, Y) {
-        b_QuickStart.BackColor = mc0044;
+        b_QuickStart.BackColor = WHITE;
     }
 
     function b_QuickStart_MouseUp(Button, Shift, X, Y) {
-        b_QuickStart.BackColor = mc0056;
+        b_QuickStart.BackColor = LIGHT_GRAY;
     }
 
     async function FillElastic_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         b_Image.Visible = 0;
         FillElastic.Visible = 0;
         b_Sound.Command = "Close";
@@ -142,7 +142,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc00B0;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -154,7 +154,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         b_Image.Picture = LoadPicture(Trim(paths.imageDir) + "logo.bmp");
         me.Tag = "";
         if (settings.soundOn == -1) {

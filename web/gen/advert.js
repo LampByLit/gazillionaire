@@ -34,8 +34,8 @@ function (me) {
     const { FillElastic, b_Sound, b_PlaceAd1, b_PlaceAd4, b_PlaceAd5, VSElastic6, b_Commodity, b_Passenger } = me.controls;
     const { b_Radio, b_Magazine, b_TV, b_Newspaper, b_None, b_Everything, b_Fliers, b_Message } = me.controls;
     const { VSElastic2, b_CommodityLabel, b_PassengerLabel, b_Cash, b_Advertising, b_ExitAdvertising1, b_Help1 } = me.controls;
-    const mc001C = 11;
-    const mc00EA = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
 
     function b_Commodity_Click() {
         sub34FE();
@@ -46,7 +46,7 @@ function (me) {
     }
 
     async function b_ExitAdvertising1_Click() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         await frm_MainMenu.Show();
         await Unload(me);
     }
@@ -66,7 +66,7 @@ function (me) {
     }
 
     async function b_Help1_Click() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -158,7 +158,7 @@ function (me) {
     }
 
     function sub34FE() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         b_Commodity.BackColor = 0xFFFF80;
         b_Passenger.BackColor = 0xC0C0C0;
         b_Passenger.Tag = "Passenger Selected = False";
@@ -177,13 +177,13 @@ function (me) {
         } else if (player.commodityAdChoice == 10000 * (game.shipSize[game.currentPlayer] / 400)) {
             b_Everything.Value = -1;
         }
-        me.MousePointer = mc00EA;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function sub371C() {
         let l00EC = "";
         let l00EE = "";
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         b_Message.FloodPercent = 100 * (player.adSpendTotal / (2 * 10000 * (game.shipSize[game.currentPlayer] / 400)));
         if (player.adSpendTotal == 1) {
             b_Advertising.Caption = "   Advertising For Next Planet:  " + Format(player.adSpendTotal, "#,#0") + " kubar";
@@ -242,11 +242,11 @@ function (me) {
         }
         b_PassengerLabel.Caption = "   Passenger Advertising:  " + l00EC;
         b_CommodityLabel.Caption = "   Commodity Advertising:  " + l00EE;
-        me.MousePointer = mc00EA;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function sub3601() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         b_Passenger.BackColor = 0xFFFF80;
         b_Commodity.BackColor = 0xC0C0C0;
         b_Passenger.Tag = "Passenger Selected = True";
@@ -265,11 +265,11 @@ function (me) {
         } else if (player.passengerAdChoice == 10000 * (game.shipSize[game.currentPlayer] / 400)) {
             b_Everything.Value = -1;
         }
-        me.MousePointer = mc00EA;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function sub3632() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         if ((player.cash + player.adSpendTotal) == 0) {
             if (settings.soundOn == -1) {
                 Beep();
@@ -299,7 +299,7 @@ function (me) {
             player.cash = player.cash - player.adSpendTotal;
         }
         sub371C();
-        me.MousePointer = mc00EA;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function sub3533() {
@@ -339,7 +339,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc00EA;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -349,7 +349,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         sub34FE();
         sub3601();
         sub371C();
@@ -360,7 +360,7 @@ function (me) {
         b_Radio.Caption = "Radio (" + Format(4000 * (game.shipSize[game.currentPlayer] / 400), "#,#0") + " kubars)";
         b_TV.Caption = "TV (" + Format(5000 * (game.shipSize[game.currentPlayer] / 400), "#,#0") + " kubars)";
         b_Everything.Caption = "Everything (" + Format(10000 * (game.shipSize[game.currentPlayer] / 400), "#,#0") + " kubars)";
-        me.MousePointer = mc00EA;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     return {

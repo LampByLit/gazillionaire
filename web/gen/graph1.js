@@ -13,12 +13,12 @@ VB.form("frm_BarGraph",
   ]],
 function (me) {
     const { FillElastic, b_Sound, VSElastic2, b_Help, b_Exit, Graph1 } = me.controls;
-    const mc001A = 11;
-    const mc007A = 1;
-    const mc007C = 255;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
+    const RED = 255;
 
     async function b_Exit_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (me.Tag == "NEWTURN" && game.tutorialMode == -1 && game.turn >= 10 || game.complexity >= 8) {
             frm_Complexity.Tag = "COMPLEXITY";
             await Unload(me);
@@ -36,12 +36,12 @@ function (me) {
     }
 
     async function b_Help_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (me.Tag == "NEWTURN" && game.tutorialMode == -1 && game.turn >= 10 || game.complexity >= 8) {
             frm_Complexity.Tag = "COMPLEXITY";
             await Unload(me);
         } else {
-            me.MousePointer = mc001A;
+            me.MousePointer = HOURGLASS;
             if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
                 b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -49,7 +49,7 @@ function (me) {
                 b_Sound.Command = "Play";
             }
             frm_Box1.FillElastic.Caption = "Help (Net Worth Graph)";
-            frm_Box1.b_Message.Caption = "This bar graph shows each company's NET WORTH. The NET WORTH is computed by adding together a company's total cash, savings and stock, then subtracting any money owed to the Trader's Union or Mr. Zinn. In order to win the game, a company must have a net worth of " + Format(fn016E(), "#,#0") + " kubars.";
+            frm_Box1.b_Message.Caption = "This bar graph shows each company's NET WORTH. The NET WORTH is computed by adding together a company's total cash, savings and stock, then subtracting any money owed to the Trader's Union or Mr. Zinn. In order to win the game, a company must have a net worth of " + Format(nextGoal(), "#,#0") + " kubars.";
             await frm_Box1.Show(1);
         }
     }
@@ -64,10 +64,9 @@ function (me) {
 
     function sub1CF9() {
         let l006E = 0;
-        const mc007A = 1;
-        const mc007C = 255;
-        me.MousePointer = mc001A;
-        sub00F9();
+        const ARROW_CURSOR = 1;
+        me.MousePointer = HOURGLASS;
+        updateRivalNetWorth();
         Graph1.DrawMode = 1;
         if (game.numPlayers == 6) {
             if (game.graphShowCompany[1] == -1) {
@@ -217,7 +216,7 @@ function (me) {
             Graph1.ColorData = 10;
             Graph1.ColorData = 9;
         }
-        Graph1.BottomTitle = "The first company to reach a NET WORTH of " + Format(fn016E(), "#,#0") + " kubars wins the game!";
+        Graph1.BottomTitle = "The first company to reach a NET WORTH of " + Format(nextGoal(), "#,#0") + " kubars wins the game!";
         Graph1.NumPoints = game.numPlayers + game.numRivals;
         Graph1.GraphType = 4;
         Graph1.GraphStyle = 0;
@@ -244,16 +243,16 @@ function (me) {
             Graph1.GraphData = rivals.netWorth[l006E];
         }
         Graph1.DrawMode = 2;
-        me.MousePointer = mc007A;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function Form_Activate() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (me.Tag == "NEWTURN" && game.tutorialMode == -1 && game.turn >= 10 || game.complexity >= 8) {
             Graph1.GraphTitle = "Net Worth on Turn " + Format(game.turn, "#,#0");
             b_Help.Caption = "Complexity";
             b_Help.FontSize = 18;
-            b_Help.ForeColor = mc007C;
+            b_Help.ForeColor = RED;
             b_Help.CaptionPos = 4;
             b_Help.Visible = 0;
         } else if (me.Tag == "NEWTURN") {
@@ -262,7 +261,7 @@ function (me) {
         } else if (me.Tag == "MONEY") {
             Graph1.GraphTitle = "Net Worth";
         }
-        me.MousePointer = mc007A;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -272,7 +271,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         sub1CF9();
     }
 

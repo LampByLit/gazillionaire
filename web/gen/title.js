@@ -12,11 +12,11 @@ VB.form("frm_TitlePage",
   ]],
 function (me) {
     const { FillElastic, b_Sound, Label4, Label3, Label2, Label1 } = me.controls;
-    const mc001A = 11;
-    const mc0030 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
 
     async function sub050F() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await frm_Intro.Show();
         await Unload(me);
@@ -27,7 +27,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0030;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -35,7 +35,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "title.bmp");
         Label2.Caption = "Produced, Designed and Programmed" + "\n" + "by" + "\n" + "Naomi Kokubo" + "\n" + "Steven Hoffman" + "\n" + "\n" + "Version 1/1/97" + "\n" + "Copyright (c) 1994 - 1997 LavaMind." + "\n" + "All rights reserved.";
         if (settings.soundOn == -1) {

@@ -20,15 +20,15 @@ VB.form("frm_Stock",
 function (me) {
     const { b_Sound, FillElastic, b_Chart, b_Message, VSElastic1, b_All, b_Next, b_Shares } = me.controls;
     const { b_Help, b_Sell, b_Buy, b_Exit } = me.controls;
-    const mc002A = 16777215;
-    const mc003C = 12632256;
-    const mc0046 = 11;
-    const mc0126 = 1;
-    const mc012C = 65280;
-    const mc0136 = 16776960;
-    const mc013A = 255;
-    const mc013E = 16711935;
-    const mc0142 = 65535;
+    const WHITE = 16777215;
+    const LIGHT_GRAY = 12632256;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
+    const GREEN = 65280;
+    const CYAN = 16776960;
+    const RED = 255;
+    const MAGENTA = 16711935;
+    const YELLOW = 65535;
     let m001A = "";
     let m001E = 0;
     let m0020 = 0;
@@ -40,19 +40,19 @@ function (me) {
     }
 
     function b_All_MouseDown(Button, Shift, X, Y) {
-        b_All.BackColor = mc002A;
+        b_All.BackColor = WHITE;
     }
 
     function b_All_MouseUp(Button, Shift, X, Y) {
-        b_All.BackColor = mc003C;
+        b_All.BackColor = LIGHT_GRAY;
     }
 
     async function b_Buy_Click() {
         let l0040 = 0;
         let l0042 = 0;
         let l0044 = 0;
-        const mc0046 = 11;
-        me.MousePointer = mc0046;
+        const HOURGLASS = 11;
+        me.MousePointer = HOURGLASS;
         if (m0020 != game.planet[game.currentPlayer] && m0020 != 7) {
             if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
@@ -90,7 +90,7 @@ function (me) {
                 l0042 = game.stockPrices[game.planet[game.currentPlayer]][15];
             }
             l0044 = CLng(0.5 * ((player.cash + player.bankBalance) / l0042));
-            l0040 = await fn01A0(0, Format(l0044, "##0"), 0.25 * l0044, l0044, game.planetNames[game.planet[game.currentPlayer]] + " Stock Exchange" + "\n" + "\n" + "Enter the number of shares you wish to purchase.", " ");
+            l0040 = await askNumber(0, Format(l0044, "##0"), 0.25 * l0044, l0044, game.planetNames[game.planet[game.currentPlayer]] + " Stock Exchange" + "\n" + "\n" + "Enter the number of shares you wish to purchase.", " ");
             if (l0040 == -3333) {
                 m001A = "";
             } else if (l0040 < 0) {
@@ -121,44 +121,44 @@ function (me) {
                 } else {
                     m001A = "\n" + "\n" + "NOTE:" + "\n" + "You bought " + Format(l0040, "#,#0") + " shares";
                 }
-                await sub015C(l0040 * l0042, 0);
+                await spend(l0040 * l0042, 0);
                 player.shareAvgCost[game.planet[game.currentPlayer]] = CLng(((player.shareAvgCost[game.planet[game.currentPlayer]] * player.shares[game.planet[game.currentPlayer]]) + (l0042 * l0040)) / (player.shares[game.planet[game.currentPlayer]] + l0040));
                 player.shares[game.planet[game.currentPlayer]] = player.shares[game.planet[game.currentPlayer]] + l0040;
                 frm_Box0.FillElastic.Caption = "Brokerage Fee";
                 frm_Box0.b_Message.Caption = "\n" + "Every time you buy or sell stock, you must pay your broker a 1% commission. This comes out to be a total of " + Format(0.01 * l0040 * l0042, "#,#0") + " kubars. Sorry, but brokers do not work for free.";
                 await frm_Box0.Show(1);
-                await sub015C(0.01 * l0040 * l0042, 0);
+                await spend(0.01 * l0040 * l0042, 0);
             }
         }
         sub3022(m0020);
     }
 
     function b_Buy_MouseDown(Button, Shift, X, Y) {
-        b_Buy.BackColor = mc002A;
+        b_Buy.BackColor = WHITE;
     }
 
     function b_Buy_MouseUp(Button, Shift, X, Y) {
-        b_Buy.BackColor = mc003C;
+        b_Buy.BackColor = LIGHT_GRAY;
     }
 
     async function b_Exit_Click() {
-        me.MousePointer = mc0046;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await frm_MainMenu.Show();
         await Unload(me);
     }
 
     function b_Exit_MouseDown(Button, Shift, X, Y) {
-        b_Exit.BackColor = mc002A;
+        b_Exit.BackColor = WHITE;
     }
 
     function b_Exit_MouseUp(Button, Shift, X, Y) {
-        b_Exit.BackColor = mc003C;
+        b_Exit.BackColor = LIGHT_GRAY;
     }
 
     async function b_Help_Click() {
         let l00AC = "";
-        me.MousePointer = mc0046;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -175,11 +175,11 @@ function (me) {
     }
 
     function b_Help_MouseDown(Button, Shift, X, Y) {
-        b_Help.BackColor = mc002A;
+        b_Help.BackColor = WHITE;
     }
 
     function b_Help_MouseUp(Button, Shift, X, Y) {
-        b_Help.BackColor = mc003C;
+        b_Help.BackColor = LIGHT_GRAY;
     }
 
     function b_Next_Click() {
@@ -196,18 +196,18 @@ function (me) {
     }
 
     function b_Next_MouseDown(Button, Shift, X, Y) {
-        b_Next.BackColor = mc002A;
+        b_Next.BackColor = WHITE;
     }
 
     function b_Next_MouseUp(Button, Shift, X, Y) {
-        b_Next.BackColor = mc003C;
+        b_Next.BackColor = LIGHT_GRAY;
     }
 
     async function b_Sell_Click() {
         let l00DE = 0;
         let l00E0 = 0;
         let l00E2 = 0;
-        me.MousePointer = mc0046;
+        me.MousePointer = HOURGLASS;
         if (m0020 != game.planet[game.currentPlayer] && m0020 != 7) {
             if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
@@ -235,9 +235,9 @@ function (me) {
                 l00E0 = game.stockPrices[game.planet[game.currentPlayer]][15];
             }
             if ((l00E0 - player.shareAvgCost[game.planet[game.currentPlayer]]) >= 0) {
-                l00DE = await fn01A0(0, Format(player.shares[game.planet[game.currentPlayer]], "##0"), 0.25 * player.shares[game.planet[game.currentPlayer]], player.shares[game.planet[game.currentPlayer]], "Enter the number of shares you wish to sell on the " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + " Exchange. If you sell all of your shares right now, you stand to make a profit of " + Format((l00E0 - player.shareAvgCost[game.planet[game.currentPlayer]]) * player.shares[game.planet[game.currentPlayer]], "#,#0") + " kubars less the brokerage fees.", Trim(game.planetNames[game.planet[game.currentPlayer]]) + " Exchange");
+                l00DE = await askNumber(0, Format(player.shares[game.planet[game.currentPlayer]], "##0"), 0.25 * player.shares[game.planet[game.currentPlayer]], player.shares[game.planet[game.currentPlayer]], "Enter the number of shares you wish to sell on the " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + " Exchange. If you sell all of your shares right now, you stand to make a profit of " + Format((l00E0 - player.shareAvgCost[game.planet[game.currentPlayer]]) * player.shares[game.planet[game.currentPlayer]], "#,#0") + " kubars less the brokerage fees.", Trim(game.planetNames[game.planet[game.currentPlayer]]) + " Exchange");
             } else {
-                l00DE = await fn01A0(0, Format(player.shares[game.planet[game.currentPlayer]], "##0"), 0.25 * player.shares[game.planet[game.currentPlayer]], player.shares[game.planet[game.currentPlayer]], "Enter the number of shares you wish to sell on the " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + " Exchange. If you sell all of your shares right now, you stand to take a loss of " + Format(-(l00E0 - player.shareAvgCost[game.planet[game.currentPlayer]]) * player.shares[game.planet[game.currentPlayer]], "#,#0") + " kubars less the brokerage fees.", Trim(game.planetNames[game.planet[game.currentPlayer]]) + " Exchange");
+                l00DE = await askNumber(0, Format(player.shares[game.planet[game.currentPlayer]], "##0"), 0.25 * player.shares[game.planet[game.currentPlayer]], player.shares[game.planet[game.currentPlayer]], "Enter the number of shares you wish to sell on the " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + " Exchange. If you sell all of your shares right now, you stand to take a loss of " + Format(-(l00E0 - player.shareAvgCost[game.planet[game.currentPlayer]]) * player.shares[game.planet[game.currentPlayer]], "#,#0") + " kubars less the brokerage fees.", Trim(game.planetNames[game.planet[game.currentPlayer]]) + " Exchange");
             }
             if (l00DE == -3333) {
                 m001A = "";
@@ -305,23 +305,23 @@ function (me) {
                     b_Sound.Command = "Play";
                 }
                 player.cash = player.cash + (l00DE * l00E0);
-                await sub015C(0.01 * l00DE * l00E0, 0);
+                await spend(0.01 * l00DE * l00E0, 0);
             }
         }
         sub3022(m0020);
     }
 
     function b_Sell_MouseDown(Button, Shift, X, Y) {
-        b_Sell.BackColor = mc002A;
+        b_Sell.BackColor = WHITE;
     }
 
     function b_Sell_MouseUp(Button, Shift, X, Y) {
-        b_Sell.BackColor = mc003C;
+        b_Sell.BackColor = LIGHT_GRAY;
     }
 
     async function b_Shares_Click() {
         let l00FE = 0;
-        me.MousePointer = mc0046;
+        me.MousePointer = HOURGLASS;
         frm_BoxCol1.FillElastic.Caption = "Your Shares" + "\n" + "On Each Planet";
         frm_BoxCol1.b_Col1.Caption = "";
         for (l00FE = 0; l00FE <= 6; l00FE++) {
@@ -332,19 +332,19 @@ function (me) {
     }
 
     function b_Shares_MouseDown(Button, Shift, X, Y) {
-        b_Shares.BackColor = mc002A;
+        b_Shares.BackColor = WHITE;
     }
 
     function b_Shares_MouseUp(Button, Shift, X, Y) {
-        b_Shares.BackColor = mc003C;
+        b_Shares.BackColor = LIGHT_GRAY;
     }
 
     function sub49B2(pv011A) {
         let l011C = 0;
         let l011E = 0;
         pv011A = CInt(pv011A);
-        const mc0126 = 1;
-        me.MousePointer = mc0046;
+        const ARROW_CURSOR = 1;
+        me.MousePointer = HOURGLASS;
         if (pv011A == 7) {
             b_Chart.DataReset = 9;
             b_Chart.DrawMode = 1;
@@ -389,7 +389,7 @@ function (me) {
                 }
             }
             b_Chart.DrawMode = 2;
-            me.MousePointer = mc0126;
+            me.MousePointer = ARROW_CURSOR;
         } else {
             b_Chart.DataReset = 9;
             b_Chart.DrawMode = 1;
@@ -438,35 +438,35 @@ function (me) {
                 }
             }
             b_Chart.DrawMode = 2;
-            me.MousePointer = mc0126;
+            me.MousePointer = ARROW_CURSOR;
         }
     }
 
     function sub3022(pv0128) {
         let l012A = "";
         pv0128 = CInt(pv0128);
-        const mc012C = 65280;
-        const mc0136 = 16776960;
-        const mc013A = 255;
-        const mc013E = 16711935;
-        const mc0142 = 65535;
+        const GREEN = 65280;
+        const CYAN = 16776960;
+        const RED = 255;
+        const MAGENTA = 16711935;
+        const YELLOW = 65535;
         if (pv0128 == 7) {
             pv0128 = game.planet[game.currentPlayer];
         }
         if (pv0128 == 0) {
-            b_Message.ForeColor = mc012C;
+            b_Message.ForeColor = GREEN;
         } else if (pv0128 == 1) {
-            b_Message.ForeColor = mc0136;
+            b_Message.ForeColor = CYAN;
         } else if (pv0128 == 2) {
-            b_Message.ForeColor = mc013A;
+            b_Message.ForeColor = RED;
         } else if (pv0128 == 3) {
-            b_Message.ForeColor = mc013E;
+            b_Message.ForeColor = MAGENTA;
         } else if (pv0128 == 4) {
-            b_Message.ForeColor = mc0142;
+            b_Message.ForeColor = YELLOW;
         } else if (pv0128 == 5) {
-            b_Message.ForeColor = mc003C;
+            b_Message.ForeColor = LIGHT_GRAY;
         } else if (pv0128 == 6) {
-            b_Message.ForeColor = mc002A;
+            b_Message.ForeColor = WHITE;
         }
         if (pv0128 == game.planet[game.currentPlayer]) {
             l012A = m001A;
@@ -513,7 +513,7 @@ function (me) {
                 m001A = "\n" + "\n" + "NOTE:" + "\n" + "The " + game.planetNames[game.newsPlanet] + " Exchange Nose Dives!";
             }
         }
-        me.MousePointer = mc0126;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -525,7 +525,7 @@ function (me) {
     function Form_Load() {
         let l014C = 0;
         let l0150 = 0;
-        me.MousePointer = mc0046;
+        me.MousePointer = HOURGLASS;
         m001A = "";
         m001E = 0;
         l0150 = 0;

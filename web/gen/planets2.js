@@ -27,8 +27,8 @@ VB.form("frm_Planets2",
   ]],
 function (me) {
     const { FillElastic, VSElastic2, b_Text, VSElastic1, b_Planet } = me.controls;
-    const mc0046 = 11;
-    const mc005E = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
     let m0020 = DimArray([13], 0);
     let m0036 = 0;
 
@@ -38,13 +38,12 @@ function (me) {
     }
 
     async function b_Text_Click(Index) {
-        const mc0046 = 11;
         game.planetNames[m0036] = FixStr(b_Planet[Index].Caption, 4);
         await sub1F87();
     }
 
     async function sub1F87() {
-        me.MousePointer = mc0046;
+        me.MousePointer = HOURGLASS;
         await Unload(me);
     }
 
@@ -120,7 +119,6 @@ function (me) {
     function fn1FBE(pv005C) {
         let ret = "";
         pv005C = CInt(pv005C);
-        const mc005E = 1;
         if (pv005C == 0) {
             ret = "Vexx is the capital of Kukubia and the seat of the Imperial Magistrate.";
         } else if (pv005C == 1) {
@@ -154,7 +152,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc005E;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -166,7 +164,7 @@ function (me) {
     function Form_Load() {
         let l0062 = 0;
         let l0064 = 0;
-        me.MousePointer = mc0046;
+        me.MousePointer = HOURGLASS;
         if (me.WindowState == 0) {
             me.Move((Screen.Width - me.Width) / 2, ((Screen.Height - me.Height) / 2));
         }

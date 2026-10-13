@@ -15,9 +15,9 @@ VB.form("frm_NameCompany",
   ]],
 function (me) {
     const { FillElastic, VSElastic1, VSElastic3, b_Player, InputCompanyName, b_Sound, Label2, Label1 } = me.controls;
-    const mc0028 = 1;
-    const mc0036 = 11;
-    const mc0082 = 3;
+    const ARROW_CURSOR = 1;
+    const HOURGLASS = 11;
+    const IBEAM_CURSOR = 3;
     let m001A = 0;
     let m001E = 0;
     let m0054 = 0;
@@ -27,7 +27,7 @@ function (me) {
     }
 
     function b_Player_MouseMove(Button, Shift, X, Y) {
-        me.MousePointer = mc0028;
+        me.MousePointer = ARROW_CURSOR;
         if (m001E == -1) {
             m001E = 0;
             if (InputCompanyName.Text == "") {
@@ -39,13 +39,13 @@ function (me) {
     }
 
     async function sub050F() {
-        me.MousePointer = mc0036;
+        me.MousePointer = HOURGLASS;
         if (InputCompanyName.Text == "" || InputCompanyName.Text == " ") {
             game.companyNames[m001A] = FixStr("Player " + Format(m001A, "#") + " Inc.", 20);
         } else {
             game.companyNames[m001A] = FixStr(InputCompanyName.Text, 20);
         }
-        sub014C(m001A);
+        storePlayer(m001A);
         m001A = m001A + 1;
         if (m001A == game.numPlayers) {
             me.Tag = "Continue";
@@ -66,11 +66,11 @@ function (me) {
             InputCompanyName.SelStart = 0;
             InputCompanyName.SelLength = Len(InputCompanyName.Text);
             await me.Show();
-            me.MousePointer = mc0028;
+            me.MousePointer = ARROW_CURSOR;
         } else {
             me.BackColor = m0054;
             FillElastic.Visible = 0;
-            me.MousePointer = mc0036;
+            me.MousePointer = HOURGLASS;
             b_Sound.Command = "Close";
             await frm_ChooseShip.Show();
             await Unload(me);
@@ -79,8 +79,8 @@ function (me) {
 
     function sub0929() {
         let l0062 = 0;
-        sub00CD();
-        sub00E5();
+        restockPlanets();
+        updatePrices();
         for (l0062 = 1; l0062 <= 6; l0062++) {
             game.netWorth[l0062] = player.cash + player.bankBalance - player.loan - player.zinnLoan;
             rivals.cash[l0062] = player.cash + player.bankBalance - player.loan - player.zinnLoan;
@@ -101,15 +101,14 @@ function (me) {
     }
 
     function FillElastic_MouseMove(Button, Shift, X, Y) {
-        me.MousePointer = mc0028;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0028;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
-        const mc0082 = 3;
         if (KeyAscii == 13) {
             await sub050F();
         } else if (KeyAscii == Asc("&")) {
@@ -122,7 +121,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc0036;
+        me.MousePointer = HOURGLASS;
         FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "stars1.bmp");
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -137,7 +136,7 @@ function (me) {
     }
 
     function InputCompanyName_MouseMove(Button, Shift, X, Y) {
-        me.MousePointer = mc0082;
+        me.MousePointer = IBEAM_CURSOR;
         if (m001E == -1) {
             m001E = 0;
             if (InputCompanyName.Text == "") {
@@ -153,7 +152,7 @@ function (me) {
     }
 
     function Label1_MouseMove(Button, Shift, X, Y) {
-        me.MousePointer = mc0028;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function Label2_Click() {
@@ -161,7 +160,7 @@ function (me) {
     }
 
     function Label2_MouseMove(Button, Shift, X, Y) {
-        me.MousePointer = mc0028;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function VSElastic1_Click() {
@@ -169,7 +168,7 @@ function (me) {
     }
 
     function VSElastic1_MouseMove(Button, Shift, X, Y) {
-        me.MousePointer = mc0028;
+        me.MousePointer = ARROW_CURSOR;
         if (m001E == -1) {
             m001E = 0;
             if (InputCompanyName.Text == "") {
@@ -185,7 +184,7 @@ function (me) {
     }
 
     function VSElastic3_MouseMove(Button, Shift, X, Y) {
-        me.MousePointer = mc0028;
+        me.MousePointer = ARROW_CURSOR;
         if (m001E == -1) {
             m001E = 0;
             if (InputCompanyName.Text == "") {

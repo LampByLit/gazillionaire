@@ -19,29 +19,29 @@ VB.form("frm_InputBox",
 function (me) {
     const { FillElastic, VSElastic2, b_UpperLimit, b_MidRange, b_LowerLimit, b_Spin, b_Text, VSElastic3 } = me.controls;
     const { b_Cancel, b_OK } = me.controls;
-    const mc001A = 11;
-    const mc0034 = 16777215;
-    const mc0046 = 1;
-    const mc0050 = 12632256;
-    const mc00C0 = 3;
+    const HOURGLASS = 11;
+    const WHITE = 16777215;
+    const ARROW_CURSOR = 1;
+    const LIGHT_GRAY = 12632256;
+    const IBEAM_CURSOR = 3;
 
     function b_Cancel_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         me.Hide();
         me.b_Text.Text = "-3333";
     }
 
     function b_Cancel_MouseDown(Button, Shift, X, Y) {
-        b_Cancel.BackColor = mc0034;
+        b_Cancel.BackColor = WHITE;
     }
 
     function b_Cancel_MouseMove(Button, Shift, X, Y) {
-        me.MousePointer = mc0046;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_Cancel_MouseUp(Button, Shift, X, Y) {
-        b_Cancel.BackColor = mc0050;
+        b_Cancel.BackColor = LIGHT_GRAY;
     }
 
     function b_LowerLimit_Click() {
@@ -51,15 +51,15 @@ function (me) {
     }
 
     function b_LowerLimit_MouseDown(Button, Shift, X, Y) {
-        b_LowerLimit.BackColor = mc0034;
+        b_LowerLimit.BackColor = WHITE;
     }
 
     function b_LowerLimit_MouseMove(Button, Shift, X, Y) {
-        me.MousePointer = mc0046;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_LowerLimit_MouseUp(Button, Shift, X, Y) {
-        b_LowerLimit.BackColor = mc0050;
+        b_LowerLimit.BackColor = LIGHT_GRAY;
     }
 
     function b_MidRange_Click() {
@@ -69,38 +69,38 @@ function (me) {
     }
 
     function b_MidRange_MouseDown(Button, Shift, X, Y) {
-        b_MidRange.BackColor = mc0034;
+        b_MidRange.BackColor = WHITE;
     }
 
     function b_MidRange_MouseMove(Button, Shift, X, Y) {
-        me.MousePointer = mc0046;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_MidRange_MouseUp(Button, Shift, X, Y) {
-        b_MidRange.BackColor = mc0050;
+        b_MidRange.BackColor = LIGHT_GRAY;
     }
 
     function b_OK_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         me.Hide();
     }
 
     function b_OK_MouseDown(Button, Shift, X, Y) {
-        b_OK.BackColor = mc0034;
+        b_OK.BackColor = WHITE;
     }
 
     function b_OK_MouseMove(Button, Shift, X, Y) {
-        me.MousePointer = mc0046;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_OK_MouseUp(Button, Shift, X, Y) {
-        b_OK.BackColor = mc0050;
+        b_OK.BackColor = LIGHT_GRAY;
     }
 
     function b_Spin_SpinDown() {
         let l00B4 = 0;
-        me.MousePointer = mc0046;
+        me.MousePointer = ARROW_CURSOR;
         l00B4 = CLng(Val(b_Text.Text));
         l00B4 = l00B4 - 1;
         b_Text.Text = Str(l00B4);
@@ -108,15 +108,14 @@ function (me) {
 
     function b_Spin_SpinUp() {
         let l00B6 = 0;
-        const mc00C0 = 3;
-        me.MousePointer = mc0046;
+        me.MousePointer = ARROW_CURSOR;
         l00B6 = CLng(Val(b_Text.Text));
         l00B6 = l00B6 + 1;
         b_Text.Text = Str(l00B6);
     }
 
     function b_Text_MouseMove(Button, Shift, X, Y) {
-        me.MousePointer = mc00C0;
+        me.MousePointer = IBEAM_CURSOR;
     }
 
     function b_UpperLimit_Click() {
@@ -126,23 +125,23 @@ function (me) {
     }
 
     function b_UpperLimit_MouseDown(Button, Shift, X, Y) {
-        b_UpperLimit.BackColor = mc0034;
+        b_UpperLimit.BackColor = WHITE;
     }
 
     function b_UpperLimit_MouseMove(Button, Shift, X, Y) {
-        me.MousePointer = mc0046;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_UpperLimit_MouseUp(Button, Shift, X, Y) {
-        b_UpperLimit.BackColor = mc0050;
+        b_UpperLimit.BackColor = LIGHT_GRAY;
     }
 
     function FillElastic_MouseMove(Button, Shift, X, Y) {
-        me.MousePointer = mc0046;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0046;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function Form_KeyPress(KeyAscii) {
@@ -165,15 +164,15 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
     }
 
     function VSElastic2_MouseMove(Button, Shift, X, Y) {
-        me.MousePointer = mc0046;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function VSElastic3_MouseMove(Button, Shift, X, Y) {
-        me.MousePointer = mc0046;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     return {

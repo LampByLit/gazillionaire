@@ -22,12 +22,12 @@ VB.form("frm_News",
 function (me) {
     const { FillElastic, b_Timer, b_Sound, b_Exit, VSElastic2, b_Help, b_Container, b_Message } = me.controls;
     const { VSElastic4, VSElastic3, Image1, b_Button } = me.controls;
-    const mc001C = 11;
-    const mc0094 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
     let m001A = 0;
 
     async function b_Button_Click() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         b_Timer.Enabled = 0;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -38,7 +38,7 @@ function (me) {
     }
 
     async function b_Exit_Click() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         b_Timer.Enabled = 0;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -56,7 +56,7 @@ function (me) {
     }
 
     async function b_Help_Click() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -93,7 +93,6 @@ function (me) {
         let l007E = 0;
         let l0082 = 0;
         let l0084 = 0;
-        const mc0094 = 1;
         if (game.newsEvent == 1) {
             b_Message.Caption = "We have reports that the Chichi Bobo Rebels have moved into the area around " + UCase(Trim(game.planetNames[game.newsPlanet])) + ". Our sources indicate Supreme Commander Dred Nicolson is planning a counter attack this week and fighting will intensify.";
         } else if (game.newsEvent == 2) {
@@ -418,7 +417,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0094;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -428,7 +427,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         m001A = 1;
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "NEWS.BMP");
         sub2ECD();

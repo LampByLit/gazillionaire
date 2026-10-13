@@ -16,20 +16,18 @@ VB.form("frm_Auction",
   ]],
 function (me) {
     const { FillElastic, b_Sound, VSElastic3, b_OK, b_ImageContainer, b_ImageLable, Image1, b_Message } = me.controls;
-    const mc001C = 11;
-    const mc0054 = 12632256;
-    const mc0066 = 4210752;
-    const mc006E = 1;
+    const HOURGLASS = 11;
+    const LIGHT_GRAY = 12632256;
+    const DARK_GRAY = 4210752;
+    const ARROW_CURSOR = 1;
 
     async function b_OK_Click() {
         let l0024 = 0;
-        const mc0054 = 12632256;
-        const mc0066 = 4210752;
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         if (game.auctionType == 1) {
             LB342E: while (true) {
-                l0024 = await fn01A0(0, "0", 10000, 50000, UCase(Trim(game.companyNames[game.currentPlayer])) + "\n" + "Current Ship Size: " + Format(game.shipSize[game.currentPlayer], "#,#0") + " tons" + "\n" + "Your Cash: " + Format(player.cash, "#,#0") + " kubars" + "\n" + "Your Savings: " + Format(player.bankBalance, "#,#0") + " kubars" + "\n" + "Your Loan: " + Format(player.loan, "#,#0") + " kubars" + "\n" + "Loan Credit Limit: " + Format(player.creditLimit, "#,#0") + " kubars", "Ship Auction");
+                l0024 = await askNumber(0, "0", 10000, 50000, UCase(Trim(game.companyNames[game.currentPlayer])) + "\n" + "Current Ship Size: " + Format(game.shipSize[game.currentPlayer], "#,#0") + " tons" + "\n" + "Your Cash: " + Format(player.cash, "#,#0") + " kubars" + "\n" + "Your Savings: " + Format(player.bankBalance, "#,#0") + " kubars" + "\n" + "Your Loan: " + Format(player.loan, "#,#0") + " kubars" + "\n" + "Loan Credit Limit: " + Format(player.creditLimit, "#,#0") + " kubars", "Ship Auction");
                 if (l0024 == -3333 || l0024 == 0) {
                     l0024 = 0;
                 } else if (l0024 > (player.cash + player.bankBalance + player.creditLimit - player.loan) || l0024 > 200000) {
@@ -57,7 +55,7 @@ function (me) {
             }
         } else if (game.auctionType == 2) {
             LB384C: while (true) {
-                l0024 = await fn01A0(0, "0", 5 * game.auctionFacilityRevenue, 30 * game.auctionFacilityRevenue, fn2D8D(game.auctionFacility) + " on " + Trim(game.planetNames[game.auctionPlanet]) + "\n" + "Facility Revenue: " + Format(game.auctionFacilityRevenue, "#,#0") + " kubars/ship" + "\n" + "Your Cash: " + Format(player.cash, "#,#0") + " kubars" + "\n" + "Your Savings: " + Format(player.bankBalance, "#,#0") + " kubars" + "\n" + "Your Loan: " + Format(player.loan, "#,#0") + " kubars" + "\n" + "Loan Credit Limit: " + Format(player.creditLimit, "#,#0") + " kubars", Trim(game.companyNames[game.currentPlayer]) + " enter your secret bid!");
+                l0024 = await askNumber(0, "0", 5 * game.auctionFacilityRevenue, 30 * game.auctionFacilityRevenue, fn2D8D(game.auctionFacility) + " on " + Trim(game.planetNames[game.auctionPlanet]) + "\n" + "Facility Revenue: " + Format(game.auctionFacilityRevenue, "#,#0") + " kubars/ship" + "\n" + "Your Cash: " + Format(player.cash, "#,#0") + " kubars" + "\n" + "Your Savings: " + Format(player.bankBalance, "#,#0") + " kubars" + "\n" + "Your Loan: " + Format(player.loan, "#,#0") + " kubars" + "\n" + "Loan Credit Limit: " + Format(player.creditLimit, "#,#0") + " kubars", Trim(game.companyNames[game.currentPlayer]) + " enter your secret bid!");
                 if (l0024 == -3333 || l0024 == 0) {
                     l0024 = 0;
                 } else if (l0024 > (player.cash + player.bankBalance + player.creditLimit - player.loan) || l0024 > 200000) {
@@ -96,17 +94,16 @@ function (me) {
     }
 
     function b_OK_MouseDown(Button, Shift, X, Y) {
-        b_OK.BackColor = mc0054;
+        b_OK.BackColor = LIGHT_GRAY;
     }
 
     function b_OK_MouseUp(Button, Shift, X, Y) {
-        b_OK.BackColor = mc0066;
+        b_OK.BackColor = DARK_GRAY;
     }
 
     function fn2D8D(pv006C) {
         let ret = "";
         pv006C = CInt(pv006C);
-        const mc006E = 1;
         if (pv006C == 1) {
             ret = "Conference Center";
         } else if (pv006C == 2) {
@@ -312,7 +309,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc006E;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -324,7 +321,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         if (game.auctionType == 1) {
             if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
@@ -349,7 +346,7 @@ function (me) {
     }
 
     function Form_QueryUnload(Cancel, UnloadMode) {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
     }
 
     function Form_Unload(Cancel) {

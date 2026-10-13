@@ -17,9 +17,9 @@ VB.form("frm_LineGraph",
 function (me) {
     const { FillElastic, b_Sound, VSElastic2, b_Help, b_All, b_Computer, b_Human, b_ExitHistory } = me.controls;
     const { Graph1 } = me.controls;
-    const mc0030 = 11;
-    const mc004C = 1;
-    const mc00D4 = 255;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
+    const RED = 255;
 
     function b_All_Click() {
         sub1D40();
@@ -37,9 +37,9 @@ function (me) {
         let l0038 = 0;
         let l003A = 0;
         let l003C = 0;
-        const mc004C = 1;
-        me.MousePointer = mc0030;
-        sub00F9();
+        const ARROW_CURSOR = 1;
+        me.MousePointer = HOURGLASS;
+        updateRivalNetWorth();
         Graph1.DataReset = 9;
         if (game.turn > 20) {
             for (l003A = 20; l003A >= 0; l003A--) {
@@ -110,7 +110,7 @@ function (me) {
             }
         }
         Graph1.DrawMode = 2;
-        me.MousePointer = mc004C;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_Computer_MouseDown(Button, Shift, X, Y) {
@@ -122,7 +122,7 @@ function (me) {
     }
 
     async function b_ExitHistory_Click() {
-        me.MousePointer = mc0030;
+        me.MousePointer = HOURGLASS;
         if (me.Tag == "NEWTURN" && game.tutorialMode == -1 && game.turn >= 10 || game.complexity >= 8) {
             frm_Complexity.Tag = "COMPLEXITY";
             await Unload(me);
@@ -140,14 +140,14 @@ function (me) {
     }
 
     async function b_Help_Click() {
-        me.MousePointer = mc0030;
+        me.MousePointer = HOURGLASS;
         if (b_Help.Visible == 0) {
-            me.MousePointer = mc004C;
+            me.MousePointer = ARROW_CURSOR;
         } else if (me.Tag == "NEWTURN" && game.tutorialMode == -1 && game.turn >= 10 || game.complexity >= 8) {
             frm_Complexity.Tag = "COMPLEXITY";
             await Unload(me);
         } else {
-            me.MousePointer = mc0030;
+            me.MousePointer = HOURGLASS;
             if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
                 b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -155,7 +155,7 @@ function (me) {
                 b_Sound.Command = "Play";
             }
             frm_Box1.FillElastic.Caption = "Help (Company History)";
-            frm_Box1.b_Message.Caption = "The COMPANY HISTORY graph shows the change in each company's net worth over the last 20 weeks (i.e. 20 game turns). Each company's net worth is computed by adding together the company's total cash, savings and stock, then subtracting any money owed to the Trader's Union or Mr. Zinn. In order to win the game, a company must have a net worth of " + Format(fn016E(), "#,#0") + " kubars.";
+            frm_Box1.b_Message.Caption = "The COMPANY HISTORY graph shows the change in each company's net worth over the last 20 weeks (i.e. 20 game turns). Each company's net worth is computed by adding together the company's total cash, savings and stock, then subtracting any money owed to the Trader's Union or Mr. Zinn. In order to win the game, a company must have a net worth of " + Format(nextGoal(), "#,#0") + " kubars.";
             await frm_Box1.Show(1);
         }
     }
@@ -172,7 +172,7 @@ function (me) {
         let l00AC = 0;
         let l00AE = 0;
         let l00B0 = 0;
-        me.MousePointer = mc0030;
+        me.MousePointer = HOURGLASS;
         Graph1.DataReset = 9;
         if (game.turn > 20) {
             for (l00AC = 20; l00AC >= 0; l00AC--) {
@@ -320,7 +320,7 @@ function (me) {
             }
         }
         Graph1.DrawMode = 2;
-        me.MousePointer = mc004C;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_Human_MouseDown(Button, Shift, X, Y) {
@@ -335,8 +335,8 @@ function (me) {
         let l00C8 = 0;
         let l00CA = 0;
         let l00CC = 0;
-        me.MousePointer = mc0030;
-        sub00F9();
+        me.MousePointer = HOURGLASS;
+        updateRivalNetWorth();
         Graph1.DataReset = 9;
         if (game.turn > 20) {
             for (l00C8 = 20; l00C8 >= 0; l00C8--) {
@@ -532,14 +532,13 @@ function (me) {
             }
         }
         Graph1.DrawMode = 2;
-        me.MousePointer = mc004C;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function sub1E3B() {
         let l00CE = 0;
         let l00D0 = 0;
         let l00D2 = 0;
-        const mc00D4 = 255;
         Graph1.DataReset = 9;
         if (game.turn > 20) {
             for (l00CE = 20; l00CE >= 0; l00CE--) {
@@ -590,7 +589,7 @@ function (me) {
             b_ExitHistory.FontSize = 12;
             b_Help.Caption = "Complexity";
             b_Help.FontSize = 18;
-            b_Help.ForeColor = mc00D4;
+            b_Help.ForeColor = RED;
             b_Help.CaptionPos = 4;
             b_Help.Visible = 0;
         } else if (me.Tag == "NEWTURN" || me.Tag == "BANKRUPT") {
@@ -602,7 +601,7 @@ function (me) {
             b_Human.Visible = 0;
             b_ExitHistory.FontSize = 12;
         }
-        me.MousePointer = mc004C;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -612,7 +611,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc0030;
+        me.MousePointer = HOURGLASS;
         if (me.Tag == "BANKRUPT") {
             sub1E3B();
         } else {

@@ -6,7 +6,7 @@ VB.form("frm_Travel1",
   ]],
 function (me) {
     const { b_Sound } = me.controls;
-    const mc0022 = 11;
+    const HOURGLASS = 11;
 
     async function Form_Activate() {
         await Unload(me);
@@ -15,8 +15,8 @@ function (me) {
     async function Form_Load() {
         let l001E = 0;
         let l0020 = 0;
-        const mc0022 = 11;
-        me.MousePointer = mc0022;
+        const HOURGLASS = 11;
+        me.MousePointer = HOURGLASS;
         l0020 = 0;
         for (l001E = 0; l001E <= 6; l001E++) {
             if (game.turn <= 15) {

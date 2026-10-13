@@ -25,7 +25,7 @@ CRYPTIC = re.compile(r"\b(?:sub|fn|mc|m|l|pv|p|gv|T|M)[0-9A-F]{4}\b")
 FIELD = re.compile(r"^M[0-9A-F]{4}$")
 IDENT = re.compile(r"^[A-Za-z_$][A-Za-z0-9_$]*$")
 STRING = re.compile(r'"(?:[^"\\\n]|\\.)*"')
-WORD = re.compile(r"(?<![\w$])(\.?)([A-Za-z_$][\w$]*)")
+WORD = re.compile(r"(\.\s*)?(?<![\w$])([A-Za-z_$][\w$]*)")
 RESERVED = set("""
     break case catch class const continue debugger default delete do else enum export extends false finally for
     function if import in instanceof let new null return super switch this throw true try typeof var void while
@@ -157,8 +157,8 @@ def main():
         return
 
     names = load_names()
-    pending_global = {o: n for o, n in names["global"].items()
-                      if any(o == t for _, t in tokens(vbjs + "".join(files.values())))}
+    present = {t for text in [vbjs, *files.values()] for _, t in tokens(text)}
+    pending_global = {o: n for o, n in names["global"].items() if o in present}
     errs = []
 
     # identifiers/properties in use anywhere: a global rename must not clash with any of them

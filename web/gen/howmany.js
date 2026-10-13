@@ -19,17 +19,17 @@ VB.form("frm_HowManyPlayers",
 function (me) {
     const { FillElastic, b_Sound, VSElastic1, SixPlayers, FourPlayers, TwoPlayers, ThreePlayers, FivePlayers } = me.controls;
     const { OnePlayer, Label2, Label1 } = me.controls;
-    const mc001A = 11;
-    const mc004A = 12632256;
+    const HOURGLASS = 11;
+    const LIGHT_GRAY = 12632256;
     const m005C = 4194304;
-    const mc0060 = 1;
+    const ARROW_CURSOR = 1;
     const m0082 = 8388608;
     const m00A2 = 16711680;
     const m00EC = 12582912;
     let m00BC = 0;
 
     async function sub050F() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -48,13 +48,13 @@ function (me) {
     }
 
     async function FivePlayers_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         game.numPlayers = 5;
         await sub050F();
     }
 
     function FivePlayers_MouseDown(Button, Shift, X, Y) {
-        FivePlayers.BackColor = mc004A;
+        FivePlayers.BackColor = LIGHT_GRAY;
     }
 
     function FivePlayers_MouseUp(Button, Shift, X, Y) {
@@ -62,11 +62,11 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0060;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function Form_Load() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "STARS5.BMP");
         if (game.isEmailGame == -1) {
             OnePlayer.Enabled = 0;
@@ -80,13 +80,13 @@ function (me) {
     }
 
     async function FourPlayers_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         game.numPlayers = 4;
         await sub050F();
     }
 
     function FourPlayers_MouseDown(Button, Shift, X, Y) {
-        FourPlayers.BackColor = mc004A;
+        FourPlayers.BackColor = LIGHT_GRAY;
     }
 
     function FourPlayers_MouseUp(Button, Shift, X, Y) {
@@ -102,13 +102,13 @@ function (me) {
     }
 
     async function OnePlayer_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         game.numPlayers = 1;
         await sub050F();
     }
 
     function OnePlayer_MouseDown(Button, Shift, X, Y) {
-        OnePlayer.BackColor = mc004A;
+        OnePlayer.BackColor = LIGHT_GRAY;
     }
 
     function OnePlayer_MouseUp(Button, Shift, X, Y) {
@@ -116,13 +116,13 @@ function (me) {
     }
 
     async function SixPlayers_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         game.numPlayers = 6;
         await sub050F();
     }
 
     function SixPlayers_MouseDown(Button, Shift, X, Y) {
-        SixPlayers.BackColor = mc004A;
+        SixPlayers.BackColor = LIGHT_GRAY;
     }
 
     function SixPlayers_MouseUp(Button, Shift, X, Y) {
@@ -130,13 +130,13 @@ function (me) {
     }
 
     async function ThreePlayers_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         game.numPlayers = 3;
         await sub050F();
     }
 
     function ThreePlayers_MouseDown(Button, Shift, X, Y) {
-        ThreePlayers.BackColor = mc004A;
+        ThreePlayers.BackColor = LIGHT_GRAY;
     }
 
     function ThreePlayers_MouseUp(Button, Shift, X, Y) {
@@ -144,13 +144,13 @@ function (me) {
     }
 
     async function TwoPlayers_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         game.numPlayers = 2;
         await sub050F();
     }
 
     function TwoPlayers_MouseDown(Button, Shift, X, Y) {
-        TwoPlayers.BackColor = mc004A;
+        TwoPlayers.BackColor = LIGHT_GRAY;
     }
 
     function TwoPlayers_MouseUp(Button, Shift, X, Y) {

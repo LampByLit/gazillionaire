@@ -1,41 +1,41 @@
 // Originally translated from src/Module3.BAS by tools/vb2js.py; this JavaScript is now the source.
 
 
-async function fn01A0(pv000E, p0010, p0012, p0014, p0016, p0018) {
-    let l001A = 0;
-    let l001C = 0;
+async function askNumber(position, defaultText, min, max, message, title) {
+    let value = 0;
+    let mid = 0;
     let ret = 0;
-    pv000E = CInt(pv000E);
-    p0012 = CLng(p0012);
-    p0014 = CLng(p0014);
+    position = CInt(position);
+    min = CLng(min);
+    max = CLng(max);
     try {
         frm_InputBox.Width = Screen.Width * 0.545;
         frm_InputBox.Height = Screen.Height * 0.8;
-        if (pv000E == 0) {
+        if (position == 0) {
             if (frm_InputBox.WindowState == 0) {
                 frm_InputBox.Move((Screen.Width - frm_InputBox.Width) / 2, ((Screen.Height - frm_InputBox.Height) / 2) + 200);
             }
-        } else if (pv000E == 1) {
+        } else if (position == 1) {
             if (frm_InputBox.WindowState == 0) {
                 frm_InputBox.Move(Screen.Width * 0.455, Screen.Height * 0.202);
             }
-        } else if (pv000E == 2) {
+        } else if (position == 2) {
             if (frm_InputBox.WindowState == 0) {
                 frm_InputBox.Move((Screen.Width - frm_InputBox.Width) / 4, ((Screen.Height - frm_InputBox.Height) / 2));
             }
         }
-        frm_InputBox.FillElastic.Caption = "\n" + p0016;
-        frm_InputBox.Caption = p0018;
-        frm_InputBox.b_UpperLimit.Tag = Str(p0014);
-        l001C = CLng(p0014 / 2);
-        frm_InputBox.b_MidRange.Tag = Str(l001C);
-        frm_InputBox.b_LowerLimit.Tag = Str(p0012);
-        frm_InputBox.b_Text.Text = p0010;
+        frm_InputBox.FillElastic.Caption = "\n" + message;
+        frm_InputBox.Caption = title;
+        frm_InputBox.b_UpperLimit.Tag = Str(max);
+        mid = CLng(max / 2);
+        frm_InputBox.b_MidRange.Tag = Str(mid);
+        frm_InputBox.b_LowerLimit.Tag = Str(min);
+        frm_InputBox.b_Text.Text = defaultText;
         frm_InputBox.b_Text.SelStart = 0;
         frm_InputBox.b_Text.SelLength = Len(frm_InputBox.b_Text.Text);
         await frm_InputBox.Show(1);
-        l001A = CLng(Val(frm_InputBox.b_Text.Text));
-        if (l001A < 0 && l001A != -3333) {
+        value = CLng(Val(frm_InputBox.b_Text.Text));
+        if (value < 0 && value != -3333) {
             if (settings.soundOn == -1) {
                 Beep();
             }
@@ -43,7 +43,7 @@ async function fn01A0(pv000E, p0010, p0012, p0014, p0016, p0018) {
             await frm_MsgBox.Show(1);
             ret = -3333;
         } else {
-            ret = l001A;
+            ret = value;
         }
         await Unload(frm_InputBox);
         return ret;
@@ -61,20 +61,20 @@ async function fn01A0(pv000E, p0010, p0012, p0014, p0016, p0018) {
     return ret;
 }
 
-function fn01AE(p0032, p0034) {
+function randomBetween(low, high) {
     let ret = 0;
-    p0032 = CLng(p0032);
-    p0034 = CLng(p0034);
+    low = CLng(low);
+    high = CLng(high);
     Randomize();
-    ret = Fix((p0034 - p0032 + 1) * Rnd()) + p0032;
+    ret = Fix((high - low + 1) * Rnd()) + low;
     return ret;
 }
 
-function fn01B7(p0038, p003A) {
+function randomInt(low, high) {
     let ret = 0;
-    p0038 = CInt(p0038);
-    p003A = CInt(p003A);
+    low = CInt(low);
+    high = CInt(high);
     Randomize();
-    ret = Fix((p003A - p0038 + 1) * Rnd()) + p0038;
+    ret = Fix((high - low + 1) * Rnd()) + low;
     return ret;
 }

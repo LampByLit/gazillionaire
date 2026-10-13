@@ -99,12 +99,12 @@ function (me) {
     const { b_Image2Container, Image2, b_Container2, b_2e, b_2d, b_2a, b_2b, b_2c } = me.controls;
     const { VSElastic2, VSElastic1, b_Image1Container, Image1, b_Container1, b_1e, b_1a, b_1c } = me.controls;
     const { b_1b, b_1d } = me.controls;
-    const mc001E = 11;
-    const mc0106 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
     let m001A = 0;
 
     async function b_Exit_Click() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         Timer1.Enabled = 0;
         b_Sound.Command = "Close";
         FillElastic.Visible = 0;
@@ -196,7 +196,6 @@ function (me) {
         let l00D8 = 0;
         let l00DA = "";
         pv00D6 = CInt(pv00D6);
-        const mc0106 = 1;
         if (pv00D6 == 1) {
             l00DA = "Trading Corp. IV";
         } else if (pv00D6 == 2) {
@@ -210,7 +209,7 @@ function (me) {
         } else if (pv00D6 == 6) {
             l00DA = "Hoff Miester";
         }
-        l00D8 = await fn01A0(0, Str(rivals.intelligence[pv00D6]), 25, 200, l00DA + "'s intelligence can range from 25% to 200%." + "\n" + "\n" + "Currently, " + l00DA + "'s intelligence is set at " + Str(rivals.intelligence[pv00D6]) + "%.", " ");
+        l00D8 = await askNumber(0, Str(rivals.intelligence[pv00D6]), 25, 200, l00DA + "'s intelligence can range from 25% to 200%." + "\n" + "\n" + "Currently, " + l00DA + "'s intelligence is set at " + Str(rivals.intelligence[pv00D6]) + "%.", " ");
         if (l00D8 == -3333) {
         } else if (l00D8 < 25) {
             rivals.intelligence[pv00D6] = 25;
@@ -228,7 +227,7 @@ function (me) {
         b_4e.Caption = "Intelligence = " + Str(rivals.intelligence[4]) + "%";
         b_5e.Caption = "Intelligence = " + Str(rivals.intelligence[5]) + "%";
         b_6e.Caption = "Intelligence = " + Str(rivals.intelligence[6]) + "%";
-        me.MousePointer = mc0106;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -238,7 +237,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         m001A = 1;
         b_Image1Container.Visible = 0;
         b_Container1.Visible = -1;

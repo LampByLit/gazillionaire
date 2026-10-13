@@ -15,16 +15,15 @@ VB.form("frm_Bankrupt1",
   ]],
 function (me) {
     const { VSElastic1, b_Sound, b_Continue, VSElastic3, VSElastic2, Image1, b_Company } = me.controls;
-    const mc0020 = 11;
-    const mc0072 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
     let m0028 = 0;  // Static in b_Continue_Click
 
     async function b_Continue_Click() {
         let l001A = 0;
         let l001E = 0;
-        const mc0020 = 11;
-        const mc0072 = 1;
-        me.MousePointer = mc0020;
+        const HOURGLASS = 11;
+        me.MousePointer = HOURGLASS;
         VSElastic1.BackColor = m0028;
         me.BackColor = m0028;
         VSElastic1.Visible = 0;
@@ -99,7 +98,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0072;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -109,7 +108,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc0020;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             if (game.shipType[game.currentPlayer] <= 6) {

@@ -21,11 +21,11 @@ VB.form("frm_Explore",
 function (me) {
     const { FillElastic, b_Sound, VSElastic3, b_Exit, b_Time, b_Help, b_History, b_News } = me.controls;
     const { b_PlanetSpecial, b_Weather, VSElastic2, Image1 } = me.controls;
-    const mc001A = 11;
-    const mc0100 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
 
     async function b_Exit_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await frm_MainMenu.Show();
         await Unload(me);
@@ -40,7 +40,7 @@ function (me) {
     }
 
     async function b_Help_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -67,7 +67,7 @@ function (me) {
     }
 
     async function b_History_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -85,7 +85,7 @@ function (me) {
     }
 
     async function b_News_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -107,7 +107,7 @@ function (me) {
     }
 
     async function b_PlanetSpecial_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         if (player.specialDone == -1) {
             if (settings.soundOn == -1) {
@@ -135,7 +135,7 @@ function (me) {
     }
 
     async function b_Time_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -153,7 +153,7 @@ function (me) {
     }
 
     async function b_Weather_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -175,9 +175,9 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = -1;
-        me.MousePointer = mc0100;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -187,7 +187,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         b_News.Tag = "";
         b_Weather.Tag = "";
         me.Tag = "";

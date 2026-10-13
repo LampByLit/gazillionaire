@@ -26,12 +26,12 @@ VB.form("frm_Fuel",
 function (me) {
     const { FillElastic, b_Sound, VSElastic5, VSElastic6, b_FuelTank, b_FuelTankCapacity, VSElastic4, b_FuelPriceRange } = me.controls;
     const { b_Fuel, b_Cash, b_Cost, b_Help, b_FillUp1, b_FillUp3, b_FillUp2, b_ExitFuel1 } = me.controls;
-    const mc001A = 11;
-    const mc00B4 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
     let m00DA = 0;  // Static in sub0F3A
 
     async function b_ExitFuel1_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         await frm_MainMenu.Show();
         await Unload(me);
     }
@@ -87,7 +87,7 @@ function (me) {
     }
 
     async function b_Help_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -127,9 +127,9 @@ function (me) {
 
     async function sub0E72() {
         let l00AC = 0;
-        const mc00B4 = 1;
-        me.MousePointer = mc001A;
-        l00AC = await fn01A0(0, Format((player.fuelCapacity - player.fuel), "##0"), 0.25 * (player.fuelCapacity - player.fuel), (player.fuelCapacity - player.fuel), "Enter the amount of fuel you would like to purchase." + "\n" + "\n" + "Cash:  " + Format(player.cash, "#,#0") + "\n" + "Fuel Tank Capacity:  " + Format(player.fuelCapacity, "#,#0") + " tons" + "\n" + "Fuel in Tank:  " + Format(player.fuel, "#,#0") + " tons", " ");
+        const ARROW_CURSOR = 1;
+        me.MousePointer = HOURGLASS;
+        l00AC = await askNumber(0, Format((player.fuelCapacity - player.fuel), "##0"), 0.25 * (player.fuelCapacity - player.fuel), (player.fuelCapacity - player.fuel), "Enter the amount of fuel you would like to purchase." + "\n" + "\n" + "Cash:  " + Format(player.cash, "#,#0") + "\n" + "Fuel Tank Capacity:  " + Format(player.fuelCapacity, "#,#0") + " tons" + "\n" + "Fuel in Tank:  " + Format(player.fuel, "#,#0") + " tons", " ");
         if (l00AC == -3333) {
         } else if ((l00AC * game.fuelPrice[game.planet[game.currentPlayer]]) > player.cash) {
             if (settings.soundOn == -1) {
@@ -161,7 +161,7 @@ function (me) {
             player.cash = player.cash - (l00AC * game.fuelPrice[game.planet[game.currentPlayer]]);
         }
         sub0F3A();
-        me.MousePointer = mc00B4;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function sub0F3A() {
@@ -185,7 +185,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc00B4;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {

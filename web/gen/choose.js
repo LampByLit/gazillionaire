@@ -22,20 +22,20 @@ VB.form("frm_ChooseShip",
   ]],
 function (me) {
     const { VSElastic1, b_Image, b_Sound, b_Message, b_Player } = me.controls;
-    const mc0020 = 11;
-    const mc0056 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
     let m001A = 0;
     let m002A = 0;  // Static in sub314A
 
     async function b_Image_Click(Index) {
-        const mc0020 = 11;
-        me.MousePointer = mc0020;
+        const HOURGLASS = 11;
+        me.MousePointer = HOURGLASS;
         await sub314A(Index);
     }
 
     async function sub314A(p0028) {
         p0028 = CInt(p0028);
-        const mc0056 = 1;
+        const ARROW_CURSOR = 1;
         me.BackColor = m002A;
         me.VSElastic1.Visible = 0;
         await Load(frm_Box1Rect);
@@ -109,7 +109,7 @@ function (me) {
                 frm_ChooseShip2.b_Sound.Command = "Play";
             }
             await frm_ChooseShip2.Show(1);
-            sub013C(m001A);
+            loadPlayer(m001A);
             game.shipType[m001A] = p0028;
             if (p0028 == 1) {
                 b_Image[p0028].Visible = 0;
@@ -208,7 +208,7 @@ function (me) {
                 player.cargoCapacity = 110;
                 game.engineSpeed[m001A] = 6;
             }
-            player.passengersWaiting = fn01AE(1, player.passengerCapacity);
+            player.passengersWaiting = randomBetween(1, player.passengerCapacity);
             player.passengersAboard = player.passengersWaiting;
             if (game.isEmailGame == -1) {
                 frm_EmailInfo.b_Title.Caption = "Player " + Format(m001A, "#,#0");
@@ -223,22 +223,22 @@ function (me) {
                 player.emailAddress = FixStr(Trim(frm_EmailInfo.b_TextBox3.Text), 64);
                 await Unload(frm_EmailInfo);
             }
-            sub014C(m001A);
+            storePlayer(m001A);
             m001A = m001A + 1;
             if (m001A <= game.numPlayers) {
-                me.MousePointer = mc0056;
+                me.MousePointer = ARROW_CURSOR;
                 b_Player.Caption = Trim(game.companyNames[m001A]);
                 me.BackColor = 0x40;
                 me.VSElastic1.Visible = -1;
             } else {
-                me.MousePointer = mc0020;
+                me.MousePointer = HOURGLASS;
                 me.BackColor = m002A;
                 me.VSElastic1.Visible = 0;
                 if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
                 }
                 await frm_Opponents.Show(1);
-                sub013C(1);
+                loadPlayer(1);
                 if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
                 }
@@ -256,12 +256,12 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0056;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function Form_Load() {
         let l006C = 0;
-        me.MousePointer = mc0020;
+        me.MousePointer = HOURGLASS;
         b_Message.Caption = "Click on the spaceship you wish to purchase:";
         for (l006C = 1; l006C <= 12; l006C++) {
             b_Image[l006C].Picture = LoadPicture(Trim(paths.imageDir) + "ship" + Trim(Str(l006C)) + "a.bmp");

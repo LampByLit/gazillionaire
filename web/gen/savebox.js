@@ -13,20 +13,20 @@ VB.form("frm_SaveBox",
   ]],
 function (me) {
     const { FillElastic, b_Cancel, b_SaveGame, b_Rect, Text1, Label3 } = me.controls;
-    const mc0032 = 11;
-    const mc004E = 12632256;
-    const mc0068 = 3;
-    const mc00A2 = 1;
+    const HOURGLASS = 11;
+    const LIGHT_GRAY = 12632256;
+    const IBEAM_CURSOR = 3;
+    const ARROW_CURSOR = 1;
     let m001C = DimArray([5], () => Space(20));
 
     async function b_Cancel_Click() {
-        me.MousePointer = mc0032;
+        me.MousePointer = HOURGLASS;
         game.saveSlot = CInt(Val(frm_SaveGame.Tag));
         await Unload(me);
     }
 
     function b_Cancel_MouseDown(Button, Shift, X, Y) {
-        b_Cancel.BackColor = mc004E;
+        b_Cancel.BackColor = LIGHT_GRAY;
     }
 
     function b_Cancel_MouseUp(Button, Shift, X, Y) {
@@ -34,22 +34,22 @@ function (me) {
     }
 
     function b_Rect_MouseMove(Button, Shift, X, Y) {
-        me.MousePointer = mc0068;
+        me.MousePointer = IBEAM_CURSOR;
     }
 
     async function b_SaveGame_Click() {
-        me.MousePointer = mc0032;
+        me.MousePointer = HOURGLASS;
         await Unload(frm_SaveGame);
         m001C[game.saveSlot] = FixStr(Text1.Text, 20);
         sub27C6();
-        await sub00B0();
+        await saveGame();
         FillElastic.Visible = 0;
         await frm_MainMenu.Show();
         await Unload(me);
     }
 
     function b_SaveGame_MouseDown(Button, Shift, X, Y) {
-        b_SaveGame.BackColor = mc004E;
+        b_SaveGame.BackColor = LIGHT_GRAY;
     }
 
     function b_SaveGame_MouseUp(Button, Shift, X, Y) {
@@ -67,7 +67,6 @@ function (me) {
 
     function sub27C6() {
         let l0098 = 0;
-        const mc00A2 = 1;
         for (l0098 = 1; l0098 <= 5; l0098++) {
             FileOpen(5, Trim(paths.saveDir) + "GAME" + Trim(Format(l0098, "#,#0")));
             FilePut(5, 1, m001C[l0098]);
@@ -76,11 +75,11 @@ function (me) {
     }
 
     function FillElastic_MouseMove(Button, Shift, X, Y) {
-        me.MousePointer = mc00A2;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function Form_Activate() {
-        me.MousePointer = mc00A2;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -92,7 +91,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc0032;
+        me.MousePointer = HOURGLASS;
         FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "stars1.bmp");
         sub2792();
         if (Trim(m001C[game.saveSlot]) == ".......") {
@@ -109,7 +108,7 @@ function (me) {
     }
 
     function Text1_MouseMove(Button, Shift, X, Y) {
-        me.MousePointer = mc0068;
+        me.MousePointer = IBEAM_CURSOR;
     }
 
     return {

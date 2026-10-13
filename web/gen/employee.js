@@ -35,15 +35,15 @@ function (me) {
     const { b_Timer, FillElastic, b_Sound, VSElastic4, b_Help1, b_Help2, b_Pay1, b_Pay2 } = me.controls;
     const { b_ExitEmployee1, b_ExitEmployee2, VSElastic3, Image1, Label1, VSElastic, b_Message, VSElastic2 } = me.controls;
     const { b_Cash, b_Total, b_Salary, b_Employee } = me.controls;
-    const mc001E = 11;
-    const mc00DC = 16777215;
-    const mc00EA = 1;
-    const mc00F2 = 255;
+    const HOURGLASS = 11;
+    const WHITE = 16777215;
+    const ARROW_CURSOR = 1;
+    const RED = 255;
     let m001A = 0;
     let m001C = 0;
 
     async function b_ExitEmployee1_Click() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         b_Timer.Enabled = 0;
         me.BackColor = 0x404040;
         FillElastic.Visible = 0;
@@ -60,7 +60,7 @@ function (me) {
     }
 
     async function b_ExitEmployee2_Click() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         b_Timer.Enabled = 0;
         me.BackColor = 0x404040;
         FillElastic.Visible = 0;
@@ -159,11 +159,11 @@ function (me) {
     }
 
     async function sub16C3() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
-        b_Message.ForeColor = mc00DC;
+        b_Message.ForeColor = WHITE;
         if (player.wagesOwed == 0) {
             if (settings.soundOn == -1) {
                 Beep();
@@ -197,11 +197,11 @@ function (me) {
             b_Timer.Enabled = -1;
         }
         sub1731();
-        me.MousePointer = mc00EA;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function sub0AFB() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -224,11 +224,10 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc00EA;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
-        const mc00F2 = 255;
         if (KeyAscii == 13 || KeyAscii == 27 || KeyAscii == 32) {
             await b_ExitEmployee1_Click();
         }
@@ -240,7 +239,7 @@ function (me) {
         b_Message.Caption = "";
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "crew.bmp");
         if (player.wagesOwed >= player.crewSize * player.crewSalary * 4) {
-            b_Message.ForeColor = mc00F2;
+            b_Message.ForeColor = RED;
             b_Message.Caption = "Your crew demands that you pay them their salary!";
         } else if ((player.crewSize * player.crewSalary * 3) <= player.wagesOwed && player.wagesOwed < (player.crewSize * player.crewSalary * 4)) {
             b_Message.Caption = "Your crew appears to be upset over the fact that you haven't paid them.";

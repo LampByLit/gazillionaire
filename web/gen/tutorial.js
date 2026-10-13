@@ -14,11 +14,11 @@ VB.form("frm_Tutorial",
   ]],
 function (me) {
     const { FillElastic, VSElastic2, b_Container, VSElastic3, b_Message, b_Continue } = me.controls;
-    const mc001A = 11;
-    const mc0042 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
 
     async function b_Continue_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await Unload(me);
     }
@@ -32,7 +32,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0042;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -42,7 +42,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (game.turn == 1) {
             b_Message.Caption = "Welcome to the Tutorial! The game will start off simple and gradually become more sophisticated. Once you learn the basic rules, we will allow you to increase the complexity at your own pace." + "\n" + "\n" + "You begin the game with " + Format(player.cash, "#,#0") + " in cash and a debt of " + Format(player.zinnLoan, "#,#0") + " kubars to Mr. Zinn. The best way to familiarize yourself with the game is to click on the GETTING STARTED button in the next section.";
         } else if (game.complexity == game.unlockLoan) {

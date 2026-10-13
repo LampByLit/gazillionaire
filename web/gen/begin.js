@@ -18,17 +18,17 @@ VB.form("frm_BeginGame",
 function (me) {
     const { b_Sound, FillElastic, VSElastic3, b_NewEmail, b_OldEmail, b_ViewCredits, b_OldGame, b_NewGame } = me.controls;
     const { b_Quit, Label1 } = me.controls;
-    const mc001A = 11;
-    const mc004E = 12632256;
+    const HOURGLASS = 11;
+    const LIGHT_GRAY = 12632256;
     const m0060 = 12582912;
     const m007A = 16711680;
     const m0098 = 8388608;
     const m00E6 = 4194304;
-    const mc00FE = 1;
+    const ARROW_CURSOR = 1;
     let m00CC = 0;
 
     async function b_NewEmail_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -60,7 +60,7 @@ function (me) {
         }
         await frm_BoxPort.Show(1);
         if (frm_BoxPort.Tag == "YES") {
-            me.MousePointer = mc001A;
+            me.MousePointer = HOURGLASS;
             game.isEmailGame = -1;
             await Unload(frm_BoxPort);
             await frm_Level.Show();
@@ -72,7 +72,7 @@ function (me) {
     }
 
     function b_NewEmail_MouseDown(Button, Shift, X, Y) {
-        b_NewEmail.BackColor = mc004E;
+        b_NewEmail.BackColor = LIGHT_GRAY;
     }
 
     function b_NewEmail_MouseUp(Button, Shift, X, Y) {
@@ -80,7 +80,7 @@ function (me) {
     }
 
     async function b_NewGame_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -90,7 +90,7 @@ function (me) {
     }
 
     function b_NewGame_MouseDown(Button, Shift, X, Y) {
-        b_NewGame.BackColor = mc004E;
+        b_NewGame.BackColor = LIGHT_GRAY;
     }
 
     function b_NewGame_MouseUp(Button, Shift, X, Y) {
@@ -98,7 +98,7 @@ function (me) {
     }
 
     async function b_OldEmail_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -109,7 +109,7 @@ function (me) {
     }
 
     function b_OldEmail_MouseDown(Button, Shift, X, Y) {
-        b_OldEmail.BackColor = mc004E;
+        b_OldEmail.BackColor = LIGHT_GRAY;
     }
 
     function b_OldEmail_MouseUp(Button, Shift, X, Y) {
@@ -117,7 +117,7 @@ function (me) {
     }
 
     async function b_OldGame_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -128,7 +128,7 @@ function (me) {
     }
 
     function b_OldGame_MouseDown(Button, Shift, X, Y) {
-        b_OldGame.BackColor = mc004E;
+        b_OldGame.BackColor = LIGHT_GRAY;
     }
 
     function b_OldGame_MouseUp(Button, Shift, X, Y) {
@@ -144,7 +144,7 @@ function (me) {
     }
 
     function b_Quit_MouseDown(Button, Shift, X, Y) {
-        b_Quit.BackColor = mc004E;
+        b_Quit.BackColor = LIGHT_GRAY;
     }
 
     function b_Quit_MouseUp(Button, Shift, X, Y) {
@@ -152,7 +152,7 @@ function (me) {
     }
 
     async function b_ViewCredits_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -266,7 +266,7 @@ function (me) {
     }
 
     function b_ViewCredits_MouseDown(Button, Shift, X, Y) {
-        b_ViewCredits.BackColor = mc004E;
+        b_ViewCredits.BackColor = LIGHT_GRAY;
     }
 
     function b_ViewCredits_MouseUp(Button, Shift, X, Y) {
@@ -279,14 +279,13 @@ function (me) {
         let l00EE = 0;
         let l00F0 = 0;
         let l00F2 = "";
-        const mc00FE = 1;
         player.passengerAdSpend = 0;
         player.commodityAdSpend = 0;
         player.adSpendTotal = 0;
         player.passengerAdChoice = 0;
         player.commodityAdChoice = 0;
         player.adExtraPassengers = 0;
-        player.age = fn01AE(17, 50);
+        player.age = randomBetween(17, 50);
         for (l00EA = 0; l00EA <= 2; l00EA++) {
             for (l00EC = 0; l00EC <= 5; l00EC++) {
                 player.cargo[l00EA][l00EC] = 0;
@@ -307,7 +306,7 @@ function (me) {
         player.insured = 0;
         player.insuranceRate = 15;
         l00F0 = player.insuranceRate * 1000;
-        player.insuranceCost = fn01AE(player.insuranceRate, l00F0);
+        player.insuranceCost = randomBetween(player.insuranceRate, l00F0);
         player.loan = 0;
         player.loanRate = 0.05;
         player.loanInterest = 0;
@@ -331,7 +330,7 @@ function (me) {
         player.quickPassengers = 0;
         player.quickTaxes = 0;
         player.quickInsurance = 0;
-        player.arrivalRoll = fn01AE(1, 100);
+        player.arrivalRoll = randomBetween(1, 100);
         player.playerName = FixStr("", 20);
         player.bankBalance = 0;
         player.bankRate = 0.01;
@@ -417,7 +416,7 @@ function (me) {
         for (l00EA = 0; l00EA <= 6; l00EA++) {
             for (l00EC = 0; l00EC <= 2; l00EC++) {
                 for (l00EE = 0; l00EE <= 5; l00EE++) {
-                    game.supplyPercent[l00EA][l00EC][l00EE] = fn01AE(0, 100);
+                    game.supplyPercent[l00EA][l00EC][l00EE] = randomBetween(0, 100);
                     game.prices[l00EA][l00EC][l00EE] = 0;
                     game.available[l00EA][l00EC][l00EE] = 0;
                 }
@@ -433,15 +432,15 @@ function (me) {
         }
         game.fuelBasePrice = 200;
         for (l00EA = 0; l00EA <= 6; l00EA++) {
-            game.fuelPrice[l00EA] = fn01AE(game.fuelBasePrice, game.fuelBasePrice * 10);
+            game.fuelPrice[l00EA] = randomBetween(game.fuelBasePrice, game.fuelBasePrice * 10);
         }
         game.saveSlot = 0;
         game.weeklyEventRoll = 0;
         game.importTariff = 0.03;
         game.skillLevel = 1;
-        game.newsEvent = fn01AE(1, 124);
-        game.weeklyRoll = fn01AE(1, 100);
-        game.newsPlanet = fn01AE(0, 6);
+        game.newsEvent = randomBetween(1, 124);
+        game.weeklyRoll = randomBetween(1, 100);
+        game.newsPlanet = randomBetween(0, 6);
         for (l00EA = 1; l00EA <= 6; l00EA++) {
             game.netWorth[l00EA] = 0;
         }
@@ -472,7 +471,7 @@ function (me) {
         for (l00EE = 1; l00EE <= 6; l00EE++) {
             for (l00EA = 0; l00EA <= 6; l00EA++) {
                 {
-                    const sel = fn01AE(0, 13);
+                    const sel = randomBetween(0, 13);
                     if (sel == 0) {
                         l00F2 = "Vexx";
                     } else if (sel == 1) {
@@ -547,8 +546,8 @@ function (me) {
         }
         game.turn = 1;
         game.tutorialMode = 0;
-        game.weatherEvent = fn01AE(1, 70);
-        game.weatherPlanet = fn01AE(0, 6);
+        game.weatherEvent = randomBetween(1, 70);
+        game.weatherPlanet = randomBetween(0, 6);
         game.winner = 0;
         game.goalNetWorth = 1000000;
         for (l00EA = 1; l00EA <= 6; l00EA++) {
@@ -593,7 +592,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc00FE;
+        me.MousePointer = ARROW_CURSOR;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "begin.wav";
@@ -603,7 +602,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         Randomize();
         FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "STARS2.BMP");
         sub472D();

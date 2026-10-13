@@ -37,11 +37,11 @@ function (me) {
     const { FillElastic, b_Sound, VSElastic4, b_PictureBox, shipImage, VSElastic2, b_PassengersWaiting, image1 } = me.controls;
     const { b_PassengerProfit, b_profitPerPassenger, VSElastic3, b_Help1, b_Help2, b_Help3, b_SetTicketPrice, b_PickUpPassengers } = me.controls;
     const { b_ExitPassengers, VSElastic6, b_PassengerGauge, image2, b_PassengerCapacity } = me.controls;
-    const mc001A = 11;
-    const mc00EC = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
 
     async function b_ExitPassengers_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await frm_MainMenu.Show();
         await Unload(me);
@@ -161,7 +161,7 @@ function (me) {
     }
 
     async function sub0AFB() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
@@ -174,7 +174,7 @@ function (me) {
     }
 
     function sub10E2() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (player.passengersBoarded == -1) {
             b_PassengerGauge.FloodPercent = 100 * (player.passengersAboard / player.passengerCapacity);
             b_PassengerGauge.Caption = "Passengers on Ship:  " + Format(player.passengersAboard, "#,#0");
@@ -202,11 +202,11 @@ function (me) {
         b_profitPerPassenger.Caption = "        Ticket Price this Week:  " + Format(player.ticketPrice, "#,#0");
         b_PassengerCapacity.Caption = "Passenger Capacity:    " + Format(player.passengerCapacity, "#,#0");
         b_SetTicketPrice.Caption = "Set TICKET PRICE for next planet at " + Format(player.nextTicketPrice, "#,#0") + " kubars";
-        me.MousePointer = mc00EC;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function sub1019() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (player.passengersBoarded == 0) {
             if (player.passengersAboard > 0) {
                 if (settings.soundOn == -1) {
@@ -231,13 +231,13 @@ function (me) {
         }
         sub10E2();
         await me.Show();
-        me.MousePointer = mc00EC;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function sub1087() {
         let l00F2 = 0;
-        me.MousePointer = mc001A;
-        l00F2 = await fn01A0(0, Str(player.nextTicketPrice), 1000, 5000, "Enter new ticket price:", "Ticket Price");
+        me.MousePointer = HOURGLASS;
+        l00F2 = await askNumber(0, Str(player.nextTicketPrice), 1000, 5000, "Enter new ticket price:", "Ticket Price");
         if (l00F2 == -3333) {
         } else if (l00F2 < 100) {
             if (settings.soundOn == -1) {
@@ -256,11 +256,11 @@ function (me) {
             }
         }
         sub10E2();
-        me.MousePointer = mc00EC;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function Form_Activate() {
-        me.MousePointer = mc00EC;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -272,7 +272,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         shipImage.Picture = LoadPicture(Trim(paths.imageDir) + "ship" + Trim(Str(game.shipType[game.currentPlayer])) + ".bmp");
         sub10E2();
     }

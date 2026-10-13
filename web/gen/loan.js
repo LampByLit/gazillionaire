@@ -33,15 +33,15 @@ function (me) {
     const { b_Timer, FillElastic, b_Sound, VSElastic4, b_BorrowMax, b_Help1, b_Help2, b_ExitLoan } = me.controls;
     const { b_PayBackMax, b_PayBack, b_Borrow, VSElastic2, b_Loan, b_Credit, b_InterestRate, b_Interest } = me.controls;
     const { b_Cash, VSElastic1, Image1, Label1, VSElastic3 } = me.controls;
-    const mc001E = 11;
-    const mc0046 = 1;
+    const HOURGLASS = 11;
+    const ARROW_CURSOR = 1;
     let m001A = 0;
     let m001C = 0;
 
     async function b_Borrow_Click() {
         let l0026 = 0;
-        const mc0046 = 1;
-        me.MousePointer = mc001E;
+        const ARROW_CURSOR = 1;
+        me.MousePointer = HOURGLASS;
         if (player.loan >= player.creditLimit) {
             if (settings.soundOn == -1) {
                 Beep();
@@ -51,7 +51,7 @@ function (me) {
             await frm_Box0.Show(1);
             l0026 = 0;
         } else {
-            l0026 = await fn01A0(0, "", 0.25 * (player.creditLimit - player.loan), (player.creditLimit - player.loan), "Enter the amount you wish to borrow:", "Borrow Money");
+            l0026 = await askNumber(0, "", 0.25 * (player.creditLimit - player.loan), (player.creditLimit - player.loan), "Enter the amount you wish to borrow:", "Borrow Money");
         }
         if (l0026 == 0) {
         } else if (l0026 == -3333) {
@@ -74,7 +74,7 @@ function (me) {
             }
         }
         sub0A24();
-        me.MousePointer = mc0046;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_Borrow_MouseDown(Button, Shift, X, Y) {
@@ -87,7 +87,7 @@ function (me) {
 
     async function b_BorrowMax_Click() {
         let l005E = 0;
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         if (player.loan >= player.creditLimit) {
             if (settings.soundOn == -1) {
                 Beep();
@@ -112,7 +112,7 @@ function (me) {
             }
         }
         sub0A24();
-        me.MousePointer = mc0046;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_BorrowMax_MouseDown(Button, Shift, X, Y) {
@@ -124,7 +124,7 @@ function (me) {
     }
 
     async function b_ExitLoan_Click() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         b_Timer.Enabled = 0;
         me.BackColor = 0x404040;
         FillElastic.Visible = 0;
@@ -167,7 +167,7 @@ function (me) {
     async function b_PayBack_Click() {
         let l00C0 = 0;
         let l00C2 = 0;
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         if (player.cash == 0) {
             if (settings.soundOn == -1) {
                 Beep();
@@ -190,7 +190,7 @@ function (me) {
             } else {
                 l00C0 = player.loan;
             }
-            l00C2 = await fn01A0(0, "", 0.25 * l00C0, l00C0, "Enter the amount you wish to pay back:", "Pay Back Loan");
+            l00C2 = await askNumber(0, "", 0.25 * l00C0, l00C0, "Enter the amount you wish to pay back:", "Pay Back Loan");
         }
         if (l00C2 == 0) {
         } else if (l00C2 == -3333) {
@@ -223,7 +223,7 @@ function (me) {
             b_Timer.Enabled = -1;
         }
         sub0A24();
-        me.MousePointer = mc0046;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_PayBack_MouseDown(Button, Shift, X, Y) {
@@ -235,7 +235,7 @@ function (me) {
     }
 
     async function b_PayBackMax_Click() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         if (player.cash == 0) {
             if (settings.soundOn == -1) {
                 Beep();
@@ -272,7 +272,7 @@ function (me) {
             b_Timer.Enabled = -1;
         }
         sub0A24();
-        me.MousePointer = mc0046;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     function b_PayBackMax_MouseDown(Button, Shift, X, Y) {
@@ -304,7 +304,7 @@ function (me) {
     }
 
     async function sub0AFB() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         m001A = 0;
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "loan1.bmp");
         if (settings.soundOn == -1) {
@@ -327,7 +327,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0046;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -337,7 +337,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001E;
+        me.MousePointer = HOURGLASS;
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "loan1.bmp");
         m001C = 1;
         m001A = 1;

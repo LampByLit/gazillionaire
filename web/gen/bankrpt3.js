@@ -18,19 +18,19 @@ VB.form("frm_Bankrupt3",
 function (me) {
     const { VSElastic1, b_Sound, b_ImageContainer, b_ImageLable, Image1, b_ContinueGame, b_NewGame, b_Message } = me.controls;
     const { b_QuitGame, Label1 } = me.controls;
-    const mc001C = 11;
+    const HOURGLASS = 11;
     const m0024 = 0;
-    const mc0068 = 1;
+    const ARROW_CURSOR = 1;
 
     async function b_ContinueGame_Click() {
         let l001A = 0;
-        const mc001C = 11;
-        me.MousePointer = mc001C;
+        const HOURGLASS = 11;
+        me.MousePointer = HOURGLASS;
         me.VSElastic1.BackColor = m0024;
         me.BackColor = m0024;
         me.VSElastic1.Visible = 0;
         game.turnDone[game.currentPlayer] = -1;
-        sub014C(game.currentPlayer);
+        storePlayer(game.currentPlayer);
         l001A = game.turnOrder[game.turnOrderPos];
         do {
             if (game.turnOrderPos < game.numPlayers) {
@@ -55,8 +55,7 @@ function (me) {
 
     async function b_NewGame_Click() {
         const m0024 = 0;
-        const mc0068 = 1;
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         me.VSElastic1.BackColor = m0024;
         me.BackColor = m0024;
         me.VSElastic1.Visible = 0;
@@ -73,7 +72,7 @@ function (me) {
     }
 
     async function b_QuitGame_Click() {
-        me.MousePointer = mc001C;
+        me.MousePointer = HOURGLASS;
         me.VSElastic1.BackColor = m0024;
         me.BackColor = m0024;
         me.VSElastic1.Visible = 0;
@@ -89,7 +88,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0068;
+        me.MousePointer = ARROW_CURSOR;
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ship" + Trim(Str(game.shipType[game.currentPlayer])) + ".bmp");
         b_ImageLable.Caption = Trim(game.companyNames[game.currentPlayer]);
         b_Message.Caption = Trim(game.companyNames[game.currentPlayer]) + " Bankrupts!!!";

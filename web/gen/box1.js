@@ -11,26 +11,26 @@ VB.form("frm_Box1",
   ]],
 function (me) {
     const { FillElastic, VSElastic1, b_Message, b_Exit } = me.controls;
-    const mc001A = 11;
-    const mc002E = 16777215;
-    const mc0040 = 12632256;
-    const mc0044 = 1;
+    const HOURGLASS = 11;
+    const WHITE = 16777215;
+    const LIGHT_GRAY = 12632256;
+    const ARROW_CURSOR = 1;
 
     async function b_Exit_Click() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         await Unload(me);
     }
 
     function b_Exit_MouseDown(Button, Shift, X, Y) {
-        b_Exit.BackColor = mc002E;
+        b_Exit.BackColor = WHITE;
     }
 
     function b_Exit_MouseUp(Button, Shift, X, Y) {
-        b_Exit.BackColor = mc0040;
+        b_Exit.BackColor = LIGHT_GRAY;
     }
 
     function Form_Activate() {
-        me.MousePointer = mc0044;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -40,7 +40,7 @@ function (me) {
     }
 
     function Form_Load() {
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (me.WindowState == 0) {
             me.Move((Screen.Width - me.Width) / 2, (Screen.Height - me.Height) / 2);
         }

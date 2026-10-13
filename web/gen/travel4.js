@@ -11,9 +11,9 @@ VB.form("frm_Travel4",
   ]],
 function (me) {
     const { FillElastic, b_Sound, Label3, Label2, Label1 } = me.controls;
-    const mc001A = 11;
+    const HOURGLASS = 11;
     const m008C = 0;
-    const mc00AC = 1;
+    const ARROW_CURSOR = 1;
 
     async function sub050F() {
         let l0022 = 0;
@@ -22,10 +22,10 @@ function (me) {
         let l0028 = 0;
         let l002A = "";
         let l002C = 0;
-        me.MousePointer = mc001A;
-        sub00F9();
+        me.MousePointer = HOURGLASS;
+        updateRivalNetWorth();
         FillElastic.Visible = 0;
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (game.tutorialMode == -1 && game.turn == 10) {
             if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
@@ -217,7 +217,7 @@ function (me) {
                 await frm_Tutorial.Show(1);
             }
         }
-        await sub00A2();
+        await autoSave();
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
@@ -511,7 +511,7 @@ function (me) {
         let l0088 = 0;
         let l008A = "";
         const m008C = 0;
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         for (l0088 = 1; l0088 <= game.numPlayers; l0088++) {
             if (game.turnDone[l0088] == -1 && l0088 != game.currentPlayer && game.previousPlanet[l0088] == game.planet[game.currentPlayer]) {
                 if (settings.soundOn == -1) {
@@ -533,7 +533,7 @@ function (me) {
                 frm_Box1Rect.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ship" + Trim(Str(game.shipType[l0088])) + ".bmp");
                 frm_Box1Rect.b_ImageLable.Caption = Trim(game.companyNames[l0088]) + " Arrives on " + Trim(game.planetNames[game.previousPlanet[l0088]]) + " First!";
                 {
-                    const sel = fn01AE(1, 60);
+                    const sel = randomBetween(1, 60);
                     if (sel == 1) {
                         l008A = "Sorry, but the early bird gets all the tastiest worms.";
                     } else if (sel == 2) {
@@ -602,7 +602,7 @@ function (me) {
                 }
                 frm_Box1Rect.b_Message.Caption = Trim(game.companyNames[l0088]) + " beats you to " + Trim(game.planetNames[game.previousPlanet[l0088]]) + ". " + l008A;
                 await frm_Box1Rect.Show(1);
-                me.MousePointer = mc001A;
+                me.MousePointer = HOURGLASS;
             }
         }
     }
@@ -612,11 +612,11 @@ function (me) {
         let l0094 = "";
         let l0096 = "";
         let l0098 = "";
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         for (l0092 = 1; l0092 <= game.numRivals; l0092++) {
             if (rivals.turnDone[l0092] == 0 && rivals.planet[l0092] == game.planet[game.currentPlayer] && rivals.travelTime[l0092] < game.travelTime[game.currentPlayer]) {
                 {
-                    const sel = fn01AE(1, 60);
+                    const sel = randomBetween(1, 60);
                     if (sel == 1) {
                         l0094 = "Sorry, but the early bird gets all the tastiest worms.";
                     } else if (sel == 2) {
@@ -696,7 +696,7 @@ function (me) {
                     l0096 = "opponent didn't purchase any commodities";
                 } else if (game.available[rivals.planet[l0092]][rivals.cargoCategory[l0092]][rivals.cargoItem[l0092]] == 0) {
                     {
-                        const sel = fn01AE(1, 20);
+                        const sel = randomBetween(1, 20);
                         if (sel == 1) {
                             l0096 = "100% of the";
                         } else if (sel == 2) {
@@ -722,7 +722,7 @@ function (me) {
                         }
                     }
                     {
-                        const sel = fn01AE(1, 10);
+                        const sel = randomBetween(1, 10);
                         if (sel == 1) {
                             l0098 = " as well as some other products";
                         } else if (sel == 2) {
@@ -739,7 +739,7 @@ function (me) {
                     }
                 } else {
                     {
-                        const sel = fn01AE(1, 20);
+                        const sel = randomBetween(1, 20);
                         if (sel == 1) {
                             l0096 = "some of the";
                         } else if (sel == 2) {
@@ -788,7 +788,7 @@ function (me) {
                     frm_Box1Rect.b_Message.Caption = Trim(rivals.companyNames[l0092]) + " beats you to " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + ". " + l0094;
                 } else {
                     {
-                        const sel = fn01AE(1, 5);
+                        const sel = randomBetween(1, 5);
                         if (sel == 1) {
                             frm_Box1Rect.b_Message.Caption = Trim(rivals.companyNames[l0092]) + " beats you to " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + " and buys up " + l0096 + " " + Trim(game.commodityNames[rivals.cargoCategory[l0092]][rivals.cargoItem[l0092]]) + l0098 + " for a very low price! " + "\n" + "\n" + l0094;
                         } else if (sel == 2) {
@@ -810,7 +810,7 @@ function (me) {
                     frm_Box1Rect.b_Sound.Command = "Play";
                 }
                 await frm_Box1Rect.Show(1);
-                me.MousePointer = mc001A;
+                me.MousePointer = HOURGLASS;
             }
         }
     }
@@ -822,7 +822,7 @@ function (me) {
         let l00A2 = 0;
         pv009A = CInt(pv009A);
         if (rivals.cargo[pv009A] > 0) {
-            game.available[rivals.planet[pv009A]][rivals.cargoCategory[pv009A]][rivals.cargoItem[pv009A]] = game.available[rivals.planet[pv009A]][rivals.cargoCategory[pv009A]][rivals.cargoItem[pv009A]] + fn01AE(rivals.cargo[pv009A] / 2, rivals.cargo[pv009A]);
+            game.available[rivals.planet[pv009A]][rivals.cargoCategory[pv009A]][rivals.cargoItem[pv009A]] = game.available[rivals.planet[pv009A]][rivals.cargoCategory[pv009A]][rivals.cargoItem[pv009A]] + randomBetween(rivals.cargo[pv009A] / 2, rivals.cargo[pv009A]);
         }
         rivals.cash[pv009A] = rivals.cash[pv009A] + (game.prices[rivals.planet[pv009A]][rivals.cargoCategory[pv009A]][rivals.cargoItem[pv009A]] * rivals.cargo[pv009A]);
         rivals.cargo[pv009A] = 0;
@@ -849,8 +849,7 @@ function (me) {
     async function sub33FA() {
         let l00A4 = 0;
         let l00A6 = 0;
-        const mc00AC = 1;
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         if (game.tutorialMode == 0 || game.complexity >= game.unlockFacilities) {
             l00A4 = 0;
             for (l00A6 = 1; l00A6 <= game.numRivals; l00A6++) {
@@ -879,7 +878,7 @@ function (me) {
                     frm_Box1Port.b_Sound.Command = "Play";
                 }
                 await frm_Box1Port.Show(1);
-                await sub015C(l00A4, -1);
+                await spend(l00A4, -1);
             }
             if (game.facilityRevenue[game.currentPlayer][game.planet[game.currentPlayer]] > 0) {
                 await Load(frm_Box1Port);
@@ -901,7 +900,7 @@ function (me) {
                 game.facilityRevenue[game.currentPlayer][game.planet[game.currentPlayer]] = 0;
             }
         }
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
     }
 
     async function FillElastic_Click() {
@@ -909,7 +908,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        me.MousePointer = mc00AC;
+        me.MousePointer = ARROW_CURSOR;
     }
 
     async function Form_KeyPress(KeyAscii) {
@@ -919,7 +918,7 @@ function (me) {
     async function Form_Load() {
         let l00B0 = 0;
         let l00B2 = 0;
-        me.MousePointer = mc001A;
+        me.MousePointer = HOURGLASS;
         await sub33C3();
         await sub33DD();
         if (game.turn > 4) {

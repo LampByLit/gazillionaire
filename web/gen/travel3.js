@@ -6,8 +6,8 @@ VB.form("frm_Travel3",
   ]],
 function (me) {
     const { b_Sound } = me.controls;
-    const mc0086 = 11;
-    const mc008E = 4;
+    const HOURGLASS = 11;
+    const ICON_CURSOR = 4;
     let m001A = DimArray([6], 0);
 
     function sub2B68() {
@@ -36,11 +36,11 @@ function (me) {
         game.auctionFacilityRevenue = 0;
         if (game.tutorialMode == 0 || game.complexity > game.unlockExplore) {
             if (game.numPlayers == 1) {
-                l0030 = fn01AE(1, 12);
+                l0030 = randomBetween(1, 12);
             } else if (game.numPlayers == 2) {
-                l0030 = fn01AE(1, 10);
+                l0030 = randomBetween(1, 10);
             } else {
-                l0030 = fn01AE(1, 8);
+                l0030 = randomBetween(1, 8);
             }
             if (game.lastAuctionType == -1 || l0030 == 1 && game.lastAuctionType != -2) {
                 game.auctionType = 1;
@@ -52,11 +52,11 @@ function (me) {
         }
         if (game.auctionType != 1 && game.tutorialMode == 0 || game.complexity > game.unlockFacilities) {
             if (game.numPlayers == 1) {
-                l0030 = fn01AE(1, 4);
+                l0030 = randomBetween(1, 4);
             } else if (game.numPlayers == 2) {
-                l0030 = fn01AE(1, 3);
+                l0030 = randomBetween(1, 3);
             } else {
-                l0030 = fn01AE(1, 2);
+                l0030 = randomBetween(1, 2);
             }
             if (l0030 == 1 || game.lastAuctionType == -2) {
                 game.auctionType = 2;
@@ -69,9 +69,9 @@ function (me) {
                     game.auctionPlanet = game.lastAuctionPlanet;
                     game.auctionFacilityRevenue = game.lastAuctionFacilityRevenue;
                 } else {
-                    game.auctionFacility = fn01AE(1, 100);
-                    game.auctionPlanet = fn01AE(0, 6);
-                    game.auctionFacilityRevenue = fn01AE(500, 5000);
+                    game.auctionFacility = randomBetween(1, 100);
+                    game.auctionPlanet = randomBetween(0, 6);
+                    game.auctionFacilityRevenue = randomBetween(500, 5000);
                 }
             }
         }
@@ -84,7 +84,7 @@ function (me) {
         let l0040 = 0;
         let l0042 = 0;
         let l0044 = 0;
-        sub00F9();
+        updateRivalNetWorth();
         do {
             l0038 = 1 + 6;
             l003A = 1 + 6;
@@ -92,35 +92,35 @@ function (me) {
             l0044 = 0;
             for (l003C = 1; l003C <= game.numRivals; l003C++) {
                 if (rivals.netWorth[l003C] <= -100000) {
-                    l0040 = fn01AE(game.auctionFacilityRevenue * 2.5, game.auctionFacilityRevenue * 5);
+                    l0040 = randomBetween(game.auctionFacilityRevenue * 2.5, game.auctionFacilityRevenue * 5);
                 } else if (-100000 < rivals.netWorth[l003C] && rivals.netWorth[l003C] <= -50000) {
-                    l0040 = fn01AE(game.auctionFacilityRevenue * 5, game.auctionFacilityRevenue * 10);
+                    l0040 = randomBetween(game.auctionFacilityRevenue * 5, game.auctionFacilityRevenue * 10);
                 } else if (-50000 < rivals.netWorth[l003C] && rivals.netWorth[l003C] <= 0) {
-                    l0040 = fn01AE(game.auctionFacilityRevenue * 7.5, game.auctionFacilityRevenue * 15);
+                    l0040 = randomBetween(game.auctionFacilityRevenue * 7.5, game.auctionFacilityRevenue * 15);
                 } else if (0 < rivals.netWorth[l003C] && rivals.netWorth[l003C] <= 100000) {
-                    l0040 = fn01AE(game.auctionFacilityRevenue * 10, game.auctionFacilityRevenue * 20);
+                    l0040 = randomBetween(game.auctionFacilityRevenue * 10, game.auctionFacilityRevenue * 20);
                 } else if (100000 < rivals.netWorth[l003C] && rivals.netWorth[l003C] <= 200000) {
-                    l0040 = fn01AE(game.auctionFacilityRevenue * 11, game.auctionFacilityRevenue * 22);
+                    l0040 = randomBetween(game.auctionFacilityRevenue * 11, game.auctionFacilityRevenue * 22);
                 } else if (200000 < rivals.netWorth[l003C] && rivals.netWorth[l003C] <= 300000) {
-                    l0040 = fn01AE(game.auctionFacilityRevenue * 12, game.auctionFacilityRevenue * 24);
+                    l0040 = randomBetween(game.auctionFacilityRevenue * 12, game.auctionFacilityRevenue * 24);
                 } else if (300000 < rivals.netWorth[l003C] && rivals.netWorth[l003C] <= 400000) {
-                    l0040 = fn01AE(game.auctionFacilityRevenue * 13, game.auctionFacilityRevenue * 26);
+                    l0040 = randomBetween(game.auctionFacilityRevenue * 13, game.auctionFacilityRevenue * 26);
                 } else if (400000 < rivals.netWorth[l003C] && rivals.netWorth[l003C] <= 500000) {
-                    l0040 = fn01AE(game.auctionFacilityRevenue * 14, game.auctionFacilityRevenue * 28);
+                    l0040 = randomBetween(game.auctionFacilityRevenue * 14, game.auctionFacilityRevenue * 28);
                 } else if (500000 < rivals.netWorth[l003C] && rivals.netWorth[l003C] <= 600000) {
-                    l0040 = fn01AE(game.auctionFacilityRevenue * 15, game.auctionFacilityRevenue * 30);
+                    l0040 = randomBetween(game.auctionFacilityRevenue * 15, game.auctionFacilityRevenue * 30);
                 } else if (600000 < rivals.netWorth[l003C] && rivals.netWorth[l003C] <= 700000) {
-                    l0040 = fn01AE(game.auctionFacilityRevenue * 16, game.auctionFacilityRevenue * 32);
+                    l0040 = randomBetween(game.auctionFacilityRevenue * 16, game.auctionFacilityRevenue * 32);
                 } else if (700000 < rivals.netWorth[l003C] && rivals.netWorth[l003C] <= 800000) {
-                    l0040 = fn01AE(game.auctionFacilityRevenue * 17, game.auctionFacilityRevenue * 34);
+                    l0040 = randomBetween(game.auctionFacilityRevenue * 17, game.auctionFacilityRevenue * 34);
                 } else if (800000 < rivals.netWorth[l003C] && rivals.netWorth[l003C] <= 900000) {
-                    l0040 = fn01AE(game.auctionFacilityRevenue * 18, game.auctionFacilityRevenue * 36);
+                    l0040 = randomBetween(game.auctionFacilityRevenue * 18, game.auctionFacilityRevenue * 36);
                 } else if (900000 < rivals.netWorth[l003C] && rivals.netWorth[l003C] <= 1000000) {
-                    l0040 = fn01AE(game.auctionFacilityRevenue * 19, game.auctionFacilityRevenue * 38);
+                    l0040 = randomBetween(game.auctionFacilityRevenue * 19, game.auctionFacilityRevenue * 38);
                 } else if (1000000 < rivals.netWorth[l003C]) {
-                    l0040 = fn01AE(game.auctionFacilityRevenue * 20, game.auctionFacilityRevenue * 40);
+                    l0040 = randomBetween(game.auctionFacilityRevenue * 20, game.auctionFacilityRevenue * 40);
                 }
-                if (fn01AE(1, 6) == 1) {
+                if (randomBetween(1, 6) == 1) {
                     l0040 = l0040 * 2;
                 }
                 if (l0040 >= l0042) {
@@ -149,7 +149,7 @@ function (me) {
         }
         if (game.auctionWinner == game.auctionRunnerUp) {
             do {
-                game.auctionRunnerUp = fn01B7(7, 12);
+                game.auctionRunnerUp = randomInt(7, 12);
             } while (game.auctionWinner == game.auctionRunnerUp);
         }
         if (game.auctionSecondBid == game.auctionTopBid && game.auctionTopBid != 0) {
@@ -162,10 +162,10 @@ function (me) {
                     rivals.facilitiesOwned[game.auctionWinner - 6][game.auctionPlanet] = rivals.facilitiesOwned[game.auctionWinner - 6][game.auctionPlanet] + 1;
                     rivals.facilityFees[game.auctionWinner - 6][game.auctionPlanet] = rivals.facilityFees[game.auctionWinner - 6][game.auctionPlanet] + game.auctionFacilityRevenue;
                 } else {
-                    sub013C(game.auctionWinner);
+                    loadPlayer(game.auctionWinner);
                     game.facilitiesOwned[game.auctionWinner][game.auctionPlanet] = game.facilitiesOwned[game.auctionWinner][game.auctionPlanet] + 1;
                     game.facilityFees[game.auctionWinner][game.auctionPlanet] = game.facilityFees[game.auctionWinner][game.auctionPlanet] + game.auctionFacilityRevenue;
-                    sub014C(game.auctionWinner);
+                    storePlayer(game.auctionWinner);
                 }
             }
         }
@@ -180,7 +180,7 @@ function (me) {
         let l005A = 0;
         let l005C = 0;
         let l005E = 0;
-        sub00F9();
+        updateRivalNetWorth();
         for (l0052 = 1; l0052 <= game.numPlayers; l0052++) {
             if (game.graphShowCompany[l0052] == 0) {
                 l005E = CInt(l0052);
@@ -199,61 +199,61 @@ function (me) {
             l005C = 0;
             for (l0050 = 1; l0050 <= game.numRivals; l0050++) {
                 if (rivals.netWorth[l0050] <= -100000) {
-                    l0058 = fn01AE(5000, 10000);
+                    l0058 = randomBetween(5000, 10000);
                 } else if (-100000 < rivals.netWorth[l0050] && rivals.netWorth[l0050] <= -50000) {
-                    l0058 = fn01AE(7500, 15000);
+                    l0058 = randomBetween(7500, 15000);
                 } else if (-50000 < rivals.netWorth[l0050] && rivals.netWorth[l0050] <= 0) {
-                    l0058 = fn01AE(10000, 20000);
+                    l0058 = randomBetween(10000, 20000);
                 } else if (0 < rivals.netWorth[l0050] && rivals.netWorth[l0050] <= 100000) {
-                    l0058 = fn01AE(12500, 50000);
+                    l0058 = randomBetween(12500, 50000);
                 } else if (100000 < rivals.netWorth[l0050] && rivals.netWorth[l0050] <= 200000) {
-                    l0058 = fn01AE(15000, 55000);
+                    l0058 = randomBetween(15000, 55000);
                 } else if (200000 < rivals.netWorth[l0050] && rivals.netWorth[l0050] <= 300000) {
-                    l0058 = fn01AE(17500, 60000);
+                    l0058 = randomBetween(17500, 60000);
                 } else if (300000 < rivals.netWorth[l0050] && rivals.netWorth[l0050] <= 400000) {
-                    l0058 = fn01AE(20000, 65000);
+                    l0058 = randomBetween(20000, 65000);
                 } else if (400000 < rivals.netWorth[l0050] && rivals.netWorth[l0050] <= 500000) {
-                    l0058 = fn01AE(22500, 70000);
+                    l0058 = randomBetween(22500, 70000);
                 } else if (500000 < rivals.netWorth[l0050] && rivals.netWorth[l0050] <= 600000) {
-                    l0058 = fn01AE(25000, 75000);
+                    l0058 = randomBetween(25000, 75000);
                 } else if (600000 < rivals.netWorth[l0050] && rivals.netWorth[l0050] <= 700000) {
-                    l0058 = fn01AE(27500, 80000);
+                    l0058 = randomBetween(27500, 80000);
                 } else if (700000 < rivals.netWorth[l0050] && rivals.netWorth[l0050] <= 800000) {
-                    l0058 = fn01AE(30000, 85000);
+                    l0058 = randomBetween(30000, 85000);
                 } else if (800000 < rivals.netWorth[l0050] && rivals.netWorth[l0050] <= 900000) {
-                    l0058 = fn01AE(32500, 90000);
+                    l0058 = randomBetween(32500, 90000);
                 } else if (900000 < rivals.netWorth[l0050] && rivals.netWorth[l0050] <= 1000000) {
-                    l0058 = fn01AE(35000, 95000);
+                    l0058 = randomBetween(35000, 95000);
                 } else if (1000000 < rivals.netWorth[l0050] && rivals.netWorth[l0050] <= 2000000) {
-                    l0058 = fn01AE(37500, 100000);
+                    l0058 = randomBetween(37500, 100000);
                 } else if (2000000 < rivals.netWorth[l0050] && rivals.netWorth[l0050] <= 3000000) {
-                    l0058 = fn01AE(40000, 110000);
+                    l0058 = randomBetween(40000, 110000);
                 } else if (3000000 < rivals.netWorth[l0050] && rivals.netWorth[l0050] <= 4000000) {
-                    l0058 = fn01AE(50000, 120000);
+                    l0058 = randomBetween(50000, 120000);
                 } else if (4000000 < rivals.netWorth[l0050] && rivals.netWorth[l0050] <= 5000000) {
-                    l0058 = fn01AE(60000, 130000);
+                    l0058 = randomBetween(60000, 130000);
                 } else if (5000000 < rivals.netWorth[l0050] && rivals.netWorth[l0050] <= 6000000) {
-                    l0058 = fn01AE(70000, 140000);
+                    l0058 = randomBetween(70000, 140000);
                 } else if (6000000 < rivals.netWorth[l0050] && rivals.netWorth[l0050] <= 7000000) {
-                    l0058 = fn01AE(80000, 150000);
+                    l0058 = randomBetween(80000, 150000);
                 } else if (7000000 < rivals.netWorth[l0050] && rivals.netWorth[l0050] <= 8000000) {
-                    l0058 = fn01AE(90000, 160000);
+                    l0058 = randomBetween(90000, 160000);
                 } else if (8000000 < rivals.netWorth[l0050] && rivals.netWorth[l0050] <= 9000000) {
-                    l0058 = fn01AE(100000, 170000);
+                    l0058 = randomBetween(100000, 170000);
                 } else if (9000000 < rivals.netWorth[l0050] && rivals.netWorth[l0050] <= 10000000) {
-                    l0058 = fn01AE(110000, 180000);
+                    l0058 = randomBetween(110000, 180000);
                 } else if (10000000 < rivals.netWorth[l0050] && rivals.netWorth[l0050] <= 100000000) {
-                    l0058 = fn01AE(120000, 190000);
+                    l0058 = randomBetween(120000, 190000);
                 } else if (100000000 < rivals.netWorth[l0050]) {
-                    l0058 = fn01AE(130000, 200000);
+                    l0058 = randomBetween(130000, 200000);
                 }
-                if (fn01AE(1, 6) == 1) {
+                if (randomBetween(1, 6) == 1) {
                     l0058 = l0058 * 2;
                 }
-                if (fn01AE(1, 6) == 1 && rivals.shipSize[l0050] < game.shipSize[l005E] && l0058 < game.auctionTopBid) {
-                    l0058 = game.auctionTopBid + fn01AE(1, 20000);
+                if (randomBetween(1, 6) == 1 && rivals.shipSize[l0050] < game.shipSize[l005E] && l0058 < game.auctionTopBid) {
+                    l0058 = game.auctionTopBid + randomBetween(1, 20000);
                     if (l0058 > 250000) {
-                        l0058 = 250000 + fn01AE(1, 25000);
+                        l0058 = 250000 + randomBetween(1, 25000);
                     }
                     if (l0058 > rivals.netWorth[l0050]) {
                         l0058 = rivals.netWorth[l0050];
@@ -288,7 +288,7 @@ function (me) {
         }
         if (game.auctionWinner == game.auctionRunnerUp) {
             do {
-                game.auctionRunnerUp = fn01B7(7, 12);
+                game.auctionRunnerUp = randomInt(7, 12);
             } while (game.auctionWinner == game.auctionRunnerUp);
         }
         if (game.auctionSecondBid == game.auctionTopBid && game.auctionTopBid != 0) {
@@ -300,7 +300,7 @@ function (me) {
                     rivals.cash[game.auctionWinner - 6] = rivals.cash[game.auctionWinner - 6] - game.auctionTopBid;
                     rivals.shipSize[game.auctionWinner - 6] = rivals.shipSize[game.auctionWinner - 6] + 200;
                 } else {
-                    sub013C(game.auctionWinner);
+                    loadPlayer(game.auctionWinner);
                     if (player.commodityAdChoice == 0) {
                         player.commodityAdChoice = 0;
                     } else if (player.commodityAdChoice == 1000 * (game.shipSize[game.auctionWinner] / 400)) {
@@ -417,8 +417,8 @@ function (me) {
                         player.crewSize = player.crewSize + 3;
                         player.insuranceRate = player.insuranceRate + 6;
                     }
-                    sub0116();
-                    sub014C(game.auctionWinner);
+                    generatePassengers();
+                    storePlayer(game.auctionWinner);
                 }
             }
         }
@@ -433,11 +433,11 @@ function (me) {
             for (l0066 = 0; l0066 <= 2; l0066++) {
                 for (l0068 = 0; l0068 <= 5; l0068++) {
                     {
-                        const sel = fn01AE(1, 2);
+                        const sel = randomBetween(1, 2);
                         if (sel == 1) {
-                            l006A = fn01AE(0, 20);
+                            l006A = randomBetween(0, 20);
                         } else if (sel == 2) {
-                            l006A = -1 * fn01AE(0, 20);
+                            l006A = -1 * randomBetween(0, 20);
                         }
                     }
                     game.supplyPercent[l0064][l0066][l0068] = game.supplyPercent[l0064][l0066][l0068] + l006A;
@@ -462,7 +462,7 @@ function (me) {
         let l0078 = 0;
         let l007A = 0;
         l0078 = (Mod(game.turn, 7));
-        game.weeklyEventRoll = fn01AE(1, 20);
+        game.weeklyEventRoll = randomBetween(1, 20);
         l0070 = 0;
         l007A = 0;
         for (l006C = 1; l006C <= game.numPlayers; l006C++) {
@@ -477,58 +477,58 @@ function (me) {
             for (l006C = 0; l006C <= 5; l006C++) {
                 l0072 = l0072 + 5;
                 l0074 = (game.marketDifficulty + 1) * l0072;
-                game.prices[l0078][0][l006C] = l0074 + fn01AE(0, 3);
-                game.available[l0078][0][l006C] = game.available[l0078][0][l006C] + l007A + fn01AE(10, 1000);
+                game.prices[l0078][0][l006C] = l0074 + randomBetween(0, 3);
+                game.available[l0078][0][l006C] = game.available[l0078][0][l006C] + l007A + randomBetween(10, 1000);
             }
         } else if (game.weeklyEventRoll == 2) {
             l0072 = 30;
             for (l006C = 0; l006C <= 5; l006C++) {
                 l0072 = l0072 + 5;
                 l0074 = (game.marketDifficulty + 1) * l0072;
-                game.prices[l0078][1][l006C] = l0074 + fn01AE(0, 3);
-                game.available[l0078][1][l006C] = game.available[l0078][1][l006C] + fn01AE(10, 1000) + l007A;
+                game.prices[l0078][1][l006C] = l0074 + randomBetween(0, 3);
+                game.available[l0078][1][l006C] = game.available[l0078][1][l006C] + randomBetween(10, 1000) + l007A;
             }
         } else if (game.weeklyEventRoll == 3) {
             l0072 = 60;
             for (l006C = 0; l006C <= 5; l006C++) {
                 l0072 = l0072 + 5;
                 l0074 = (game.marketDifficulty + 1) * l0072;
-                game.prices[l0078][2][l006C] = l0074 + fn01AE(0, 3);
-                game.available[l0078][2][l006C] = game.available[l0078][2][l006C] + fn01AE(10, 1000) + l007A;
+                game.prices[l0078][2][l006C] = l0074 + randomBetween(0, 3);
+                game.available[l0078][2][l006C] = game.available[l0078][2][l006C] + randomBetween(10, 1000) + l007A;
             }
         } else if (game.weeklyEventRoll == 4) {
             l0076 = 0;
             for (l006C = 0; l006C <= 5; l006C++) {
                 l0076 = l0076 + 40;
-                game.prices[l0078][0][l006C] = l0076 - fn01AE(0, 3);
-                game.available[l0078][0][l006C] = fn01AE(1, 4);
+                game.prices[l0078][0][l006C] = l0076 - randomBetween(0, 3);
+                game.available[l0078][0][l006C] = randomBetween(1, 4);
             }
         } else if (game.weeklyEventRoll == 5) {
             l0076 = 240;
             for (l006C = 0; l006C <= 5; l006C++) {
                 l0076 = l0076 + 40;
-                game.prices[l0078][1][l006C] = l0076 - fn01AE(0, 3);
-                game.available[l0078][1][l006C] = fn01AE(1, 4);
+                game.prices[l0078][1][l006C] = l0076 - randomBetween(0, 3);
+                game.available[l0078][1][l006C] = randomBetween(1, 4);
             }
         } else if (game.weeklyEventRoll == 6) {
             l0076 = 480;
             for (l006C = 0; l006C <= 5; l006C++) {
                 l0076 = l0076 + 40;
-                game.prices[l0078][2][l006C] = l0076 - fn01AE(0, 3);
-                game.available[l0078][2][l006C] = fn01AE(1, 4);
+                game.prices[l0078][2][l006C] = l0076 - randomBetween(0, 3);
+                game.available[l0078][2][l006C] = randomBetween(1, 4);
             }
         } else if (game.weeklyEventRoll == 7) {
             if (game.tutorialMode == 0 || game.complexity >= game.unlockFuel) {
                 game.fuelBasePrice = CLng(game.fuelBasePrice * 1.2);
                 for (l006C = 0; l006C <= 6; l006C++) {
-                    game.fuelPrice[l006C] = (game.fuelBasePrice * 10) - fn01AE(0, 20);
+                    game.fuelPrice[l006C] = (game.fuelBasePrice * 10) - randomBetween(0, 20);
                 }
             }
         } else if (game.weeklyEventRoll == 8) {
             if (game.tutorialMode == 0 || game.complexity >= game.unlockFuel && game.fuelBasePrice >= 15) {
                 game.fuelBasePrice = CLng(game.fuelBasePrice * 0.8);
                 for (l006C = 0; l006C <= 6; l006C++) {
-                    game.fuelPrice[l006C] = game.fuelBasePrice + fn01AE(0, 20);
+                    game.fuelPrice[l006C] = game.fuelBasePrice + randomBetween(0, 20);
                 }
             }
         } else if (game.weeklyEventRoll == 9) {
@@ -573,8 +573,8 @@ function (me) {
                 for (l006E = 0; l006E <= 5; l006E++) {
                     l0072 = l0072 + 5;
                     l0074 = (game.marketDifficulty + 1) * l0072;
-                    game.prices[l0078][l006C][l006E] = l0074 + fn01AE(0, 3);
-                    game.available[l0078][l006C][l006E] = game.available[l0078][l006C][l006E] + l007A + fn01AE(1, 1000);
+                    game.prices[l0078][l006C][l006E] = l0074 + randomBetween(0, 3);
+                    game.available[l0078][l006C][l006E] = game.available[l0078][l006C][l006E] + l007A + randomBetween(1, 1000);
                 }
             }
         } else if (game.weeklyEventRoll == 16) {
@@ -582,8 +582,8 @@ function (me) {
             for (l006C = 0; l006C <= 2; l006C++) {
                 for (l006E = 0; l006E <= 5; l006E++) {
                     l0076 = l0076 + 40;
-                    game.prices[l0078][l006C][l006E] = l0076 - fn01AE(0, 3);
-                    game.available[l0078][l006C][l006E] = fn01AE(1, 4);
+                    game.prices[l0078][l006C][l006E] = l0076 - randomBetween(0, 3);
+                    game.available[l0078][l006C][l006E] = randomBetween(1, 4);
                 }
             }
         }
@@ -592,7 +592,7 @@ function (me) {
     function sub13FE() {
         let l007C = 0;
         let l007E = 0;
-        sub00F9();
+        updateRivalNetWorth();
         if (game.turn <= 20) {
             for (l007C = 1; l007C <= game.numPlayers; l007C++) {
                 game.netWorthHistory[l007C][game.turn] = game.netWorth[l007C];
@@ -623,9 +623,9 @@ function (me) {
         let l0082 = 0;
         let l0084 = 0;
         try {
-            const mc0086 = 11;
-            const mc008E = 4;
-            me.MousePointer = mc0086;
+            const HOURGLASS = 11;
+            const ICON_CURSOR = 4;
+            me.MousePointer = HOURGLASS;
             if (game.turnOrderPos >= game.numPlayers) {
                 game.turnOrderPos = 0;
                 game.turn = game.turn + 1;
@@ -658,7 +658,7 @@ function (me) {
                         rivals.turnDone[l0080] = -1;
                     }
                 }
-                sub00F9();
+                updateRivalNetWorth();
                 for (l0080 = 1; l0080 <= game.numRivals; l0080++) {
                     sub2BE1(l0080);
                 }
@@ -672,31 +672,31 @@ function (me) {
                         sub2C09(l0080);
                     }
                 }
-                sub00F9();
+                updateRivalNetWorth();
                 for (l0080 = 1; l0080 <= game.numRivals; l0080++) {
                     rivals.turnDone[l0080] = 0;
                 }
-                me.MousePointer = mc0086;
+                me.MousePointer = HOURGLASS;
                 sub2C1C();
                 if (game.tutorialMode == 0 || game.complexity >= game.unlockExplore) {
                     sub2C2D();
                 }
                 if (game.tutorialMode == 0 || game.complexity >= game.unlockExplore) {
-                    game.weatherEvent = fn01AE(1, 70);
-                    game.weatherPlanet = fn01AE(0, 6);
+                    game.weatherEvent = randomBetween(1, 70);
+                    game.weatherPlanet = randomBetween(0, 6);
                 }
                 for (l0080 = 1; l0080 <= game.numRivals; l0080++) {
                     sub2C3C(l0080);
                 }
                 sub2C50();
-                me.MousePointer = mc0086;
+                me.MousePointer = HOURGLASS;
                 sub2B9B();
-                sub00CD();
-                sub00E5();
+                restockPlanets();
+                updatePrices();
                 for (l0080 = 0; l0080 <= 6; l0080++) {
-                    game.fuelPrice[l0080] = fn01AE(game.fuelBasePrice, game.fuelBasePrice * 10);
+                    game.fuelPrice[l0080] = randomBetween(game.fuelBasePrice, game.fuelBasePrice * 10);
                 }
-                me.MousePointer = mc0086;
+                me.MousePointer = HOURGLASS;
                 if (game.turn > 2) {
                     sub2B68();
                 }
@@ -711,7 +711,7 @@ function (me) {
                     await sub2C8E();
                 }
                 for (l0080 = 1; l0080 <= game.numPlayers; l0080++) {
-                    sub013C(l0080);
+                    loadPlayer(l0080);
                     if (game.graphShowCompany[l0080] == 0) {
                         l0084 = 0;
                         for (l0082 = 0; l0082 <= 6; l0082++) {
@@ -725,13 +725,13 @@ function (me) {
                     } else {
                         game.netWorth[l0080] = 0;
                     }
-                    sub014C(l0080);
+                    storePlayer(l0080);
                 }
                 sub13FE();
                 sub2CA6();
-                me.MousePointer = mc0086;
+                me.MousePointer = HOURGLASS;
             }
-            me.MousePointer = mc0086;
+            me.MousePointer = HOURGLASS;
             game.turnOrderPos = game.turnOrderPos + 1;
             if (game.turnOrderPos == 1) {
                 l0084 = game.turnOrder[game.turnOrderPos];
@@ -745,8 +745,8 @@ function (me) {
                 } while (game.graphShowCompany[l0084] == -1 && game.turnOrderPos < game.numPlayers);
             }
             game.currentPlayer = game.turnOrder[game.turnOrderPos];
-            sub013C(game.currentPlayer);
-            me.MousePointer = mc008E;
+            loadPlayer(game.currentPlayer);
+            me.MousePointer = ICON_CURSOR;
             if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
             }
@@ -757,16 +757,16 @@ function (me) {
             return;
         } catch (e) {
             Err.Catch(e);
-            await sub012D(Err.Number);
+            await reportFileError(Err.Number);
             return;
         }
     }
 
     function sub2C2D() {
-        game.weeklyRoll = fn01AE(1, 100);
-        game.newsPlanet = fn01AE(0, 6);
-        if (fn01AE(1, 100) <= 15 && game.turn >= 4 && game.stockCrashed[game.newsPlanet] == 0) {
-            game.newsEvent = fn01AE(1000, 1003);
+        game.weeklyRoll = randomBetween(1, 100);
+        game.newsPlanet = randomBetween(0, 6);
+        if (randomBetween(1, 100) <= 15 && game.turn >= 4 && game.stockCrashed[game.newsPlanet] == 0) {
+            game.newsEvent = randomBetween(1000, 1003);
             if (game.newsEvent == 1000) {
                 if (game.turn <= 15) {
                     if (game.stockPrices[game.newsPlanet][game.turn] > 250) {
@@ -852,8 +852,8 @@ function (me) {
         let l00A8 = 0;
         let l00AA = 0;
         for (l00A8 = 1; l00A8 <= game.numRivals; l00A8++) {
-            l00AA = fn01AE(5000, 25000);
-            if (fn01AE(1, 4) != 1 && game.planetNames[rivals.planet[l00A8]] == "Pyke") {
+            l00AA = randomBetween(5000, 25000);
+            if (randomBetween(1, 4) != 1 && game.planetNames[rivals.planet[l00A8]] == "Pyke") {
                 if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
                     b_Sound.FileName = Trim(paths.soundDir) + "op" + Trim(Str(l00A8)) + ".wav";
@@ -870,8 +870,8 @@ function (me) {
                 await frm_Box1Rect.Show(1);
                 rivals.engineSpeed[l00A8] = rivals.engineSpeed[l00A8] + 1;
                 rivals.cash[l00A8] = CLng(rivals.cash[l00A8] - l00AA);
-            } else if (fn01AE(1, 4) == 1 && game.planetNames[rivals.planet[l00A8]] == "Xeen") {
-                if (fn01AE(1, 3) == 1) {
+            } else if (randomBetween(1, 4) == 1 && game.planetNames[rivals.planet[l00A8]] == "Xeen") {
+                if (randomBetween(1, 3) == 1) {
                 } else {
                     if (settings.soundOn == -1) {
                         b_Sound.Command = "Close";
@@ -936,8 +936,8 @@ function (me) {
                 l00BA = 17;
             }
         }
-        if (fn01AE(1, l00BA) == 1) {
-            l00B8 = fn01AE(25000, 75000);
+        if (randomBetween(1, l00BA) == 1) {
+            l00B8 = randomBetween(25000, 75000);
             rivals.cash[pv00B6] = rivals.cash[pv00B6] - l00B8;
             rivals.shipSize[pv00B6] = rivals.shipSize[pv00B6] + 200;
             if (settings.soundOn == -1) {
@@ -960,8 +960,8 @@ function (me) {
     async function sub2C7A() {
         let l00C0 = 0;
         let l00C2 = "";
-        sub00F9();
-        l00C0 = fn01AE(1, 6);
+        updateRivalNetWorth();
+        l00C0 = randomBetween(1, 6);
         l00C2 = "neutral";
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -976,7 +976,7 @@ function (me) {
         frm_Box1Rect.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "op" + Trim(Str((l00C0))) + ".bmp");
         frm_Box1Rect.b_ImageLable.Caption = Trim(rivals.companyNames[l00C0]);
         {
-            const sel = fn01AE(1, 108);
+            const sel = randomBetween(1, 108);
             if (sel == 1) {
                 frm_Box1Rect.b_Message.Caption = Trim(rivals.companyNames[l00C0]) + " moves to expand its market share.";
                 l00C2 = "good";
@@ -1297,9 +1297,9 @@ function (me) {
         }
         await frm_Box1Rect.Show(1);
         if (l00C2 == "good") {
-            rivals.cash[l00C0] = rivals.cash[l00C0] + (2 * fn01AE(25, 75) * rivals.shipSize[l00C0]);
+            rivals.cash[l00C0] = rivals.cash[l00C0] + (2 * randomBetween(25, 75) * rivals.shipSize[l00C0]);
         } else if (l00C2 == "bad") {
-            rivals.cash[l00C0] = rivals.cash[l00C0] - (fn01AE(25, 75) * rivals.shipSize[l00C0]);
+            rivals.cash[l00C0] = rivals.cash[l00C0] - (randomBetween(25, 75) * rivals.shipSize[l00C0]);
         }
     }
 
@@ -1456,7 +1456,7 @@ function (me) {
         let l00DE = 0;
         pv00D8 = CInt(pv00D8);
         m001A[pv00D8] = rivals.planet[pv00D8];
-        l00DC = fn01AE(0, 6);
+        l00DC = randomBetween(0, 6);
         for (l00DA = 0; l00DA <= 6; l00DA++) {
             if (game.supplyPercent[l00DA][rivals.cargoCategory[pv00D8]][rivals.cargoItem[pv00D8]] <= game.supplyPercent[l00DC][rivals.cargoCategory[pv00D8]][rivals.cargoItem[pv00D8]]) {
                 l00DC = CLng(l00DA);
@@ -1487,7 +1487,7 @@ function (me) {
                     game.turnOrder[l00E2] = l00E4;
                 }
                 if (game.travelTime[game.turnOrder[l00E0]] == game.travelTime[game.turnOrder[l00E2]]) {
-                    l00E4 = fn01AE(0, 1);
+                    l00E4 = randomBetween(0, 1);
                     if (l00E4 == 0) {
                         l00E4 = game.turnOrder[l00E0];
                         game.turnOrder[l00E0] = game.turnOrder[l00E2];
@@ -1499,7 +1499,7 @@ function (me) {
     }
 
     function sub2CB4() {
-        game.newsEvent = fn01AE(1, 124);
+        game.newsEvent = randomBetween(1, 124);
     }
 
     function sub2C1C() {
@@ -1523,22 +1523,22 @@ function (me) {
             } else {
                 if (game.turn > 1 && game.turn <= 15) {
                     if (game.stockPrices[l00E8][game.turn - 1] < 250) {
-                        l00EC = fn01AE(50, 75);
+                        l00EC = randomBetween(50, 75);
                         game.stockStrength[l00E8] = 1;
                     } else {
                         l00EC = CLng(game.stockPrices[l00E8][game.turn - 1] * 0.01);
-                        l00EC = fn01AE(l00EC, (l00EC * 10));
+                        l00EC = randomBetween(l00EC, (l00EC * 10));
                     }
                 } else {
                     if (game.stockPrices[l00E8][15] < 250) {
-                        l00EC = fn01AE(50, 75);
+                        l00EC = randomBetween(50, 75);
                         game.stockStrength[l00E8] = 1;
                     } else {
                         l00EC = CLng(game.stockPrices[l00E8][15] * 0.01);
-                        l00EC = fn01AE(l00EC, (l00EC * 10));
+                        l00EC = randomBetween(l00EC, (l00EC * 10));
                     }
                 }
-                if (fn01AE(1, 95) <= game.stockStrength[l00E8]) {
+                if (randomBetween(1, 95) <= game.stockStrength[l00E8]) {
                     if (game.stockStrength[l00E8] > 50) {
                         game.stockStrength[l00E8] = game.stockStrength[l00E8] + 5;
                         if (game.stockStrength[l00E8] > 85) {
@@ -1596,8 +1596,8 @@ function (me) {
         let l00EE = 0;
         let l00F0 = 0;
         let l00F2 = 0;
-        sub00F9();
-        me.MousePointer = mc008E;
+        updateRivalNetWorth();
+        me.MousePointer = ICON_CURSOR;
         if (game.winner != 0) {
             game.winner = 0;
             if (game.goalNetWorth == 1000000) {
@@ -1641,17 +1641,17 @@ function (me) {
     }
 
     async function Form_Activate() {
-        me.MousePointer = mc0086;
+        me.MousePointer = HOURGLASS;
         await Unload(me);
     }
 
     async function Form_Load() {
-        me.MousePointer = mc0086;
+        me.MousePointer = HOURGLASS;
         await sub2BBF();
     }
 
     function Form_QueryUnload(Cancel, UnloadMode) {
-        me.MousePointer = mc0086;
+        me.MousePointer = HOURGLASS;
     }
 
     return {
