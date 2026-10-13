@@ -38,64 +38,64 @@ function (me) {
     async function b_Exit_Click() {
         me.MousePointer = mc001A;
         if (b_Warehouse.Value == -1) {
-            gv0BF2.M4DD2 = -1;
+            player.quickWarehouse = -1;
         } else {
-            gv0BF2.M4DD2 = 0;
+            player.quickWarehouse = 0;
         }
         if (b_Buy.Value == -1) {
-            gv0BF2.M4DE4 = -1;
+            player.quickMarket = -1;
         } else {
-            gv0BF2.M4DE4 = 0;
+            player.quickMarket = 0;
         }
         if (b_Deposit.Value == -1) {
-            gv0BF2.M4DF0 = -1;
+            player.quickDeposit = -1;
         } else {
-            gv0BF2.M4DF0 = 0;
+            player.quickDeposit = 0;
         }
         if (b_Bank.Value == -1) {
-            gv0BF2.M4E00 = -1;
+            player.quickBank = -1;
         } else {
-            gv0BF2.M4E00 = 0;
+            player.quickBank = 0;
         }
         if (b_Borrow.Value == -1) {
-            gv0BF2.M4E0D = -1;
+            player.quickLoan = -1;
         } else {
-            gv0BF2.M4E0D = 0;
+            player.quickLoan = 0;
         }
         if (b_Advertising.Value == -1) {
-            gv0BF2.M4E1A = -1;
+            player.quickAdvertise = -1;
         } else {
-            gv0BF2.M4E1A = 0;
+            player.quickAdvertise = 0;
         }
         if (b_Crew.Value == -1) {
-            gv0BF2.M4E2E = -1;
+            player.quickCrew = -1;
         } else {
-            gv0BF2.M4E2E = 0;
+            player.quickCrew = 0;
         }
         if (b_Fuel.Value == -1) {
-            gv0BF2.M4E3B = -1;
+            player.quickFuel = -1;
         } else {
-            gv0BF2.M4E3B = 0;
+            player.quickFuel = 0;
         }
         if (b_Journey.Value == -1) {
-            gv0BF2.M4E48 = -1;
+            player.quickTravel = -1;
         } else {
-            gv0BF2.M4E48 = 0;
+            player.quickTravel = 0;
         }
         if (b_Passengers.Value == -1) {
-            gv0BF2.M4E57 = -1;
+            player.quickPassengers = -1;
         } else {
-            gv0BF2.M4E57 = 0;
+            player.quickPassengers = 0;
         }
         if (b_Tax.Value == -1) {
-            gv0BF2.M4E6A = -1;
+            player.quickTaxes = -1;
         } else {
-            gv0BF2.M4E6A = 0;
+            player.quickTaxes = 0;
         }
         if (b_Insurance.Value == -1) {
-            gv0BF2.M4E76 = -1;
+            player.quickInsurance = -1;
         } else {
-            gv0BF2.M4E76 = 0;
+            player.quickInsurance = 0;
         }
         await frm_File.Show();
         await Unload(me);
@@ -111,9 +111,9 @@ function (me) {
 
     async function b_Help_Click() {
         me.MousePointer = mc001A;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -177,22 +177,22 @@ function (me) {
     }
 
     function sub41F1() {
-        if (gv11CE.M552A == -1 && gv11CE.M4FFC < gv11CE.M509D) {
+        if (game.tutorialMode == -1 && game.complexity < game.unlockAdvertising) {
             b_Advertising.Visible = 0;
         }
-        if (gv11CE.M552A == -1 && gv11CE.M4FFC < gv11CE.M508D) {
+        if (game.tutorialMode == -1 && game.complexity < game.unlockCrew) {
             b_Crew.Visible = 0;
         }
-        if (gv11CE.M552A == -1 && gv11CE.M4FFC < gv11CE.M5067) {
+        if (game.tutorialMode == -1 && game.complexity < game.unlockFuel) {
             b_Fuel.Visible = 0;
         }
-        if (gv11CE.M552A == -1 && gv11CE.M4FFC < gv11CE.M5077) {
+        if (game.tutorialMode == -1 && game.complexity < game.unlockPassengers) {
             b_Passengers.Visible = 0;
         }
-        if (gv11CE.M552A == -1 && gv11CE.M4FFC < gv11CE.M50B4) {
+        if (game.tutorialMode == -1 && game.complexity < game.unlockTaxes) {
             b_Tax.Visible = 0;
         }
-        if (gv11CE.M552A == -1 && gv11CE.M4FFC < gv11CE.M503E) {
+        if (game.tutorialMode == -1 && game.complexity < game.unlockInsurance) {
             b_Insurance.Visible = 0;
         }
     }
@@ -209,62 +209,62 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = mc001A;
-        if (gv0BF2.M4DD2 == -1) {
+        if (player.quickWarehouse == -1) {
             b_Warehouse.Value = -1;
         } else {
             b_Warehouse.Value = 0;
         }
-        if (gv0BF2.M4DE4 == -1) {
+        if (player.quickMarket == -1) {
             b_Buy.Value = -1;
         } else {
             b_Buy.Value = 0;
         }
-        if (gv0BF2.M4DF0 == -1) {
+        if (player.quickDeposit == -1) {
             b_Deposit.Value = -1;
         } else {
             b_Deposit.Value = 0;
         }
-        if (gv0BF2.M4E00 == -1) {
+        if (player.quickBank == -1) {
             b_Bank.Value = -1;
         } else {
             b_Bank.Value = 0;
         }
-        if (gv0BF2.M4E0D == -1) {
+        if (player.quickLoan == -1) {
             b_Borrow.Value = -1;
         } else {
             b_Borrow.Value = 0;
         }
-        if (gv0BF2.M4E1A == -1) {
+        if (player.quickAdvertise == -1) {
             b_Advertising.Value = -1;
         } else {
             b_Advertising.Value = 0;
         }
-        if (gv0BF2.M4E2E == -1) {
+        if (player.quickCrew == -1) {
             b_Crew.Value = -1;
         } else {
             b_Crew.Value = 0;
         }
-        if (gv0BF2.M4E3B == -1) {
+        if (player.quickFuel == -1) {
             b_Fuel.Value = -1;
         } else {
             b_Fuel.Value = 0;
         }
-        if (gv0BF2.M4E48 == -1) {
+        if (player.quickTravel == -1) {
             b_Journey.Value = -1;
         } else {
             b_Journey.Value = 0;
         }
-        if (gv0BF2.M4E57 == -1) {
+        if (player.quickPassengers == -1) {
             b_Passengers.Value = -1;
         } else {
             b_Passengers.Value = 0;
         }
-        if (gv0BF2.M4E6A == -1) {
+        if (player.quickTaxes == -1) {
             b_Tax.Value = -1;
         } else {
             b_Tax.Value = 0;
         }
-        if (gv0BF2.M4E76 == -1) {
+        if (player.quickInsurance == -1) {
             b_Insurance.Value = -1;
         } else {
             b_Insurance.Value = 0;

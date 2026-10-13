@@ -29,7 +29,7 @@ function (me) {
 
     async function b_Beginner_Click() {
         me.MousePointer = mc001A;
-        gv11CE.M5359 = 3;
+        game.skillLevel = 3;
         await sub050F();
     }
 
@@ -43,7 +43,7 @@ function (me) {
 
     async function b_Expert_Click() {
         me.MousePointer = mc001A;
-        gv11CE.M5359 = 5;
+        game.skillLevel = 5;
         await sub050F();
     }
 
@@ -57,7 +57,7 @@ function (me) {
 
     async function b_Intermediate_Click() {
         me.MousePointer = mc001A;
-        gv11CE.M5359 = 4;
+        game.skillLevel = 4;
         await sub050F();
     }
 
@@ -71,7 +71,7 @@ function (me) {
 
     async function b_Master_Click() {
         me.MousePointer = mc001A;
-        gv11CE.M5359 = 6;
+        game.skillLevel = 6;
         await sub050F();
     }
 
@@ -85,7 +85,7 @@ function (me) {
 
     async function b_Novice_Click() {
         me.MousePointer = mc001A;
-        gv11CE.M5359 = 2;
+        game.skillLevel = 2;
         await sub050F();
     }
 
@@ -99,7 +99,7 @@ function (me) {
 
     async function b_Tutorial_Click() {
         me.MousePointer = mc001A;
-        gv11CE.M5359 = 1;
+        game.skillLevel = 1;
         await sub050F();
     }
 
@@ -115,64 +115,64 @@ function (me) {
         let l00C2 = 0;
         const mc00E4 = 1;
         me.MousePointer = mc001A;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
-        if (gv11CE.M5359 == 1) {
-            gv11CE.M52C8 = 0;
-            gv11CE.M552A = -1;
-            gv0BF2.M4CF9 = 50000;
-            gv0BF2.M4FBD = 100000;
-            gv0BF2.M4D38 = 85;
-            gv0BF2.M4D45 = -1;
+        if (game.skillLevel == 1) {
+            game.marketDifficulty = 0;
+            game.tutorialMode = -1;
+            player.cash = 50000;
+            player.zinnLoan = 100000;
+            player.luck = 85;
+            player.luckIsTemporary = -1;
             for (l00C2 = 1; l00C2 <= 6; l00C2++) {
-                gv1EB2.M559E[l00C2] = 50;
+                rivals.intelligence[l00C2] = 50;
             }
-        } else if (gv11CE.M5359 == 2) {
-            gv11CE.M52C8 = 0;
-            gv11CE.M552A = 0;
-            gv0BF2.M4CF9 = 25000;
-            gv0BF2.M4FBD = 110000;
-            gv0BF2.M4D38 = 75;
-            gv0BF2.M4D45 = -1;
+        } else if (game.skillLevel == 2) {
+            game.marketDifficulty = 0;
+            game.tutorialMode = 0;
+            player.cash = 25000;
+            player.zinnLoan = 110000;
+            player.luck = 75;
+            player.luckIsTemporary = -1;
             for (l00C2 = 1; l00C2 <= 6; l00C2++) {
-                gv1EB2.M559E[l00C2] = 75;
+                rivals.intelligence[l00C2] = 75;
             }
-        } else if (gv11CE.M5359 == 3) {
-            gv11CE.M52C8 = 1;
-            gv11CE.M552A = 0;
-            gv0BF2.M4FBD = 120000;
-            gv0BF2.M4D38 = 65;
-            gv0BF2.M4D45 = -1;
+        } else if (game.skillLevel == 3) {
+            game.marketDifficulty = 1;
+            game.tutorialMode = 0;
+            player.zinnLoan = 120000;
+            player.luck = 65;
+            player.luckIsTemporary = -1;
             for (l00C2 = 1; l00C2 <= 6; l00C2++) {
-                gv1EB2.M559E[l00C2] = 100;
+                rivals.intelligence[l00C2] = 100;
             }
-        } else if (gv11CE.M5359 == 4) {
-            gv11CE.M52C8 = 2;
-            gv11CE.M552A = 0;
-            gv0BF2.M4FBD = 130000;
-            gv0BF2.M4D38 = 55;
-            gv0BF2.M4D45 = -1;
+        } else if (game.skillLevel == 4) {
+            game.marketDifficulty = 2;
+            game.tutorialMode = 0;
+            player.zinnLoan = 130000;
+            player.luck = 55;
+            player.luckIsTemporary = -1;
             for (l00C2 = 1; l00C2 <= 6; l00C2++) {
-                gv1EB2.M559E[l00C2] = 125;
+                rivals.intelligence[l00C2] = 125;
             }
-        } else if (gv11CE.M5359 == 5) {
-            gv11CE.M52C8 = 3;
-            gv11CE.M552A = 0;
-            gv0BF2.M4FBD = 140000;
-            gv0BF2.M4D38 = 50;
-            gv0BF2.M4D45 = -1;
+        } else if (game.skillLevel == 5) {
+            game.marketDifficulty = 3;
+            game.tutorialMode = 0;
+            player.zinnLoan = 140000;
+            player.luck = 50;
+            player.luckIsTemporary = -1;
             for (l00C2 = 1; l00C2 <= 6; l00C2++) {
-                gv1EB2.M559E[l00C2] = 150;
+                rivals.intelligence[l00C2] = 150;
             }
-        } else if (gv11CE.M5359 == 6) {
-            gv11CE.M52C8 = 4;
-            gv11CE.M552A = 0;
-            gv0BF2.M4FBD = 150000;
-            gv0BF2.M4D38 = 50;
-            gv0BF2.M4D45 = -1;
+        } else if (game.skillLevel == 6) {
+            game.marketDifficulty = 4;
+            game.tutorialMode = 0;
+            player.zinnLoan = 150000;
+            player.luck = 50;
+            player.luckIsTemporary = -1;
             for (l00C2 = 1; l00C2 <= 6; l00C2++) {
-                gv1EB2.M559E[l00C2] = 175;
+                rivals.intelligence[l00C2] = 175;
             }
         }
         FillElastic.Visible = 0;
@@ -186,13 +186,13 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = mc001A;
-        FillElastic.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "STARS5.BMP");
-        if (gv11CE.M52F2 == -1) {
+        FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "STARS5.BMP");
+        if (game.isEmailGame == -1) {
             b_Tutorial.Enabled = 0;
         }
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "";
+            b_Sound.FileName = Trim(paths.soundDir) + "";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }

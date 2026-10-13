@@ -33,13 +33,13 @@ function (me) {
     let m0036 = 0;
 
     async function b_Planet_Click(Index) {
-        gv11CE.M53C1[m0036] = FixStr(b_Planet[Index].Caption, 4);
+        game.planetNames[m0036] = FixStr(b_Planet[Index].Caption, 4);
         await sub1F87();
     }
 
     async function b_Text_Click(Index) {
         const mc0046 = 11;
-        gv11CE.M53C1[m0036] = FixStr(b_Planet[Index].Caption, 4);
+        game.planetNames[m0036] = FixStr(b_Planet[Index].Caption, 4);
         await sub1F87();
     }
 
@@ -174,19 +174,19 @@ function (me) {
         for (l0062 = 0; l0062 <= 13; l0062++) {
             m0020[l0062] = -1;
             for (l0064 = 0; l0064 <= 6; l0064++) {
-                if (fn1FA1(l0062) == gv11CE.M53C1[l0064]) {
+                if (fn1FA1(l0062) == game.planetNames[l0064]) {
                     m0020[l0062] = CInt(l0064);
                 }
             }
         }
-        b_Planet[7].Caption = gv11CE.M53C1[m0036];
-        b_Planet[7].Picture = LoadPicture(Trim(gv09F0.M4BF5) + gv11CE.M53C1[m0036] + "1.bmp");
-        b_Text[7].Caption = fn1FBE(fn1FAD(gv11CE.M53C1[m0036]));
+        b_Planet[7].Caption = game.planetNames[m0036];
+        b_Planet[7].Picture = LoadPicture(Trim(paths.imageDir) + game.planetNames[m0036] + "1.bmp");
+        b_Text[7].Caption = fn1FBE(fn1FAD(game.planetNames[m0036]));
         for (l0062 = 0; l0062 <= 6; l0062++) {
             for (l0064 = 0; l0064 <= 13; l0064++) {
                 if (m0020[l0064] == -1) {
                     m0020[l0064] = -2;
-                    b_Planet[l0062].Picture = LoadPicture(Trim(gv09F0.M4BF5) + fn1FA1(l0064) + "1.bmp");
+                    b_Planet[l0062].Picture = LoadPicture(Trim(paths.imageDir) + fn1FA1(l0064) + "1.bmp");
                     b_Planet[l0062].Caption = fn1FA1(l0064);
                     b_Text[l0062].Caption = fn1FBE(l0064);
                     l0064 = 13;

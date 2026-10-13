@@ -30,13 +30,13 @@ function (me) {
 
     function Form_Activate() {
         me.MousePointer = mc001A;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "mira.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "mira.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
-        FillElastic.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "planets.bmp");
+        FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "planets.bmp");
         me.MousePointer = mc003E;
         Label2.Caption = "For the first time in 700 years, Emperor Dred Nicolson has granted you and a handful of other newly formed trading companies permission to operate inside the Kukubian Colonies.";
         Label1.Caption = "As president of a trading company, you must make a profit transporting essential commodities between the seven planets of Kukubia.";

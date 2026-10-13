@@ -157,7 +157,7 @@ function (me) {
             me.b_Text.Text = "0";
         } else {
             KeyAscii = 0;
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
         }

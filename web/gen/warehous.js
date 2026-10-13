@@ -70,14 +70,14 @@ function (me) {
 
     async function b_Help_Click() {
         me.MousePointer = mc0054;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
         frm_Box2.FillElastic.Caption = "Help (Warehouse)";
-        frm_Box2.b_Message.Caption = "You currently have " + Format(gv0BF2.M4F79, "#,#0") + " tons of warehouse space. That means you can store up to " + Format(gv0BF2.M4F79, "#,#0") + " tons of goods on each planet." + "\n" + "\n" + "Unfortunately, you cannot increase your warehouse space whenever you feel like it. The Trader's Union strictly regulates the sale of all space. This helps to maintain a trade balance between the various planets and prevents the larger companies from monopolizing the market." + "\n" + "\n" + "By virtue of being a member of the Trader's Union, your name is automatically entered into a lottery. If your name comes up, you will be given the chance to purchase more space.";
+        frm_Box2.b_Message.Caption = "You currently have " + Format(player.warehouseCapacity, "#,#0") + " tons of warehouse space. That means you can store up to " + Format(player.warehouseCapacity, "#,#0") + " tons of goods on each planet." + "\n" + "\n" + "Unfortunately, you cannot increase your warehouse space whenever you feel like it. The Trader's Union strictly regulates the sale of all space. This helps to maintain a trade balance between the various planets and prevents the larger companies from monopolizing the market." + "\n" + "\n" + "By virtue of being a member of the Trader's Union, your name is automatically entered into a lottery. If your name comes up, you will be given the chance to purchase more space.";
         await frm_Box2.Show(1);
     }
 
@@ -91,7 +91,7 @@ function (me) {
 
     async function b_Marketplace_Click() {
         me.MousePointer = mc0054;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         await Unload(frm_Market);
@@ -107,11 +107,11 @@ function (me) {
     }
 
     function b_Quick_Click() {
-        if (gv0BF2.M4DD2 == -1) {
-            gv0BF2.M4DD2 = 0;
+        if (player.quickWarehouse == -1) {
+            player.quickWarehouse = 0;
             b_Quick.Caption = "Shortcut = off";
         } else {
-            gv0BF2.M4DD2 = -1;
+            player.quickWarehouse = -1;
             b_Quick.Caption = "Shortcut = on";
         }
     }
@@ -129,9 +129,9 @@ function (me) {
         frm_BoxCol1.FillElastic.Caption = "Warehouse on" + "\n" + "Each Planet";
         frm_BoxCol1.b_Col1.Caption = "";
         for (l00F4 = 0; l00F4 <= 6; l00F4++) {
-            frm_BoxCol1.b_Col1.Caption = frm_BoxCol1.b_Col1.Caption + gv11CE.M53C1[l00F4] + "\n";
+            frm_BoxCol1.b_Col1.Caption = frm_BoxCol1.b_Col1.Caption + game.planetNames[l00F4] + "\n";
         }
-        frm_BoxCol1.b_Col2.Caption = Format(gv0BF2.M4FAF[0], "#,#0") + "  tons" + "\n" + Format(gv0BF2.M4FAF[1], "#,#0") + "  tons" + "\n" + Format(gv0BF2.M4FAF[2], "#,#0") + "  tons" + "\n" + Format(gv0BF2.M4FAF[3], "#,#0") + "  tons" + "\n" + Format(gv0BF2.M4FAF[4], "#,#0") + "  tons" + "\n" + Format(gv0BF2.M4FAF[5], "#,#0") + "  tons" + "\n" + Format(gv0BF2.M4FAF[6], "#,#0") + "  tons";
+        frm_BoxCol1.b_Col2.Caption = Format(player.warehouseUsed[0], "#,#0") + "  tons" + "\n" + Format(player.warehouseUsed[1], "#,#0") + "  tons" + "\n" + Format(player.warehouseUsed[2], "#,#0") + "  tons" + "\n" + Format(player.warehouseUsed[3], "#,#0") + "  tons" + "\n" + Format(player.warehouseUsed[4], "#,#0") + "  tons" + "\n" + Format(player.warehouseUsed[5], "#,#0") + "  tons" + "\n" + Format(player.warehouseUsed[6], "#,#0") + "  tons";
         await frm_BoxCol1.Show(1);
     }
 
@@ -151,15 +151,15 @@ function (me) {
         let l011E = 0;
         let l0120 = 0;
         let l0122 = 0;
-        b_CargoOnShip.Caption = "ship's cargo bay = " + Format(100 * gv0BF2.M4CDB / gv0BF2.M4CE8, "#,#0") + "% filled (" + Format(gv0BF2.M4CDB, "#,#0") + "/" + Format(gv0BF2.M4CE8, "#,#0") + ")";
-        b_CargoOnShip.FloodPercent = (gv0BF2.M4CDB / gv0BF2.M4CE8) * 100;
-        b_TonsInWarehouse.Caption = "warehouse space = " + Format(((gv0BF2.M4FAF[gv11CE.M53A9[gv11CE.M53E5]]) / gv0BF2.M4F79) * 100, "#,#0") + "% filled (" + Format(gv0BF2.M4FAF[gv11CE.M53A9[gv11CE.M53E5]], "#,#0") + "/" + Format(gv0BF2.M4F79, "#,#0") + ")";
-        b_TonsInWarehouse.FloodPercent = ((gv0BF2.M4FAF[gv11CE.M53A9[gv11CE.M53E5]]) / gv0BF2.M4F79) * 100;
+        b_CargoOnShip.Caption = "ship's cargo bay = " + Format(100 * player.cargoTotal / player.cargoCapacity, "#,#0") + "% filled (" + Format(player.cargoTotal, "#,#0") + "/" + Format(player.cargoCapacity, "#,#0") + ")";
+        b_CargoOnShip.FloodPercent = (player.cargoTotal / player.cargoCapacity) * 100;
+        b_TonsInWarehouse.Caption = "warehouse space = " + Format(((player.warehouseUsed[game.planet[game.currentPlayer]]) / player.warehouseCapacity) * 100, "#,#0") + "% filled (" + Format(player.warehouseUsed[game.planet[game.currentPlayer]], "#,#0") + "/" + Format(player.warehouseCapacity, "#,#0") + ")";
+        b_TonsInWarehouse.FloodPercent = ((player.warehouseUsed[game.planet[game.currentPlayer]]) / player.warehouseCapacity) * 100;
         m001C = 0;
         if (m001A == mc004E) {
             for (l0114 = 0; l0114 <= 2; l0114++) {
                 for (l0116 = 0; l0116 <= 5; l0116++) {
-                    if (gv0BF2.M4CCA[l0114][l0116] != 0 || gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][l0114][l0116] != 0) {
+                    if (player.cargo[l0114][l0116] != 0 || player.warehouseStock[game.planet[game.currentPlayer]][l0114][l0116] != 0) {
                         m001C = m001C + 1;
                     }
                 }
@@ -167,7 +167,7 @@ function (me) {
         } else if (m001A == mc0050) {
             for (l0114 = 0; l0114 <= 2; l0114++) {
                 for (l0116 = 0; l0116 <= 5; l0116++) {
-                    if (gv0BF2.M4CCA[l0114][l0116] != 0) {
+                    if (player.cargo[l0114][l0116] != 0) {
                         m001C = m001C + 1;
                     }
                 }
@@ -175,7 +175,7 @@ function (me) {
         } else if (m001A == mc0052) {
             for (l0114 = 0; l0114 <= 2; l0114++) {
                 for (l0116 = 0; l0116 <= 5; l0116++) {
-                    if (gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][l0114][l0116] != 0) {
+                    if (player.warehouseStock[game.planet[game.currentPlayer]][l0114][l0116] != 0) {
                         m001C = m001C + 1;
                     }
                 }
@@ -212,49 +212,49 @@ function (me) {
             for (l0116 = 0; l0116 <= 2; l0116++) {
                 for (l0118 = 0; l0118 <= 5; l0118++) {
                     l011E = l011E + 5;
-                    l0122 = (gv11CE.M52C8 + 1) * l011E;
+                    l0122 = (game.marketDifficulty + 1) * l011E;
                     l0120 = l0120 + 40;
-                    if (gv0BF2.M4CCA[l0116][l0118] != 0 || gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][l0116][l0118] != 0 && m001A == mc004E) {
+                    if (player.cargo[l0116][l0118] != 0 || player.warehouseStock[game.planet[game.currentPlayer]][l0116][l0118] != 0 && m001A == mc004E) {
                         l011A = l011A + 1;
                         m0020[l011A] = CLng(l0116);
                         m0036[l011A] = CLng(l0118);
                         b_Grid.Row = l011A;
                         if (l0114 == 0) {
-                            b_Grid.Text = Trim(gv11CE.M52A5[l0116][l0118]);
+                            b_Grid.Text = Trim(game.commodityNames[l0116][l0118]);
                         } else if (l0114 == 1) {
-                            b_Grid.Text = Format(gv0BF2.M4CCA[l0116][l0118], "#,#0");
+                            b_Grid.Text = Format(player.cargo[l0116][l0118], "#,#0");
                         } else if (l0114 == 2) {
-                            b_Grid.Text = Format(gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][l0116][l0118], "#,#0");
+                            b_Grid.Text = Format(player.warehouseStock[game.planet[game.currentPlayer]][l0116][l0118], "#,#0");
                         } else if (l0114 == 3) {
-                            b_Grid.Text = Format(gv11CE.M52B8[gv11CE.M53A9[gv11CE.M53E5]][l0116][l0118], "#,#0");
+                            b_Grid.Text = Format(game.prices[game.planet[game.currentPlayer]][l0116][l0118], "#,#0");
                         }
-                    } else if (gv0BF2.M4CCA[l0116][l0118] != 0 && m001A == mc0050) {
+                    } else if (player.cargo[l0116][l0118] != 0 && m001A == mc0050) {
                         l011A = l011A + 1;
                         m0020[l011A] = CLng(l0116);
                         m0036[l011A] = CLng(l0118);
                         b_Grid.Row = l011A;
                         if (l0114 == 0) {
-                            b_Grid.Text = Trim(gv11CE.M52A5[l0116][l0118]);
+                            b_Grid.Text = Trim(game.commodityNames[l0116][l0118]);
                         } else if (l0114 == 1) {
-                            b_Grid.Text = Format(gv0BF2.M4CCA[l0116][l0118], "#,#0");
+                            b_Grid.Text = Format(player.cargo[l0116][l0118], "#,#0");
                         } else if (l0114 == 2) {
-                            b_Grid.Text = Format(gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][l0116][l0118], "#,#0");
+                            b_Grid.Text = Format(player.warehouseStock[game.planet[game.currentPlayer]][l0116][l0118], "#,#0");
                         } else if (l0114 == 3) {
-                            b_Grid.Text = Format(gv11CE.M52B8[gv11CE.M53A9[gv11CE.M53E5]][l0116][l0118], "#,#0");
+                            b_Grid.Text = Format(game.prices[game.planet[game.currentPlayer]][l0116][l0118], "#,#0");
                         }
-                    } else if (gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][l0116][l0118] != 0 && m001A == mc0052) {
+                    } else if (player.warehouseStock[game.planet[game.currentPlayer]][l0116][l0118] != 0 && m001A == mc0052) {
                         l011A = l011A + 1;
                         m0020[l011A] = CLng(l0116);
                         m0036[l011A] = CLng(l0118);
                         b_Grid.Row = l011A;
                         if (l0114 == 0) {
-                            b_Grid.Text = Trim(gv11CE.M52A5[l0116][l0118]);
+                            b_Grid.Text = Trim(game.commodityNames[l0116][l0118]);
                         } else if (l0114 == 1) {
-                            b_Grid.Text = Format(gv0BF2.M4CCA[l0116][l0118], "#,#0");
+                            b_Grid.Text = Format(player.cargo[l0116][l0118], "#,#0");
                         } else if (l0114 == 2) {
-                            b_Grid.Text = Format(gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][l0116][l0118], "#,#0");
+                            b_Grid.Text = Format(player.warehouseStock[game.planet[game.currentPlayer]][l0116][l0118], "#,#0");
                         } else if (l0114 == 3) {
-                            b_Grid.Text = Format(gv11CE.M52B8[gv11CE.M53A9[gv11CE.M53E5]][l0116][l0118], "#,#0");
+                            b_Grid.Text = Format(game.prices[game.planet[game.currentPlayer]][l0116][l0118], "#,#0");
                         }
                     }
                 }
@@ -302,56 +302,56 @@ function (me) {
         const mc015E = 16776960;
         const mc0162 = 1;
         me.MousePointer = mc0054;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             {
-                const sel = Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]);
+                const sel = Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]);
                 if (sel == "Cantaloupe") {
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "cantalou.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "cantalou.wav";
                 } else if (sel == "Jelly Beans") {
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "jellybea.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "jellybea.wav";
                 } else if (sel == "Moon Ferns") {
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "moonfern.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "moonfern.wav";
                 } else if (sel == "Frog Legs") {
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "frogleg.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "frogleg.wav";
                 } else if (sel == "Whip Cream") {
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "whipcrem.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "whipcrem.wav";
                 } else if (sel == "Babel Seeds") {
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "babel.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "babel.wav";
                 } else if (sel == "Diapers") {
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "diapers.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "diapers.wav";
                 } else if (sel == "Umbrellas") {
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "umbrella.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "umbrella.wav";
                 } else if (sel == "Toasters") {
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "toasters.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "toasters.wav";
                 } else if (sel == "Polyester") {
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "polyestr.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "polyestr.wav";
                 } else if (sel == "Hair Tonic") {
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "tonic.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "tonic.wav";
                 } else if (sel == "Lava Lamps") {
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "lavalamp.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "lavalamp.wav";
                 } else if (sel == "Oxygen") {
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "oxygen.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "oxygen.wav";
                 } else if (sel == "Oggle Sand") {
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "oggle.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "oggle.wav";
                 } else if (sel == "Kryptoons") {
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "kryptoon.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "kryptoon.wav";
                 } else if (sel == "X Fuels") {
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "xfuel.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "xfuel.wav";
                 } else if (sel == "Gems") {
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "gems.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "gems.wav";
                 } else if (sel == "Exotic") {
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "exotic.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "exotic.wav";
                 }
             }
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
-        if (gv0BF2.M4DD2 == 0) {
-            if (gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 1) {
-                frm_Store.Caption = "There is " + Format(gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " ton of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
+        if (player.quickWarehouse == 0) {
+            if (player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 1) {
+                frm_Store.Caption = "There is " + Format(player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
             } else {
-                frm_Store.Caption = "There are " + Format(gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " tons of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
+                frm_Store.Caption = "There are " + Format(player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
             }
             if (frm_Store.WindowState == 0) {
                 frm_Store.Move((Screen.Width - frm_Store.Width) / 2, (Screen.Height - frm_Store.Height) / 1.2);
@@ -359,7 +359,7 @@ function (me) {
             await frm_Store.Show(1);
             l013E = frm_Store.Tag;
         } else {
-            if (gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] > 0 && gv0BF2.M4CDB != gv0BF2.M4CE8) {
+            if (player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] > 0 && player.cargoTotal != player.cargoCapacity) {
                 l013E = "TAKEMAX";
             } else {
                 l013E = "STOREMAX";
@@ -369,262 +369,262 @@ function (me) {
         b_Message.Caption = "";
         if (l013E == "TAKE") {
             l0140 = -6666;
-            if (gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
-                if (gv0060.M4C47 == -1) {
+            if (player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Warehouse";
-                frm_Box0.b_Message.Caption = "\n" + "There are zero tons of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse. Check Tons in Warehouse";
+                frm_Box0.b_Message.Caption = "\n" + "There are zero tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse. Check Tons in Warehouse";
                 await frm_Box0.Show(1);
-                b_Message.Caption = "You cannot take " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " out of the warehouse.";
-            } else if (gv0BF2.M4CDB == gv0BF2.M4CE8) {
-                if (gv0060.M4C47 == -1) {
+                b_Message.Caption = "You cannot take " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " out of the warehouse.";
+            } else if (player.cargoTotal == player.cargoCapacity) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Warehouse";
                 frm_Box0.b_Message.Caption = "\n" + "There is not enough room on your ship. Check your ship's cargo capacity.";
                 await frm_Box0.Show(1);
-                b_Message.Caption = "You cannot take " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " out of the warehouse because your ship is full of cargo.";
+                b_Message.Caption = "You cannot take " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " out of the warehouse because your ship is full of cargo.";
             } else {
-                if ((gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] + gv0BF2.M4CDB) > gv0BF2.M4CE8) {
-                    l0144 = gv0BF2.M4CE8 - gv0BF2.M4CDB;
+                if ((player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] + player.cargoTotal) > player.cargoCapacity) {
+                    l0144 = player.cargoCapacity - player.cargoTotal;
                 } else {
-                    l0144 = gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]];
+                    l0144 = player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]];
                 }
-                if (gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 1) {
-                    l0140 = await fn01A0(0, Str(l0144), 0.25 * l0144, l0144, "There is " + Format(gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " ton of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.", "Take Goods Out of Warehouse");
+                if (player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 1) {
+                    l0140 = await fn01A0(0, Str(l0144), 0.25 * l0144, l0144, "There is " + Format(player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.", "Take Goods Out of Warehouse");
                 } else {
-                    l0140 = await fn01A0(0, Str(l0144), 0.25 * l0144, l0144, "There are " + Format(gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " tons of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.", "Take Goods Out of Warehouse");
+                    l0140 = await fn01A0(0, Str(l0144), 0.25 * l0144, l0144, "There are " + Format(player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.", "Take Goods Out of Warehouse");
                 }
             }
             if (l0140 == -6666) {
             } else if (l0140 == -3333) {
-                if (gv0060.M4C47 == -1) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 b_Message.Caption = "Your transaction was cancelled. No goods were taken out of the warehouse.";
             } else if (l0140 == 0) {
-                b_Message.Caption = "You didn't take any " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " out of the warehouse.";
-            } else if ((l0140 + gv0BF2.M4CDB) > gv0BF2.M4CE8) {
-                if (gv0060.M4C47 == -1) {
+                b_Message.Caption = "You didn't take any " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " out of the warehouse.";
+            } else if ((l0140 + player.cargoTotal) > player.cargoCapacity) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Warehouse";
                 frm_Box0.b_Message.Caption = "\n" + "There is not enough room on your ship. Check your cargo capacity.";
                 await frm_Box0.Show(1);
                 if (l0140 == 1) {
-                    b_Message.Caption = Format(l0140, "#,#0") + " ton of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " will not fit in your ship.";
+                    b_Message.Caption = Format(l0140, "#,#0") + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " will not fit in your ship.";
                 } else {
-                    b_Message.Caption = Format(l0140, "#,#0") + " tons of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " will not fit in your ship.";
+                    b_Message.Caption = Format(l0140, "#,#0") + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " will not fit in your ship.";
                 }
-            } else if (l0140 > gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]]) {
-                if (gv0060.M4C47 == -1) {
+            } else if (l0140 > player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]]) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Warehouse";
-                frm_Box0.b_Message.Caption = "\n" + "You cannot take that much. Check the tons of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
+                frm_Box0.b_Message.Caption = "\n" + "You cannot take that much. Check the tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
                 await frm_Box0.Show(1);
-                if (gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 1) {
-                    b_Message.Caption = "There is only " + Format(gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " ton of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
+                if (player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 1) {
+                    b_Message.Caption = "There is only " + Format(player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
                 } else {
-                    b_Message.Caption = "There are only " + Format(gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " tons of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
+                    b_Message.Caption = "There are only " + Format(player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
                 }
             } else {
-                gv0BF2.M4CD2[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = CLng((gv0BF2.M4CD2[m0020[b_Grid.Row]][m0036[b_Grid.Row]] * gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + gv0BF2.M4F98[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] * l0140) / (gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + l0140));
-                gv0BF2.M4CDB = gv0BF2.M4CDB + l0140;
-                gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + l0140;
-                gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] - l0140;
-                gv0BF2.M4FAF[gv11CE.M53A9[gv11CE.M53E5]] = gv0BF2.M4FAF[gv11CE.M53A9[gv11CE.M53E5]] - l0140;
-                if (gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
-                    gv0BF2.M4F98[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = 0;
+                player.cargoAvgCost[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = CLng((player.cargoAvgCost[m0020[b_Grid.Row]][m0036[b_Grid.Row]] * player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + player.warehouseAvgCost[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] * l0140) / (player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + l0140));
+                player.cargoTotal = player.cargoTotal + l0140;
+                player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + l0140;
+                player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] - l0140;
+                player.warehouseUsed[game.planet[game.currentPlayer]] = player.warehouseUsed[game.planet[game.currentPlayer]] - l0140;
+                if (player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
+                    player.warehouseAvgCost[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = 0;
                 }
                 b_Message.ForeColor = mc015A;
                 if (l0140 == 1) {
-                    b_Message.Caption = "You transferred " + Format(l0140, "#,#0") + " ton of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " from the warehouse to your ship.";
+                    b_Message.Caption = "You transferred " + Format(l0140, "#,#0") + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " from the warehouse to your ship.";
                 } else {
-                    b_Message.Caption = "You transferred " + Format(l0140, "#,#0") + " tons of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " from the warehouse to your ship.";
+                    b_Message.Caption = "You transferred " + Format(l0140, "#,#0") + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " from the warehouse to your ship.";
                 }
             }
         } else if (l013E == "TAKEMAX") {
-            if ((gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] + gv0BF2.M4CDB) > gv0BF2.M4CE8) {
-                l0140 = gv0BF2.M4CE8 - gv0BF2.M4CDB;
+            if ((player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] + player.cargoTotal) > player.cargoCapacity) {
+                l0140 = player.cargoCapacity - player.cargoTotal;
             } else {
-                l0140 = gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]];
+                l0140 = player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]];
             }
-            if (gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
-                if (gv0060.M4C47 == -1) {
+            if (player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Warehouse";
-                frm_Box0.b_Message.Caption = "\n" + "There are zero tons of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse. Check Tons in Warehouse";
+                frm_Box0.b_Message.Caption = "\n" + "There are zero tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse. Check Tons in Warehouse";
                 await frm_Box0.Show(1);
-                b_Message.Caption = "You cannot take " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " out of the warehouse.";
-            } else if (gv0BF2.M4CDB == gv0BF2.M4CE8) {
-                if (gv0060.M4C47 == -1) {
+                b_Message.Caption = "You cannot take " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " out of the warehouse.";
+            } else if (player.cargoTotal == player.cargoCapacity) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Warehouse";
                 frm_Box0.b_Message.Caption = "\n" + "There is not enough room on your ship. Check your cargo capacity.";
                 await frm_Box0.Show(1);
-                b_Message.Caption = "You cannot take " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " out of the warehouse.";
+                b_Message.Caption = "You cannot take " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " out of the warehouse.";
             } else {
-                gv0BF2.M4CD2[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = CLng((gv0BF2.M4CD2[m0020[b_Grid.Row]][m0036[b_Grid.Row]] * gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + gv0BF2.M4F98[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] * l0140) / (gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + l0140));
-                gv0BF2.M4CDB = gv0BF2.M4CDB + l0140;
-                gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + l0140;
-                gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] - l0140;
-                gv0BF2.M4FAF[gv11CE.M53A9[gv11CE.M53E5]] = gv0BF2.M4FAF[gv11CE.M53A9[gv11CE.M53E5]] - l0140;
-                if (gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
-                    gv0BF2.M4F98[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = 0;
+                player.cargoAvgCost[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = CLng((player.cargoAvgCost[m0020[b_Grid.Row]][m0036[b_Grid.Row]] * player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + player.warehouseAvgCost[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] * l0140) / (player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + l0140));
+                player.cargoTotal = player.cargoTotal + l0140;
+                player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + l0140;
+                player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] - l0140;
+                player.warehouseUsed[game.planet[game.currentPlayer]] = player.warehouseUsed[game.planet[game.currentPlayer]] - l0140;
+                if (player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
+                    player.warehouseAvgCost[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = 0;
                 }
                 b_Message.ForeColor = mc015A;
                 if (l0140 == 1) {
-                    b_Message.Caption = "You just transferred " + Format(l0140, "#,#0") + " ton of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " from the warehouse to your ship.";
+                    b_Message.Caption = "You just transferred " + Format(l0140, "#,#0") + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " from the warehouse to your ship.";
                 } else {
-                    b_Message.Caption = "You just transferred " + Format(l0140, "#,#0") + " tons of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " from the warehouse to your ship.";
+                    b_Message.Caption = "You just transferred " + Format(l0140, "#,#0") + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " from the warehouse to your ship.";
                 }
             }
         } else if (l013E == "STORE") {
             l0140 = -6666;
-            if (gv0BF2.M4CDB == 0) {
-                if (gv0060.M4C47 == -1) {
+            if (player.cargoTotal == 0) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Warehouse";
                 frm_Box0.b_Message.Caption = "\n" + "You don't have any commodities on your ship. Check Tons on Ship.";
                 await frm_Box0.Show(1);
                 b_Message.Caption = "Before you can store a commodity in the warehouse, you must first buy it.";
-            } else if (gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
-                if (gv0060.M4C47 == -1) {
+            } else if (player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Warehouse";
-                frm_Box0.b_Message.Caption = "\n" + "You cannot store " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse. Check Tons on Ship.";
+                frm_Box0.b_Message.Caption = "\n" + "You cannot store " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse. Check Tons on Ship.";
                 await frm_Box0.Show(1);
-                b_Message.Caption = "There are zero tons of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " on your ship.";
-            } else if (gv0BF2.M4FAF[gv11CE.M53A9[gv11CE.M53E5]] == gv0BF2.M4F79) {
-                if (gv0060.M4C47 == -1) {
+                b_Message.Caption = "There are zero tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " on your ship.";
+            } else if (player.warehouseUsed[game.planet[game.currentPlayer]] == player.warehouseCapacity) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Warehouse";
-                frm_Box0.b_Message.Caption = "\n" + "You cannot store " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in your warehouse because it is already full. Check Tons in Warehouse.";
+                frm_Box0.b_Message.Caption = "\n" + "You cannot store " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in your warehouse because it is already full. Check Tons in Warehouse.";
                 await frm_Box0.Show(1);
                 b_Message.Caption = "Your warehouse is full.";
             } else {
-                if ((gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + gv0BF2.M4FAF[gv11CE.M53A9[gv11CE.M53E5]]) > gv0BF2.M4F79) {
-                    l0144 = gv0BF2.M4F79 - gv0BF2.M4FAF[gv11CE.M53A9[gv11CE.M53E5]];
+                if ((player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + player.warehouseUsed[game.planet[game.currentPlayer]]) > player.warehouseCapacity) {
+                    l0144 = player.warehouseCapacity - player.warehouseUsed[game.planet[game.currentPlayer]];
                 } else {
-                    l0144 = gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]];
+                    l0144 = player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]];
                 }
-                if (gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 1) {
-                    l0140 = await fn01A0(0, Str(l0144), 0.25 * l0144, l0144, "You have " + Format(gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " ton of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " on your ship.", "Store Goods in Warehouse");
+                if (player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 1) {
+                    l0140 = await fn01A0(0, Str(l0144), 0.25 * l0144, l0144, "You have " + Format(player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " on your ship.", "Store Goods in Warehouse");
                 } else {
-                    l0140 = await fn01A0(0, Str(l0144), 0.25 * l0144, l0144, "You have " + Format(gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " tons of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " on your ship.", "Store Goods in Warehouse");
+                    l0140 = await fn01A0(0, Str(l0144), 0.25 * l0144, l0144, "You have " + Format(player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " on your ship.", "Store Goods in Warehouse");
                 }
             }
             if (l0140 == -6666) {
             } else if (l0140 == -3333) {
-                if (gv0060.M4C47 == -1) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 b_Message.Caption = "Your transaction was cancelled. No goods were stored in the warehouse.";
-            } else if (l0140 > gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) {
-                if (gv0060.M4C47 == -1) {
+            } else if (l0140 > player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Warehouse";
-                frm_Box0.b_Message.Caption = "\n" + "You don't have that many tons of " + Format(Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]), "#,#0") + " on your ship. Check Tons on Ship.";
+                frm_Box0.b_Message.Caption = "\n" + "You don't have that many tons of " + Format(Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]), "#,#0") + " on your ship. Check Tons on Ship.";
                 await frm_Box0.Show(1);
-                b_Message.Caption = "You only have " + Format(gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " tons of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " on your ship.";
+                b_Message.Caption = "You only have " + Format(player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " on your ship.";
             } else if (l0140 == 0) {
-                b_Message.Caption = "You didn't store any " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
-            } else if ((l0140 + gv0BF2.M4FAF[gv11CE.M53A9[gv11CE.M53E5]]) > gv0BF2.M4F79) {
-                if (gv0060.M4C47 == -1) {
+                b_Message.Caption = "You didn't store any " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
+            } else if ((l0140 + player.warehouseUsed[game.planet[game.currentPlayer]]) > player.warehouseCapacity) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
-                if (gv0BF2.M4FAF[gv11CE.M53A9[gv11CE.M53E5]] == 1) {
+                if (player.warehouseUsed[game.planet[game.currentPlayer]] == 1) {
                     frm_Box0.FillElastic.Caption = "Warehouse";
-                    frm_Box0.b_Message.Caption = "\n" + "You are only alloted " + Format(gv0BF2.M4F79, "#,#0") + " tons of warehouse space on each planet, and you have already used " + Format(gv0BF2.M4FAF[gv11CE.M53A9[gv11CE.M53E5]], "#,#0") + " ton of it.";
+                    frm_Box0.b_Message.Caption = "\n" + "You are only alloted " + Format(player.warehouseCapacity, "#,#0") + " tons of warehouse space on each planet, and you have already used " + Format(player.warehouseUsed[game.planet[game.currentPlayer]], "#,#0") + " ton of it.";
                     await frm_Box0.Show(1);
                 } else {
                     frm_Box0.FillElastic.Caption = "Warehouse";
-                    frm_Box0.b_Message.Caption = "\n" + "You are only alloted " + Format(gv0BF2.M4F79, "#,#0") + " tons of warehouse space on each planet, and you have already used " + Format(gv0BF2.M4FAF[gv11CE.M53A9[gv11CE.M53E5]], "#,#0") + " tons of it.";
+                    frm_Box0.b_Message.Caption = "\n" + "You are only alloted " + Format(player.warehouseCapacity, "#,#0") + " tons of warehouse space on each planet, and you have already used " + Format(player.warehouseUsed[game.planet[game.currentPlayer]], "#,#0") + " tons of it.";
                     await frm_Box0.Show(1);
                 }
                 if (l0140 == 1) {
-                    b_Message.Caption = Format(l0140, "#,#0") + " ton of " + Format(Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]), "#,#0") + " will not fit in your warehouse. Check your Warehouse Space.";
+                    b_Message.Caption = Format(l0140, "#,#0") + " ton of " + Format(Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]), "#,#0") + " will not fit in your warehouse. Check your Warehouse Space.";
                 } else {
-                    b_Message.Caption = Format(l0140, "#,#0") + " tons of " + Format(Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]), "#,#0") + " will not fit in your warehouse. Check your Warehouse Space.";
+                    b_Message.Caption = Format(l0140, "#,#0") + " tons of " + Format(Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]), "#,#0") + " will not fit in your warehouse. Check your Warehouse Space.";
                 }
             } else {
-                gv0BF2.M4F98[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = CLng((gv0BF2.M4F98[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] * gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] + gv0BF2.M4CD2[m0020[b_Grid.Row]][m0036[b_Grid.Row]] * l0140) / (l0140 + gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]]));
+                player.warehouseAvgCost[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = CLng((player.warehouseAvgCost[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] * player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] + player.cargoAvgCost[m0020[b_Grid.Row]][m0036[b_Grid.Row]] * l0140) / (l0140 + player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]]));
                 b_Message.ForeColor = mc015E;
                 if (l0140 == 1) {
-                    b_Message.Caption = "You just stored " + Format(l0140) + " ton of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
+                    b_Message.Caption = "You just stored " + Format(l0140) + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
                 } else {
-                    b_Message.Caption = "You just stored " + Format(l0140) + " tons of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
+                    b_Message.Caption = "You just stored " + Format(l0140) + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
                 }
-                gv0BF2.M4CDB = gv0BF2.M4CDB - l0140;
-                gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]] - l0140;
-                gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] + l0140;
-                gv0BF2.M4FAF[gv11CE.M53A9[gv11CE.M53E5]] = gv0BF2.M4FAF[gv11CE.M53A9[gv11CE.M53E5]] + l0140;
-                if (gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
-                    gv0BF2.M4CD2[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = 0;
+                player.cargoTotal = player.cargoTotal - l0140;
+                player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] - l0140;
+                player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] + l0140;
+                player.warehouseUsed[game.planet[game.currentPlayer]] = player.warehouseUsed[game.planet[game.currentPlayer]] + l0140;
+                if (player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
+                    player.cargoAvgCost[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = 0;
                 }
             }
         } else if (l013E == "STOREMAX") {
             l0140 = -6666;
-            if (gv0BF2.M4CDB == 0) {
-                if (gv0060.M4C47 == -1) {
+            if (player.cargoTotal == 0) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Warehouse";
                 frm_Box0.b_Message.Caption = "\n" + "You don't have any commodities on your ship. Check Tons on Ship.";
                 await frm_Box0.Show(1);
                 b_Message.Caption = "Before you can store a commodity in the warehouse, you must first buy it.";
-            } else if (gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
-                if (gv0060.M4C47 == -1) {
+            } else if (player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Warehouse";
-                frm_Box0.b_Message.Caption = "\n" + "You cannot store " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse. Check Tons on Ship.";
+                frm_Box0.b_Message.Caption = "\n" + "You cannot store " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse. Check Tons on Ship.";
                 await frm_Box0.Show(1);
-                b_Message.Caption = "There are zero tons of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " on your ship.";
-            } else if (gv0BF2.M4FAF[gv11CE.M53A9[gv11CE.M53E5]] == gv0BF2.M4F79) {
-                if (gv0060.M4C47 == -1) {
+                b_Message.Caption = "There are zero tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " on your ship.";
+            } else if (player.warehouseUsed[game.planet[game.currentPlayer]] == player.warehouseCapacity) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Warehouse";
-                frm_Box0.b_Message.Caption = "\n" + "You cannot store " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in your warehouse because it is already full. Check Tons in Warehouse.";
+                frm_Box0.b_Message.Caption = "\n" + "You cannot store " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in your warehouse because it is already full. Check Tons in Warehouse.";
                 await frm_Box0.Show(1);
                 b_Message.Caption = "Your warehouse is full.";
             } else {
-                if ((gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + gv0BF2.M4FAF[gv11CE.M53A9[gv11CE.M53E5]]) > gv0BF2.M4F79) {
-                    l0140 = gv0BF2.M4F79 - gv0BF2.M4FAF[gv11CE.M53A9[gv11CE.M53E5]];
+                if ((player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + player.warehouseUsed[game.planet[game.currentPlayer]]) > player.warehouseCapacity) {
+                    l0140 = player.warehouseCapacity - player.warehouseUsed[game.planet[game.currentPlayer]];
                 } else {
-                    l0140 = gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]];
+                    l0140 = player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]];
                 }
             }
             if (l0140 == -6666) {
             } else if (l0140 == 0) {
-                b_Message.Caption = "You didn't store any " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
+                b_Message.Caption = "You didn't store any " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
             } else {
-                gv0BF2.M4F98[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = CLng((gv0BF2.M4F98[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] * gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] + gv0BF2.M4CD2[m0020[b_Grid.Row]][m0036[b_Grid.Row]] * l0140) / (l0140 + gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]]));
+                player.warehouseAvgCost[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = CLng((player.warehouseAvgCost[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] * player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] + player.cargoAvgCost[m0020[b_Grid.Row]][m0036[b_Grid.Row]] * l0140) / (l0140 + player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]]));
                 b_Message.ForeColor = mc015E;
                 if (l0140 == 1) {
-                    b_Message.Caption = "You just stored " + Format(l0140) + " ton of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
+                    b_Message.Caption = "You just stored " + Format(l0140) + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
                 } else {
-                    b_Message.Caption = "You just stored " + Format(l0140) + " tons of " + Trim(gv11CE.M52A5[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
+                    b_Message.Caption = "You just stored " + Format(l0140) + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
                 }
-                gv0BF2.M4CDB = gv0BF2.M4CDB - l0140;
-                gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]] - l0140;
-                gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = gv0BF2.M4F8B[gv11CE.M53A9[gv11CE.M53E5]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] + l0140;
-                gv0BF2.M4FAF[gv11CE.M53A9[gv11CE.M53E5]] = gv0BF2.M4FAF[gv11CE.M53A9[gv11CE.M53E5]] + l0140;
-                if (gv0BF2.M4CCA[m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
-                    gv0BF2.M4CD2[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = 0;
+                player.cargoTotal = player.cargoTotal - l0140;
+                player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] - l0140;
+                player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] + l0140;
+                player.warehouseUsed[game.planet[game.currentPlayer]] = player.warehouseUsed[game.planet[game.currentPlayer]] + l0140;
+                if (player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
+                    player.cargoAvgCost[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = 0;
                 }
             }
         } else if (l013E == "CANCEL") {
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             b_Message.Caption = "Your transaction was cancelled. No goods transferred to or from your warehouse.";
@@ -653,12 +653,12 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = mc0054;
-        if (gv0BF2.M4DD2 == -1) {
+        if (player.quickWarehouse == -1) {
             b_Quick.Caption = "Shortcut = on";
         } else {
             b_Quick.Caption = "Shortcut = off";
         }
-        b_TitleBar.Caption = "Warehouse on " + Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]]);
+        b_TitleBar.Caption = "Warehouse on " + Trim(game.planetNames[game.planet[game.currentPlayer]]);
         m001A = mc004E;
         sub1B77();
         sub1B91();

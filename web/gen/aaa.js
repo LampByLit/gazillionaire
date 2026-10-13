@@ -10,25 +10,25 @@ function (me) {
     const mc0024 = 1;
 
     async function sub4244() {
-        FileOpen(8, Trim(gv09F0.M4BE9) + "CONFIG.DAT");
-        gv0060 = FileGet(8, 1, gv0060);
+        FileOpen(8, Trim(paths.configDir) + "CONFIG.DAT");
+        settings = FileGet(8, 1, settings);
         FileClose(8);
-        if (Left(gv0060.M4C30, 1) >= "A" && Left(gv0060.M4C30, 1) <= "Z" || Left(gv0060.M4C30, 1) >= "a" && Left(gv0060.M4C30, 1) <= "z" && Right(gv0060.M4C30, 1) == ":") {
+        if (Left(settings.cdDrive, 1) >= "A" && Left(settings.cdDrive, 1) <= "Z" || Left(settings.cdDrive, 1) >= "a" && Left(settings.cdDrive, 1) <= "z" && Right(settings.cdDrive, 1) == ":") {
         } else {
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             await MsgBox("There has been an error reading your Configuration Data.  All Configuration Variables are being set to their default values.");
-            gv0060.M4C30 = FixStr("D:", 2);
-            gv0060.M4C3B = FixStr(CurDir() + "\\email\\", 128);
-            gv0060.M4C47 = -1;
+            settings.cdDrive = FixStr("D:", 2);
+            settings.emailDir = FixStr(CurDir() + "\\email\\", 128);
+            settings.soundOn = -1;
             sub4254();
         }
     }
 
     function sub4254() {
-        FileOpen(7, Trim(gv09F0.M4BE9) + "CONFIG.DAT");
-        FilePut(7, 1, gv0060);
+        FileOpen(7, Trim(paths.configDir) + "CONFIG.DAT");
+        FilePut(7, 1, settings);
         FileClose(7);
     }
 
@@ -38,28 +38,28 @@ function (me) {
             me.MousePointer = mc0024;
             l002C = 0;
             Randomize();
-            gv09F0.M4C05 = FixStr(CurDir() + "\\savegame\\", 128);
-            gv09F0.M4BE9 = FixStr(CurDir() + "\\units\\", 128);
+            paths.saveDir = FixStr(CurDir() + "\\savegame\\", 128);
+            paths.configDir = FixStr(CurDir() + "\\units\\", 128);
             await sub4244();
-            gv09F0.M4BF5 = FixStr(gv0060.M4C30 + "\\lavamind\\gaz2\\graphics\\", 128);
-            gv09F0.M4C15 = FixStr(gv0060.M4C30 + "\\lavamind\\gaz2\\sound\\", 128);
-            b_Test.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "test.bmp");
+            paths.imageDir = FixStr(settings.cdDrive + "\\lavamind\\gaz2\\graphics\\", 128);
+            paths.soundDir = FixStr(settings.cdDrive + "\\lavamind\\gaz2\\sound\\", 128);
+            b_Test.Picture = LoadPicture(Trim(paths.imageDir) + "test.bmp");
             await frm_LavaMind.Show();
             await Unload(me);
             return;
         } catch (e) {
             Err.Catch(e);
             l002C = l002C + 1;
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             if (l002C == 1) {
                 await MsgBox("Before you start the game, you must first configure the game to your system." + "\n" + "\n" + "We will now go to the System Configuration Menu." + "\n" + "\n" + "Make sure that your CD-ROM Drive is set to the correct drive letter, otherwise Gazillionaire will not function properly.", 64, "System Configuration");
-                if (gv0060.M4C47 == -1) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 await frm_Config.Show(1);
-                await MsgBox("Your CD-ROM Drive has been set to " + Trim(gv0060.M4C30));
+                await MsgBox("Your CD-ROM Drive has been set to " + Trim(settings.cdDrive));
                 return;
             } else if (l002C == 2) {
                 await MsgBox("There has been an error reading your CD-ROM drive." + "\n" + "\n" + "In order to play Gazillionaire, the Gazillionaire CD-ROM must be in the CD-ROM drive at all times." + "\n" + "\n" + "Please check to make sure the correct CD-ROM is in the CD-ROM drive, then click on the OK button.", 64, "Error Reading CD-ROM Drive");
@@ -67,7 +67,7 @@ function (me) {
             } else if (l002C == 3) {
                 await MsgBox("There has been another error reading your CD-ROM drive." + "\n" + "\n" + "We will now go to the System Configuration Menu. Please make sure that you selected the correct CD-ROM drive letter on the System Configuration Menu.", 32, "Error Reading CD-ROM Drive");
                 await frm_Config.Show(1);
-                await MsgBox("Your CD-ROM Drive has been set to " + Trim(gv0060.M4C30));
+                await MsgBox("Your CD-ROM Drive has been set to " + Trim(settings.cdDrive));
                 return;
             } else if (l002C == 4) {
                 await MsgBox("There has been another error reading your CD-ROM drive." + "\n" + "\n" + "We will now exit the program so you may check to make sure your CD-ROM drive is functioning properly.", 16, "Error Reading CD-ROM Drive");

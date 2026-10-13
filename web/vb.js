@@ -294,7 +294,7 @@ const VFS = {
     },
 };
 if (!VFS.exists("units/config.dat")) {
-    VFS.write("units/config.dat", [{ M4C30: "D:", M4C3B: FixStr("C:\\email\\", 128), M4C47: -1 }]);
+    VFS.write("units/config.dat", [{ cdDrive: "D:", emailDir: FixStr("C:\\email\\", 128), soundOn: -1 }]);
 }
 for (let i = 1; i <= 5; i++) {
     if (!VFS.exists(`savegame/game${i}`)) VFS.write(`savegame/game${i}`, [FixStr(".......", 20)]);

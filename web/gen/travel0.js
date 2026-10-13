@@ -19,7 +19,7 @@ function (me) {
         me.MousePointer = mc0022;
         Image1.Left = Add(Screen.Width, 1000);
         Timer1.Enabled = 0;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         FillElastic.Visible = 0;
@@ -41,25 +41,25 @@ function (me) {
     }
 
     function Form_Load() {
-        FillElastic.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "STARS5.BMP");
+        FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "STARS5.BMP");
         me.MousePointer = mc0022;
         Image1.Left = -2000;
         Image1.Top = Screen.Height / 3;
-        Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "ship" + Trim(Str(gv11CE.M541E[gv11CE.M53E5])) + "a.bmp");
-        if (gv0060.M4C47 == -1) {
+        Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ship" + Trim(Str(game.shipType[game.currentPlayer])) + "a.bmp");
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            if (gv11CE.M541E[gv11CE.M53E5] == 1 || gv11CE.M541E[gv11CE.M53E5] == 9) {
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "rocket1.wav";
-            } else if (gv11CE.M541E[gv11CE.M53E5] == 2 || gv11CE.M541E[gv11CE.M53E5] == 7) {
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "rocket2.wav";
-            } else if (gv11CE.M541E[gv11CE.M53E5] == 3 || gv11CE.M541E[gv11CE.M53E5] == 8) {
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "rocket3.wav";
-            } else if (gv11CE.M541E[gv11CE.M53E5] == 4 || gv11CE.M541E[gv11CE.M53E5] == 10) {
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "rocket4.wav";
-            } else if (gv11CE.M541E[gv11CE.M53E5] == 5 || gv11CE.M541E[gv11CE.M53E5] == 11) {
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "rocket5.wav";
-            } else if (gv11CE.M541E[gv11CE.M53E5] == 6 || gv11CE.M541E[gv11CE.M53E5] == 12) {
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "rocket6.wav";
+            if (game.shipType[game.currentPlayer] == 1 || game.shipType[game.currentPlayer] == 9) {
+                b_Sound.FileName = Trim(paths.soundDir) + "rocket1.wav";
+            } else if (game.shipType[game.currentPlayer] == 2 || game.shipType[game.currentPlayer] == 7) {
+                b_Sound.FileName = Trim(paths.soundDir) + "rocket2.wav";
+            } else if (game.shipType[game.currentPlayer] == 3 || game.shipType[game.currentPlayer] == 8) {
+                b_Sound.FileName = Trim(paths.soundDir) + "rocket3.wav";
+            } else if (game.shipType[game.currentPlayer] == 4 || game.shipType[game.currentPlayer] == 10) {
+                b_Sound.FileName = Trim(paths.soundDir) + "rocket4.wav";
+            } else if (game.shipType[game.currentPlayer] == 5 || game.shipType[game.currentPlayer] == 11) {
+                b_Sound.FileName = Trim(paths.soundDir) + "rocket5.wav";
+            } else if (game.shipType[game.currentPlayer] == 6 || game.shipType[game.currentPlayer] == 12) {
+                b_Sound.FileName = Trim(paths.soundDir) + "rocket6.wav";
             }
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
@@ -76,12 +76,12 @@ function (me) {
 
     async function Timer1_Timer() {
         Timer1.Interval = 1;
-        Image1.Left = Add(Add(Image1.Left, (gv11CE.M530C[gv11CE.M53E5] * 50)), 150);
+        Image1.Left = Add(Add(Image1.Left, (game.engineSpeed[game.currentPlayer] * 50)), 150);
         if (Image1.Left >= (Add(Screen.Width, 8000))) {
             me.MousePointer = mc0022;
             Image1.Visible = 0;
             Timer1.Enabled = 0;
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
             }
             FillElastic.Visible = 0;

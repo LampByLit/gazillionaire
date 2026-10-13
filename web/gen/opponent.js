@@ -210,24 +210,24 @@ function (me) {
         } else if (pv00D6 == 6) {
             l00DA = "Hoff Miester";
         }
-        l00D8 = await fn01A0(0, Str(gv1EB2.M559E[pv00D6]), 25, 200, l00DA + "'s intelligence can range from 25% to 200%." + "\n" + "\n" + "Currently, " + l00DA + "'s intelligence is set at " + Str(gv1EB2.M559E[pv00D6]) + "%.", " ");
+        l00D8 = await fn01A0(0, Str(rivals.intelligence[pv00D6]), 25, 200, l00DA + "'s intelligence can range from 25% to 200%." + "\n" + "\n" + "Currently, " + l00DA + "'s intelligence is set at " + Str(rivals.intelligence[pv00D6]) + "%.", " ");
         if (l00D8 == -3333) {
         } else if (l00D8 < 25) {
-            gv1EB2.M559E[pv00D6] = 25;
+            rivals.intelligence[pv00D6] = 25;
         } else if (l00D8 > 200) {
-            gv1EB2.M559E[pv00D6] = 200;
+            rivals.intelligence[pv00D6] = 200;
         } else {
-            gv1EB2.M559E[pv00D6] = l00D8;
+            rivals.intelligence[pv00D6] = l00D8;
         }
     }
 
     function Form_Activate() {
-        b_1e.Caption = "Intelligence = " + Str(gv1EB2.M559E[2]) + "%";
-        b_2e.Caption = "Intelligence = " + Str(gv1EB2.M559E[1]) + "%";
-        b_3e.Caption = "Intelligence = " + Str(gv1EB2.M559E[3]) + "%";
-        b_4e.Caption = "Intelligence = " + Str(gv1EB2.M559E[4]) + "%";
-        b_5e.Caption = "Intelligence = " + Str(gv1EB2.M559E[5]) + "%";
-        b_6e.Caption = "Intelligence = " + Str(gv1EB2.M559E[6]) + "%";
+        b_1e.Caption = "Intelligence = " + Str(rivals.intelligence[2]) + "%";
+        b_2e.Caption = "Intelligence = " + Str(rivals.intelligence[1]) + "%";
+        b_3e.Caption = "Intelligence = " + Str(rivals.intelligence[3]) + "%";
+        b_4e.Caption = "Intelligence = " + Str(rivals.intelligence[4]) + "%";
+        b_5e.Caption = "Intelligence = " + Str(rivals.intelligence[5]) + "%";
+        b_6e.Caption = "Intelligence = " + Str(rivals.intelligence[6]) + "%";
         me.MousePointer = mc0106;
     }
 
@@ -252,12 +252,12 @@ function (me) {
         b_Container5.Visible = -1;
         b_Image6Container.Visible = 0;
         b_Container6.Visible = -1;
-        Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "op2.bmp");
+        Image1.Picture = LoadPicture(Trim(paths.imageDir) + "op2.bmp");
         b_Image1Container.Visible = -1;
         b_Container1.Visible = 0;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "op2.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "op2.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -270,12 +270,12 @@ function (me) {
         }
         if (m001A == 1) {
             Timer1.Interval = 8000;
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "op2.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "op2.bmp");
             b_Image1Container.Visible = -1;
             b_Container1.Visible = 0;
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "op2.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "op2.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
@@ -286,12 +286,12 @@ function (me) {
             b_Container1.Visible = -1;
         } else if (m001A == 3) {
             Timer1.Interval = 8000;
-            Image2.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "op1.bmp");
+            Image2.Picture = LoadPicture(Trim(paths.imageDir) + "op1.bmp");
             b_Image2Container.Visible = -1;
             b_Container2.Visible = 0;
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "op1.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "op1.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
@@ -302,12 +302,12 @@ function (me) {
             b_Container2.Visible = -1;
         } else if (m001A == 5) {
             Timer1.Interval = 8000;
-            Image3.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "op3.bmp");
+            Image3.Picture = LoadPicture(Trim(paths.imageDir) + "op3.bmp");
             b_Image3Container.Visible = -1;
             b_Container3.Visible = 0;
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "op3.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "op3.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
@@ -318,12 +318,12 @@ function (me) {
             b_Container3.Visible = -1;
         } else if (m001A == 7) {
             Timer1.Interval = 5500;
-            Image4.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "op4.bmp");
+            Image4.Picture = LoadPicture(Trim(paths.imageDir) + "op4.bmp");
             b_Image4Container.Visible = -1;
             b_Container4.Visible = 0;
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "op4.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "op4.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
@@ -334,12 +334,12 @@ function (me) {
             b_Container4.Visible = -1;
         } else if (m001A == 9) {
             Timer1.Interval = 8000;
-            Image5.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "op5.bmp");
+            Image5.Picture = LoadPicture(Trim(paths.imageDir) + "op5.bmp");
             b_Image5Container.Visible = -1;
             b_Container5.Visible = 0;
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "op5.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "op5.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
@@ -350,12 +350,12 @@ function (me) {
             b_Container5.Visible = -1;
         } else if (m001A == 11) {
             Timer1.Interval = 8000;
-            Image6.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "op6.bmp");
+            Image6.Picture = LoadPicture(Trim(paths.imageDir) + "op6.bmp");
             b_Image6Container.Visible = -1;
             b_Container6.Visible = 0;
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "op6.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "op6.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }

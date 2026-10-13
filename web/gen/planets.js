@@ -27,7 +27,7 @@ function (me) {
 
     async function b_Continue_Click() {
         me.MousePointer = mc001A;
-        if (gv11CE.M53EF != 1) {
+        if (game.numPlayers != 1) {
             frm_NameCompany.Tag = "Next Player";
         }
         FillElastic.Visible = 0;
@@ -45,9 +45,9 @@ function (me) {
 
     async function b_Planet_Click(Index) {
         me.MousePointer = mc001A;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "ping2.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "ping2.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -97,23 +97,23 @@ function (me) {
                     }
                 }
                 for (l0064 = 0; l0064 <= 6; l0064++) {
-                    if (l0068 == gv11CE.M53C1[l0064]) {
+                    if (l0068 == game.planetNames[l0064]) {
                         l0068 = "do not replace";
                     }
                 }
                 if (l0068 == "do not replace") {
                 } else {
-                    gv11CE.M53C1[l0062] = FixStr(l0068, 4);
+                    game.planetNames[l0062] = FixStr(l0068, 4);
                 }
             }
         }
         for (l0062 = 0; l0062 <= 6; l0062++) {
-            b_Planet[l0062].Picture = LoadPicture(Trim(gv09F0.M4BF5) + gv11CE.M53C1[l0062] + "1.bmp");
-            b_Planet[l0062].Caption = gv11CE.M53C1[l0062];
+            b_Planet[l0062].Picture = LoadPicture(Trim(paths.imageDir) + game.planetNames[l0062] + "1.bmp");
+            b_Planet[l0062].Caption = game.planetNames[l0062];
         }
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "ping1.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "ping1.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -131,12 +131,12 @@ function (me) {
     function Form_Activate() {
         let l008A = 0;
         for (l008A = 0; l008A <= 6; l008A++) {
-            b_Planet[l008A].Picture = LoadPicture(Trim(gv09F0.M4BF5) + gv11CE.M53C1[l008A] + "1.bmp");
-            b_Planet[l008A].Caption = gv11CE.M53C1[l008A];
+            b_Planet[l008A].Picture = LoadPicture(Trim(paths.imageDir) + game.planetNames[l008A] + "1.bmp");
+            b_Planet[l008A].Caption = game.planetNames[l008A];
         }
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "ping1.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "ping1.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -151,7 +151,7 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = mc001A;
-        FillElastic.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "STARS2.BMP");
+        FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "STARS2.BMP");
     }
 
     function Label1_Click() {

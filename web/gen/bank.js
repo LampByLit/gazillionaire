@@ -43,8 +43,8 @@ function (me) {
         let l0028 = 0;
         const mc0048 = 1;
         me.MousePointer = mc0020;
-        if (gv0BF2.M4CF9 == 0) {
-            if (gv0060.M4C47 == -1) {
+        if (player.cash == 0) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "The Bank";
@@ -52,25 +52,25 @@ function (me) {
             await frm_Box0.Show(1);
             l0028 = 0;
         } else {
-            l0028 = await fn01A0(0, "", 0.25 * gv0BF2.M4CF9, gv0BF2.M4CF9, "Enter the amount you wish to deposit:", "Deposit Money");
+            l0028 = await fn01A0(0, "", 0.25 * player.cash, player.cash, "Enter the amount you wish to deposit:", "Deposit Money");
         }
         if (l0028 == 0) {
         } else if (l0028 == -3333) {
-        } else if (l0028 > gv0BF2.M4CF9) {
-            if (gv0060.M4C47 == -1) {
+        } else if (l0028 > player.cash) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "The Bank";
             frm_Box0.b_Message.Caption = "\n" + "You don't have enough money. Check your cash.";
             await frm_Box0.Show(1);
         } else {
-            gv0BF2.M4E9E = gv0BF2.M4E9E + l0028;
-            gv0BF2.M4CF9 = gv0BF2.M4CF9 - l0028;
+            player.bankBalance = player.bankBalance + l0028;
+            player.cash = player.cash - l0028;
             m001E = -1;
             b_Timer.Enabled = -1;
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "bank.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "bank.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
@@ -89,8 +89,8 @@ function (me) {
 
     async function b_DepositAll_Click() {
         me.MousePointer = mc0020;
-        if (gv0BF2.M4CF9 == 0) {
-            if (gv0060.M4C47 == -1) {
+        if (player.cash == 0) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "The Bank";
@@ -99,11 +99,11 @@ function (me) {
         } else {
             m001E = -1;
             b_Timer.Enabled = -1;
-            gv0BF2.M4E9E = gv0BF2.M4E9E + gv0BF2.M4CF9;
-            gv0BF2.M4CF9 = 0;
-            if (gv0060.M4C47 == -1) {
+            player.bankBalance = player.bankBalance + player.cash;
+            player.cash = 0;
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "bank.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "bank.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
@@ -164,19 +164,19 @@ function (me) {
     function b_Timer_Timer() {
         if (m001E == -1) {
             if (m001A == 1) {
-                Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "BANK2.BMP");
+                Image1.Picture = LoadPicture(Trim(paths.imageDir) + "BANK2.BMP");
             } else if (m001A == 2) {
-                Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "BANK2.BMP");
+                Image1.Picture = LoadPicture(Trim(paths.imageDir) + "BANK2.BMP");
             } else if (m001A == 3) {
-                Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "BANK.BMP");
+                Image1.Picture = LoadPicture(Trim(paths.imageDir) + "BANK.BMP");
             }
         } else {
             if (m001A == 1) {
-                Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "BANK1.BMP");
+                Image1.Picture = LoadPicture(Trim(paths.imageDir) + "BANK1.BMP");
             } else if (m001A == 2) {
-                Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "BANK1.BMP");
+                Image1.Picture = LoadPicture(Trim(paths.imageDir) + "BANK1.BMP");
             } else if (m001A == 3) {
-                Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "BANK.BMP");
+                Image1.Picture = LoadPicture(Trim(paths.imageDir) + "BANK.BMP");
             }
         }
         m001A = m001A + 1;
@@ -194,8 +194,8 @@ function (me) {
     async function b_Withdraw_Click() {
         let l00CA = 0;
         me.MousePointer = mc0020;
-        if (gv0BF2.M4E9E == 0) {
-            if (gv0060.M4C47 == -1) {
+        if (player.bankBalance == 0) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "The Bank";
@@ -203,25 +203,25 @@ function (me) {
             await frm_Box0.Show(1);
             l00CA = 0;
         } else {
-            l00CA = await fn01A0(0, "", 0.25 * gv0BF2.M4E9E, gv0BF2.M4E9E, "Enter the amount you wish to withdraw:", "Withdraw Money");
+            l00CA = await fn01A0(0, "", 0.25 * player.bankBalance, player.bankBalance, "Enter the amount you wish to withdraw:", "Withdraw Money");
         }
         if (l00CA == 0) {
         } else if (l00CA == -3333) {
-        } else if (l00CA > gv0BF2.M4E9E) {
-            if (gv0060.M4C47 == -1) {
+        } else if (l00CA > player.bankBalance) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "The Bank";
             frm_Box0.b_Message.Caption = "\n" + "You don't have enough money in your account. Check your account balance.";
             await frm_Box0.Show(1);
         } else {
-            gv0BF2.M4E9E = gv0BF2.M4E9E - l00CA;
-            gv0BF2.M4CF9 = gv0BF2.M4CF9 + l00CA;
+            player.bankBalance = player.bankBalance - l00CA;
+            player.cash = player.cash + l00CA;
             m001E = 0;
             b_Timer.Enabled = -1;
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "bank2.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "bank2.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
@@ -240,21 +240,21 @@ function (me) {
 
     async function b_WithdrawAll_Click() {
         me.MousePointer = mc0020;
-        if (gv0BF2.M4E9E == 0) {
-            if (gv0060.M4C47 == -1) {
+        if (player.bankBalance == 0) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "The Bank";
             frm_Box0.b_Message.Caption = "\n" + "You don't have any money in the bank. Check your account balance.";
             await frm_Box0.Show(1);
         } else {
-            gv0BF2.M4CF9 = gv0BF2.M4CF9 + gv0BF2.M4E9E;
-            gv0BF2.M4E9E = 0;
+            player.cash = player.cash + player.bankBalance;
+            player.bankBalance = 0;
             m001E = 0;
             b_Timer.Enabled = -1;
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "bank2.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "bank2.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
@@ -272,22 +272,22 @@ function (me) {
     }
 
     function sub0CA5() {
-        b_Bank.Caption = "  Account Balance:   " + Format(gv0BF2.M4E9E, "#,#0");
-        b_Cash.Caption = "  Cash:   " + Format(gv0BF2.M4CF9, "#,#0");
-        b_InterestRate.Caption = "  Interest Rate:   " + Format(gv0BF2.M4EA9 * 100, "#,#0") + "% per week";
-        b_Interest.Caption = "  Interest Earned (last week):   " + Format(gv0BF2.M4EB8, "#,#0");
+        b_Bank.Caption = "  Account Balance:   " + Format(player.bankBalance, "#,#0");
+        b_Cash.Caption = "  Cash:   " + Format(player.cash, "#,#0");
+        b_InterestRate.Caption = "  Interest Rate:   " + Format(player.bankRate * 100, "#,#0") + "% per week";
+        b_Interest.Caption = "  Interest Earned (last week):   " + Format(player.bankInterest, "#,#0");
     }
 
     async function sub0AFB() {
         me.MousePointer = mc0020;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
         frm_Box1.FillElastic.Caption = "Help (Trader's Union Bank)";
-        frm_Box1.b_Message.Caption = "Any time you are on a planet, you may deposit money in your Trader's Union Bank Account. The Trader's Union will pay you " + Format(gv0BF2.M4EA9 * 100, "#,#0") + "% interest. Every time you travel to a new planet, the interest will be automatically added to your bank account. There is no limit to how much money you may deposit in your account.";
+        frm_Box1.b_Message.Caption = "Any time you are on a planet, you may deposit money in your Trader's Union Bank Account. The Trader's Union will pay you " + Format(player.bankRate * 100, "#,#0") + "% interest. Every time you travel to a new planet, the interest will be automatically added to your bank account. There is no limit to how much money you may deposit in your account.";
         await frm_Box1.Show(1);
     }
 
@@ -303,7 +303,7 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = mc0020;
-        Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "BANK.BMP");
+        Image1.Picture = LoadPicture(Trim(paths.imageDir) + "BANK.BMP");
         m001C = 0;
         m001A = 1;
         sub0CA5();

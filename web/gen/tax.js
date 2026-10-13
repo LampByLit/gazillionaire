@@ -52,14 +52,14 @@ function (me) {
 
     async function b_Help1_Click() {
         me.MousePointer = mc001E;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
         frm_Box1.FillElastic.Caption = "Help (Imperial Taxes)";
-        frm_Box1.b_Message.Caption = "The Imperial Government, which rules over all of Kukubia, levies two types of taxes: a Passenger Tax and a Commodities Tariff. The Passenger Tax is a " + Format(gv11CE.M539E * 100, "#,#0") + "% tax on all income from passengers. The Commodities Tariff is a " + Format(gv11CE.M52E2 * 100, "#,#0") + "% tax on all goods exported from a planet and a " + Format(gv11CE.M5349 * 100, "#,#0") + "% tax on all goods imported to a planet. If the goods never leave a planet, you will not be charged any tariffs.";
+        frm_Box1.b_Message.Caption = "The Imperial Government, which rules over all of Kukubia, levies two types of taxes: a Passenger Tax and a Commodities Tariff. The Passenger Tax is a " + Format(game.passengerTaxRate * 100, "#,#0") + "% tax on all income from passengers. The Commodities Tariff is a " + Format(game.exportTariff * 100, "#,#0") + "% tax on all goods exported from a planet and a " + Format(game.importTariff * 100, "#,#0") + "% tax on all goods imported to a planet. If the goods never leave a planet, you will not be charged any tariffs.";
         await frm_Box1.Show(1);
     }
 
@@ -74,24 +74,24 @@ function (me) {
     async function b_PayAll_Click() {
         me.MousePointer = mc001E;
         b_Message.ForeColor = mc007C;
-        if ((gv0BF2.M4F72 + gv0BF2.M4F68) == 0) {
-            if (gv0060.M4C47 == -1) {
+        if ((player.passengerTaxOwed + player.tariffsOwed) == 0) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Taxes";
             frm_Box0.b_Message.Caption = "\n" + "You don't owe the government any money.";
             await frm_Box0.Show(1);
             b_Message.Caption = "You don't owe the government any money.";
-        } else if (gv0BF2.M4CF9 == 0) {
-            if (gv0060.M4C47 == -1) {
+        } else if (player.cash == 0) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Taxes";
             frm_Box0.b_Message.Caption = "\n" + "You don't have any money. Check your cash.";
             await frm_Box0.Show(1);
             b_Message.Caption = "You don't have any money. Check your cash.";
-        } else if (gv0BF2.M4CF9 < (gv0BF2.M4F72 + gv0BF2.M4F68)) {
-            if (gv0060.M4C47 == -1) {
+        } else if (player.cash < (player.passengerTaxOwed + player.tariffsOwed)) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Taxes";
@@ -100,17 +100,17 @@ function (me) {
             b_Message.Caption = "You don't have enough money to pay all your taxes and tariffs.";
         } else {
             b_Message.Caption = "You paid your taxes & tariffs in full!";
-            gv0BF2.M4CF9 = gv0BF2.M4CF9 - (gv0BF2.M4F72 + gv0BF2.M4F68);
+            player.cash = player.cash - (player.passengerTaxOwed + player.tariffsOwed);
             b_Timer.Enabled = 0;
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "TAX.BMP");
-            if (gv0060.M4C47 == -1) {
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "TAX.BMP");
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "tax2.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "tax2.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
-            gv0BF2.M4F72 = 0;
-            gv0BF2.M4F68 = 0;
+            player.passengerTaxOwed = 0;
+            player.tariffsOwed = 0;
         }
         sub15B2();
         me.MousePointer = mc0094;
@@ -126,9 +126,9 @@ function (me) {
 
     function b_Timer_Timer() {
         if (m001A == 1) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "TAX.BMP");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "TAX.BMP");
         } else if (m001A == 2) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "tax2.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "tax2.bmp");
         }
         m001A = m001A + 1;
         if (m001A == 3) {
@@ -138,15 +138,15 @@ function (me) {
         if (m001C == 6) {
             b_Timer.Enabled = 0;
             m001C = 0;
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "tax2.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "tax2.bmp");
         }
     }
 
     function sub15B2() {
-        b_Tax.Caption = "   Passenger Taxes:   " + Format(gv0BF2.M4F72, "#,#0");
-        b_Tariff.Caption = "   Commodity Tariffs:   " + Format(gv0BF2.M4F68, "#,#0");
-        b_Total.Caption = "   Total Taxes:   " + Format((gv0BF2.M4F72 + gv0BF2.M4F68), "#,#0");
-        b_Cash.Caption = "   Cash:   " + Format(gv0BF2.M4CF9, "#,#0");
+        b_Tax.Caption = "   Passenger Taxes:   " + Format(player.passengerTaxOwed, "#,#0");
+        b_Tariff.Caption = "   Commodity Tariffs:   " + Format(player.tariffsOwed, "#,#0");
+        b_Total.Caption = "   Total Taxes:   " + Format((player.passengerTaxOwed + player.tariffsOwed), "#,#0");
+        b_Cash.Caption = "   Cash:   " + Format(player.cash, "#,#0");
     }
 
     function Form_Activate() {
@@ -165,26 +165,26 @@ function (me) {
         me.MousePointer = mc001E;
         m001C = 1;
         m001A = 1;
-        if (gv0BF2.M4F72 + gv0BF2.M4F68 > 0) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "tax2.bmp");
+        if (player.passengerTaxOwed + player.tariffsOwed > 0) {
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "tax2.bmp");
             b_Timer.Enabled = -1;
         } else {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "tax.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "tax.bmp");
             b_Timer.Enabled = 0;
         }
-        if ((gv0BF2.M4F68 + gv0BF2.M4F72) >= (35 * gv11CE.M54B3[gv11CE.M53E5])) {
+        if ((player.tariffsOwed + player.passengerTaxOwed) >= (35 * game.shipSize[game.currentPlayer])) {
             b_Message.ForeColor = mc00C6;
             b_Message.Caption = "The Tax Auditor warns you to pay your taxes immediately.";
-        } else if ((25 * gv11CE.M54B3[gv11CE.M53E5]) <= (gv0BF2.M4F68 + gv0BF2.M4F72) && (gv0BF2.M4F68 + gv0BF2.M4F72) < (35 * gv11CE.M54B3[gv11CE.M53E5])) {
+        } else if ((25 * game.shipSize[game.currentPlayer]) <= (player.tariffsOwed + player.passengerTaxOwed) && (player.tariffsOwed + player.passengerTaxOwed) < (35 * game.shipSize[game.currentPlayer])) {
             b_Message.Caption = "The Tax Auditor reminds you not to wait until the last minute to pay your taxes.";
-        } else if ((15 * gv11CE.M54B3[gv11CE.M53E5]) <= (gv0BF2.M4F68 + gv0BF2.M4F72) && (gv0BF2.M4F68 + gv0BF2.M4F72) < (25 * gv11CE.M54B3[gv11CE.M53E5])) {
+        } else if ((15 * game.shipSize[game.currentPlayer]) <= (player.tariffsOwed + player.passengerTaxOwed) && (player.tariffsOwed + player.passengerTaxOwed) < (25 * game.shipSize[game.currentPlayer])) {
             b_Message.Caption = "The Tax Auditor says it never hurts to pay your taxes ahead of time.";
-        } else if ((gv0BF2.M4F68 + gv0BF2.M4F72) < (15 * gv11CE.M54B3[gv11CE.M53E5])) {
+        } else if ((player.tariffsOwed + player.passengerTaxOwed) < (15 * game.shipSize[game.currentPlayer])) {
             b_Message.Caption = "You don't have to pay your taxes right away.";
         }
-        if (gv0060.M4C47 == -1 && (gv0BF2.M4F72 + gv0BF2.M4F68) > 0) {
+        if (settings.soundOn == -1 && (player.passengerTaxOwed + player.tariffsOwed) > 0) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "tax.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "tax.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }

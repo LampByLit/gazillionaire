@@ -30,11 +30,11 @@ function (me) {
 
     async function sub050F() {
         me.MousePointer = mc001A;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
-        if (gv11CE.M5359 == 1) {
-            if (gv11CE.M53EF != 1) {
+        if (game.skillLevel == 1) {
+            if (game.numPlayers != 1) {
                 frm_NameCompany.Tag = "Next Player";
             }
             FillElastic.Visible = 0;
@@ -49,7 +49,7 @@ function (me) {
 
     async function FivePlayers_Click() {
         me.MousePointer = mc001A;
-        gv11CE.M53EF = 5;
+        game.numPlayers = 5;
         await sub050F();
     }
 
@@ -67,13 +67,13 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = mc001A;
-        FillElastic.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "STARS5.BMP");
-        if (gv11CE.M52F2 == -1) {
+        FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "STARS5.BMP");
+        if (game.isEmailGame == -1) {
             OnePlayer.Enabled = 0;
         }
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "";
+            b_Sound.FileName = Trim(paths.soundDir) + "";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -81,7 +81,7 @@ function (me) {
 
     async function FourPlayers_Click() {
         me.MousePointer = mc001A;
-        gv11CE.M53EF = 4;
+        game.numPlayers = 4;
         await sub050F();
     }
 
@@ -103,7 +103,7 @@ function (me) {
 
     async function OnePlayer_Click() {
         me.MousePointer = mc001A;
-        gv11CE.M53EF = 1;
+        game.numPlayers = 1;
         await sub050F();
     }
 
@@ -117,7 +117,7 @@ function (me) {
 
     async function SixPlayers_Click() {
         me.MousePointer = mc001A;
-        gv11CE.M53EF = 6;
+        game.numPlayers = 6;
         await sub050F();
     }
 
@@ -131,7 +131,7 @@ function (me) {
 
     async function ThreePlayers_Click() {
         me.MousePointer = mc001A;
-        gv11CE.M53EF = 3;
+        game.numPlayers = 3;
         await sub050F();
     }
 
@@ -145,7 +145,7 @@ function (me) {
 
     async function TwoPlayers_Click() {
         me.MousePointer = mc001A;
-        gv11CE.M53EF = 2;
+        game.numPlayers = 2;
         await sub050F();
     }
 

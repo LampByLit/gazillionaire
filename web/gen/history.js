@@ -32,7 +32,7 @@ function (me) {
     async function b_Exit_Click() {
         me.MousePointer = mc0022;
         FillElastic.Visible = 0;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         await Unload(me);
@@ -48,14 +48,14 @@ function (me) {
 
     async function b_Help_Click() {
         me.MousePointer = mc0022;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
-        frm_Box1.FillElastic.Caption = "Help (History of " + Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]]) + ")";
-        frm_Box1.b_Message.Caption = "The History of " + Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]]) + " Menu provides a detailed history of this planet. To read about the other planets, you must first travel to those planets.";
+        frm_Box1.FillElastic.Caption = "Help (History of " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + ")";
+        frm_Box1.b_Message.Caption = "The History of " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + " Menu provides a detailed history of this planet. To read about the other planets, you must first travel to those planets.";
         await frm_Box1.Show(1);
     }
 
@@ -69,7 +69,7 @@ function (me) {
 
     function b_Next_Click() {
         me.MousePointer = mc0022;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         m001A = m001A + 1;
@@ -93,7 +93,7 @@ function (me) {
 
     function b_Previous_Click() {
         me.MousePointer = mc0022;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         m001A = m001A - 1;
@@ -160,9 +160,9 @@ function (me) {
     }
 
     function sub3022() {
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "history.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "history.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -180,59 +180,59 @@ function (me) {
             b_Next.ForeColor = mc00AA;
             b_Next.Enabled = -1;
         }
-        if (gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]] == "Vexx") {
+        if (game.planetNames[game.planet[game.currentPlayer]] == "Vexx") {
             m001E = 10;
             b_Page.Caption = "Page " + Format(m001A, "#,#0") + " of " + Format(m001E, "#,#0");
             sub04AB();
-        } else if (gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]] == "Pyke") {
+        } else if (game.planetNames[game.planet[game.currentPlayer]] == "Pyke") {
             m001E = 11;
             b_Page.Caption = "Page " + Format(m001A, "#,#0") + " of " + Format(m001E, "#,#0");
             sub0497();
-        } else if (gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]] == "Mira") {
+        } else if (game.planetNames[game.planet[game.currentPlayer]] == "Mira") {
             m001E = 8;
             b_Page.Caption = "Page " + Format(m001A, "#,#0") + " of " + Format(m001E, "#,#0");
             sub0479();
-        } else if (gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]] == "Stye") {
+        } else if (game.planetNames[game.planet[game.currentPlayer]] == "Stye") {
             m001E = 6;
             b_Page.Caption = "Page " + Format(m001A, "#,#0") + " of " + Format(m001E, "#,#0");
             sub04B5();
-        } else if (gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]] == "Loro") {
+        } else if (game.planetNames[game.planet[game.currentPlayer]] == "Loro") {
             m001E = 5;
             b_Page.Caption = "Page " + Format(m001A, "#,#0") + " of " + Format(m001E, "#,#0");
             sub046F();
-        } else if (gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]] == "Zile") {
+        } else if (game.planetNames[game.planet[game.currentPlayer]] == "Zile") {
             m001E = 8;
             b_Page.Caption = "Page " + Format(m001A, "#,#0") + " of " + Format(m001E, "#,#0");
             sub04BF();
-        } else if (gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]] == "Frac") {
+        } else if (game.planetNames[game.planet[game.currentPlayer]] == "Frac") {
             m001E = 10;
             b_Page.Caption = "Page " + Format(m001A, "#,#0") + " of " + Format(m001E, "#,#0");
             sub045B();
-        } else if (gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]] == "Tilo") {
+        } else if (game.planetNames[game.planet[game.currentPlayer]] == "Tilo") {
             m001E = 5;
             b_Page.Caption = "Page " + Format(m001A, "#,#0") + " of " + Format(m001E, "#,#0");
             sub04C9();
-        } else if (gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]] == "Ooom") {
+        } else if (game.planetNames[game.planet[game.currentPlayer]] == "Ooom") {
             m001E = 5;
             b_Page.Caption = "Page " + Format(m001A, "#,#0") + " of " + Format(m001E, "#,#0");
             sub048D();
-        } else if (gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]] == "Nosh") {
+        } else if (game.planetNames[game.planet[game.currentPlayer]] == "Nosh") {
             m001E = 3;
             b_Page.Caption = "Page " + Format(m001A, "#,#0") + " of " + Format(m001E, "#,#0");
             sub0483();
-        } else if (gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]] == "Queg") {
+        } else if (game.planetNames[game.planet[game.currentPlayer]] == "Queg") {
             m001E = 4;
             b_Page.Caption = "Page " + Format(m001A, "#,#0") + " of " + Format(m001E, "#,#0");
             sub04A1();
-        } else if (gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]] == "Bass") {
+        } else if (game.planetNames[game.planet[game.currentPlayer]] == "Bass") {
             m001E = 3;
             b_Page.Caption = "Page " + Format(m001A, "#,#0") + " of " + Format(m001E, "#,#0");
             sub0451();
-        } else if (gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]] == "Hork") {
+        } else if (game.planetNames[game.planet[game.currentPlayer]] == "Hork") {
             m001E = 3;
             b_Page.Caption = "Page " + Format(m001A, "#,#0") + " of " + Format(m001E, "#,#0");
             sub0465();
-        } else if (gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]] == "Xeen") {
+        } else if (game.planetNames[game.planet[game.currentPlayer]] == "Xeen") {
             m001E = 2;
             b_Page.Caption = "Page " + Format(m001A, "#,#0") + " of " + Format(m001E, "#,#0");
             sub04D3();
@@ -428,9 +428,9 @@ function (me) {
     }
 
     function Form_Load() {
-        Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "history.bmp");
+        Image1.Picture = LoadPicture(Trim(paths.imageDir) + "history.bmp");
         m001A = 1;
-        b_Title.Caption = "The Story of " + Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]]);
+        b_Title.Caption = "The Story of " + Trim(game.planetNames[game.planet[game.currentPlayer]]);
         sub3022();
     }
 

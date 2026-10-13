@@ -22,8 +22,8 @@ function (me) {
 
     async function b_ContinueGame_Click() {
         me.MousePointer = mc001A;
-        if (gv11CE.M5559 == 900000000) {
-            if (gv0060.M4C47 == -1) {
+        if (game.goalNetWorth == 900000000) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box1.FillElastic.Caption = "Game Nearly Over";

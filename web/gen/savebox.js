@@ -21,7 +21,7 @@ function (me) {
 
     async function b_Cancel_Click() {
         me.MousePointer = mc0032;
-        gv11CE.M5334 = CInt(Val(frm_SaveGame.Tag));
+        game.saveSlot = CInt(Val(frm_SaveGame.Tag));
         await Unload(me);
     }
 
@@ -40,7 +40,7 @@ function (me) {
     async function b_SaveGame_Click() {
         me.MousePointer = mc0032;
         await Unload(frm_SaveGame);
-        m001C[gv11CE.M5334] = FixStr(Text1.Text, 20);
+        m001C[game.saveSlot] = FixStr(Text1.Text, 20);
         sub27C6();
         await sub00B0();
         FillElastic.Visible = 0;
@@ -59,7 +59,7 @@ function (me) {
     function sub2792() {
         let l0092 = 0;
         for (l0092 = 1; l0092 <= 5; l0092++) {
-            FileOpen(6, Trim(gv09F0.M4C05) + "GAME" + Trim(Format(l0092, "#,#0")));
+            FileOpen(6, Trim(paths.saveDir) + "GAME" + Trim(Format(l0092, "#,#0")));
             m001C[l0092] = FileGet(6, 1, m001C[l0092]);
             FileClose(6);
         }
@@ -69,7 +69,7 @@ function (me) {
         let l0098 = 0;
         const mc00A2 = 1;
         for (l0098 = 1; l0098 <= 5; l0098++) {
-            FileOpen(5, Trim(gv09F0.M4C05) + "GAME" + Trim(Format(l0098, "#,#0")));
+            FileOpen(5, Trim(paths.saveDir) + "GAME" + Trim(Format(l0098, "#,#0")));
             FilePut(5, 1, m001C[l0098]);
             FileClose(5);
         }
@@ -93,12 +93,12 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = mc0032;
-        FillElastic.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "stars1.bmp");
+        FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "stars1.bmp");
         sub2792();
-        if (Trim(m001C[gv11CE.M5334]) == ".......") {
-            Text1.Text = Trim(gv11CE.M5401[gv11CE.M53E5]);
+        if (Trim(m001C[game.saveSlot]) == ".......") {
+            Text1.Text = Trim(game.companyNames[game.currentPlayer]);
         } else {
-            Text1.Text = m001C[gv11CE.M5334];
+            Text1.Text = m001C[game.saveSlot];
         }
         Text1.SelStart = 0;
         Text1.SelLength = Len(Trim(Text1.Text));

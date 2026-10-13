@@ -85,18 +85,18 @@ function (me) {
     async function b_OK_Click() {
         try {
             me.MousePointer = mc0052;
-            gv0060.M4C30 = FixStr(Left(Combo1.Text, 2), 2);
-            gv09F0.M4BF5 = FixStr(gv0060.M4C30 + "\\lavamind\\gaz2\\graphics\\", 128);
-            gv09F0.M4C15 = FixStr(gv0060.M4C30 + "\\lavamind\\gaz2\\sound\\", 128);
-            b_Test.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "test.bmp");
-            gv0060.M4C47 = CInt(b_Sound.Value);
+            settings.cdDrive = FixStr(Left(Combo1.Text, 2), 2);
+            paths.imageDir = FixStr(settings.cdDrive + "\\lavamind\\gaz2\\graphics\\", 128);
+            paths.soundDir = FixStr(settings.cdDrive + "\\lavamind\\gaz2\\sound\\", 128);
+            b_Test.Picture = LoadPicture(Trim(paths.imageDir) + "test.bmp");
+            settings.soundOn = CInt(b_Sound.Value);
             sub4254();
             await Unload(me);
             return;
         } catch (e) {
             Err.Catch(e);
             m001A = m001A + 1;
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             if (m001A == 1) {
@@ -156,8 +156,8 @@ function (me) {
     }
 
     function sub4254() {
-        FileOpen(7, Trim(gv09F0.M4BE9) + "CONFIG.DAT");
-        FilePut(7, 1, gv0060);
+        FileOpen(7, Trim(paths.configDir) + "CONFIG.DAT");
+        FilePut(7, 1, settings);
         FileClose(7);
     }
 
@@ -168,7 +168,7 @@ function (me) {
     function Form_Load() {
         me.MousePointer = mc0052;
         m001A = 0;
-        Combo1.Text = gv0060.M4C30;
+        Combo1.Text = settings.cdDrive;
         Combo1.AddItem("A:");
         Combo1.AddItem("B:");
         Combo1.AddItem("C:");
@@ -200,7 +200,7 @@ function (me) {
         b_GraphicsText.Caption = "The game is designed to be played at a resolution of 640 by 480 pixels. If your monitor is set to a higher or lower resolution, the game may not function properly.";
         b_supportText.Caption = "If you have any technical problems, please read the Help Menus and Troubleshooting Guide. If this does not solve your problem, you may email our tech support team at support@lavamind.com";
         b_SoundText.Caption = "If you do not have a 16 bit Sound Blaster compatible sound card, you should switch the SOUND OFF.";
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Value = -1;
             b_Sound.Caption = "Sound On";
         } else {

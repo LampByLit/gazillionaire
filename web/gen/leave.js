@@ -79,14 +79,14 @@ function (me) {
 
     async function b_Help_Click() {
         me.MousePointer = mc001A;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
         frm_Box1.FillElastic.Caption = "Help (Leave Planet)";
-        frm_Box1.b_Message.Caption = "You are presently on the planet " + Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]]) + ". To leave this planet, click on the planet you wish to travel to." + "\n" + "\n" + "If you are travelling to a nearby planet and have a fast engine, you will usually beat your competitors to the planet. That is, if you don't run into trouble along the way.";
+        frm_Box1.b_Message.Caption = "You are presently on the planet " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + ". To leave this planet, click on the planet you wish to travel to." + "\n" + "\n" + "If you are travelling to a nearby planet and have a fast engine, you will usually beat your competitors to the planet. That is, if you don't run into trouble along the way.";
         await frm_Box1.Show(1);
     }
 
@@ -100,12 +100,12 @@ function (me) {
 
     async function b_Planet_Click(Index) {
         me.MousePointer = mc001A;
-        if (gv11CE.M53A9[gv11CE.M53E5] == Index) {
-            if (gv0060.M4C47 == -1) {
+        if (game.planet[game.currentPlayer] == Index) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Travel";
-            frm_Box0.b_Message.Caption = "\n" + "You are already on " + gv11CE.M53C1[Index] + ". Try another planet.";
+            frm_Box0.b_Message.Caption = "\n" + "You are already on " + game.planetNames[Index] + ". Try another planet.";
             await frm_Box0.Show(1);
         } else {
             await sub3B58((Index));
@@ -127,19 +127,19 @@ function (me) {
             FillElastic.Visible = 0;
             l00AE = 0;
             for (l00B0 = 0; l00B0 <= 6; l00B0++) {
-                if (gv11CE.M5522 <= 15) {
-                    l00AE = l00AE + gv0BF2.M4ED9[l00B0] * gv11CE.M54DA[l00B0][gv11CE.M5522];
+                if (game.turn <= 15) {
+                    l00AE = l00AE + player.shares[l00B0] * game.stockPrices[l00B0][game.turn];
                 } else {
-                    l00AE = l00AE + gv0BF2.M4ED9[l00B0] * gv11CE.M54DA[l00B0][15];
+                    l00AE = l00AE + player.shares[l00B0] * game.stockPrices[l00B0][15];
                 }
             }
-            if (gv11CE.M5299[gv11CE.M53E5] == 0) {
-                gv11CE.M5384[gv11CE.M53E5] = l00AE + gv0BF2.M4CF9 + gv0BF2.M4E9E - gv0BF2.M4DA3 - gv0BF2.M4FBD;
+            if (game.graphShowCompany[game.currentPlayer] == 0) {
+                game.netWorth[game.currentPlayer] = l00AE + player.cash + player.bankBalance - player.loan - player.zinnLoan;
             } else {
-                gv11CE.M5384[gv11CE.M53E5] = 0;
+                game.netWorth[game.currentPlayer] = 0;
             }
             await sub00A2();
-            if (gv0BF2.M4FBD > gv0BF2.M4FC9 || gv0BF2.M4DA3 > gv0BF2.M4DC7) {
+            if (player.zinnLoan > player.zinnCreditLimit || player.loan > player.creditLimit) {
                 frm_Box1Port.b_Yes.Caption = "Go To Main Menu";
                 frm_Box1Port.b_No.Caption = "Bankrupt Me!";
                 frm_Box1Port.b_Yes.Visible = -1;
@@ -147,23 +147,23 @@ function (me) {
                 frm_Box1Port.b_OK.Visible = 0;
                 frm_Box1Port.b_Container.BackColor = mc00C2;
                 frm_Box1Port.b_Message.ForeColor = m00C6;
-                if (gv0BF2.M4FBD > gv0BF2.M4FC9) {
-                    frm_Box1Port.b_Message.Caption = "If you leave the planet now you will go bankrupt and lose the game! You cannot owe more than " + Format(gv0BF2.M4FC9, "#,#0") + " kubars to Mr. Zinn." + "\n" + "\n" + "Do you want to return to the Main Menu and try to straighten out your finances?" + "\n" + "\n" + "If you click on BANKRUPT ME, you will leave the planet and lose the game. If you click on GO TO MAIN MENU, you will return to the Main Menu.";
-                    frm_Box1Port.Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "ZINN.BMP");
+                if (player.zinnLoan > player.zinnCreditLimit) {
+                    frm_Box1Port.b_Message.Caption = "If you leave the planet now you will go bankrupt and lose the game! You cannot owe more than " + Format(player.zinnCreditLimit, "#,#0") + " kubars to Mr. Zinn." + "\n" + "\n" + "Do you want to return to the Main Menu and try to straighten out your finances?" + "\n" + "\n" + "If you click on BANKRUPT ME, you will leave the planet and lose the game. If you click on GO TO MAIN MENU, you will return to the Main Menu.";
+                    frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ZINN.BMP");
                     frm_Box1Port.b_ImageLable.Caption = "Mr. Zinn";
-                    if (gv0060.M4C47 == -1) {
+                    if (settings.soundOn == -1) {
                         b_Sound.Command = "Close";
-                        b_Sound.FileName = Trim(gv09F0.M4C15) + "zinn.wav";
+                        b_Sound.FileName = Trim(paths.soundDir) + "zinn.wav";
                         b_Sound.Command = "Open";
                         b_Sound.Command = "Play";
                     }
                 } else {
-                    frm_Box1Port.b_Message.Caption = "If you leave the planet now you will go bankrupt and lose the game! You cannot owe more than " + Format(gv0BF2.M4DC7, "#,#0") + " kubars to the Trader's Union." + "\n" + "\n" + "Do you want to return to the Main Menu and try to straighten out your finances?" + "\n" + "\n" + "If you click on BANKRUPT ME, you will leave the planet and lose the game. If you click on GO TO MAIN MENU, you will return to the Main Menu.";
-                    frm_Box1Port.Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "loan1.bmp");
+                    frm_Box1Port.b_Message.Caption = "If you leave the planet now you will go bankrupt and lose the game! You cannot owe more than " + Format(player.creditLimit, "#,#0") + " kubars to the Trader's Union." + "\n" + "\n" + "Do you want to return to the Main Menu and try to straighten out your finances?" + "\n" + "\n" + "If you click on BANKRUPT ME, you will leave the planet and lose the game. If you click on GO TO MAIN MENU, you will return to the Main Menu.";
+                    frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "loan1.bmp");
                     frm_Box1Port.b_ImageLable.Caption = "Trader's Union Official";
-                    if (gv0060.M4C47 == -1) {
+                    if (settings.soundOn == -1) {
                         frm_Box1Port.b_Sound.Command = "Close";
-                        frm_Box1Port.b_Sound.FileName = Trim(gv09F0.M4C15) + "loan.wav";
+                        frm_Box1Port.b_Sound.FileName = Trim(paths.soundDir) + "loan.wav";
                         frm_Box1Port.b_Sound.Command = "Open";
                         frm_Box1Port.b_Sound.Command = "Play";
                     }
@@ -176,11 +176,11 @@ function (me) {
                 } else {
                     await Unload(frm_Box1Port);
                     for (l00B0 = 0; l00B0 <= 6; l00B0++) {
-                        gv11CE.M5452[gv11CE.M53E5][l00B0] = 0;
-                        gv11CE.M5464[gv11CE.M53E5][l00B0] = 0;
-                        gv11CE.M5479[gv11CE.M53E5][l00B0] = 0;
+                        game.facilitiesOwned[game.currentPlayer][l00B0] = 0;
+                        game.facilityFees[game.currentPlayer][l00B0] = 0;
+                        game.facilityRevenue[game.currentPlayer][l00B0] = 0;
                     }
-                    if (gv0060.M4C47 == -1) {
+                    if (settings.soundOn == -1) {
                         b_Sound.Command = "Close";
                     }
                     await frm_Bankrupt1.Show();
@@ -192,15 +192,15 @@ function (me) {
                 await frm_MainMenu.Show();
                 await Unload(me);
             } else {
-                if (gv0BF2.M4DF0 == -1) {
-                    gv0BF2.M4E9E = gv0BF2.M4E9E + gv0BF2.M4CF9;
-                    gv0BF2.M4CF9 = 0;
+                if (player.quickDeposit == -1) {
+                    player.bankBalance = player.bankBalance + player.cash;
+                    player.cash = 0;
                 }
-                if (gv0BF2.M4E48 == 0) {
+                if (player.quickTravel == 0) {
                     me.MousePointer = mc001A;
-                    gv11CE.M53B3[gv11CE.M53E5] = gv11CE.M53A9[gv11CE.M53E5];
-                    gv11CE.M53A9[gv11CE.M53E5] = pv00AC;
-                    if (gv11CE.M513F == 1 || gv11CE.M513F == 2) {
+                    game.previousPlanet[game.currentPlayer] = game.planet[game.currentPlayer];
+                    game.planet[game.currentPlayer] = pv00AC;
+                    if (game.auctionType == 1 || game.auctionType == 2) {
                         frm_Auction.Tag = "TRAVEL0";
                         await frm_Auction.Show();
                     } else {
@@ -209,10 +209,10 @@ function (me) {
                     await Unload(me);
                 } else {
                     me.MousePointer = mc001A;
-                    gv11CE.M53B3[gv11CE.M53E5] = gv11CE.M53A9[gv11CE.M53E5];
-                    gv11CE.M53A9[gv11CE.M53E5] = pv00AC;
+                    game.previousPlanet[game.currentPlayer] = game.planet[game.currentPlayer];
+                    game.planet[game.currentPlayer] = pv00AC;
                     await Load(frm_Travel1);
-                    if (gv11CE.M513F == 1 || gv11CE.M513F == 2) {
+                    if (game.auctionType == 1 || game.auctionType == 2) {
                         frm_Auction.Tag = "TRAVEL1";
                         await frm_Auction.Show();
                     } else {
@@ -247,21 +247,21 @@ function (me) {
         let l00DE = 0;
         const mc00E6 = 255;
         me.MousePointer = mc001A;
-        FillElastic.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "STARS2.BMP");
+        FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "STARS2.BMP");
         for (l00DE = 0; l00DE <= 6; l00DE++) {
-            b_Planet[l00DE].Picture = LoadPicture(Trim(gv09F0.M4BF5) + gv11CE.M53C1[l00DE] + "1.bmp");
-            b_Planet[l00DE].Caption = gv11CE.M53C1[l00DE];
+            b_Planet[l00DE].Picture = LoadPicture(Trim(paths.imageDir) + game.planetNames[l00DE] + "1.bmp");
+            b_Planet[l00DE].Caption = game.planetNames[l00DE];
         }
-        if (gv11CE.M552A == -1 && gv11CE.M4FFC < gv11CE.M510F) {
+        if (game.tutorialMode == -1 && game.complexity < game.unlockFacilities) {
             b_Facility.Visible = 0;
         }
-        if (gv11CE.M552A == -1 && gv11CE.M4FFC < gv11CE.M50FB) {
+        if (game.tutorialMode == -1 && game.complexity < game.unlockDistanceChart) {
             b_DistanceChart.Visible = 0;
         }
-        if (gv0BF2.M4EE2 >= 0 && gv0BF2.M4EE2 <= 6) {
-            b_Planet[gv0BF2.M4EE2].ForeColor = mc00C2;
+        if (player.supplyChartPlanet >= 0 && player.supplyChartPlanet <= 6) {
+            b_Planet[player.supplyChartPlanet].ForeColor = mc00C2;
         }
-        b_Planet[gv11CE.M53A9[gv11CE.M53E5]].ForeColor = mc00E6;
+        b_Planet[game.planet[game.currentPlayer]].ForeColor = mc00E6;
     }
 
     function Label1_Click() {

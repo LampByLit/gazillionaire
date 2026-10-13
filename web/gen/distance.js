@@ -49,9 +49,9 @@ function (me) {
 
     async function b_Help_Click() {
         me.MousePointer = mc0022;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -97,9 +97,9 @@ function (me) {
         let l0098 = 0;
         let l009A = 0;
         let l009C = 0;
-        if (b_Sound.Tag == "First Sound = True" && gv0060.M4C47 == -1) {
+        if (b_Sound.Tag == "First Sound = True" && settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "ping2.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "ping2.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -107,15 +107,15 @@ function (me) {
         if (m001A == 7) {
             b_Message.Caption = "Click on the above planet icons to determine the DISTANCE to that planet.";
         } else {
-            b_Message.Caption = "The distance between the CURRENT PLANET and " + UCase(Trim(gv11CE.M53C1[m001A])) + ".";
+            b_Message.Caption = "The distance between the CURRENT PLANET and " + UCase(Trim(game.planetNames[m001A])) + ".";
         }
         l009A = 0;
-        for (l0094 = 1; l0094 <= gv11CE.M53EF; l0094++) {
-            if (gv11CE.M5299[l0094] == 0) {
+        for (l0094 = 1; l0094 <= game.numPlayers; l0094++) {
+            if (game.graphShowCompany[l0094] == 0) {
                 l009A = l009A + 1;
             }
         }
-        m001E = l009A + gv11CE.M5390;
+        m001E = l009A + game.numRivals;
         b_Grid.Cols = 4;
         b_Grid.Rows = m001E + 1;
         for (l0094 = 0; l0094 <= 3; l0094++) {
@@ -133,35 +133,35 @@ function (me) {
                 if (m001A == 7) {
                     b_Grid.Text = "Distance to -----";
                 } else {
-                    b_Grid.Text = "Distance to " + Trim(gv11CE.M53C1[m001A]);
+                    b_Grid.Text = "Distance to " + Trim(game.planetNames[m001A]);
                 }
             }
         }
         for (l0094 = 0; l0094 <= 3; l0094++) {
             b_Grid.Col = l0094;
             l009A = 0;
-            for (l0096 = 1; l0096 <= gv11CE.M53EF; l0096++) {
-                if (gv11CE.M5299[l0096] == 0) {
+            for (l0096 = 1; l0096 <= game.numPlayers; l0096++) {
+                if (game.graphShowCompany[l0096] == 0) {
                     l009A = l009A + 1;
                     b_Grid.Row = l009A;
                     if (l0094 == 0) {
-                        b_Grid.Text = Trim(gv11CE.M5401[l0096]);
+                        b_Grid.Text = Trim(game.companyNames[l0096]);
                     } else if (l0094 == 1) {
-                        if (gv11CE.M5515[l0096] == 0) {
-                            b_Grid.Text = Trim(gv11CE.M53C1[gv11CE.M53A9[l0096]]);
+                        if (game.turnDone[l0096] == 0) {
+                            b_Grid.Text = Trim(game.planetNames[game.planet[l0096]]);
                         } else {
-                            b_Grid.Text = Trim(gv11CE.M53C1[gv11CE.M53B3[l0096]]);
+                            b_Grid.Text = Trim(game.planetNames[game.previousPlanet[l0096]]);
                         }
                     } else if (l0094 == 2) {
-                        b_Grid.Text = Format(gv11CE.M530C[l0096], "#,#0") + " kuarps";
+                        b_Grid.Text = Format(game.engineSpeed[l0096], "#,#0") + " kuarps";
                     } else if (l0094 == 3) {
                         if (m001A == 7) {
                             b_Grid.Text = "-----";
                         } else {
-                            if (gv11CE.M5515[l0096] == 0) {
-                                l009C = CLng(Sqr(((gv11CE.M53CF[gv11CE.M53A9[l0096]] - gv11CE.M53CF[m001A])) ** (2) + ((gv11CE.M53DA[gv11CE.M53A9[l0096]] - gv11CE.M53DA[m001A])) ** (2)));
+                            if (game.turnDone[l0096] == 0) {
+                                l009C = CLng(Sqr(((game.planetX[game.planet[l0096]] - game.planetX[m001A])) ** (2) + ((game.planetY[game.planet[l0096]] - game.planetY[m001A])) ** (2)));
                             } else {
-                                l009C = CLng(Sqr(((gv11CE.M53CF[gv11CE.M53B3[l0096]] - gv11CE.M53CF[m001A])) ** (2) + ((gv11CE.M53DA[gv11CE.M53B3[l0096]] - gv11CE.M53DA[m001A])) ** (2)));
+                                l009C = CLng(Sqr(((game.planetX[game.previousPlanet[l0096]] - game.planetX[m001A])) ** (2) + ((game.planetY[game.previousPlanet[l0096]] - game.planetY[m001A])) ** (2)));
                             }
                             if (l009C == 0) {
                                 b_Grid.Text = "-----";
@@ -172,20 +172,20 @@ function (me) {
                     }
                 }
             }
-            for (l0098 = 1; l0098 <= gv11CE.M5390; l0098++) {
+            for (l0098 = 1; l0098 <= game.numRivals; l0098++) {
                 l009A = l009A + 1;
                 b_Grid.Row = l009A;
                 if (l0094 == 0) {
-                    b_Grid.Text = Trim(gv1EB2.M5579[l0098]);
+                    b_Grid.Text = Trim(rivals.companyNames[l0098]);
                 } else if (l0094 == 1) {
-                    b_Grid.Text = Trim(gv11CE.M53C1[gv1EB2.M53A9[l0098]]);
+                    b_Grid.Text = Trim(game.planetNames[rivals.planet[l0098]]);
                 } else if (l0094 == 2) {
-                    b_Grid.Text = Format(gv1EB2.M530C[l0098], "#,#0") + " kuarps";
+                    b_Grid.Text = Format(rivals.engineSpeed[l0098], "#,#0") + " kuarps";
                 } else if (l0094 == 3) {
                     if (m001A == 7) {
                         b_Grid.Text = "-----";
                     } else {
-                        l009C = CLng(Sqr(((gv11CE.M53CF[gv1EB2.M53A9[l0098]] - gv11CE.M53CF[m001A])) ** (2) + ((gv11CE.M53DA[gv1EB2.M53A9[l0098]] - gv11CE.M53DA[m001A])) ** (2)));
+                        l009C = CLng(Sqr(((game.planetX[rivals.planet[l0098]] - game.planetX[m001A])) ** (2) + ((game.planetY[rivals.planet[l0098]] - game.planetY[m001A])) ** (2)));
                         if (l009C == 0) {
                             b_Grid.Text = "-----";
                         } else {
@@ -208,7 +208,7 @@ function (me) {
         l00B6 = Screen.Width * 0.99;
         b_Grid.ColWidth[0] = l00B6 / 3.3;
         for (l00BA = 0; l00BA <= m001E; l00BA++) {
-            b_Grid.RowHeight[l00BA] = l00B2 / (gv11CE.M53EF + gv11CE.M5390 + 1);
+            b_Grid.RowHeight[l00BA] = l00B2 / (game.numPlayers + game.numRivals + 1);
         }
         for (l00BA = 1; l00BA <= 3; l00BA++) {
             b_Grid.ColWidth[l00BA] = (l00B6 - (l00B6 / 3.3)) / 3;
@@ -231,8 +231,8 @@ function (me) {
         b_Sound.Tag = "First Sound = False";
         m001A = 7;
         for (l00C2 = 0; l00C2 <= 6; l00C2++) {
-            b_Planet[l00C2].Picture = LoadPicture(Trim(gv09F0.M4BF5) + gv11CE.M53C1[l00C2] + "1.bmp");
-            b_Planet[l00C2].Caption = gv11CE.M53C1[l00C2];
+            b_Planet[l00C2].Picture = LoadPicture(Trim(paths.imageDir) + game.planetNames[l00C2] + "1.bmp");
+            b_Planet[l00C2].Caption = game.planetNames[l00C2];
         }
         sub348F();
         sub34AD();

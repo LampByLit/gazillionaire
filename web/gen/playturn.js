@@ -33,20 +33,20 @@ function (me) {
 
     async function b_BeginTurn_Click() {
         me.MousePointer = mc001E;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         FillElastic.Visible = 0;
-        gv11CE.M54CD = -1;
+        game.canBuyStock = -1;
         await sub2CFF();
         await sub2D0F();
-        if (gv11CE.M514A == 1 || gv11CE.M514A == -1) {
+        if (game.lastAuctionType == 1 || game.lastAuctionType == -1) {
             await sub2B75();
         }
-        if (gv11CE.M514A == 2 || gv11CE.M514A == -2) {
+        if (game.lastAuctionType == 2 || game.lastAuctionType == -2) {
             await sub2B86();
         }
-        if (gv11CE.M554F != 0) {
+        if (game.winner != 0) {
             await frm_WinGame.Show();
             await Unload(me);
         } else {
@@ -66,7 +66,7 @@ function (me) {
 
     async function b_NewGame_Click() {
         me.MousePointer = mc001E;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         FillElastic.Visible = 0;
@@ -99,51 +99,51 @@ function (me) {
     async function b_Ranking_Click() {
         let l0094 = "";
         me.MousePointer = mc001E;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
-        if (gv11CE.M5359 == 1) {
+        if (game.skillLevel == 1) {
             l0094 = "Tutorial";
-        } else if (gv11CE.M5359 == 2) {
+        } else if (game.skillLevel == 2) {
             l0094 = "Novice";
-        } else if (gv11CE.M5359 == 3) {
+        } else if (game.skillLevel == 3) {
             l0094 = "Beginner";
-        } else if (gv11CE.M5359 == 4) {
+        } else if (game.skillLevel == 4) {
             l0094 = "Intermediate";
-        } else if (gv11CE.M5359 == 5) {
+        } else if (game.skillLevel == 5) {
             l0094 = "Expert";
-        } else if (gv11CE.M5359 == 6) {
+        } else if (game.skillLevel == 6) {
             l0094 = "Master";
         }
-        if (gv11CE.M554F == 0) {
+        if (game.winner == 0) {
             frm_Box2.FillElastic.Caption = "Company Ranking";
             frm_Box2.b_Message.FontSize = 10.5;
-            frm_Box2.b_Message.Caption = "COMPANY RANKING:" + "\n" + "\n" + "The companies are ranked according to their wealth. The first company to reach " + Format(gv11CE.M5559, "#,#0") + " kubars wins the game!" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l0094;
+            frm_Box2.b_Message.Caption = "COMPANY RANKING:" + "\n" + "\n" + "The companies are ranked according to their wealth. The first company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars wins the game!" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l0094;
             await frm_Box2.Show(1);
         } else {
-            if (gv11CE.M5559 == 1000000000) {
-                if (gv11CE.M554F <= 6) {
+            if (game.goalNetWorth == 1000000000) {
+                if (game.winner <= 6) {
                     frm_Box2.FillElastic.Caption = "Company Ranking";
-                    frm_Box2.b_Message.Caption = Trim(gv11CE.M5401[gv11CE.M554F]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(gv11CE.M5559, "#,#0") + " kubars!!! This means the game is now officially over." + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l0094;
+                    frm_Box2.b_Message.Caption = Trim(game.companyNames[game.winner]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!! This means the game is now officially over." + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l0094;
                     await frm_Box2.Show(1);
                 } else {
                     frm_Box2.FillElastic.Caption = "Company Ranking";
-                    frm_Box2.b_Message.Caption = Trim(gv1EB2.M5579[gv11CE.M554F - 6]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(gv11CE.M5559, "#,#0") + " kubars!!! This means the game is now officially over." + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l0094;
+                    frm_Box2.b_Message.Caption = Trim(rivals.companyNames[game.winner - 6]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!! This means the game is now officially over." + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l0094;
                     await frm_Box2.Show(1);
                 }
-            } else if (gv11CE.M554F <= 6) {
-                if (gv11CE.M554F == gv11CE.M53E5) {
+            } else if (game.winner <= 6) {
+                if (game.winner == game.currentPlayer) {
                     frm_Box2.FillElastic.Caption = "Company Ranking";
-                    frm_Box2.b_Message.Caption = "You won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(gv11CE.M5559, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l0094;
+                    frm_Box2.b_Message.Caption = "You won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l0094;
                     await frm_Box2.Show(1);
                 } else {
                     frm_Box2.FillElastic.Caption = "Company Ranking";
-                    frm_Box2.b_Message.Caption = Trim(gv11CE.M5401[gv11CE.M554F]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(gv11CE.M5559, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l0094;
+                    frm_Box2.b_Message.Caption = Trim(game.companyNames[game.winner]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l0094;
                     await frm_Box2.Show(1);
                 }
             } else {
                 frm_Box2.FillElastic.Caption = "Company Ranking";
-                frm_Box2.b_Message.Caption = Trim(gv1EB2.M5579[gv11CE.M554F - 6]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(gv11CE.M5559, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l0094;
+                frm_Box2.b_Message.Caption = Trim(rivals.companyNames[game.winner - 6]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l0094;
                 await frm_Box2.Show(1);
             }
         }
@@ -159,7 +159,7 @@ function (me) {
 
     async function b_SaveGame_Click() {
         me.MousePointer = mc001E;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         FillElastic.Visible = 0;
@@ -179,57 +179,57 @@ function (me) {
     async function sub2B86() {
         let l00CE = "";
         let l00D0 = "";
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
-        if (gv11CE.M514A == 2) {
-            if (gv11CE.M51D5 > 0) {
-                if (gv11CE.M5181 <= 6) {
-                    l00CE = Trim(gv11CE.M5401[gv11CE.M5181]);
-                    if (gv11CE.M5197 <= 6) {
-                        l00D0 = Trim(gv11CE.M5401[gv11CE.M5197]);
+        if (game.lastAuctionType == 2) {
+            if (game.lastAuctionTopBid > 0) {
+                if (game.lastAuctionWinner <= 6) {
+                    l00CE = Trim(game.companyNames[game.lastAuctionWinner]);
+                    if (game.lastAuctionRunnerUp <= 6) {
+                        l00D0 = Trim(game.companyNames[game.lastAuctionRunnerUp]);
                     } else {
-                        l00D0 = Trim(gv1EB2.M5579[gv11CE.M5197 - 6]);
+                        l00D0 = Trim(rivals.companyNames[game.lastAuctionRunnerUp - 6]);
                     }
                 } else {
-                    l00CE = Trim(gv1EB2.M5579[gv11CE.M5181 - 6]);
-                    if (gv11CE.M5197 <= 6) {
-                        l00D0 = Trim(gv11CE.M5401[gv11CE.M5197]);
+                    l00CE = Trim(rivals.companyNames[game.lastAuctionWinner - 6]);
+                    if (game.lastAuctionRunnerUp <= 6) {
+                        l00D0 = Trim(game.companyNames[game.lastAuctionRunnerUp]);
                     } else {
-                        l00D0 = Trim(gv1EB2.M5579[gv11CE.M5197 - 6]);
+                        l00D0 = Trim(rivals.companyNames[game.lastAuctionRunnerUp - 6]);
                     }
                 }
                 frm_Box1Rect.b_Yes.Visible = 0;
                 frm_Box1Rect.b_No.Visible = 0;
                 frm_Box1Rect.b_OK.Visible = -1;
                 frm_Box1Rect.b_Container.BackColor = 0x4000;
-                if (gv11CE.M5181 <= 6) {
-                    frm_Box1Rect.Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "ship" + Trim(Str(gv11CE.M541E[gv11CE.M5181])) + ".bmp");
+                if (game.lastAuctionWinner <= 6) {
+                    frm_Box1Rect.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ship" + Trim(Str(game.shipType[game.lastAuctionWinner])) + ".bmp");
                 } else {
-                    frm_Box1Rect.Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "op" + Trim(Str((gv11CE.M5181 - 6))) + ".bmp");
+                    frm_Box1Rect.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "op" + Trim(Str((game.lastAuctionWinner - 6))) + ".bmp");
                 }
                 frm_Box1Rect.b_ImageLable.Caption = l00CE + " won the auction!";
-                frm_Box1Rect.b_Message.Caption = l00CE + " bid highest, purchasing the " + fn2D8D(gv11CE.M5247) + " on " + gv11CE.M53C1[gv11CE.M5262] + " for " + Format(gv11CE.M51D5, "#,#0") + " kubars. The next highest was " + l00D0 + " with a bid of " + Format(gv11CE.M51EB, "#,#0") + " kubars.";
-                if (gv0060.M4C47 == -1 && gv11CE.M5181 <= 6) {
+                frm_Box1Rect.b_Message.Caption = l00CE + " bid highest, purchasing the " + fn2D8D(game.lastAuctionFacility) + " on " + game.planetNames[game.lastAuctionPlanet] + " for " + Format(game.lastAuctionTopBid, "#,#0") + " kubars. The next highest was " + l00D0 + " with a bid of " + Format(game.lastAuctionSecondBid, "#,#0") + " kubars.";
+                if (settings.soundOn == -1 && game.lastAuctionWinner <= 6) {
                     b_Sound.Command = "Close";
                     frm_Box1Rect.b_Sound.Command = "Close";
-                    if (gv11CE.M541E[gv11CE.M5181] <= 6) {
-                        frm_Box1Rect.b_Sound.FileName = Trim(gv09F0.M4C15) + "ship" + Trim(Str(gv11CE.M541E[gv11CE.M5181])) + ".wav";
+                    if (game.shipType[game.lastAuctionWinner] <= 6) {
+                        frm_Box1Rect.b_Sound.FileName = Trim(paths.soundDir) + "ship" + Trim(Str(game.shipType[game.lastAuctionWinner])) + ".wav";
                     } else {
-                        frm_Box1Rect.b_Sound.FileName = Trim(gv09F0.M4C15) + "ship" + Trim(Str(gv11CE.M541E[gv11CE.M5181] - 6)) + ".wav";
+                        frm_Box1Rect.b_Sound.FileName = Trim(paths.soundDir) + "ship" + Trim(Str(game.shipType[game.lastAuctionWinner] - 6)) + ".wav";
                     }
                     frm_Box1Rect.b_Sound.Command = "Open";
                     frm_Box1Rect.b_Sound.Command = "Play";
-                } else if (gv0060.M4C47 == -1) {
+                } else if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
                     frm_Box1Rect.b_Sound.Command = "Close";
-                    frm_Box1Rect.b_Sound.FileName = Trim(gv09F0.M4C15) + "op" + Trim(Str(gv11CE.M5181 - 6)) + ".wav";
+                    frm_Box1Rect.b_Sound.FileName = Trim(paths.soundDir) + "op" + Trim(Str(game.lastAuctionWinner - 6)) + ".wav";
                     frm_Box1Rect.b_Sound.Command = "Open";
                     frm_Box1Rect.b_Sound.Command = "Play";
                 }
                 await frm_Box1Rect.Show(1);
-                if (gv11CE.M53E5 == gv11CE.M5181) {
-                    await sub015C(gv11CE.M51D5, -1);
+                if (game.currentPlayer == game.lastAuctionWinner) {
+                    await sub015C(game.lastAuctionTopBid, -1);
                 }
             } else {
                 await Load(frm_Box1Port);
@@ -237,30 +237,30 @@ function (me) {
                 frm_Box1Port.b_No.Visible = 0;
                 frm_Box1Port.b_OK.Visible = -1;
                 frm_Box1Port.b_Container.BackColor = 0x4000;
-                frm_Box1Port.Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "DRED.BMP");
+                frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "DRED.BMP");
                 frm_Box1Port.b_ImageLable.Caption = "Emperor Dred Nicolson";
                 frm_Box1Port.b_Message.Caption = "Because none of the companies placed a bid for the facility, Emperor Dred Nicolson has canceled this auction.";
-                if (gv0060.M4C47 == -1) {
+                if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
                     frm_Box1Port.b_Sound.Command = "Close";
-                    frm_Box1Port.b_Sound.FileName = Trim(gv09F0.M4C15) + "auction.wav";
+                    frm_Box1Port.b_Sound.FileName = Trim(paths.soundDir) + "auction.wav";
                     frm_Box1Port.b_Sound.Command = "Open";
                     frm_Box1Port.b_Sound.Command = "Play";
                 }
                 await frm_Box1Port.Show(1);
             }
-        } else if (gv11CE.M514A == -2) {
+        } else if (game.lastAuctionType == -2) {
             frm_Box1Port.b_Yes.Visible = 0;
             frm_Box1Port.b_No.Visible = 0;
             frm_Box1Port.b_OK.Visible = -1;
             frm_Box1Port.b_Container.BackColor = 0x4000;
-            frm_Box1Port.Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "DRED.BMP");
+            frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "DRED.BMP");
             frm_Box1Port.b_ImageLable.Caption = "Emperor Dred Nicolson";
             frm_Box1Port.b_Message.Caption = "Because more than one company made exactly the same highest bid, all the companies must bid again for the facility. Another auction will be held at the end of this week.";
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
                 frm_Box1Port.b_Sound.Command = "Close";
-                frm_Box1Port.b_Sound.FileName = Trim(gv09F0.M4C15) + "auction.wav";
+                frm_Box1Port.b_Sound.FileName = Trim(paths.soundDir) + "auction.wav";
                 frm_Box1Port.b_Sound.Command = "Open";
                 frm_Box1Port.b_Sound.Command = "Play";
             }
@@ -271,56 +271,56 @@ function (me) {
     async function sub2B75() {
         let l00DE = "";
         let l00E0 = "";
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
-        if (gv11CE.M514A == 1) {
-            if (gv11CE.M51D5 > 0) {
-                if (gv11CE.M5181 <= 6) {
-                    l00DE = Trim(gv11CE.M5401[gv11CE.M5181]);
-                    if (gv11CE.M5197 <= 6) {
-                        l00E0 = Trim(gv11CE.M5401[gv11CE.M5197]);
+        if (game.lastAuctionType == 1) {
+            if (game.lastAuctionTopBid > 0) {
+                if (game.lastAuctionWinner <= 6) {
+                    l00DE = Trim(game.companyNames[game.lastAuctionWinner]);
+                    if (game.lastAuctionRunnerUp <= 6) {
+                        l00E0 = Trim(game.companyNames[game.lastAuctionRunnerUp]);
                     } else {
-                        l00E0 = Trim(gv1EB2.M5579[gv11CE.M5197 - 6]);
+                        l00E0 = Trim(rivals.companyNames[game.lastAuctionRunnerUp - 6]);
                     }
                 } else {
-                    l00DE = Trim(gv1EB2.M5579[gv11CE.M5181 - 6]);
-                    if (gv11CE.M5197 <= 6) {
-                        l00E0 = Trim(gv11CE.M5401[gv11CE.M5197]);
+                    l00DE = Trim(rivals.companyNames[game.lastAuctionWinner - 6]);
+                    if (game.lastAuctionRunnerUp <= 6) {
+                        l00E0 = Trim(game.companyNames[game.lastAuctionRunnerUp]);
                     } else {
-                        l00E0 = Trim(gv1EB2.M5579[gv11CE.M5197 - 6]);
+                        l00E0 = Trim(rivals.companyNames[game.lastAuctionRunnerUp - 6]);
                     }
                 }
                 frm_Box1Rect.b_Yes.Visible = 0;
                 frm_Box1Rect.b_No.Visible = 0;
                 frm_Box1Rect.b_OK.Visible = -1;
                 frm_Box1Rect.b_Container.BackColor = 0x4000;
-                if (gv11CE.M5181 <= 6) {
-                    frm_Box1Rect.Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "ship" + Trim(Str(gv11CE.M541E[gv11CE.M5181])) + ".bmp");
+                if (game.lastAuctionWinner <= 6) {
+                    frm_Box1Rect.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ship" + Trim(Str(game.shipType[game.lastAuctionWinner])) + ".bmp");
                 } else {
-                    frm_Box1Rect.Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "op" + Trim(Str((gv11CE.M5181 - 6))) + ".bmp");
+                    frm_Box1Rect.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "op" + Trim(Str((game.lastAuctionWinner - 6))) + ".bmp");
                 }
                 frm_Box1Rect.b_ImageLable.Caption = l00DE + " won the auction!";
-                frm_Box1Rect.b_Message.Caption = l00DE + " bid highest, purchasing a new, larger ship for " + Format(gv11CE.M51D5, "#,#0") + " kubars. The next highest was " + l00E0 + " with a bid of " + Format(gv11CE.M51EB, "#,#0") + " kubars.";
-                if (gv0060.M4C47 == -1 && gv11CE.M5181 <= 6) {
+                frm_Box1Rect.b_Message.Caption = l00DE + " bid highest, purchasing a new, larger ship for " + Format(game.lastAuctionTopBid, "#,#0") + " kubars. The next highest was " + l00E0 + " with a bid of " + Format(game.lastAuctionSecondBid, "#,#0") + " kubars.";
+                if (settings.soundOn == -1 && game.lastAuctionWinner <= 6) {
                     frm_Box1Rect.b_Sound.Command = "Close";
-                    if (gv11CE.M541E[gv11CE.M5181] <= 6) {
-                        frm_Box1Rect.b_Sound.FileName = Trim(gv09F0.M4C15) + "ship" + Trim(Str(gv11CE.M541E[gv11CE.M5181])) + ".wav";
+                    if (game.shipType[game.lastAuctionWinner] <= 6) {
+                        frm_Box1Rect.b_Sound.FileName = Trim(paths.soundDir) + "ship" + Trim(Str(game.shipType[game.lastAuctionWinner])) + ".wav";
                     } else {
-                        frm_Box1Rect.b_Sound.FileName = Trim(gv09F0.M4C15) + "ship" + Trim(Str(gv11CE.M541E[gv11CE.M5181] - 6)) + ".wav";
+                        frm_Box1Rect.b_Sound.FileName = Trim(paths.soundDir) + "ship" + Trim(Str(game.shipType[game.lastAuctionWinner] - 6)) + ".wav";
                     }
                     frm_Box1Rect.b_Sound.Command = "Open";
                     frm_Box1Rect.b_Sound.Command = "Play";
-                } else if (gv0060.M4C47 == -1) {
+                } else if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
                     frm_Box1Rect.b_Sound.Command = "Close";
-                    frm_Box1Rect.b_Sound.FileName = Trim(gv09F0.M4C15) + "op" + Trim(Str(gv11CE.M5181 - 6)) + ".wav";
+                    frm_Box1Rect.b_Sound.FileName = Trim(paths.soundDir) + "op" + Trim(Str(game.lastAuctionWinner - 6)) + ".wav";
                     frm_Box1Rect.b_Sound.Command = "Open";
                     frm_Box1Rect.b_Sound.Command = "Play";
                 }
                 await frm_Box1Rect.Show(1);
-                if (gv11CE.M53E5 == gv11CE.M5181) {
-                    await sub015C(gv11CE.M51D5, -1);
+                if (game.currentPlayer == game.lastAuctionWinner) {
+                    await sub015C(game.lastAuctionTopBid, -1);
                 }
             } else {
                 await Load(frm_Box1Port);
@@ -328,30 +328,30 @@ function (me) {
                 frm_Box1Port.b_No.Visible = 0;
                 frm_Box1Port.b_OK.Visible = -1;
                 frm_Box1Port.b_Container.BackColor = 0x4000;
-                frm_Box1Port.Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "DRED.BMP");
+                frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "DRED.BMP");
                 frm_Box1Port.b_ImageLable.Caption = "Emperor Dred Nicolson";
                 frm_Box1Port.b_Message.Caption = "Because none of the companies placed a bid for the ship, Emperor Dred Nicolson has canceled this auction.";
-                if (gv0060.M4C47 == -1) {
+                if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
                     frm_Box1Port.b_Sound.Command = "Close";
-                    frm_Box1Port.b_Sound.FileName = Trim(gv09F0.M4C15) + "auction.wav";
+                    frm_Box1Port.b_Sound.FileName = Trim(paths.soundDir) + "auction.wav";
                     frm_Box1Port.b_Sound.Command = "Open";
                     frm_Box1Port.b_Sound.Command = "Play";
                 }
                 await frm_Box1Port.Show(1);
             }
-        } else if (gv11CE.M514A == -1) {
+        } else if (game.lastAuctionType == -1) {
             frm_Box1Port.b_Yes.Visible = 0;
             frm_Box1Port.b_No.Visible = 0;
             frm_Box1Port.b_OK.Visible = -1;
             frm_Box1Port.b_Container.BackColor = 0x4000;
-            frm_Box1Port.Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "DRED.BMP");
+            frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "DRED.BMP");
             frm_Box1Port.b_ImageLable.Caption = "Emperor Dred Nicolson";
             frm_Box1Port.b_Message.Caption = "Because more than one company made exactly the same highest bid, all the companies must bid again for the ship. Another auction will be held at the end of this week.";
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
                 frm_Box1Port.b_Sound.Command = "Close";
-                frm_Box1Port.b_Sound.FileName = Trim(gv09F0.M4C15) + "auction.wav";
+                frm_Box1Port.b_Sound.FileName = Trim(paths.soundDir) + "auction.wav";
                 frm_Box1Port.b_Sound.Command = "Open";
                 frm_Box1Port.b_Sound.Command = "Play";
             }
@@ -580,58 +580,58 @@ function (me) {
         sub00F9();
         l00F2 = "";
         for (l00EA = 1; l00EA <= 6; l00EA++) {
-            if (gv11CE.M5299[l00EA] == -1 || l00EA > gv11CE.M53EF) {
+            if (game.graphShowCompany[l00EA] == -1 || l00EA > game.numPlayers) {
                 l00F4[l00EA] = -1;
             } else {
                 l00F4[l00EA] = 0;
             }
         }
-        for (l00EA = 1; l00EA <= gv11CE.M5390; l00EA++) {
+        for (l00EA = 1; l00EA <= game.numRivals; l00EA++) {
             l00FA[l00EA] = 0;
         }
         l00EC = 1;
         do {
             l00EE = 0;
-            for (l00EA = 1; l00EA <= gv11CE.M5390; l00EA++) {
+            for (l00EA = 1; l00EA <= game.numRivals; l00EA++) {
                 if (l00FA[l00EA] == 0) {
                     l00EE = CInt(l00EA);
-                    l00EA = gv11CE.M5390;
+                    l00EA = game.numRivals;
                 }
             }
             if (l00EE != 0) {
-                for (l00EA = 1; l00EA <= gv11CE.M5390; l00EA++) {
-                    if (gv1EB2.M5384[l00EA] > gv1EB2.M5384[l00EE] && l00FA[l00EA] == 0) {
+                for (l00EA = 1; l00EA <= game.numRivals; l00EA++) {
+                    if (rivals.netWorth[l00EA] > rivals.netWorth[l00EE] && l00FA[l00EA] == 0) {
                         l00EE = CInt(l00EA);
                     }
                 }
             }
             l00F0 = 0;
-            for (l00EA = 1; l00EA <= gv11CE.M53EF; l00EA++) {
+            for (l00EA = 1; l00EA <= game.numPlayers; l00EA++) {
                 if (l00F4[l00EA] == 0) {
                     l00F0 = CInt(l00EA);
-                    l00EA = gv11CE.M53EF;
+                    l00EA = game.numPlayers;
                 }
             }
             if (l00F0 != 0) {
-                for (l00EA = 1; l00EA <= gv11CE.M53EF; l00EA++) {
-                    if (gv11CE.M5384[l00EA] > gv11CE.M5384[l00F0] && l00F4[l00EA] == 0) {
+                for (l00EA = 1; l00EA <= game.numPlayers; l00EA++) {
+                    if (game.netWorth[l00EA] > game.netWorth[l00F0] && l00F4[l00EA] == 0) {
                         l00F0 = CInt(l00EA);
                     }
                 }
             }
             if (l00EE != 0 && l00F0 != 0) {
-                if (gv11CE.M5384[l00F0] >= gv1EB2.M5384[l00EE]) {
-                    l00F2 = l00F2 + "\n" + Format(l00EC, "#,#0") + ")  " + Trim(gv11CE.M5401[l00F0]) + "   " + Format(gv11CE.M5384[l00F0], "#,#0");
+                if (game.netWorth[l00F0] >= rivals.netWorth[l00EE]) {
+                    l00F2 = l00F2 + "\n" + Format(l00EC, "#,#0") + ")  " + Trim(game.companyNames[l00F0]) + "   " + Format(game.netWorth[l00F0], "#,#0");
                     l00F4[l00F0] = -1;
                 } else {
-                    l00F2 = l00F2 + "\n" + Format(l00EC, "#,#0") + ")  " + Trim(gv1EB2.M5579[l00EE]) + "   " + Format(gv1EB2.M5384[l00EE], "#,#0");
+                    l00F2 = l00F2 + "\n" + Format(l00EC, "#,#0") + ")  " + Trim(rivals.companyNames[l00EE]) + "   " + Format(rivals.netWorth[l00EE], "#,#0");
                     l00FA[l00EE] = -1;
                 }
             } else if (l00EE != 0) {
-                l00F2 = l00F2 + "\n" + Format(l00EC, "#,#0") + ")  " + Trim(gv1EB2.M5579[l00EE]) + "   " + Format(gv1EB2.M5384[l00EE], "#,#0");
+                l00F2 = l00F2 + "\n" + Format(l00EC, "#,#0") + ")  " + Trim(rivals.companyNames[l00EE]) + "   " + Format(rivals.netWorth[l00EE], "#,#0");
                 l00FA[l00EE] = -1;
             } else if (l00F0 != 0) {
-                l00F2 = l00F2 + "\n" + Format(l00EC, "#,#0") + ")  " + Trim(gv11CE.M5401[l00F0]) + "   " + Format(gv11CE.M5384[l00F0], "#,#0");
+                l00F2 = l00F2 + "\n" + Format(l00EC, "#,#0") + ")  " + Trim(game.companyNames[l00F0]) + "   " + Format(game.netWorth[l00F0], "#,#0");
                 l00F4[l00F0] = -1;
             }
             l00EC = l00EC + 1;
@@ -644,27 +644,27 @@ function (me) {
         let l0100 = 0;
         let l0102 = 0;
         for (l0100 = 0; l0100 <= 6; l0100++) {
-            if (gv11CE.M54BF[l0100] == -1) {
-                gv0BF2.M4ED9[l0100] = 0;
-                gv0BF2.M4ECB[l0100] = 0;
-                for (l0102 = 1; l0102 <= gv11CE.M5390; l0102++) {
-                    gv1EB2.M4ED9[l0102][l0100] = 0;
+            if (game.stockCrashed[l0100] == -1) {
+                player.shares[l0100] = 0;
+                player.shareAvgCost[l0100] = 0;
+                for (l0102 = 1; l0102 <= game.numRivals; l0102++) {
+                    rivals.shares[l0102][l0100] = 0;
                 }
                 frm_Box1Port.b_Yes.Visible = 0;
                 frm_Box1Port.b_No.Visible = 0;
                 frm_Box1Port.b_OK.Visible = -1;
                 frm_Box1Port.b_Container.BackColor = 0xC0;
-                frm_Box1Port.Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "NEWS.BMP");
+                frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "NEWS.BMP");
                 frm_Box1Port.b_ImageLable.Caption = "Emergency Broadcast";
-                frm_Box1Port.b_Message.Caption = "This is an emergency update! The stock market on planet " + Trim(gv11CE.M53C1[l0100]) + " crashed today!!! Everyone who owned shares in the " + Trim(gv11CE.M53C1[l0100]) + " Exchange lost their entire investment. Supreme Commander Dred Nicolson has intervened and shut down the " + Trim(gv11CE.M53C1[l0100]) + " Exchange for one week. Investors are protesting, but there is no way to recover the lost money.";
-                if (gv0060.M4C47 == -1) {
+                frm_Box1Port.b_Message.Caption = "This is an emergency update! The stock market on planet " + Trim(game.planetNames[l0100]) + " crashed today!!! Everyone who owned shares in the " + Trim(game.planetNames[l0100]) + " Exchange lost their entire investment. Supreme Commander Dred Nicolson has intervened and shut down the " + Trim(game.planetNames[l0100]) + " Exchange for one week. Investors are protesting, but there is no way to recover the lost money.";
+                if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "stokcrsh.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "stokcrsh.wav";
                     b_Sound.Command = "Open";
                     b_Sound.Command = "Play";
                 }
                 await frm_Box1Port.Show(1);
-                if (gv0060.M4C47 == -1) {
+                if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
                 }
             }
@@ -675,14 +675,14 @@ function (me) {
         let l0108 = 0;
         let l010A = 0;
         for (l0108 = 0; l0108 <= 6; l0108++) {
-            if (gv11CE.M54BF[l0108] == 0) {
+            if (game.stockCrashed[l0108] == 0) {
                 l010A = 0;
-                if (gv11CE.M5522 > 1 && gv11CE.M5522 <= 15) {
-                    if (gv11CE.M54DA[l0108][gv11CE.M5522 - 1] < 250) {
+                if (game.turn > 1 && game.turn <= 15) {
+                    if (game.stockPrices[l0108][game.turn - 1] < 250) {
                         l010A = -1;
                     }
                 } else {
-                    if (gv11CE.M54DA[l0108][15] < 250) {
+                    if (game.stockPrices[l0108][15] < 250) {
                         l010A = -1;
                     }
                 }
@@ -691,42 +691,42 @@ function (me) {
                     frm_Box1Port.b_No.Visible = 0;
                     frm_Box1Port.b_OK.Visible = -1;
                     frm_Box1Port.b_Container.BackColor = 0xC0;
-                    frm_Box1Port.Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "NEWS.BMP");
+                    frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "NEWS.BMP");
                     frm_Box1Port.b_ImageLable.Caption = "Financial Update!";
                     {
-                        const sel = (Mod((Add(gv11CE.M5522, l0108)), 11)) + 1;
+                        const sel = (Mod((Add(game.turn, l0108)), 11)) + 1;
                         if (sel == 1) {
-                            frm_Box1Port.b_Message.Caption = "Financial analysts across Kukubia are warning that the " + Trim(gv11CE.M53C1[l0108]) + " Exchange is headed for a crash.";
+                            frm_Box1Port.b_Message.Caption = "Financial analysts across Kukubia are warning that the " + Trim(game.planetNames[l0108]) + " Exchange is headed for a crash.";
                         } else if (sel == 2) {
-                            frm_Box1Port.b_Message.Caption = "It is rumored that Mr. Zinn is selling off a substantial portion of his investments in the " + Trim(gv11CE.M53C1[l0108]) + " Exchange. Experts predict this rumor may push the " + Trim(gv11CE.M53C1[l0108]) + " Exchange down further.";
+                            frm_Box1Port.b_Message.Caption = "It is rumored that Mr. Zinn is selling off a substantial portion of his investments in the " + Trim(game.planetNames[l0108]) + " Exchange. Experts predict this rumor may push the " + Trim(game.planetNames[l0108]) + " Exchange down further.";
                         } else if (sel == 3) {
-                            frm_Box1Port.b_Message.Caption = "Corporate investors throughout the galaxy have been unloading their shares of the " + Trim(gv11CE.M53C1[l0108]) + " Exchange.";
+                            frm_Box1Port.b_Message.Caption = "Corporate investors throughout the galaxy have been unloading their shares of the " + Trim(game.planetNames[l0108]) + " Exchange.";
                         } else if (sel == 4) {
-                            frm_Box1Port.b_Message.Caption = "Small investors are flooding the " + Trim(gv11CE.M53C1[l0108]) + " Exchange with sell orders.";
+                            frm_Box1Port.b_Message.Caption = "Small investors are flooding the " + Trim(game.planetNames[l0108]) + " Exchange with sell orders.";
                         } else if (sel == 5) {
-                            frm_Box1Port.b_Message.Caption = "Everyone seems to feel a stock market meltdown on planet " + Trim(gv11CE.M53C1[l0108]) + " is imminent.";
+                            frm_Box1Port.b_Message.Caption = "Everyone seems to feel a stock market meltdown on planet " + Trim(game.planetNames[l0108]) + " is imminent.";
                         } else if (sel == 6) {
-                            frm_Box1Port.b_Message.Caption = "We have reports that the majority of " + Trim(gv11CE.M53C1[l0108]) + " Exchange shareholders have lost all confidence in the market.";
+                            frm_Box1Port.b_Message.Caption = "We have reports that the majority of " + Trim(game.planetNames[l0108]) + " Exchange shareholders have lost all confidence in the market.";
                         } else if (sel == 7) {
-                            frm_Box1Port.b_Message.Caption = "The " + Trim(gv11CE.M53C1[l0108]) + " Exchange Board of Trustees has called for calm and requested that investors hold onto their shares. However, this has not stemmed the tide of sell orders.";
+                            frm_Box1Port.b_Message.Caption = "The " + Trim(game.planetNames[l0108]) + " Exchange Board of Trustees has called for calm and requested that investors hold onto their shares. However, this has not stemmed the tide of sell orders.";
                         } else if (sel == 8) {
-                            frm_Box1Port.b_Message.Caption = "The " + Trim(gv11CE.M53C1[l0108]) + " Exchange is in a state of utter confusion as investors pack the floor, scrambling to sell their shares. Some investors have been hiring spaceships at exorbitant prices just to make it to " + Trim(gv11CE.M53C1[l0108]) + " in time to sell off their investments.";
+                            frm_Box1Port.b_Message.Caption = "The " + Trim(game.planetNames[l0108]) + " Exchange is in a state of utter confusion as investors pack the floor, scrambling to sell their shares. Some investors have been hiring spaceships at exorbitant prices just to make it to " + Trim(game.planetNames[l0108]) + " in time to sell off their investments.";
                         } else if (sel == 9) {
-                            frm_Box1Port.b_Message.Caption = "A broad based loss of confidence in the " + Trim(gv11CE.M53C1[l0108]) + " Exchange has lead to a major crash. The " + Trim(gv11CE.M53C1[l0108]) + " Exchange Board of Trustees is begging investors to hold onto their shares, but no one seems to be willing to take that chance.";
+                            frm_Box1Port.b_Message.Caption = "A broad based loss of confidence in the " + Trim(game.planetNames[l0108]) + " Exchange has lead to a major crash. The " + Trim(game.planetNames[l0108]) + " Exchange Board of Trustees is begging investors to hold onto their shares, but no one seems to be willing to take that chance.";
                         } else if (sel == 10) {
-                            frm_Box1Port.b_Message.Caption = "A panic selling spree has brought the " + Trim(gv11CE.M53C1[l0108]) + " Exchange to its knees. It's only a matter of time before it completely crashes.";
+                            frm_Box1Port.b_Message.Caption = "A panic selling spree has brought the " + Trim(game.planetNames[l0108]) + " Exchange to its knees. It's only a matter of time before it completely crashes.";
                         } else if (sel == 11) {
-                            frm_Box1Port.b_Message.Caption = "It appears that the " + Trim(gv11CE.M53C1[l0108]) + " Exchange is in a free fall. Analysts across Kukubia are advising their clients to sell their shares before it's too late.";
+                            frm_Box1Port.b_Message.Caption = "It appears that the " + Trim(game.planetNames[l0108]) + " Exchange is in a free fall. Analysts across Kukubia are advising their clients to sell their shares before it's too late.";
                         }
                     }
-                    if (gv0060.M4C47 == -1) {
+                    if (settings.soundOn == -1) {
                         b_Sound.Command = "Close";
-                        b_Sound.FileName = Trim(gv09F0.M4C15) + "stokcrsh.wav";
+                        b_Sound.FileName = Trim(paths.soundDir) + "stokcrsh.wav";
                         b_Sound.Command = "Open";
                         b_Sound.Command = "Play";
                     }
                     await frm_Box1Port.Show(1);
-                    if (gv0060.M4C47 == -1) {
+                    if (settings.soundOn == -1) {
                         b_Sound.Command = "Close";
                     }
                 }
@@ -737,65 +737,65 @@ function (me) {
     function Form_Activate() {
         let l010E = "";
         const mc0116 = 1;
-        if (gv11CE.M5359 == 1) {
+        if (game.skillLevel == 1) {
             l010E = "Tutorial";
-        } else if (gv11CE.M5359 == 2) {
+        } else if (game.skillLevel == 2) {
             l010E = "Novice";
-        } else if (gv11CE.M5359 == 3) {
+        } else if (game.skillLevel == 3) {
             l010E = "Beginner";
-        } else if (gv11CE.M5359 == 4) {
+        } else if (game.skillLevel == 4) {
             l010E = "Intermediate";
-        } else if (gv11CE.M5359 == 5) {
+        } else if (game.skillLevel == 5) {
             l010E = "Expert";
-        } else if (gv11CE.M5359 == 6) {
+        } else if (game.skillLevel == 6) {
             l010E = "Master";
         }
-        if (gv11CE.M52F2 == -1) {
+        if (game.isEmailGame == -1) {
             if (me.Tag == "GAME SAVED") {
                 b_Ranking.Visible = -1;
                 b_BeginTurn.Visible = 0;
                 b_SaveGame.Visible = 0;
                 b_QuitGame.Visible = -1;
                 b_NewGame.Visible = -1;
-                b_Message.Caption = "Send Email:" + "\n" + "\n" + "Now that you have SAVED the game, you should EXIT GAZILLIONAIRE and open your email software." + "\n" + "\n" + "Once inside your email software, ATTACH the file you just saved to an email letter and send it to " + Trim(gv0BF2.M4E92) + " at " + "\n" + "\n" + Trim(gv0BF2.M4D28);
+                b_Message.Caption = "Send Email:" + "\n" + "\n" + "Now that you have SAVED the game, you should EXIT GAZILLIONAIRE and open your email software." + "\n" + "\n" + "Once inside your email software, ATTACH the file you just saved to an email letter and send it to " + Trim(player.playerName) + " at " + "\n" + "\n" + Trim(player.emailAddress);
             } else if (me.Tag == "BEGIN TURN") {
                 b_Ranking.Visible = -1;
                 b_BeginTurn.Visible = -1;
                 b_SaveGame.Visible = 0;
                 b_QuitGame.Visible = -1;
                 b_NewGame.Visible = 0;
-                b_Message.Caption = "Next Player's Turn:" + "\n" + "\n" + "It is now " + Trim(gv11CE.M5401[gv11CE.M53E5]) + "'s turn! If your name is " + Trim(gv0BF2.M4E92) + ", click on the BEGIN TURN button to start your turn." + "\n" + "\n" + "If your name isn't " + Trim(gv0BF2.M4E92) + ", you should EXIT GAZILLIONAIRE and open your email software. Once inside your email software, ATTACH the file you just loaded to an email letter and send it to " + Trim(gv0BF2.M4E92) + " at " + "\n" + "\n" + Trim(gv0BF2.M4D28);
+                b_Message.Caption = "Next Player's Turn:" + "\n" + "\n" + "It is now " + Trim(game.companyNames[game.currentPlayer]) + "'s turn! If your name is " + Trim(player.playerName) + ", click on the BEGIN TURN button to start your turn." + "\n" + "\n" + "If your name isn't " + Trim(player.playerName) + ", you should EXIT GAZILLIONAIRE and open your email software. Once inside your email software, ATTACH the file you just loaded to an email letter and send it to " + Trim(player.playerName) + " at " + "\n" + "\n" + Trim(player.emailAddress);
             } else if (me.Tag == "END TURN") {
                 b_Ranking.Visible = -1;
                 b_BeginTurn.Visible = -1;
                 b_SaveGame.Visible = -1;
                 b_QuitGame.Visible = 0;
                 b_NewGame.Visible = 0;
-                b_Message.Caption = "Play-By-Email:" + "\n" + "\n" + "It is now " + Trim(gv11CE.M5401[gv11CE.M53E5]) + "'s turn! If your name is " + Trim(gv0BF2.M4E92) + ", click on the BEGIN TURN button to begin your turn." + "\n" + "\n" + "If your name isn't " + Trim(gv0BF2.M4E92) + ", you must now SAVE the email game by clicking on the SAVE GAME button.";
+                b_Message.Caption = "Play-By-Email:" + "\n" + "\n" + "It is now " + Trim(game.companyNames[game.currentPlayer]) + "'s turn! If your name is " + Trim(player.playerName) + ", click on the BEGIN TURN button to begin your turn." + "\n" + "\n" + "If your name isn't " + Trim(player.playerName) + ", you must now SAVE the email game by clicking on the SAVE GAME button.";
             }
-        } else if (gv11CE.M52F2 == 0) {
+        } else if (game.isEmailGame == 0) {
             b_Ranking.Visible = 0;
             b_BeginTurn.Visible = -1;
             b_SaveGame.Visible = 0;
             b_QuitGame.Visible = 0;
             b_NewGame.Visible = 0;
-            if (gv11CE.M554F == 0) {
-                b_Message.Caption = "COMPANY RANKING:" + "\n" + "\n" + "The companies are ranked according to their wealth. The first company to reach " + Format(gv11CE.M5559, "#,#0") + " kubars wins the game!" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l010E;
+            if (game.winner == 0) {
+                b_Message.Caption = "COMPANY RANKING:" + "\n" + "\n" + "The companies are ranked according to their wealth. The first company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars wins the game!" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l010E;
             } else {
-                if (gv11CE.M5559 == 1000000000) {
-                    if (gv11CE.M554F <= 6) {
-                        b_Message.Caption = Trim(gv11CE.M5401[gv11CE.M554F]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(gv11CE.M5559, "#,#0") + " kubars!!! This means the game is now officially over." + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l010E;
+                if (game.goalNetWorth == 1000000000) {
+                    if (game.winner <= 6) {
+                        b_Message.Caption = Trim(game.companyNames[game.winner]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!! This means the game is now officially over." + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l010E;
                     } else {
-                        b_Message.Caption = Trim(gv1EB2.M5579[gv11CE.M554F - 6]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(gv11CE.M5559, "#,#0") + " kubars!!! This means the game is now officially over." + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l010E;
+                        b_Message.Caption = Trim(rivals.companyNames[game.winner - 6]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!! This means the game is now officially over." + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l010E;
                     }
-                } else if (gv11CE.M554F <= 6) {
-                    if (gv11CE.M554F == gv11CE.M53E5) {
-                        b_Message.Caption = "You won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(gv11CE.M5559, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l010E;
+                } else if (game.winner <= 6) {
+                    if (game.winner == game.currentPlayer) {
+                        b_Message.Caption = "You won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l010E;
                     } else {
-                        b_Message.Caption = Trim(gv11CE.M5401[gv11CE.M554F]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(gv11CE.M5559, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l010E;
+                        b_Message.Caption = Trim(game.companyNames[game.winner]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l010E;
                     }
                 } else {
-                    b_Message.Caption = Trim(gv1EB2.M5579[gv11CE.M554F - 6]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(gv11CE.M5559, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l010E;
+                    b_Message.Caption = Trim(rivals.companyNames[game.winner - 6]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l010E;
                 }
             }
         }
@@ -812,33 +812,33 @@ function (me) {
         l011E = 0;
         l011A = 0;
         for (l0118 = 0; l0118 <= 6; l0118++) {
-            if (gv11CE.M5522 <= 15) {
-                l011A = l011A + gv0BF2.M4ED9[l0118] * gv11CE.M54DA[l0118][gv11CE.M5522];
+            if (game.turn <= 15) {
+                l011A = l011A + player.shares[l0118] * game.stockPrices[l0118][game.turn];
             } else {
-                l011A = l011A + gv0BF2.M4ED9[l0118] * gv11CE.M54DA[l0118][15];
+                l011A = l011A + player.shares[l0118] * game.stockPrices[l0118][15];
             }
         }
-        if (gv11CE.M5299[gv11CE.M53E5] == 0) {
-            gv11CE.M5384[gv11CE.M53E5] = l011A + gv0BF2.M4CF9 + gv0BF2.M4E9E - gv0BF2.M4DA3 - gv0BF2.M4FBD;
+        if (game.graphShowCompany[game.currentPlayer] == 0) {
+            game.netWorth[game.currentPlayer] = l011A + player.cash + player.bankBalance - player.loan - player.zinnLoan;
         } else {
-            gv11CE.M5384[gv11CE.M53E5] = 0;
+            game.netWorth[game.currentPlayer] = 0;
         }
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            if (gv11CE.M541E[gv11CE.M53E5] <= 6) {
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "ship" + Trim(Str(gv11CE.M541E[gv11CE.M53E5])) + ".wav";
+            if (game.shipType[game.currentPlayer] <= 6) {
+                b_Sound.FileName = Trim(paths.soundDir) + "ship" + Trim(Str(game.shipType[game.currentPlayer])) + ".wav";
             } else {
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "ship" + Trim(Str(gv11CE.M541E[gv11CE.M53E5] - 6)) + ".wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "ship" + Trim(Str(game.shipType[game.currentPlayer] - 6)) + ".wav";
             }
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
-        b_Title.Caption = Trim(gv11CE.M5401[gv11CE.M53E5]);
-        b_Week.Caption = "Turn " + Format(gv11CE.M5522, "#,#0");
+        b_Title.Caption = Trim(game.companyNames[game.currentPlayer]);
+        b_Week.Caption = "Turn " + Format(game.turn, "#,#0");
         l011C = "";
-        for (l0118 = 1; l0118 <= gv11CE.M53EF; l0118++) {
-            if (gv11CE.M5299[l0118] == -1) {
-                l011C = l011C + gv11CE.M5401[l0118] + "\n";
+        for (l0118 = 1; l0118 <= game.numPlayers; l0118++) {
+            if (game.graphShowCompany[l0118] == -1) {
+                l011C = l011C + game.companyNames[l0118] + "\n";
             }
         }
         if (l011C == "") {
@@ -846,8 +846,8 @@ function (me) {
         } else {
             b_bankrupt.Caption = "Bankrupt Companies: " + "\n" + l011C;
         }
-        l011A = CLng((gv11CE.M5384[gv11CE.M53E5]) / 50000);
-        if (gv11CE.M5384[gv11CE.M53E5] < 0) {
+        l011A = CLng((game.netWorth[game.currentPlayer]) / 50000);
+        if (game.netWorth[game.currentPlayer] < 0) {
             if (l011A < 0) {
                 l011A = l011A * (-1);
             }
@@ -877,7 +877,7 @@ function (me) {
             }
             b_Status.Caption = "Status: " + l011C;
             {
-                const sel = ((Mod(gv0BF2.M4E88, 4)) + 1);
+                const sel = ((Mod(player.arrivalRoll, 4)) + 1);
                 if (sel == 1) {
                     l011C = "Trader";
                 } else if (sel == 2) {
@@ -889,7 +889,7 @@ function (me) {
                 }
             }
             b_Status.Caption = b_Status.Caption + " " + l011C;
-        } else if (gv11CE.M5384[gv11CE.M53E5] >= 0) {
+        } else if (game.netWorth[game.currentPlayer] >= 0) {
             if (l011A > 20) {
                 l011A = 20;
             }
@@ -938,7 +938,7 @@ function (me) {
             }
             b_Status.Caption = "Status: " + l011C;
             {
-                const sel = ((Mod(gv0BF2.M4E88, 4)) + 1);
+                const sel = ((Mod(player.arrivalRoll, 4)) + 1);
                 if (sel == 1) {
                     l011C = "Trader";
                 } else if (sel == 2) {
@@ -951,10 +951,10 @@ function (me) {
             }
             b_Status.Caption = b_Status.Caption + " " + l011C;
         }
-        Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "ship" + Trim(Str(gv11CE.M541E[gv11CE.M53E5])) + ".bmp");
-        if (gv11CE.M52F2 == -1 && l011E == 0) {
+        Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ship" + Trim(Str(game.shipType[game.currentPlayer])) + ".bmp");
+        if (game.isEmailGame == -1 && l011E == 0) {
             l011E = -1;
-            if (Trim(gv11CE.M52FB) == "") {
+            if (Trim(game.emailFileName) == "") {
             } else {
                 me.MousePointer = mc013E;
                 await sub00BE("STARTTURN");

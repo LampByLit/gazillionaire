@@ -51,9 +51,9 @@ function (me) {
 
     async function b_Help_Click() {
         me.MousePointer = mc001A;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -80,14 +80,14 @@ function (me) {
             l0074 = -1;
             me.MousePointer = mc001A;
             if (Trim(textbox1.Text) == "") {
-                if (gv0060.M4C47 == -1) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 await MsgBox("Invalid File Name. Please enter a new File Name a try again.", 16, "Invalid File Name");
                 me.MousePointer = mc007C;
             } else {
-                gv11CE.M52FB = FixStr(Trim(textbox1.Text), 12);
-                gv0060.M4C3B = FixStr(Trim(dir1.Path), 128);
+                game.emailFileName = FixStr(Trim(textbox1.Text), 12);
+                settings.emailDir = FixStr(Trim(dir1.Path), 128);
                 sub4254();
                 if (me.Tag == "MAIN MENU") {
                     await sub00BE("MAIN MENU");
@@ -166,8 +166,8 @@ function (me) {
     }
 
     function sub4254() {
-        FileOpen(7, Trim(gv09F0.M4BE9) + "CONFIG.DAT");
-        FilePut(7, 1, gv0060);
+        FileOpen(7, Trim(paths.configDir) + "CONFIG.DAT");
+        FilePut(7, 1, settings);
         FileClose(7);
     }
 
@@ -207,7 +207,7 @@ function (me) {
             await b_SaveEmailGame_Click();
         } else {
             KeyAscii = 0;
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
         }
@@ -220,20 +220,20 @@ function (me) {
         try {
             l00BA = -1;
             me.MousePointer = mc001A;
-            l00BC = InStr(1, Trim(gv11CE.M52FB), ".");
+            l00BC = InStr(1, Trim(game.emailFileName), ".");
             if (l00BC > 0 && l00BC >= 8) {
-                gv11CE.M52FB = FixStr(Mid(Trim(gv11CE.M52FB), 1, 8) + Mid(Trim(gv11CE.M52FB), l00BC, 4), 12);
+                game.emailFileName = FixStr(Mid(Trim(game.emailFileName), 1, 8) + Mid(Trim(game.emailFileName), l00BC, 4), 12);
             } else if (l00BC > 0 && l00BC < 8) {
-                gv11CE.M52FB = FixStr(Mid(Trim(gv11CE.M52FB), 1, l00BC - 1) + Mid(Trim(gv11CE.M52FB), l00BC, 4), 12);
+                game.emailFileName = FixStr(Mid(Trim(game.emailFileName), 1, l00BC - 1) + Mid(Trim(game.emailFileName), l00BC, 4), 12);
             } else {
-                gv11CE.M52FB = FixStr(Mid(Trim(gv11CE.M52FB), 1, 8), 12);
+                game.emailFileName = FixStr(Mid(Trim(game.emailFileName), 1, 8), 12);
             }
-            gv11CE.M52FB = FixStr(LCase(Trim(gv11CE.M52FB)), 12);
-            textbox1.Text = Trim(gv11CE.M52FB);
-            dir1.Path = Trim(gv0060.M4C3B);
-            file1.Path = Trim(gv0060.M4C3B);
+            game.emailFileName = FixStr(LCase(Trim(game.emailFileName)), 12);
+            textbox1.Text = Trim(game.emailFileName);
+            dir1.Path = Trim(settings.emailDir);
+            file1.Path = Trim(settings.emailDir);
             drive1.Drive = dir1.Path;
-            FillElastic.Caption = "\n" + "Save Email Game  (turn " + Format(gv11CE.M5522, "#,#0") + ")";
+            FillElastic.Caption = "\n" + "Save Email Game  (turn " + Format(game.turn, "#,#0") + ")";
             return;
         } catch (e) {
             Err.Catch(e);
@@ -255,7 +255,7 @@ function (me) {
         if (KeyAscii == 8 || KeyAscii == Asc(".") || KeyAscii >= Asc("A") && KeyAscii <= Asc("Z") || KeyAscii >= Asc("a") && KeyAscii <= Asc("z") || KeyAscii >= Asc("0") && KeyAscii <= Asc("9")) {
         } else {
             KeyAscii = 0;
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
         }

@@ -92,9 +92,9 @@ function (me) {
 
     async function b_Help_Click() {
         me.MousePointer = mc0054;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -113,15 +113,15 @@ function (me) {
 
     function b_Timer_Timer() {
         if (m001A == 1) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "insure3.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "insure3.bmp");
         } else if (m001A == 2) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "insure.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "insure.bmp");
         } else if (m001A == 3) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "insure3.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "insure3.bmp");
         } else if (m001A == 4) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "insure2.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "insure2.bmp");
         } else if (m001A == 5) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "insure.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "insure.bmp");
         }
         m001A = m001A + 1;
         if (m001A == 6) {
@@ -135,24 +135,24 @@ function (me) {
 
     async function sub1794() {
         me.MousePointer = mc0054;
-        if (gv0BF2.M4D6E == -1) {
-            if (gv0060.M4C47 == -1) {
+        if (player.insured == -1) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Insurance";
             frm_Box0.b_Message.Caption = "\n" + "You already purchased Voyager's Insurance.";
             await frm_Box0.Show(1);
             b_Message.Caption = "You have already purchased Voyager's Insurance.";
-        } else if (gv0BF2.M4CF9 == 0) {
-            if (gv0060.M4C47 == -1) {
+        } else if (player.cash == 0) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Insurance";
             frm_Box0.b_Message.Caption = "\n" + "You don't have any money. Check your cash.";
             await frm_Box0.Show(1);
             b_Message.Caption = "You don't have enough money to buy Voyager's Insurance.";
-        } else if (gv0BF2.M4D92 > gv0BF2.M4CF9) {
-            if (gv0060.M4C47 == -1) {
+        } else if (player.insuranceCost > player.cash) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Insurance";
@@ -160,17 +160,17 @@ function (me) {
             await frm_Box0.Show(1);
             b_Message.Caption = "You don't have enough money to buy Voyager's Insurance.";
         } else {
-            gv0BF2.M4D6E = -1;
+            player.insured = -1;
             b_Timer.Enabled = -1;
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "insure.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "insure.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
             b_Message.Caption = "You just bought Voyager's Insurance for your next journey!";
             b_Message.ForeColor = mc00C2;
-            gv0BF2.M4CF9 = gv0BF2.M4CF9 - gv0BF2.M4D92;
+            player.cash = player.cash - player.insuranceCost;
         }
         sub18F0();
         me.MousePointer = mc00C6;
@@ -178,30 +178,30 @@ function (me) {
 
     function sub190A() {
         {
-            const sel = (Mod(gv11CE.M536A, 2)) + 1;
+            const sel = (Mod(game.weeklyRoll, 2)) + 1;
             if (sel == 1) {
-                gv0BF2.M4D92 = CLng(((gv0BF2.M4D7B * 1000) / 2) * (1 + (gv11CE.M536A / 100)));
+                player.insuranceCost = CLng(((player.insuranceRate * 1000) / 2) * (1 + (game.weeklyRoll / 100)));
             } else if (sel == 2) {
-                gv0BF2.M4D92 = CLng(((gv0BF2.M4D7B * 1000) / 2) * (gv11CE.M536A / 100));
+                player.insuranceCost = CLng(((player.insuranceRate * 1000) / 2) * (game.weeklyRoll / 100));
             }
         }
-        if (gv0BF2.M4D92 < gv0BF2.M4D7B) {
-            gv0BF2.M4D92 = gv0BF2.M4D7B;
+        if (player.insuranceCost < player.insuranceRate) {
+            player.insuranceCost = player.insuranceRate;
         }
-        if (gv0BF2.M4D92 > (1000 * gv0BF2.M4D7B)) {
-            gv0BF2.M4D92 = 1000 * gv0BF2.M4D7B;
+        if (player.insuranceCost > (1000 * player.insuranceRate)) {
+            player.insuranceCost = 1000 * player.insuranceRate;
         }
         sub18F0();
     }
 
     function sub18F0() {
-        if (gv0BF2.M4D6E == 0) {
+        if (player.insured == 0) {
             b_Insurance.Caption = "   Insurance Paid for Next Week:   No";
         } else {
             b_Insurance.Caption = "   Insurance Paid for Next Week:   Yes";
         }
-        b_Cost.Caption = "   Cost of Insurance:   " + Format(gv0BF2.M4D92, "#,#0");
-        b_Cash.Caption = "   Cash:   " + Format(gv0BF2.M4CF9, "#,#0");
+        b_Cost.Caption = "   Cost of Insurance:   " + Format(player.insuranceCost, "#,#0");
+        b_Cash.Caption = "   Cash:   " + Format(player.cash, "#,#0");
     }
 
     function Form_Activate() {
@@ -220,9 +220,9 @@ function (me) {
         m001C = 1;
         m001A = 1;
         sub18F0();
-        Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "insure.bmp");
+        Image1.Picture = LoadPicture(Trim(paths.imageDir) + "insure.bmp");
         b_BuyInsurance.Caption = "Purchase Voyager's" + "\n" + "Insurance";
-        b_Message.Caption = "Your insurance ranges in price from " + Format(gv0BF2.M4D7B, "#,#0") + " to " + Format(gv0BF2.M4D7B * 1000, "#,#0") + " kubars";
+        b_Message.Caption = "Your insurance ranges in price from " + Format(player.insuranceRate, "#,#0") + " to " + Format(player.insuranceRate * 1000, "#,#0") + " kubars";
     }
 
     return {

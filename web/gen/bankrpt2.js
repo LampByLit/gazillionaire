@@ -56,15 +56,15 @@ function (me) {
 
     function Form_Activate() {
         me.MousePointer = mc004E;
-        Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "ship" + Trim(Str(gv11CE.M541E[gv11CE.M53E5])) + ".bmp");
-        b_ImageLable.Caption = Trim(gv11CE.M5401[gv11CE.M53E5]);
-        b_Message.Caption = Trim(gv11CE.M5401[gv11CE.M53E5]) + " Bankrupts!!!";
-        if (gv0060.M4C47 == -1) {
+        Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ship" + Trim(Str(game.shipType[game.currentPlayer])) + ".bmp");
+        b_ImageLable.Caption = Trim(game.companyNames[game.currentPlayer]);
+        b_Message.Caption = Trim(game.companyNames[game.currentPlayer]) + " Bankrupts!!!";
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            if (gv11CE.M541E[gv11CE.M53E5] <= 6) {
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "ship" + Trim(Str(gv11CE.M541E[gv11CE.M53E5])) + ".wav";
+            if (game.shipType[game.currentPlayer] <= 6) {
+                b_Sound.FileName = Trim(paths.soundDir) + "ship" + Trim(Str(game.shipType[game.currentPlayer])) + ".wav";
             } else {
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "ship" + Trim(Str(gv11CE.M541E[gv11CE.M53E5] - 6)) + ".wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "ship" + Trim(Str(game.shipType[game.currentPlayer] - 6)) + ".wav";
             }
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";

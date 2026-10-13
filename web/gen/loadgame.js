@@ -34,7 +34,7 @@ function (me) {
 
     async function b_Exit_Click() {
         me.MousePointer = mc004E;
-        gv11CE.M5334 = m004C;
+        game.saveSlot = m004C;
         if (me.Tag == "BeginGame") {
             me.Tag = "";
             FillElastic.Visible = 0;
@@ -57,7 +57,7 @@ function (me) {
 
     async function b_Game1_Click() {
         me.MousePointer = mc004E;
-        gv11CE.M5334 = 1;
+        game.saveSlot = 1;
         await sub2652();
     }
 
@@ -71,7 +71,7 @@ function (me) {
 
     async function b_Game2_Click() {
         me.MousePointer = mc004E;
-        gv11CE.M5334 = 2;
+        game.saveSlot = 2;
         await sub2652();
     }
 
@@ -85,7 +85,7 @@ function (me) {
 
     async function b_Game3_Click() {
         me.MousePointer = mc004E;
-        gv11CE.M5334 = 3;
+        game.saveSlot = 3;
         await sub2652();
     }
 
@@ -99,7 +99,7 @@ function (me) {
 
     async function b_Game4_Click() {
         me.MousePointer = mc004E;
-        gv11CE.M5334 = 4;
+        game.saveSlot = 4;
         await sub2652();
     }
 
@@ -113,7 +113,7 @@ function (me) {
 
     async function b_Game5_Click() {
         me.MousePointer = mc004E;
-        gv11CE.M5334 = 5;
+        game.saveSlot = 5;
         await sub2652();
     }
 
@@ -127,9 +127,9 @@ function (me) {
 
     async function b_Help_Click() {
         me.MousePointer = mc004E;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -147,13 +147,13 @@ function (me) {
     }
 
     async function sub2652() {
-        if (Trim(m0036[gv11CE.M5334]) == ".......") {
-            if (gv0060.M4C47 == -1) {
+        if (Trim(m0036[game.saveSlot]) == ".......") {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_MsgBox.FillElastic.Caption = "\n" + "You cannot load an empty file. Before you can load a game, you must first save the game.";
             await frm_MsgBox.Show(1);
-            gv11CE.M5334 = m004C;
+            game.saveSlot = m004C;
             me.MousePointer = mc0136;
         } else {
             me.MousePointer = mc004E;
@@ -180,7 +180,7 @@ function (me) {
     function sub2792() {
         let l013C = 0;
         for (l013C = 1; l013C <= 5; l013C++) {
-            FileOpen(6, Trim(gv09F0.M4C05) + "GAME" + Trim(Format(l013C, "#,#0")));
+            FileOpen(6, Trim(paths.saveDir) + "GAME" + Trim(Format(l013C, "#,#0")));
             m0036[l013C] = FileGet(6, 1, m0036[l013C]);
             FileClose(6);
         }
@@ -189,19 +189,19 @@ function (me) {
     async function sub276D() {
         let l013E = 0;
         try {
-            FileOpen(2, Trim(gv09F0.M4C05) + "GAME" + Trim(Format(gv11CE.M5334, "#0")) + ".DAT");
+            FileOpen(2, Trim(paths.saveDir) + "GAME" + Trim(Format(game.saveSlot, "#0")) + ".DAT");
             m001C = FileGet(2, 1, m001C);
             if (m001C != "GAZ DELUXE NORMAL GAME ") {
                 throw new VBError(0);
             }
-            gv11CE = FileGet(2, null, gv11CE);
-            gv1EB2 = FileGet(2, null, gv1EB2);
-            for (l013E = 1; l013E <= gv11CE.M53EF; l013E++) {
-                gv0BF2 = FileGet(2, null, gv0BF2);
+            game = FileGet(2, null, game);
+            rivals = FileGet(2, null, rivals);
+            for (l013E = 1; l013E <= game.numPlayers; l013E++) {
+                player = FileGet(2, null, player);
                 sub014C(l013E);
             }
             FileClose(2);
-            sub013C(gv11CE.M53E5);
+            sub013C(game.currentPlayer);
             return;
         } catch (e) {
             Err.Catch(e);
@@ -216,9 +216,9 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = mc004E;
-        m004C = gv11CE.M5334;
+        m004C = game.saveSlot;
         m001C = FixStr("", 23);
-        FillElastic.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "STARS5.BMP");
+        FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "STARS5.BMP");
         sub2792();
         sub277B();
     }

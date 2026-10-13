@@ -41,19 +41,19 @@ function (me) {
 
     async function b_Help_Click() {
         me.MousePointer = mc001A;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
-        if (gv11CE.M4FFC >= gv11CE.M50E8 || gv11CE.M552A == 0) {
+        if (game.complexity >= game.unlockExplore || game.tutorialMode == 0) {
             frm_Box2.FillElastic.Caption = "Help (Explore Planet)";
-            frm_Box2.b_Message.Caption = "While on a planet you may visit any of the local institutions." + "\n" + "\n" + "The PLANET SPECIAL allows you to access each planet's special resources such as banking, insurance, taxes, religion, engine construction and so on." + "\n" + "\n" + "The WEATHER BUREAU can alert you to dangerous storms in the area." + "\n" + "\n" + "The NEWS CENTER can provide you with updates on pirate attacks, revolutions and other events which will affect your business." + "\n" + "\n" + "The MINISTRY OF TIME and the HISTORY OF " + UCase(Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]])) + " are good sources of Kukubian trivia and background information.";
+            frm_Box2.b_Message.Caption = "While on a planet you may visit any of the local institutions." + "\n" + "\n" + "The PLANET SPECIAL allows you to access each planet's special resources such as banking, insurance, taxes, religion, engine construction and so on." + "\n" + "\n" + "The WEATHER BUREAU can alert you to dangerous storms in the area." + "\n" + "\n" + "The NEWS CENTER can provide you with updates on pirate attacks, revolutions and other events which will affect your business." + "\n" + "\n" + "The MINISTRY OF TIME and the HISTORY OF " + UCase(Trim(game.planetNames[game.planet[game.currentPlayer]])) + " are good sources of Kukubian trivia and background information.";
             await frm_Box2.Show(1);
         } else {
             frm_Box1.FillElastic.Caption = "Help (View City)";
-            frm_Box1.b_Message.Caption = "From the View City Menu you may access the MINISTRY OF TIME or the HISTORY OF " + UCase(Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]])) + ". These are good sources of Kukubian trivia and background information.";
+            frm_Box1.b_Message.Caption = "From the View City Menu you may access the MINISTRY OF TIME or the HISTORY OF " + UCase(Trim(game.planetNames[game.planet[game.currentPlayer]])) + ". These are good sources of Kukubian trivia and background information.";
             await frm_Box1.Show(1);
         }
     }
@@ -69,7 +69,7 @@ function (me) {
     async function b_History_Click() {
         me.MousePointer = mc001A;
         FillElastic.Visible = 0;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         await frm_History.Show(1);
@@ -87,7 +87,7 @@ function (me) {
     async function b_News_Click() {
         me.MousePointer = mc001A;
         FillElastic.Visible = 0;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         await frm_News.Show(1);
@@ -109,8 +109,8 @@ function (me) {
     async function b_PlanetSpecial_Click() {
         me.MousePointer = mc001A;
         FillElastic.Visible = 0;
-        if (gv0BF2.M4F53 == -1) {
-            if (gv0060.M4C47 == -1) {
+        if (player.specialDone == -1) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Planet Special";
@@ -137,7 +137,7 @@ function (me) {
     async function b_Time_Click() {
         me.MousePointer = mc001A;
         FillElastic.Visible = 0;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         await frm_Time.Show(1);
@@ -155,7 +155,7 @@ function (me) {
     async function b_Weather_Click() {
         me.MousePointer = mc001A;
         FillElastic.Visible = 0;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         await frm_Weather.Show(1);
@@ -191,11 +191,11 @@ function (me) {
         b_News.Tag = "";
         b_Weather.Tag = "";
         me.Tag = "";
-        b_History.Caption = "History of " + Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]]);
-        Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]] + ".bmp");
-        if (gv0060.M4C47 == -1) {
+        b_History.Caption = "History of " + Trim(game.planetNames[game.planet[game.currentPlayer]]);
+        Image1.Picture = LoadPicture(Trim(paths.imageDir) + game.planetNames[game.planet[game.currentPlayer]] + ".bmp");
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]] + ".wav";
+            b_Sound.FileName = Trim(paths.soundDir) + game.planetNames[game.planet[game.currentPlayer]] + ".wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }

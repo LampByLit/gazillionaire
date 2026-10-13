@@ -88,14 +88,14 @@ function (me) {
 
     async function b_Help_Click() {
         me.MousePointer = mc001A;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
         frm_Box2.FillElastic.Caption = "Help (Fuel)";
-        frm_Box2.b_Message.Caption = "Your ship has a " + Format(gv0BF2.M4D5E, "#,#0") + "-ton fuel tank and runs on Ionic Fuel, a combination of nuclear and synthetic fuels. This fuel costs between " + Format(gv11CE.M5316, "#,#0") + " and " + Format(gv11CE.M5316 * 10, "#,#0") + " kubars per ton." + "\n" + "\n" + "Every time you travel to a planet, your ship consumes between 2 and " + Format((gv11CE.M54B3[gv11CE.M53E5] / 100) + 11, "#,#0") + " tons of fuel. On average, the longer the distance travelled and the larger the ship, the more fuel is used." + "\n" + "\n" + "If you want to save fuel, a good idea is to travel to a nearby planet, rather than one on the other side of Kukubia.";
+        frm_Box2.b_Message.Caption = "Your ship has a " + Format(player.fuelCapacity, "#,#0") + "-ton fuel tank and runs on Ionic Fuel, a combination of nuclear and synthetic fuels. This fuel costs between " + Format(game.fuelBasePrice, "#,#0") + " and " + Format(game.fuelBasePrice * 10, "#,#0") + " kubars per ton." + "\n" + "\n" + "Every time you travel to a planet, your ship consumes between 2 and " + Format((game.shipSize[game.currentPlayer] / 100) + 11, "#,#0") + " tons of fuel. On average, the longer the distance travelled and the larger the ship, the more fuel is used." + "\n" + "\n" + "If you want to save fuel, a good idea is to travel to a nearby planet, rather than one on the other side of Kukubia.";
         await frm_Box2.Show(1);
     }
 
@@ -109,18 +109,18 @@ function (me) {
 
     function sub0F2D() {
         {
-            const sel = (Mod(gv11CE.M536A, 2)) + 1;
+            const sel = (Mod(game.weeklyRoll, 2)) + 1;
             if (sel == 1) {
-                gv11CE.M5328[gv11CE.M53A9[gv11CE.M53E5]] = CLng(((gv11CE.M5316 * 10) / 2) * (gv11CE.M536A / 100));
+                game.fuelPrice[game.planet[game.currentPlayer]] = CLng(((game.fuelBasePrice * 10) / 2) * (game.weeklyRoll / 100));
             } else if (sel == 2) {
-                gv11CE.M5328[gv11CE.M53A9[gv11CE.M53E5]] = CLng(((gv11CE.M5316 * 10) / 2) * (1 + (gv11CE.M536A / 100)));
+                game.fuelPrice[game.planet[game.currentPlayer]] = CLng(((game.fuelBasePrice * 10) / 2) * (1 + (game.weeklyRoll / 100)));
             }
         }
-        if (gv11CE.M5328[gv11CE.M53A9[gv11CE.M53E5]] < gv11CE.M5316) {
-            gv11CE.M5328[gv11CE.M53A9[gv11CE.M53E5]] = gv11CE.M5316;
+        if (game.fuelPrice[game.planet[game.currentPlayer]] < game.fuelBasePrice) {
+            game.fuelPrice[game.planet[game.currentPlayer]] = game.fuelBasePrice;
         }
-        if (gv11CE.M5328[gv11CE.M53A9[gv11CE.M53E5]] > (10 * gv11CE.M5316)) {
-            gv11CE.M5328[gv11CE.M53A9[gv11CE.M53E5]] = (10 * gv11CE.M5316);
+        if (game.fuelPrice[game.planet[game.currentPlayer]] > (10 * game.fuelBasePrice)) {
+            game.fuelPrice[game.planet[game.currentPlayer]] = (10 * game.fuelBasePrice);
         }
         sub0F3A();
     }
@@ -129,57 +129,57 @@ function (me) {
         let l00AC = 0;
         const mc00B4 = 1;
         me.MousePointer = mc001A;
-        l00AC = await fn01A0(0, Format((gv0BF2.M4D5E - gv0BF2.M4D56), "##0"), 0.25 * (gv0BF2.M4D5E - gv0BF2.M4D56), (gv0BF2.M4D5E - gv0BF2.M4D56), "Enter the amount of fuel you would like to purchase." + "\n" + "\n" + "Cash:  " + Format(gv0BF2.M4CF9, "#,#0") + "\n" + "Fuel Tank Capacity:  " + Format(gv0BF2.M4D5E, "#,#0") + " tons" + "\n" + "Fuel in Tank:  " + Format(gv0BF2.M4D56, "#,#0") + " tons", " ");
+        l00AC = await fn01A0(0, Format((player.fuelCapacity - player.fuel), "##0"), 0.25 * (player.fuelCapacity - player.fuel), (player.fuelCapacity - player.fuel), "Enter the amount of fuel you would like to purchase." + "\n" + "\n" + "Cash:  " + Format(player.cash, "#,#0") + "\n" + "Fuel Tank Capacity:  " + Format(player.fuelCapacity, "#,#0") + " tons" + "\n" + "Fuel in Tank:  " + Format(player.fuel, "#,#0") + " tons", " ");
         if (l00AC == -3333) {
-        } else if ((l00AC * gv11CE.M5328[gv11CE.M53A9[gv11CE.M53E5]]) > gv0BF2.M4CF9) {
-            if (gv0060.M4C47 == -1) {
+        } else if ((l00AC * game.fuelPrice[game.planet[game.currentPlayer]]) > player.cash) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Fuel";
             frm_Box0.b_Message.Caption = "\n" + "You don't have enough money. Check your cash.";
             await frm_Box0.Show(1);
-        } else if (l00AC > (gv0BF2.M4D5E - gv0BF2.M4D56)) {
-            if (gv0060.M4C47 == -1) {
+        } else if (l00AC > (player.fuelCapacity - player.fuel)) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Fuel";
-            if ((gv0BF2.M4D5E - gv0BF2.M4D56) == 1) {
+            if ((player.fuelCapacity - player.fuel) == 1) {
                 frm_Box0.b_Message.Caption = "\n" + "You cannot purchase that much fuel. You only have room in your tank to buy one ton of fuel.";
             } else {
-                frm_Box0.b_Message.Caption = "\n" + "You cannot purchase that much fuel. You only have room in your tank to buy " + Format((gv0BF2.M4D5E - gv0BF2.M4D56), "#,#0") + " tons of fuel.";
+                frm_Box0.b_Message.Caption = "\n" + "You cannot purchase that much fuel. You only have room in your tank to buy " + Format((player.fuelCapacity - player.fuel), "#,#0") + " tons of fuel.";
             }
             await frm_Box0.Show(1);
         } else if (l00AC == 0) {
         } else {
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "fuel.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "fuel.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
-            gv0BF2.M4D56 = gv0BF2.M4D56 + l00AC;
-            gv0BF2.M4CF9 = gv0BF2.M4CF9 - (l00AC * gv11CE.M5328[gv11CE.M53A9[gv11CE.M53E5]]);
+            player.fuel = player.fuel + l00AC;
+            player.cash = player.cash - (l00AC * game.fuelPrice[game.planet[game.currentPlayer]]);
         }
         sub0F3A();
         me.MousePointer = mc00B4;
     }
 
     function sub0F3A() {
-        b_Cost.Caption = "   Fuel Cost ( per ton ):   " + Format(gv11CE.M5328[gv11CE.M53A9[gv11CE.M53E5]], "#,#0") + " kubars";
-        b_FuelPriceRange.Caption = "   Fuel Price Range:   " + Format(gv11CE.M5316, "#,#0") + " to " + Format(gv11CE.M5316 * 10, "#,#0") + " kubars/ton";
-        b_Fuel.Caption = "   Fuel Usage:   2 to " + Format((gv11CE.M54B3[gv11CE.M53E5] / 100) + 11, "#,#0") + " tons per trip";
-        if (gv0BF2.M4CF9 == 1) {
-            b_Cash.Caption = "   Cash:   " + Format(gv0BF2.M4CF9, "#,#0") + " kubar";
+        b_Cost.Caption = "   Fuel Cost ( per ton ):   " + Format(game.fuelPrice[game.planet[game.currentPlayer]], "#,#0") + " kubars";
+        b_FuelPriceRange.Caption = "   Fuel Price Range:   " + Format(game.fuelBasePrice, "#,#0") + " to " + Format(game.fuelBasePrice * 10, "#,#0") + " kubars/ton";
+        b_Fuel.Caption = "   Fuel Usage:   2 to " + Format((game.shipSize[game.currentPlayer] / 100) + 11, "#,#0") + " tons per trip";
+        if (player.cash == 1) {
+            b_Cash.Caption = "   Cash:   " + Format(player.cash, "#,#0") + " kubar";
         } else {
-            b_Cash.Caption = "   Cash:   " + Format(gv0BF2.M4CF9, "#,#0") + " kubars";
+            b_Cash.Caption = "   Cash:   " + Format(player.cash, "#,#0") + " kubars";
         }
-        b_FuelTank.FloodPercent = 100 * (gv0BF2.M4D56 / (gv0BF2.M4D5E));
-        b_FuelTankCapacity.Caption = Format(gv0BF2.M4D5E, "#,#0") + " tons";
-        if (gv0BF2.M4D56 < ((gv11CE.M54B3[gv11CE.M53E5] / 100) + 11)) {
-            b_FuelTank.Caption = "LOW on Fuel:  " + Format(gv0BF2.M4D56, "#,#0") + " tons remaining";
+        b_FuelTank.FloodPercent = 100 * (player.fuel / (player.fuelCapacity));
+        b_FuelTankCapacity.Caption = Format(player.fuelCapacity, "#,#0") + " tons";
+        if (player.fuel < ((game.shipSize[game.currentPlayer] / 100) + 11)) {
+            b_FuelTank.Caption = "LOW on Fuel:  " + Format(player.fuel, "#,#0") + " tons remaining";
             b_Fuel.ForeColor = 0x80;
         } else {
-            b_FuelTank.Caption = "Fuel in Tank:  " + Format(gv0BF2.M4D56, "#,#0") + " tons";
+            b_FuelTank.Caption = "Fuel in Tank:  " + Format(player.fuel, "#,#0") + " tons";
             b_Fuel.ForeColor = m00DA;
         }
     }

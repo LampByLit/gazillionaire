@@ -43,43 +43,43 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = mc001A;
-        if (gv11CE.M5522 == 1) {
-            b_Message.Caption = "Welcome to the Tutorial! The game will start off simple and gradually become more sophisticated. Once you learn the basic rules, we will allow you to increase the complexity at your own pace." + "\n" + "\n" + "You begin the game with " + Format(gv0BF2.M4CF9, "#,#0") + " in cash and a debt of " + Format(gv0BF2.M4FBD, "#,#0") + " kubars to Mr. Zinn. The best way to familiarize yourself with the game is to click on the GETTING STARTED button in the next section.";
-        } else if (gv11CE.M4FFC == gv11CE.M502E) {
+        if (game.turn == 1) {
+            b_Message.Caption = "Welcome to the Tutorial! The game will start off simple and gradually become more sophisticated. Once you learn the basic rules, we will allow you to increase the complexity at your own pace." + "\n" + "\n" + "You begin the game with " + Format(player.cash, "#,#0") + " in cash and a debt of " + Format(player.zinnLoan, "#,#0") + " kubars to Mr. Zinn. The best way to familiarize yourself with the game is to click on the GETTING STARTED button in the next section.";
+        } else if (game.complexity == game.unlockLoan) {
             b_Message.Caption = "This turn we are introducing a new game function called LOAN. This allows you to borrow money from the Trader's Union. Be sure to click on the LOAN HELP button for more information!";
-        } else if (gv11CE.M4FFC == gv11CE.M500C) {
-            b_Message.Caption = "This turn we are introducing a new game function called ZINN'S LOAN. In order to start your company, you had to borrow " + Format(gv0BF2.M4FBD, "#,#0") + " kubars from Mr. Zinn. You used this money to purchase your spaceship. Now you must begin to pay Mr. Zinn back." + "\n" + "\n" + "Mr. Zinn is charging you 4% interest per week. It takes one week to travel to a new planet and conduct business. In other words, one week equals one game turn.";
-        } else if (gv11CE.M4FFC == gv11CE.M501C) {
+        } else if (game.complexity == game.unlockZinnLoan) {
+            b_Message.Caption = "This turn we are introducing a new game function called ZINN'S LOAN. In order to start your company, you had to borrow " + Format(player.zinnLoan, "#,#0") + " kubars from Mr. Zinn. You used this money to purchase your spaceship. Now you must begin to pay Mr. Zinn back." + "\n" + "\n" + "Mr. Zinn is charging you 4% interest per week. It takes one week to travel to a new planet and conduct business. In other words, one week equals one game turn.";
+        } else if (game.complexity == game.unlockSupply) {
             b_Message.Caption = "This turn we are introducing a new game function called SUPPLY. The SUPPLY chart shows you the supply of goods on each planet." + "\n" + "\n" + "If the supply is 100%, the commodities are plentiful on the planet and the price tends to be low. If the supply is 0%, the goods are rare, and the price tends to be high. This should help you determine which planet is worth travelling to.";
-        } else if (gv11CE.M4FFC == gv11CE.M5053) {
+        } else if (game.complexity == game.unlockViewCity) {
             b_Message.Caption = "This turn we are introducing a new game function called VIEW CITY." + "\n" + "\n" + "This function allows you to look at the city you are visiting and read about the planet's history.";
-        } else if (gv11CE.M4FFC == gv11CE.M50C3) {
+        } else if (game.complexity == game.unlockBank) {
             b_Message.Caption = "Because you chose to increase the complexity, we are introducing a new game function called BANK. This allows you to deposit money in a Savings Account." + "\n" + "\n" + "Be sure to click on the BANK HELP button for more information!";
-        } else if (gv11CE.M4FFC == gv11CE.M5077) {
+        } else if (game.complexity == game.unlockPassengers) {
             b_Message.Caption = "Because you chose to increase the complexity, we are introducing a new game function called PICK-UP PASSENGERS. This allows you to make money transporting passengers from one planet to another.";
-        } else if (gv11CE.M5522 == 10) {
+        } else if (game.turn == 10) {
             b_Message.Caption = "From this point on, you must decide when to add more complexity to the game. Immediately following the GRAPH menu, a COMPLEXITY menu will appear." + "\n" + "\n" + "From this menu, you can either make the game more complex by adding another function to the game or keep the game as it is.";
-        } else if (gv11CE.M4FFC == gv11CE.M5067) {
+        } else if (game.complexity == game.unlockFuel) {
             b_Message.Caption = "This turn we are introducing a new game function called FUEL." + "\n" + "\n" + "From this point on you MUST buy fuel for your spaceship. Be sure to click on the FUEL HELP button for more information!";
-        } else if (gv11CE.M4FFC == gv11CE.M508D) {
+        } else if (game.complexity == game.unlockCrew) {
             b_Message.Caption = "Because you chose to increase the complexity, we are introducing a new game function called CREW." + "\n" + "\n" + "From this point on you MUST pay your ship's crew a salary.";
-        } else if (gv11CE.M4FFC == gv11CE.M509D) {
+        } else if (game.complexity == game.unlockAdvertising) {
             b_Message.Caption = "Because you chose to increase the complexity, we are introducing a new game function called ADVERTISING." + "\n" + "\n" + "Now you can advertise for passengers and cargo. Be sure to click on the ADVERTISING HELP button for more information!";
-        } else if (gv11CE.M4FFC == gv11CE.M50B4) {
+        } else if (game.complexity == game.unlockTaxes) {
             b_Message.Caption = "Because you chose to increase the complexity, we are introducing a new game function called TAXES." + "\n" + "\n" + "Unfortunately, you must pay taxes from now on. Sorry, but that's life.";
-        } else if (gv11CE.M4FFC == gv11CE.M503E) {
+        } else if (game.complexity == game.unlockInsurance) {
             b_Message.Caption = "This turn we are introducing a new game function called VOYAGER'S INSURANCE." + "\n" + "\n" + "Now you can buy insurance to protect your company from unforeseen disasters.";
-        } else if (gv11CE.M4FFC == gv11CE.M50D3) {
+        } else if (game.complexity == game.unlockWarehouse) {
             b_Message.Caption = "Because you chose to increase the complexity, we are introducing a new game function called WAREHOUSE." + "\n" + "\n" + "Now you can store commodities in warehouses on all seven planets. Be sure to click on the WAREHOUSE HELP button for more information!";
-        } else if (gv11CE.M4FFC == gv11CE.M50E8) {
+        } else if (game.complexity == game.unlockExplore) {
             b_Message.Caption = "Because you chose to increase the complexity, we are introducing a new game function called EXPLORE." + "\n" + "\n" + "This will allow you to explore the planets, get weather updates, and catch the latest in Kukubian news.";
-        } else if (gv11CE.M4FFC == gv11CE.M50FB) {
+        } else if (game.complexity == game.unlockDistanceChart) {
             b_Message.Caption = "Because you chose to increase the complexity, we are introducing a new game function called DISTANCE CHART. The button will appear when you JOURNEY to a new planet at the bottom of the screen." + "\n" + "\n" + "The DISTANCE CHART will show the exact distance between each of the planets and the location of all the other players' ships.";
-        } else if (gv11CE.M4FFC == gv11CE.M510F) {
+        } else if (game.complexity == game.unlockFacilities) {
             b_Message.Caption = "Because you chose to increase the complexity, we are introducing a new game function called FACILITIES. The button will appear when you JOURNEY to a new planet, right next to the DISTANCE CHART button." + "\n" + "\n" + "Once every few weeks, Emperor Dred Nicolson will auction off government facilities to the highest bidder. The company that buys a facility can charge other trading companies a FEE every time they visit the planet where the facility is located.";
-        } else if (gv11CE.M4FFC == gv11CE.M5123) {
+        } else if (game.complexity == game.unlockStocks) {
             b_Message.Caption = "Because you chose to increase the complexity, we are introducing a new game function called STOCK MARKETS. Each planet has its own stock exchange. These stock exchanges are similar to index funds. They are an average of selected stocks on the planet. A word of caution, before making any big investments, be sure to look at the market trend lines. If a market is on a downward trend, it is not a good idea to invest too much money.";
-            gv11CE.M552A = 0;
+            game.tutorialMode = 0;
         }
     }
 

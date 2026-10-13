@@ -51,7 +51,7 @@ function (me) {
         me.MousePointer = mc001A;
         await Load(frm_ShipInfoBox);
         frm_ShipInfoBox.Caption = "Cargo Capacity";
-        frm_ShipInfoBox.b_Message.Caption = "The amount of cargo your ship can carry depends on the size and type of your ship. The ship you own now can hold up to " + Format(gv0BF2.M4CE8, "#,#0") + " tons of cargo. That means you can buy up to " + Format(gv0BF2.M4CE8, "#,#0") + " tons of commodities and transport them to another planet. Generally, the larger your ship, the more tons of cargo you can carry.";
+        frm_ShipInfoBox.b_Message.Caption = "The amount of cargo your ship can carry depends on the size and type of your ship. The ship you own now can hold up to " + Format(player.cargoCapacity, "#,#0") + " tons of cargo. That means you can buy up to " + Format(player.cargoCapacity, "#,#0") + " tons of commodities and transport them to another planet. Generally, the larger your ship, the more tons of cargo you can carry.";
         await frm_ShipInfoBox.Show(1);
         me.MousePointer = mc002A;
     }
@@ -68,7 +68,7 @@ function (me) {
         me.MousePointer = mc001A;
         await Load(frm_ShipInfoBox);
         frm_ShipInfoBox.Caption = "Crew";
-        frm_ShipInfoBox.b_Message.Caption = "The number of employees you have depends on the size and type of your ship. Your company currently employs " + Format(gv0BF2.M4D01, "#,#0") + " crew members. You must pay each employee a weekly salary of " + Format(gv0BF2.M4D09, "#,#0") + " kubars. You will not be required to hire any additional employees until you purchase a larger ship.";
+        frm_ShipInfoBox.b_Message.Caption = "The number of employees you have depends on the size and type of your ship. Your company currently employs " + Format(player.crewSize, "#,#0") + " crew members. You must pay each employee a weekly salary of " + Format(player.crewSalary, "#,#0") + " kubars. You will not be required to hire any additional employees until you purchase a larger ship.";
         await frm_ShipInfoBox.Show(1);
         me.MousePointer = mc002A;
     }
@@ -99,7 +99,7 @@ function (me) {
         me.MousePointer = mc001A;
         await Load(frm_ShipInfoBox);
         frm_ShipInfoBox.Caption = "Fuel Tank Size";
-        frm_ShipInfoBox.b_Message.Caption = "The fuel tank size (fuel capacity) for your ship is " + Format(gv0BF2.M4D5E, "#,#0") + " tons. This is the maximum amount of fuel your ship can carry. The advantage of a larger fuel tank is that if fuel prices are high on one planet, you can usually afford to wait until you reach another planet before filling up your tank.";
+        frm_ShipInfoBox.b_Message.Caption = "The fuel tank size (fuel capacity) for your ship is " + Format(player.fuelCapacity, "#,#0") + " tons. This is the maximum amount of fuel your ship can carry. The advantage of a larger fuel tank is that if fuel prices are high on one planet, you can usually afford to wait until you reach another planet before filling up your tank.";
         await frm_ShipInfoBox.Show(1);
         me.MousePointer = mc002A;
     }
@@ -116,7 +116,7 @@ function (me) {
         me.MousePointer = mc001A;
         await Load(frm_ShipInfoBox);
         frm_ShipInfoBox.Caption = "Fuel Usage";
-        frm_ShipInfoBox.b_Message.Caption = "Every time you travel to a planet, your ship consumes between 2 and " + Format((gv11CE.M54B3[gv11CE.M53E5] / 100) + 11, "#,#0") + " tons of fuel. On average, the longer the distance travelled and the larger the ship, the more fuel is used. If you want to save fuel, a good idea is to travel to a nearby planet, rather than one on the other side of Kukubia.";
+        frm_ShipInfoBox.b_Message.Caption = "Every time you travel to a planet, your ship consumes between 2 and " + Format((game.shipSize[game.currentPlayer] / 100) + 11, "#,#0") + " tons of fuel. On average, the longer the distance travelled and the larger the ship, the more fuel is used. If you want to save fuel, a good idea is to travel to a nearby planet, rather than one on the other side of Kukubia.";
         await frm_ShipInfoBox.Show(1);
         me.MousePointer = mc002A;
     }
@@ -131,10 +131,10 @@ function (me) {
 
     async function b_Help_Click() {
         me.MousePointer = mc001A;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             frm_Money.b_Sound.Command = "Close";
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -157,14 +157,14 @@ function (me) {
         me.MousePointer = mc001A;
         await Load(frm_ShipInfoBox);
         frm_ShipInfoBox.Caption = "Passenger Capacity";
-        if (gv0BF2.M4F47 == -1) {
-            l00D4 = gv0BF2.M4EF2;
-            l00D6 = gv0BF2.M4F15 - gv0BF2.M4EF2;
+        if (player.passengersBoarded == -1) {
+            l00D4 = player.passengersAboard;
+            l00D6 = player.passengersWaiting - player.passengersAboard;
         } else {
             l00D4 = 0;
-            l00D6 = gv0BF2.M4F15;
+            l00D6 = player.passengersWaiting;
         }
-        frm_ShipInfoBox.b_Message.Caption = "The number of passengers a ship can carry depends on its size and type. The ship you own now can accommodate up to " + Format(gv0BF2.M4F00, "#,#0") + " passengers. The more you spend on passenger advertising, the more people will want to travel on your ship. On the other hand, the more you charge for tickets, the fewer passengers you'll get. At this time you have " + Format(l00D4, "#,#0") + " passenger(s) on your ship and " + Format(l00D6, "#,#0") + " passenger(s) waiting to buy tickets.";
+        frm_ShipInfoBox.b_Message.Caption = "The number of passengers a ship can carry depends on its size and type. The ship you own now can accommodate up to " + Format(player.passengerCapacity, "#,#0") + " passengers. The more you spend on passenger advertising, the more people will want to travel on your ship. On the other hand, the more you charge for tickets, the fewer passengers you'll get. At this time you have " + Format(l00D4, "#,#0") + " passenger(s) on your ship and " + Format(l00D6, "#,#0") + " passenger(s) waiting to buy tickets.";
         await frm_ShipInfoBox.Show(1);
         me.MousePointer = mc002A;
     }
@@ -197,7 +197,7 @@ function (me) {
     async function b_ShipSizeButton_Click() {
         me.MousePointer = mc001A;
         frm_ShipInfoBox.Caption = "Ship Size";
-        frm_ShipInfoBox.b_Message.Caption = "You currently own a " + Format(gv11CE.M54B3[gv11CE.M53E5], "#,#0") + "-ton ship. This does not mean you can carry " + Format(gv11CE.M54B3[gv11CE.M53E5], "#,#0") + " tons of cargo. The ship's engine room, bridge, passenger seating area, crew living quarters, life support systems, and fuel tanks take up approximately " + Format(gv11CE.M54B3[gv11CE.M53E5] - gv0BF2.M4CE8, "#,#0") + " tons. The remaining " + Format(gv0BF2.M4CE8, "#,#0") + " tons can be used to haul cargo.";
+        frm_ShipInfoBox.b_Message.Caption = "You currently own a " + Format(game.shipSize[game.currentPlayer], "#,#0") + "-ton ship. This does not mean you can carry " + Format(game.shipSize[game.currentPlayer], "#,#0") + " tons of cargo. The ship's engine room, bridge, passenger seating area, crew living quarters, life support systems, and fuel tanks take up approximately " + Format(game.shipSize[game.currentPlayer] - player.cargoCapacity, "#,#0") + " tons. The remaining " + Format(player.cargoCapacity, "#,#0") + " tons can be used to haul cargo.";
         await frm_ShipInfoBox.Show(1);
         me.MousePointer = mc002A;
     }
@@ -214,7 +214,7 @@ function (me) {
         me.MousePointer = mc001A;
         await Load(frm_ShipInfoBox);
         frm_ShipInfoBox.Caption = "Engine";
-        frm_ShipInfoBox.b_Message.Caption = "Your ship has a " + Format(gv11CE.M530C[gv11CE.M53E5], "#,#0") + " kuarp engine. The higher the kuarp value, the faster your ship can travel. This is an advantage if you are trying to beat another player to a planet in order to buy up all the best commodities. You can roughly compute the time it will take you to travel to a planet by dividing the total DISTANCE by the ENGINE SPEED. You can purchase a faster engine by going to Pyke and clicking on EXPLORE PLANET, then PLANET SPECIAL.";
+        frm_ShipInfoBox.b_Message.Caption = "Your ship has a " + Format(game.engineSpeed[game.currentPlayer], "#,#0") + " kuarp engine. The higher the kuarp value, the faster your ship can travel. This is an advantage if you are trying to beat another player to a planet in order to buy up all the best commodities. You can roughly compute the time it will take you to travel to a planet by dividing the total DISTANCE by the ENGINE SPEED. You can purchase a faster engine by going to Pyke and clicking on EXPLORE PLANET, then PLANET SPECIAL.";
         await frm_ShipInfoBox.Show(1);
         me.MousePointer = mc002A;
     }
@@ -229,46 +229,46 @@ function (me) {
 
     function sub2339() {
         let l0130 = "";
-        b_Passengers.Caption = " Passenger Capacity:  " + Format(gv0BF2.M4F00, "#,#0");
-        b_Speed.Caption = " Engine Speed:  " + Format(gv11CE.M530C[gv11CE.M53E5], "#,#0") + " kuarps";
-        if (gv11CE.M541E[gv11CE.M53E5] == 1) {
+        b_Passengers.Caption = " Passenger Capacity:  " + Format(player.passengerCapacity, "#,#0");
+        b_Speed.Caption = " Engine Speed:  " + Format(game.engineSpeed[game.currentPlayer], "#,#0") + " kuarps";
+        if (game.shipType[game.currentPlayer] == 1) {
             l0130 = "Stinger XII";
-        } else if (gv11CE.M541E[gv11CE.M53E5] == 2) {
+        } else if (game.shipType[game.currentPlayer] == 2) {
             l0130 = "Fly Catcher";
-        } else if (gv11CE.M541E[gv11CE.M53E5] == 3) {
+        } else if (game.shipType[game.currentPlayer] == 3) {
             l0130 = "Le Rock";
-        } else if (gv11CE.M541E[gv11CE.M53E5] == 4) {
+        } else if (game.shipType[game.currentPlayer] == 4) {
             l0130 = "Whaler 2000";
-        } else if (gv11CE.M541E[gv11CE.M53E5] == 5) {
+        } else if (game.shipType[game.currentPlayer] == 5) {
             l0130 = "Retina";
-        } else if (gv11CE.M541E[gv11CE.M53E5] == 6) {
+        } else if (game.shipType[game.currentPlayer] == 6) {
             l0130 = "Cerebralis";
-        } else if (gv11CE.M541E[gv11CE.M53E5] == 7) {
+        } else if (game.shipType[game.currentPlayer] == 7) {
             l0130 = "The Globulizer";
-        } else if (gv11CE.M541E[gv11CE.M53E5] == 8) {
+        } else if (game.shipType[game.currentPlayer] == 8) {
             l0130 = "Locomotis";
-        } else if (gv11CE.M541E[gv11CE.M53E5] == 9) {
+        } else if (game.shipType[game.currentPlayer] == 9) {
             l0130 = "Mantagon";
-        } else if (gv11CE.M541E[gv11CE.M53E5] == 10) {
+        } else if (game.shipType[game.currentPlayer] == 10) {
             l0130 = "Kegger";
-        } else if (gv11CE.M541E[gv11CE.M53E5] == 11) {
+        } else if (game.shipType[game.currentPlayer] == 11) {
             l0130 = "Worm Shuttle";
-        } else if (gv11CE.M541E[gv11CE.M53E5] == 12) {
+        } else if (game.shipType[game.currentPlayer] == 12) {
             l0130 = "Squidocity";
         }
         b_ShipName.Caption = "Ship Name:  " + l0130;
-        b_CargoCapacity.Caption = " Cargo Capacity:  " + Format(gv0BF2.M4CE8, "#,#0");
-        b_ShipTons.Caption = " Ship Size: " + Format(gv11CE.M54B3[gv11CE.M53E5], "#,#0") + " tons";
-        b_EmployeeSalary.Caption = "Salary Per Person..... " + Format(gv0BF2.M4D09, "#,#0") + " kubars";
-        b_TankSize.Caption = "Tank Size:  " + Format(gv0BF2.M4D5E, "#,#0") + " tons";
-        b_Consumption.Caption = "Max Possible Usage:  2 to " + Format((gv11CE.M54B3[gv11CE.M53E5] / 100) + 11, "#,#0") + " tons per week";
-        b_Employee.Caption = "Crew:  Total of " + Format(gv0BF2.M4D01, "#,#0");
-        if (gv0BF2.M4D01 == 1) {
+        b_CargoCapacity.Caption = " Cargo Capacity:  " + Format(player.cargoCapacity, "#,#0");
+        b_ShipTons.Caption = " Ship Size: " + Format(game.shipSize[game.currentPlayer], "#,#0") + " tons";
+        b_EmployeeSalary.Caption = "Salary Per Person..... " + Format(player.crewSalary, "#,#0") + " kubars";
+        b_TankSize.Caption = "Tank Size:  " + Format(player.fuelCapacity, "#,#0") + " tons";
+        b_Consumption.Caption = "Max Possible Usage:  2 to " + Format((game.shipSize[game.currentPlayer] / 100) + 11, "#,#0") + " tons per week";
+        b_Employee.Caption = "Crew:  Total of " + Format(player.crewSize, "#,#0");
+        if (player.crewSize == 1) {
             b_Pilot.Caption = "Pilot:  " + Format(1, "#,#0");
             b_Navigator.Caption = "Navigator:  " + Format(0, "#,#0");
             b_Engineer.Caption = "Engineer:  " + Format(0, "#,#0");
             b_Crew.Caption = "Staff:  " + Format(0, "#,#0");
-        } else if (gv0BF2.M4D01 == 2) {
+        } else if (player.crewSize == 2) {
             b_Pilot.Caption = "Pilot:  " + Format(1, "#,#0");
             b_Navigator.Caption = "Navigator:  " + Format(1, "#,#0");
             b_Engineer.Caption = "Engineer:  " + Format(0, "#,#0");
@@ -277,7 +277,7 @@ function (me) {
             b_Pilot.Caption = "Pilot:  " + Format(1, "#,#0");
             b_Navigator.Caption = "Navigator:  " + Format(1, "#,#0");
             b_Engineer.Caption = "Engineer:  " + Format(1, "#,#0");
-            b_Crew.Caption = "Staff:  " + Format(gv0BF2.M4D01 - 3, "#,#0");
+            b_Crew.Caption = "Staff:  " + Format(player.crewSize - 3, "#,#0");
         }
     }
 
@@ -293,8 +293,8 @@ function (me) {
 
     async function Form_Load() {
         me.MousePointer = mc001A;
-        Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "ship" + Trim(Str(gv11CE.M541E[gv11CE.M53E5])) + ".bmp");
-        if (gv11CE.M552A == -1) {
+        Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ship" + Trim(Str(game.shipType[game.currentPlayer])) + ".bmp");
+        if (game.tutorialMode == -1) {
             frm_Box1.FillElastic.Caption = "Tutorial";
             frm_Box1.b_Message.Caption = "Because you are playing the TUTORIAL game, you will notice that many of the ship's features are not yet included. As you play, these features will gradually be added to the game." + "\n" + "\n" + "For example, you cannot buy a larger engine until the PLANET SPECIAL feature is introduced to the game, and this happens near the end of the TUTORIAL.";
             await frm_Box1.Show(1);

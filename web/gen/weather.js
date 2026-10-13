@@ -29,7 +29,7 @@ function (me) {
     async function b_Button_Click() {
         me.MousePointer = mc001C;
         b_Timer.Enabled = 0;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         FillElastic.Visible = 0;
@@ -40,7 +40,7 @@ function (me) {
     async function b_Exit_Click() {
         me.MousePointer = mc001C;
         b_Timer.Enabled = 0;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         FillElastic.Visible = 0;
@@ -57,9 +57,9 @@ function (me) {
 
     async function b_Help_Click() {
         me.MousePointer = mc001C;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -78,9 +78,9 @@ function (me) {
 
     function b_Timer_Timer() {
         if (m001A == 1) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "weather2.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "weather2.bmp");
         } else if (m001A == 2) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "WEATHER.BMP");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "WEATHER.BMP");
         }
         m001A = m001A + 1;
         if (m001A == 3) {
@@ -89,138 +89,138 @@ function (me) {
     }
 
     function sub2F02() {
-        if (gv11CE.M5533 == 1) {
-            b_Message.Caption = "Our satellites indicate you should be careful when travelling near " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ". A meteor storm is expected to move into the area this week.";
-        } else if (gv11CE.M5533 == 2) {
-            b_Message.Caption = "We expect a solar storm to hit " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " this week. If you plan on travelling in that area, be sure to prepare for some rough weather.";
-        } else if (gv11CE.M5533 == 3) {
-            b_Message.Caption = "This week's forecast shows a Space Hurricane forming around " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ". If you plan on visiting " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ", you might invest in a little Voyager's Insurance.";
-        } else if (gv11CE.M5533 == 4) {
-            b_Message.Caption = "The skies are looking quite turbulent on planet " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " these days. The locals inform us that a Stellar Typhoon will hit the planet any day now.";
-        } else if (gv11CE.M5533 == 5) {
-            b_Message.Caption = "It looks like a corrosive cloud of Dexxy Gas is moving towards " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ". If you plan on being in the area, you should beware.";
-        } else if (gv11CE.M5533 == 6) {
-            b_Message.Caption = "If you're planning a trip to " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " any time soon, I'd be on the look out for Mippi Weeds. A sticky drift of weeds is headed in that direction.";
-        } else if (gv11CE.M5533 == 7) {
-            b_Message.Caption = "We predict a stream of acidic Bollup Juice will be flowing past " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " in the near future. This deadly liquid is known to cause severe damage to engine pods and hull liners.";
-        } else if (gv11CE.M5533 == 8) {
-            b_Message.Caption = "It seems like a pool of Wess Vapor is accumulating around " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ". It should reach harmful levels within a few days.";
-        } else if (gv11CE.M5533 == 9) {
-            b_Message.Caption = "Beware, a Stellar Whirl Pool is forming off planet " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ". It should reach critical strength in the next few days.";
-        } else if (gv11CE.M5533 == 10) {
-            b_Message.Caption = "We have reports of a Bobble Warp, a dangerous break in the time/space continuum, flaring up in the region around " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ".";
-        } else if ((gv11CE.M5533 >= 11 && gv11CE.M5533 <= 15)) {
+        if (game.weatherEvent == 1) {
+            b_Message.Caption = "Our satellites indicate you should be careful when travelling near " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ". A meteor storm is expected to move into the area this week.";
+        } else if (game.weatherEvent == 2) {
+            b_Message.Caption = "We expect a solar storm to hit " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " this week. If you plan on travelling in that area, be sure to prepare for some rough weather.";
+        } else if (game.weatherEvent == 3) {
+            b_Message.Caption = "This week's forecast shows a Space Hurricane forming around " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ". If you plan on visiting " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ", you might invest in a little Voyager's Insurance.";
+        } else if (game.weatherEvent == 4) {
+            b_Message.Caption = "The skies are looking quite turbulent on planet " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " these days. The locals inform us that a Stellar Typhoon will hit the planet any day now.";
+        } else if (game.weatherEvent == 5) {
+            b_Message.Caption = "It looks like a corrosive cloud of Dexxy Gas is moving towards " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ". If you plan on being in the area, you should beware.";
+        } else if (game.weatherEvent == 6) {
+            b_Message.Caption = "If you're planning a trip to " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " any time soon, I'd be on the look out for Mippi Weeds. A sticky drift of weeds is headed in that direction.";
+        } else if (game.weatherEvent == 7) {
+            b_Message.Caption = "We predict a stream of acidic Bollup Juice will be flowing past " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " in the near future. This deadly liquid is known to cause severe damage to engine pods and hull liners.";
+        } else if (game.weatherEvent == 8) {
+            b_Message.Caption = "It seems like a pool of Wess Vapor is accumulating around " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ". It should reach harmful levels within a few days.";
+        } else if (game.weatherEvent == 9) {
+            b_Message.Caption = "Beware, a Stellar Whirl Pool is forming off planet " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ". It should reach critical strength in the next few days.";
+        } else if (game.weatherEvent == 10) {
+            b_Message.Caption = "We have reports of a Bobble Warp, a dangerous break in the time/space continuum, flaring up in the region around " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ".";
+        } else if ((game.weatherEvent >= 11 && game.weatherEvent <= 15)) {
             b_Message.Caption = "Welcome to the Weather Bureau. All is looking clear this week. No reports of meteor storms or space hurricanes yet. You know what they say, \"No news is good news.\"";
-        } else if (gv11CE.M5533 == 16) {
-            b_Message.Caption = UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " has been experiencing some mighty dry weather lately. Local Officials expressed fears that this may turn into a drought.";
-        } else if (gv11CE.M5533 == 17) {
-            b_Message.Caption = "It's cloudy over " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " these days. Looks like occasional showers, clearing up later in the week.";
-        } else if (gv11CE.M5533 == 18) {
-            b_Message.Caption = "Don't forget your raincoat if you're headed to " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ". We expect a healthy dose of wet weather.";
-        } else if (gv11CE.M5533 == 19) {
-            b_Message.Caption = "It looks like the skies around " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " have cleared up. Good news for anyone heading that way.";
-        } else if (gv11CE.M5533 == 20) {
-            b_Message.Caption = "It's the perfect time of year to travel to " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ". The skies are looking beautiful and the Imo Blossoms are in full bloom.";
-        } else if (gv11CE.M5533 == 21) {
-            b_Message.Caption = "The weather around planet " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " has taken a turn for the better these days. No Bobble Warps or Dexxy Gas has been spotted for quite some time.";
-        } else if (gv11CE.M5533 == 22) {
-            b_Message.Caption = "It appears that the seasonal Meteor Storms around " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " aren't coming this year. That's good news for merchants operating in the region.";
-        } else if (gv11CE.M5533 == 23) {
-            b_Message.Caption = "We have reports that the Wess Vapor problem around " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " has completely diminished. You shouldn't experience any trouble if you are headed in that direction.";
-        } else if (gv11CE.M5533 == 24) {
-            b_Message.Caption = "The space around " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " is black and beautiful this week. It looks like clear sailing for those of you passing through the area.";
-        } else if (gv11CE.M5533 == 25) {
-            b_Message.Caption = "It's the perfect time of year to visit " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " and join in the local Ipnu Festivals. The weather is expected to be gorgeous for at least the next week.";
-        } else if (gv11CE.M5533 == 26) {
-            b_Message.Caption = "If you enjoy drinking Gapa Milk under milky green skies, now is a great time to head to " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ". The unusually humid weather this past year has inspired the Gapa Cattle to produced record quantities of this delicious beverage.";
-        } else if (gv11CE.M5533 == 27) {
-            b_Message.Caption = "It looks like the unseasonably hot weather on " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " has produced an explosion of Kele Jumpers. These hungry insects are causing the local farmers a real headache but shouldn't be much of a problem to visitors.";
-        } else if (gv11CE.M5533 == 28) {
-            b_Message.Caption = "The temperature on " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " has dropped lately. This climate change may cause some trouble for the local farmers but shouldn't inconvenience any visitors to the planet.";
-        } else if (gv11CE.M5533 == 29) {
-            b_Message.Caption = "Don't expect perfect weather when you visit " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ". It looks like they are in for some heavy rains. But no need to worry, only minor flooding is expected this year.";
-        } else if (gv11CE.M5533 == 30) {
-            b_Message.Caption = "The region around " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " looks like it is finally clearing up. We don't expect any new problems in the area for quite some time.";
-        } else if (gv11CE.M5533 == 31) {
-            b_Message.Caption = "A recent heat wave on " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " has caused 2,000 tons of whipped cream to go rancid. This is a major loss for the whipped cream industry.";
-        } else if (gv11CE.M5533 == 32) {
-            b_Message.Caption = "The freezing temperatures on " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " over the past few months have caused a number of outdoor lava lamps to stop functioning.";
-        } else if (gv11CE.M5533 == 33) {
-            b_Message.Caption = "The unseasonably warm temperatures on " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " have caused the Yiffit Fly population to explode. If you're headed in that direction, be sure to bring some Yiffit repellent.";
-        } else if (gv11CE.M5533 == 34) {
-            b_Message.Caption = "The extremely hot weather on " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " this past week has caused literally thousands of tons of jelly beans to melt into giant jelly gobs. The manufacturers have no choice but to destroy these gobs and write off the losses.";
-        } else if (gv11CE.M5533 == 35) {
-            b_Message.Caption = "The cold weather on " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " this past week has kept people indoors, and as a consequence, local shop owners are suffering.";
-        } else if (gv11CE.M5533 == 36) {
-            b_Message.Caption = "An unexpected tidal wave on " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " wiped out an entire village. Fortunately, this happened during the Hagel Pilgrimage, and the village was almost entirely empty.";
-        } else if (gv11CE.M5533 == 37) {
-            b_Message.Caption = "As a result of the heat wave on " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ", locals have taken to painting their skin silver. They claim this reflects the sun and prevents skin cancer. If you're headed to the planet, be sure to bring sun glasses because at times it can be quite blinding.";
-        } else if (gv11CE.M5533 == 38) {
-            b_Message.Caption = "Locals on " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " are now engaged in their annual snow eating contest. The individual who manages to eat the most snow can claim the Snow Stuffer of the Year Award.";
-        } else if (gv11CE.M5533 == 39) {
-            b_Message.Caption = "Mothers on " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " claim that the unseasonably hot weather this past summer prevented numerous pregnancies. Statistical data shows that the birth rate has fallen 14% compared to the same time last year.";
-        } else if (gv11CE.M5533 == 40) {
-            b_Message.Caption = "Because of the heavy rains this past winter on " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ", umbrella sales were well above average, and store owners report that their inventories are substantially lower than in previous years.";
-        } else if (gv11CE.M5533 == 41) {
-            b_Message.Caption = "Due to the above average snow fall this winter on " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ", a startup company announced plans to package the fresh snow, keep it frozen, and sell it to ski resorts around Kukubia. It remains to be seen whether or not there is a market for this type of product.";
-        } else if (gv11CE.M5533 == 42) {
-            b_Message.Caption = "Gusty winds and non-stop rain fell on " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " this past week. Unfortunately, Emperor Dred Nicolson was visiting the planet at the time and became extremely upset. Taking the terrible weather as a personal insult, the Emperor vowed never to come back to " + Trim(gv11CE.M53C1[gv11CE.M553E]) + ".";
-        } else if (gv11CE.M5533 == 43) {
-            b_Message.Caption = "Due to the extended drought on " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ", the entire year's grain harvest has been ruined.";
-        } else if (gv11CE.M5533 == 44) {
-            b_Message.Caption = "A major earthquake shook " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " late last night. As of today, " + Format(gv11CE.M536A * 3, "#,#0") + " are reported dead and thousands are homeless. Crews are still working around the clock to rescue those trapped in the rubble.";
-        } else if (gv11CE.M5533 == 45) {
-            b_Message.Caption = "A series of devastating floods has wiped out " + Format((gv11CE.M536A / 2) + 40, "#,#0") + "% of the farms on " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ". Emperor Dred Nicolson has declared this a planetary emergency and is sending one billion kubars in aid to the planet.";
-        } else if (gv11CE.M5533 == 46) {
-            b_Message.Caption = "The warm weather has triggered an explosion in the Catox Bug population, and farmers on " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " are battling to save their crops from these ravenous insects. The Governor has asked for help from the Imperial Magistrate, but as of yet, there has been no official response.";
-        } else if (gv11CE.M5533 == 47) {
-            b_Message.Caption = "The weather on " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " has been warm and beautiful. That is why the Governor just enacted a new law outlawing nude bathing. This is in response to a flood of tourists, who have come to the planet to enjoy the beaches and shed their clothing.";
-        } else if (gv11CE.M5533 == 48) {
-            b_Message.Caption = "The Kukubian Association of Meteorologists is planning a picnic on " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " this weekend. Unfortunately, it is supposed to rain both days.";
-        } else if (gv11CE.M5533 == 49) {
-            b_Message.Caption = "A new study shows that our weather predictions are correct " + Format((gv11CE.M536A / 2) + 40, "#,#0") + "% of the time. You'll be happy to know this is up from " + Format((gv11CE.M536A / 2) + 35, "#,#0") + "% last year and is well above the " + Format((gv11CE.M536A / 2) + 13, "#,#0") + "% national average.";
-        } else if (gv11CE.M5533 == 50) {
+        } else if (game.weatherEvent == 16) {
+            b_Message.Caption = UCase(Trim(game.planetNames[game.weatherPlanet])) + " has been experiencing some mighty dry weather lately. Local Officials expressed fears that this may turn into a drought.";
+        } else if (game.weatherEvent == 17) {
+            b_Message.Caption = "It's cloudy over " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " these days. Looks like occasional showers, clearing up later in the week.";
+        } else if (game.weatherEvent == 18) {
+            b_Message.Caption = "Don't forget your raincoat if you're headed to " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ". We expect a healthy dose of wet weather.";
+        } else if (game.weatherEvent == 19) {
+            b_Message.Caption = "It looks like the skies around " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " have cleared up. Good news for anyone heading that way.";
+        } else if (game.weatherEvent == 20) {
+            b_Message.Caption = "It's the perfect time of year to travel to " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ". The skies are looking beautiful and the Imo Blossoms are in full bloom.";
+        } else if (game.weatherEvent == 21) {
+            b_Message.Caption = "The weather around planet " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " has taken a turn for the better these days. No Bobble Warps or Dexxy Gas has been spotted for quite some time.";
+        } else if (game.weatherEvent == 22) {
+            b_Message.Caption = "It appears that the seasonal Meteor Storms around " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " aren't coming this year. That's good news for merchants operating in the region.";
+        } else if (game.weatherEvent == 23) {
+            b_Message.Caption = "We have reports that the Wess Vapor problem around " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " has completely diminished. You shouldn't experience any trouble if you are headed in that direction.";
+        } else if (game.weatherEvent == 24) {
+            b_Message.Caption = "The space around " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " is black and beautiful this week. It looks like clear sailing for those of you passing through the area.";
+        } else if (game.weatherEvent == 25) {
+            b_Message.Caption = "It's the perfect time of year to visit " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " and join in the local Ipnu Festivals. The weather is expected to be gorgeous for at least the next week.";
+        } else if (game.weatherEvent == 26) {
+            b_Message.Caption = "If you enjoy drinking Gapa Milk under milky green skies, now is a great time to head to " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ". The unusually humid weather this past year has inspired the Gapa Cattle to produced record quantities of this delicious beverage.";
+        } else if (game.weatherEvent == 27) {
+            b_Message.Caption = "It looks like the unseasonably hot weather on " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " has produced an explosion of Kele Jumpers. These hungry insects are causing the local farmers a real headache but shouldn't be much of a problem to visitors.";
+        } else if (game.weatherEvent == 28) {
+            b_Message.Caption = "The temperature on " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " has dropped lately. This climate change may cause some trouble for the local farmers but shouldn't inconvenience any visitors to the planet.";
+        } else if (game.weatherEvent == 29) {
+            b_Message.Caption = "Don't expect perfect weather when you visit " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ". It looks like they are in for some heavy rains. But no need to worry, only minor flooding is expected this year.";
+        } else if (game.weatherEvent == 30) {
+            b_Message.Caption = "The region around " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " looks like it is finally clearing up. We don't expect any new problems in the area for quite some time.";
+        } else if (game.weatherEvent == 31) {
+            b_Message.Caption = "A recent heat wave on " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " has caused 2,000 tons of whipped cream to go rancid. This is a major loss for the whipped cream industry.";
+        } else if (game.weatherEvent == 32) {
+            b_Message.Caption = "The freezing temperatures on " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " over the past few months have caused a number of outdoor lava lamps to stop functioning.";
+        } else if (game.weatherEvent == 33) {
+            b_Message.Caption = "The unseasonably warm temperatures on " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " have caused the Yiffit Fly population to explode. If you're headed in that direction, be sure to bring some Yiffit repellent.";
+        } else if (game.weatherEvent == 34) {
+            b_Message.Caption = "The extremely hot weather on " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " this past week has caused literally thousands of tons of jelly beans to melt into giant jelly gobs. The manufacturers have no choice but to destroy these gobs and write off the losses.";
+        } else if (game.weatherEvent == 35) {
+            b_Message.Caption = "The cold weather on " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " this past week has kept people indoors, and as a consequence, local shop owners are suffering.";
+        } else if (game.weatherEvent == 36) {
+            b_Message.Caption = "An unexpected tidal wave on " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " wiped out an entire village. Fortunately, this happened during the Hagel Pilgrimage, and the village was almost entirely empty.";
+        } else if (game.weatherEvent == 37) {
+            b_Message.Caption = "As a result of the heat wave on " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ", locals have taken to painting their skin silver. They claim this reflects the sun and prevents skin cancer. If you're headed to the planet, be sure to bring sun glasses because at times it can be quite blinding.";
+        } else if (game.weatherEvent == 38) {
+            b_Message.Caption = "Locals on " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " are now engaged in their annual snow eating contest. The individual who manages to eat the most snow can claim the Snow Stuffer of the Year Award.";
+        } else if (game.weatherEvent == 39) {
+            b_Message.Caption = "Mothers on " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " claim that the unseasonably hot weather this past summer prevented numerous pregnancies. Statistical data shows that the birth rate has fallen 14% compared to the same time last year.";
+        } else if (game.weatherEvent == 40) {
+            b_Message.Caption = "Because of the heavy rains this past winter on " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ", umbrella sales were well above average, and store owners report that their inventories are substantially lower than in previous years.";
+        } else if (game.weatherEvent == 41) {
+            b_Message.Caption = "Due to the above average snow fall this winter on " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ", a startup company announced plans to package the fresh snow, keep it frozen, and sell it to ski resorts around Kukubia. It remains to be seen whether or not there is a market for this type of product.";
+        } else if (game.weatherEvent == 42) {
+            b_Message.Caption = "Gusty winds and non-stop rain fell on " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " this past week. Unfortunately, Emperor Dred Nicolson was visiting the planet at the time and became extremely upset. Taking the terrible weather as a personal insult, the Emperor vowed never to come back to " + Trim(game.planetNames[game.weatherPlanet]) + ".";
+        } else if (game.weatherEvent == 43) {
+            b_Message.Caption = "Due to the extended drought on " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ", the entire year's grain harvest has been ruined.";
+        } else if (game.weatherEvent == 44) {
+            b_Message.Caption = "A major earthquake shook " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " late last night. As of today, " + Format(game.weeklyRoll * 3, "#,#0") + " are reported dead and thousands are homeless. Crews are still working around the clock to rescue those trapped in the rubble.";
+        } else if (game.weatherEvent == 45) {
+            b_Message.Caption = "A series of devastating floods has wiped out " + Format((game.weeklyRoll / 2) + 40, "#,#0") + "% of the farms on " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ". Emperor Dred Nicolson has declared this a planetary emergency and is sending one billion kubars in aid to the planet.";
+        } else if (game.weatherEvent == 46) {
+            b_Message.Caption = "The warm weather has triggered an explosion in the Catox Bug population, and farmers on " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " are battling to save their crops from these ravenous insects. The Governor has asked for help from the Imperial Magistrate, but as of yet, there has been no official response.";
+        } else if (game.weatherEvent == 47) {
+            b_Message.Caption = "The weather on " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " has been warm and beautiful. That is why the Governor just enacted a new law outlawing nude bathing. This is in response to a flood of tourists, who have come to the planet to enjoy the beaches and shed their clothing.";
+        } else if (game.weatherEvent == 48) {
+            b_Message.Caption = "The Kukubian Association of Meteorologists is planning a picnic on " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " this weekend. Unfortunately, it is supposed to rain both days.";
+        } else if (game.weatherEvent == 49) {
+            b_Message.Caption = "A new study shows that our weather predictions are correct " + Format((game.weeklyRoll / 2) + 40, "#,#0") + "% of the time. You'll be happy to know this is up from " + Format((game.weeklyRoll / 2) + 35, "#,#0") + "% last year and is well above the " + Format((game.weeklyRoll / 2) + 13, "#,#0") + "% national average.";
+        } else if (game.weatherEvent == 50) {
             b_Message.Caption = "The Kukubian Broadcasters Association is thinking of launching a fruits and vegetables channel. This will feature fruit and vegetable related stories 24 hours a day.";
-        } else if (gv11CE.M5533 == 51) {
-            b_Message.Caption = "Clouds of space dust were spotted forming around " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ". Experts in the area inform us that the dust may appear ominous, but it should not impede travel at all.";
-        } else if (gv11CE.M5533 == 52) {
-            b_Message.Caption = "Clouds of green gas are reported to be rising from the surface of " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ". Scientists on the planet say these clouds may look dangerous, but they are nothing to worry about.";
-        } else if (gv11CE.M5533 == 53) {
-            b_Message.Caption = "Last night, a meteor slammed into a merchant ship trying to land on " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ". The ship was heavily damaged but managed to land safely.";
-        } else if (gv11CE.M5533 == 54) {
-            b_Message.Caption = "Clouds of radioactive particles were spotted in the region of " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ". Experts in the area claim these particles are essentially harmless and should disperse within a few days.";
-        } else if (gv11CE.M5533 == 55) {
-            b_Message.Caption = "A small commuter craft slammed into a 5,000 ton freighter as it was approaching " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ". It exploded upon impact, and all onboard the ship are reported dead.";
-        } else if (gv11CE.M5533 == 56) {
-            b_Message.Caption = "A corrosive cloud of Dexxy Gas severely damaged a cargo ship headed for " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ". Fortunately, no one was injured and the Dexxy Gas seems to have naturally dispersed.";
-        } else if (gv11CE.M5533 == 57) {
-            b_Message.Caption = "A stream of Bollup Juice took a bite out of a passing merchant ship near " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " last night. Fortunately, the Bollup Juice has since been neutralized by an anti-Bollup stream.";
-        } else if (gv11CE.M5533 == 58) {
-            b_Message.Caption = "A meteor shower rained down on " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " yesterday evening. It appears that 17 buildings were damaged and two individuals were injured. The shower lasted for approximately 24 minutes.";
-        } else if (gv11CE.M5533 == 59) {
-            b_Message.Caption = "Clouds of dense gas around " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " have created a traffic jam. Ships entering and leaving the planet must now travel at a snail's pace to avoid bumping into each other. The government is currently trying to figure out a way of dispersing the troublesome gas.";
-        } else if (gv11CE.M5533 == 60) {
-            b_Message.Caption = "A recent survey indicates that weather related accidents across Kukubia are down " + Format((gv11CE.M536A / 2) + 10, "#,#0") + "% over the same period last year. Perhaps this is an indication that more travellers are tuning into our weather reports and planning safer trips.";
-        } else if (gv11CE.M5533 == 61) {
-            b_Message.Caption = "Our satellites indicate you should be careful when travelling near " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ". A meteor storm is expected to move into the area this week.";
-        } else if (gv11CE.M5533 == 62) {
-            b_Message.Caption = "We expect a solar storm to hit " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " this week. If you plan on travelling in that area, be sure to prepare for some rough weather.";
-        } else if (gv11CE.M5533 == 63) {
-            b_Message.Caption = "This week's forecast shows a Space Hurricane forming around " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ". If you plan on visiting " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ", you might invest in a little Voyager's Insurance.";
-        } else if (gv11CE.M5533 == 64) {
-            b_Message.Caption = "The skies are looking quite turbulent on planet " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " these days. The locals inform us that a Stellar Typhoon will hit the planet any day now.";
-        } else if (gv11CE.M5533 == 65) {
-            b_Message.Caption = "It looks like a corrosive cloud of Dexxy Gas is moving towards " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ". If you plan on being in the area, you should beware.";
-        } else if (gv11CE.M5533 == 66) {
-            b_Message.Caption = "If you're planning a trip to " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " any time soon, I'd be on the look out for Mippi Weeds. A sticky drift of weeds is headed in that direction.";
-        } else if (gv11CE.M5533 == 67) {
-            b_Message.Caption = "We predict a stream of acidic Bollup Juice will be flowing past " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + " in the near future. This deadly liquid is known to cause severe damage to engine pods and hull liners.";
-        } else if (gv11CE.M5533 == 68) {
-            b_Message.Caption = "It seems like a pool of Wess Vapor is accumulating around " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ". It should reach harmful levels within a few days.";
-        } else if (gv11CE.M5533 == 69) {
-            b_Message.Caption = "Beware, a Stellar Whirl Pool is forming off planet " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ". It should reach critical strength in the next few days.";
-        } else if (gv11CE.M5533 == 70) {
-            b_Message.Caption = "We have reports of a Bobble Warp, a dangerous break in the time/space continuum, flaring up in the region around " + UCase(Trim(gv11CE.M53C1[gv11CE.M553E])) + ".";
+        } else if (game.weatherEvent == 51) {
+            b_Message.Caption = "Clouds of space dust were spotted forming around " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ". Experts in the area inform us that the dust may appear ominous, but it should not impede travel at all.";
+        } else if (game.weatherEvent == 52) {
+            b_Message.Caption = "Clouds of green gas are reported to be rising from the surface of " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ". Scientists on the planet say these clouds may look dangerous, but they are nothing to worry about.";
+        } else if (game.weatherEvent == 53) {
+            b_Message.Caption = "Last night, a meteor slammed into a merchant ship trying to land on " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ". The ship was heavily damaged but managed to land safely.";
+        } else if (game.weatherEvent == 54) {
+            b_Message.Caption = "Clouds of radioactive particles were spotted in the region of " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ". Experts in the area claim these particles are essentially harmless and should disperse within a few days.";
+        } else if (game.weatherEvent == 55) {
+            b_Message.Caption = "A small commuter craft slammed into a 5,000 ton freighter as it was approaching " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ". It exploded upon impact, and all onboard the ship are reported dead.";
+        } else if (game.weatherEvent == 56) {
+            b_Message.Caption = "A corrosive cloud of Dexxy Gas severely damaged a cargo ship headed for " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ". Fortunately, no one was injured and the Dexxy Gas seems to have naturally dispersed.";
+        } else if (game.weatherEvent == 57) {
+            b_Message.Caption = "A stream of Bollup Juice took a bite out of a passing merchant ship near " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " last night. Fortunately, the Bollup Juice has since been neutralized by an anti-Bollup stream.";
+        } else if (game.weatherEvent == 58) {
+            b_Message.Caption = "A meteor shower rained down on " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " yesterday evening. It appears that 17 buildings were damaged and two individuals were injured. The shower lasted for approximately 24 minutes.";
+        } else if (game.weatherEvent == 59) {
+            b_Message.Caption = "Clouds of dense gas around " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " have created a traffic jam. Ships entering and leaving the planet must now travel at a snail's pace to avoid bumping into each other. The government is currently trying to figure out a way of dispersing the troublesome gas.";
+        } else if (game.weatherEvent == 60) {
+            b_Message.Caption = "A recent survey indicates that weather related accidents across Kukubia are down " + Format((game.weeklyRoll / 2) + 10, "#,#0") + "% over the same period last year. Perhaps this is an indication that more travellers are tuning into our weather reports and planning safer trips.";
+        } else if (game.weatherEvent == 61) {
+            b_Message.Caption = "Our satellites indicate you should be careful when travelling near " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ". A meteor storm is expected to move into the area this week.";
+        } else if (game.weatherEvent == 62) {
+            b_Message.Caption = "We expect a solar storm to hit " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " this week. If you plan on travelling in that area, be sure to prepare for some rough weather.";
+        } else if (game.weatherEvent == 63) {
+            b_Message.Caption = "This week's forecast shows a Space Hurricane forming around " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ". If you plan on visiting " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ", you might invest in a little Voyager's Insurance.";
+        } else if (game.weatherEvent == 64) {
+            b_Message.Caption = "The skies are looking quite turbulent on planet " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " these days. The locals inform us that a Stellar Typhoon will hit the planet any day now.";
+        } else if (game.weatherEvent == 65) {
+            b_Message.Caption = "It looks like a corrosive cloud of Dexxy Gas is moving towards " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ". If you plan on being in the area, you should beware.";
+        } else if (game.weatherEvent == 66) {
+            b_Message.Caption = "If you're planning a trip to " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " any time soon, I'd be on the look out for Mippi Weeds. A sticky drift of weeds is headed in that direction.";
+        } else if (game.weatherEvent == 67) {
+            b_Message.Caption = "We predict a stream of acidic Bollup Juice will be flowing past " + UCase(Trim(game.planetNames[game.weatherPlanet])) + " in the near future. This deadly liquid is known to cause severe damage to engine pods and hull liners.";
+        } else if (game.weatherEvent == 68) {
+            b_Message.Caption = "It seems like a pool of Wess Vapor is accumulating around " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ". It should reach harmful levels within a few days.";
+        } else if (game.weatherEvent == 69) {
+            b_Message.Caption = "Beware, a Stellar Whirl Pool is forming off planet " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ". It should reach critical strength in the next few days.";
+        } else if (game.weatherEvent == 70) {
+            b_Message.Caption = "We have reports of a Bobble Warp, a dangerous break in the time/space continuum, flaring up in the region around " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ".";
         }
     }
 
@@ -237,11 +237,11 @@ function (me) {
     function Form_Load() {
         me.MousePointer = mc001C;
         m001A = 1;
-        Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "WEATHER.BMP");
+        Image1.Picture = LoadPicture(Trim(paths.imageDir) + "WEATHER.BMP");
         sub2F02();
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "weather.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "weather.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }

@@ -19,7 +19,7 @@ function (me) {
 
     async function b_ExitMarketStrength_Click() {
         me.MousePointer = mc001A;
-        if (me.Tag == "NEWTURN" && gv11CE.M552A == -1 && gv11CE.M5522 >= 10 || gv11CE.M4FFC >= 8) {
+        if (me.Tag == "NEWTURN" && game.tutorialMode == -1 && game.turn >= 10 || game.complexity >= 8) {
             frm_Complexity.Tag = "COMPLEXITY";
             await Unload(me);
         } else {
@@ -37,14 +37,14 @@ function (me) {
 
     async function b_Help_Click() {
         me.MousePointer = mc001A;
-        if (me.Tag == "NEWTURN" && gv11CE.M552A == -1 && gv11CE.M5522 >= 10 || gv11CE.M4FFC >= 8) {
+        if (me.Tag == "NEWTURN" && game.tutorialMode == -1 && game.turn >= 10 || game.complexity >= 8) {
             frm_Complexity.Tag = "COMPLEXITY";
             await Unload(me);
         } else {
             me.MousePointer = mc001A;
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
@@ -68,33 +68,33 @@ function (me) {
         const mc007C = 255;
         me.MousePointer = mc001A;
         Graph1.DrawMode = 1;
-        if (gv11CE.M53EF == 6) {
-            if (gv11CE.M5299[1] == -1) {
+        if (game.numPlayers == 6) {
+            if (game.graphShowCompany[1] == -1) {
                 Graph1.ColorData = 0;
             } else {
                 Graph1.ColorData = 15;
             }
-            if (gv11CE.M5299[2] == -1) {
+            if (game.graphShowCompany[2] == -1) {
                 Graph1.ColorData = 0;
             } else {
                 Graph1.ColorData = 14;
             }
-            if (gv11CE.M5299[3] == -1) {
+            if (game.graphShowCompany[3] == -1) {
                 Graph1.ColorData = 0;
             } else {
                 Graph1.ColorData = 12;
             }
-            if (gv11CE.M5299[4] == -1) {
+            if (game.graphShowCompany[4] == -1) {
                 Graph1.ColorData = 0;
             } else {
                 Graph1.ColorData = 13;
             }
-            if (gv11CE.M5299[5] == -1) {
+            if (game.graphShowCompany[5] == -1) {
                 Graph1.ColorData = 0;
             } else {
                 Graph1.ColorData = 11;
             }
-            if (gv11CE.M5299[6] == -1) {
+            if (game.graphShowCompany[6] == -1) {
                 Graph1.ColorData = 0;
             } else {
                 Graph1.ColorData = 10;
@@ -105,28 +105,28 @@ function (me) {
             Graph1.ColorData = 3;
             Graph1.ColorData = 2;
             Graph1.ColorData = 1;
-        } else if (gv11CE.M53EF == 5) {
-            if (gv11CE.M5299[1] == -1) {
+        } else if (game.numPlayers == 5) {
+            if (game.graphShowCompany[1] == -1) {
                 Graph1.ColorData = 0;
             } else {
                 Graph1.ColorData = 15;
             }
-            if (gv11CE.M5299[2] == -1) {
+            if (game.graphShowCompany[2] == -1) {
                 Graph1.ColorData = 0;
             } else {
                 Graph1.ColorData = 14;
             }
-            if (gv11CE.M5299[3] == -1) {
+            if (game.graphShowCompany[3] == -1) {
                 Graph1.ColorData = 0;
             } else {
                 Graph1.ColorData = 12;
             }
-            if (gv11CE.M5299[4] == -1) {
+            if (game.graphShowCompany[4] == -1) {
                 Graph1.ColorData = 0;
             } else {
                 Graph1.ColorData = 13;
             }
-            if (gv11CE.M5299[5] == -1) {
+            if (game.graphShowCompany[5] == -1) {
                 Graph1.ColorData = 0;
             } else {
                 Graph1.ColorData = 11;
@@ -137,23 +137,23 @@ function (me) {
             Graph1.ColorData = 5;
             Graph1.ColorData = 3;
             Graph1.ColorData = 2;
-        } else if (gv11CE.M53EF == 4) {
-            if (gv11CE.M5299[1] == -1) {
+        } else if (game.numPlayers == 4) {
+            if (game.graphShowCompany[1] == -1) {
                 Graph1.ColorData = 0;
             } else {
                 Graph1.ColorData = 15;
             }
-            if (gv11CE.M5299[2] == -1) {
+            if (game.graphShowCompany[2] == -1) {
                 Graph1.ColorData = 0;
             } else {
                 Graph1.ColorData = 14;
             }
-            if (gv11CE.M5299[3] == -1) {
+            if (game.graphShowCompany[3] == -1) {
                 Graph1.ColorData = 0;
             } else {
                 Graph1.ColorData = 12;
             }
-            if (gv11CE.M5299[4] == -1) {
+            if (game.graphShowCompany[4] == -1) {
                 Graph1.ColorData = 0;
             } else {
                 Graph1.ColorData = 13;
@@ -164,18 +164,18 @@ function (me) {
             Graph1.ColorData = 4;
             Graph1.ColorData = 5;
             Graph1.ColorData = 3;
-        } else if (gv11CE.M53EF == 3) {
-            if (gv11CE.M5299[1] == -1) {
+        } else if (game.numPlayers == 3) {
+            if (game.graphShowCompany[1] == -1) {
                 Graph1.ColorData = 0;
             } else {
                 Graph1.ColorData = 15;
             }
-            if (gv11CE.M5299[2] == -1) {
+            if (game.graphShowCompany[2] == -1) {
                 Graph1.ColorData = 0;
             } else {
                 Graph1.ColorData = 14;
             }
-            if (gv11CE.M5299[3] == -1) {
+            if (game.graphShowCompany[3] == -1) {
                 Graph1.ColorData = 0;
             } else {
                 Graph1.ColorData = 12;
@@ -186,13 +186,13 @@ function (me) {
             Graph1.ColorData = 9;
             Graph1.ColorData = 4;
             Graph1.ColorData = 5;
-        } else if (gv11CE.M53EF == 2) {
-            if (gv11CE.M5299[1] == -1) {
+        } else if (game.numPlayers == 2) {
+            if (game.graphShowCompany[1] == -1) {
                 Graph1.ColorData = 0;
             } else {
                 Graph1.ColorData = 15;
             }
-            if (gv11CE.M5299[2] == -1) {
+            if (game.graphShowCompany[2] == -1) {
                 Graph1.ColorData = 0;
             } else {
                 Graph1.ColorData = 14;
@@ -203,8 +203,8 @@ function (me) {
             Graph1.ColorData = 10;
             Graph1.ColorData = 9;
             Graph1.ColorData = 4;
-        } else if (gv11CE.M53EF == 1) {
-            if (gv11CE.M5299[1] == -1) {
+        } else if (game.numPlayers == 1) {
+            if (game.graphShowCompany[1] == -1) {
                 Graph1.ColorData = 0;
             } else {
                 Graph1.ColorData = 15;
@@ -216,24 +216,24 @@ function (me) {
             Graph1.ColorData = 10;
             Graph1.ColorData = 9;
         }
-        Graph1.NumPoints = gv11CE.M53EF + gv11CE.M5390;
+        Graph1.NumPoints = game.numPlayers + game.numRivals;
         Graph1.GraphType = 2;
         Graph1.GraphStyle = 0;
-        for (l006C = 1; l006C <= gv11CE.M53EF; l006C++) {
-            Graph1.LegendText = Trim(gv11CE.M5401[l006C]);
+        for (l006C = 1; l006C <= game.numPlayers; l006C++) {
+            Graph1.LegendText = Trim(game.companyNames[l006C]);
         }
-        for (l006C = 1; l006C <= gv11CE.M5390; l006C++) {
-            Graph1.LegendText = Trim(gv1EB2.M5579[l006C]);
+        for (l006C = 1; l006C <= game.numRivals; l006C++) {
+            Graph1.LegendText = Trim(rivals.companyNames[l006C]);
         }
-        for (l006C = 1; l006C <= gv11CE.M53EF; l006C++) {
-            if (gv11CE.M5299[l006C] == 0) {
-                Graph1.GraphData = gv11CE.M54B3[l006C];
+        for (l006C = 1; l006C <= game.numPlayers; l006C++) {
+            if (game.graphShowCompany[l006C] == 0) {
+                Graph1.GraphData = game.shipSize[l006C];
             } else {
                 Graph1.GraphData = 0;
             }
         }
-        for (l006C = 1; l006C <= gv11CE.M5390; l006C++) {
-            Graph1.GraphData = gv1EB2.M54B3[l006C];
+        for (l006C = 1; l006C <= game.numRivals; l006C++) {
+            Graph1.GraphData = rivals.shipSize[l006C];
         }
         Graph1.DrawMode = 2;
         me.MousePointer = mc007A;
@@ -241,18 +241,18 @@ function (me) {
 
     function Form_Activate() {
         if (me.Tag != "NEWTURN") {
-            Graph1.ThisPoint = gv11CE.M53E5;
+            Graph1.ThisPoint = game.currentPlayer;
             Graph1.ExtraData = 1;
         }
-        if (me.Tag == "NEWTURN" && gv11CE.M552A == -1 && gv11CE.M5522 >= 10 || gv11CE.M4FFC >= 8) {
-            Graph1.GraphTitle = "Market Strength on Turn " + Format(gv11CE.M5522, "#,#0");
+        if (me.Tag == "NEWTURN" && game.tutorialMode == -1 && game.turn >= 10 || game.complexity >= 8) {
+            Graph1.GraphTitle = "Market Strength on Turn " + Format(game.turn, "#,#0");
             b_Help.Caption = "Complexity";
             b_Help.FontSize = 18;
             b_Help.ForeColor = mc007C;
             b_Help.CaptionPos = 4;
             b_Help.Visible = 0;
         } else if (me.Tag == "NEWTURN") {
-            Graph1.GraphTitle = "Market Strength on Turn " + Format(gv11CE.M5522, "#,#0");
+            Graph1.GraphTitle = "Market Strength on Turn " + Format(game.turn, "#,#0");
             b_Help.Visible = 0;
         } else if (me.Tag == "MONEY") {
             Graph1.GraphTitle = "Net Worth";

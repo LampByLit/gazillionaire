@@ -53,77 +53,77 @@ function (me) {
         let l0044 = 0;
         const mc0046 = 11;
         me.MousePointer = mc0046;
-        if (m0020 != gv11CE.M53A9[gv11CE.M53E5] && m0020 != 7) {
-            if (gv0060.M4C47 == -1) {
+        if (m0020 != game.planet[game.currentPlayer] && m0020 != 7) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "neutral.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "neutral.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
-            frm_Box0.FillElastic.Caption = Trim(gv11CE.M53C1[m0020]) + " Exchange";
-            frm_Box0.b_Message.Caption = "\n" + "Sorry, but you cannot buy or sell shares on the " + Trim(gv11CE.M53C1[m0020]) + " Exchange unless you are visiting the planet " + Trim(gv11CE.M53C1[m0020]) + ".";
+            frm_Box0.FillElastic.Caption = Trim(game.planetNames[m0020]) + " Exchange";
+            frm_Box0.b_Message.Caption = "\n" + "Sorry, but you cannot buy or sell shares on the " + Trim(game.planetNames[m0020]) + " Exchange unless you are visiting the planet " + Trim(game.planetNames[m0020]) + ".";
             await frm_Box0.Show(1);
-        } else if (gv11CE.M54CD == 0) {
-            if (gv0060.M4C47 == -1) {
+        } else if (game.canBuyStock == 0) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "neutral.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "neutral.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
             frm_Box0.FillElastic.Caption = "You Cannot Buy Stock";
             frm_Box0.b_Message.Caption = "\n" + "You already purchased shares this week. If you want to buy more shares, you must come back another week.";
             await frm_Box0.Show(1);
-        } else if (gv11CE.M54BF[gv11CE.M53A9[gv11CE.M53E5]] == -1) {
-            if (gv0060.M4C47 == -1) {
+        } else if (game.stockCrashed[game.planet[game.currentPlayer]] == -1) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "bad.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "bad.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
             frm_Box1.FillElastic.Caption = "Stock Market Crash!!!";
-            frm_Box1.b_Message.Caption = "The Stock Market on planet " + Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]]) + " crashed today !!! Everyone who owned stock in the " + Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]]) + " Exchange lost their entire investment. Emperor Dred Nicolson has intervened and shut down the " + Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]]) + " Exchange for one week. The Stock Exchange Board is working around the clock on restoring the " + Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]]) + " Exchange to 1000 points by next week. This, however, will come at a high price. No investors are expected to have their losses refunded.";
+            frm_Box1.b_Message.Caption = "The Stock Market on planet " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + " crashed today !!! Everyone who owned stock in the " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + " Exchange lost their entire investment. Emperor Dred Nicolson has intervened and shut down the " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + " Exchange for one week. The Stock Exchange Board is working around the clock on restoring the " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + " Exchange to 1000 points by next week. This, however, will come at a high price. No investors are expected to have their losses refunded.";
             await frm_Box1.Show(1);
         } else {
-            if (gv11CE.M5522 < 15) {
-                l0042 = gv11CE.M54DA[gv11CE.M53A9[gv11CE.M53E5]][gv11CE.M5522];
+            if (game.turn < 15) {
+                l0042 = game.stockPrices[game.planet[game.currentPlayer]][game.turn];
             } else {
-                l0042 = gv11CE.M54DA[gv11CE.M53A9[gv11CE.M53E5]][15];
+                l0042 = game.stockPrices[game.planet[game.currentPlayer]][15];
             }
-            l0044 = CLng(0.5 * ((gv0BF2.M4CF9 + gv0BF2.M4E9E) / l0042));
-            l0040 = await fn01A0(0, Format(l0044, "##0"), 0.25 * l0044, l0044, gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]] + " Stock Exchange" + "\n" + "\n" + "Enter the number of shares you wish to purchase.", " ");
+            l0044 = CLng(0.5 * ((player.cash + player.bankBalance) / l0042));
+            l0040 = await fn01A0(0, Format(l0044, "##0"), 0.25 * l0044, l0044, game.planetNames[game.planet[game.currentPlayer]] + " Stock Exchange" + "\n" + "\n" + "Enter the number of shares you wish to purchase.", " ");
             if (l0040 == -3333) {
                 m001A = "";
             } else if (l0040 < 0) {
                 m001A = "";
             } else if (l0040 == 0) {
-                if (gv0060.M4C47 == -1) {
+                if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "neutral.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "neutral.wav";
                     b_Sound.Command = "Open";
                     b_Sound.Command = "Play";
                 }
                 m001A = "\n" + "\n" + "NOTE:" + "\n" + "You didn't buy any shares.";
             } else if (l0040 > l0044) {
-                if (gv0060.M4C47 == -1) {
+                if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "neutral.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "neutral.wav";
                     b_Sound.Command = "Open";
                     b_Sound.Command = "Play";
                 }
                 frm_Box2.FillElastic.Caption = "Purchase Denied";
-                frm_Box2.b_Message.Caption = "The " + gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]] + " Stock Exchange has refused to allow you to purchase " + Format(l0040, "#,#0") + " shares of stock. The Stock Exchange has a strict set of regulations, which permit no one company to invest more than 50% of its money in one week." + "\n" + "\n" + "This trade regulation is designed to prevent rampant speculation, which has the potential to destabilize the market." + "\n" + "\n" + "The maximum number of shares you can purchase this week is " + Format(l0044, "#,#0") + ". If you still want to purchase stock, please enter your trade again.";
+                frm_Box2.b_Message.Caption = "The " + game.planetNames[game.planet[game.currentPlayer]] + " Stock Exchange has refused to allow you to purchase " + Format(l0040, "#,#0") + " shares of stock. The Stock Exchange has a strict set of regulations, which permit no one company to invest more than 50% of its money in one week." + "\n" + "\n" + "This trade regulation is designed to prevent rampant speculation, which has the potential to destabilize the market." + "\n" + "\n" + "The maximum number of shares you can purchase this week is " + Format(l0044, "#,#0") + ". If you still want to purchase stock, please enter your trade again.";
                 await frm_Box2.Show(1);
                 m001A = "\n" + "\n" + "NOTE:" + "\n" + "You didn't buy any shares.";
             } else {
-                gv11CE.M54CD = 0;
+                game.canBuyStock = 0;
                 if (l0040 == 1) {
                     m001A = "\n" + "\n" + "NOTE:" + "\n" + "You bought " + Format(l0040, "#,#0") + " share";
                 } else {
                     m001A = "\n" + "\n" + "NOTE:" + "\n" + "You bought " + Format(l0040, "#,#0") + " shares";
                 }
                 await sub015C(l0040 * l0042, 0);
-                gv0BF2.M4ECB[gv11CE.M53A9[gv11CE.M53E5]] = CLng(((gv0BF2.M4ECB[gv11CE.M53A9[gv11CE.M53E5]] * gv0BF2.M4ED9[gv11CE.M53A9[gv11CE.M53E5]]) + (l0042 * l0040)) / (gv0BF2.M4ED9[gv11CE.M53A9[gv11CE.M53E5]] + l0040));
-                gv0BF2.M4ED9[gv11CE.M53A9[gv11CE.M53E5]] = gv0BF2.M4ED9[gv11CE.M53A9[gv11CE.M53E5]] + l0040;
+                player.shareAvgCost[game.planet[game.currentPlayer]] = CLng(((player.shareAvgCost[game.planet[game.currentPlayer]] * player.shares[game.planet[game.currentPlayer]]) + (l0042 * l0040)) / (player.shares[game.planet[game.currentPlayer]] + l0040));
+                player.shares[game.planet[game.currentPlayer]] = player.shares[game.planet[game.currentPlayer]] + l0040;
                 frm_Box0.FillElastic.Caption = "Brokerage Fee";
                 frm_Box0.b_Message.Caption = "\n" + "Every time you buy or sell stock, you must pay your broker a 1% commission. This comes out to be a total of " + Format(0.01 * l0040 * l0042, "#,#0") + " kubars. Sorry, but brokers do not work for free.";
                 await frm_Box0.Show(1);
@@ -159,14 +159,14 @@ function (me) {
     async function b_Help_Click() {
         let l00AC = "";
         me.MousePointer = mc0046;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
         frm_Box3.FillElastic.Caption = "Help (Stock Market)";
-        frm_Box3.b_Message.Caption = "Each planet has its own stock exchange. These stock exchanges are similar to index funds. They are an average of selected stocks on each planet." + "\n" + "\n" + "While visiting " + Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]]) + ", you may either buy or sell shares on the " + Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]]) + " Exchange. If you wish to buy or sell shares on the other exchanges, you must travel to the planet where the exchange is located." + "\n" + "\n" + "Emperor Dred has enacted a strict set of regulations. First of all, each company gets only one chance per week to purchase stock. Secondly, no one company may invest more than 50% of its money in one week." + "\n" + "\n" + "These regulations are designed to prevent rampant speculation, which has the potential to destabilize the market.";
+        frm_Box3.b_Message.Caption = "Each planet has its own stock exchange. These stock exchanges are similar to index funds. They are an average of selected stocks on each planet." + "\n" + "\n" + "While visiting " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + ", you may either buy or sell shares on the " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + " Exchange. If you wish to buy or sell shares on the other exchanges, you must travel to the planet where the exchange is located." + "\n" + "\n" + "Emperor Dred has enacted a strict set of regulations. First of all, each company gets only one chance per week to purchase stock. Secondly, no one company may invest more than 50% of its money in one week." + "\n" + "\n" + "These regulations are designed to prevent rampant speculation, which has the potential to destabilize the market.";
         await frm_Box3.Show(1);
         frm_Box3.FillElastic.Caption = "Help (Stock Market)";
         l00AC = "The stock market operates according to trends. When you invest, you should be watching for bull markets and bear markets." + "\n" + "\n" + "If an upward trend starts, it naturally gains momentum every time the market rises. However, if the market takes a dip, that could trigger the start of a downward trend. As an investor, you want to spot an upward trend and invest heavily, then just as a downward trend kicks in, you should sell your shares." + "\n" + "\n" + "Also, be sure to take note when the stock market falls too low. If the market hits zero, this signals a crash, and you will lose your entire investment.";
@@ -184,7 +184,7 @@ function (me) {
 
     function b_Next_Click() {
         if (m0020 == 7) {
-            m0020 = gv11CE.M53A9[gv11CE.M53E5];
+            m0020 = game.planet[game.currentPlayer];
         } else {
             m0020 = m0020 + 1;
             if (m0020 > 6) {
@@ -208,36 +208,36 @@ function (me) {
         let l00E0 = 0;
         let l00E2 = 0;
         me.MousePointer = mc0046;
-        if (m0020 != gv11CE.M53A9[gv11CE.M53E5] && m0020 != 7) {
-            if (gv0060.M4C47 == -1) {
+        if (m0020 != game.planet[game.currentPlayer] && m0020 != 7) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "neutral.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "neutral.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
-            frm_Box0.FillElastic.Caption = Trim(gv11CE.M53C1[m0020]) + " Exchange";
-            frm_Box0.b_Message.Caption = "\n" + "Sorry, but you cannot buy or sell shares on the " + Trim(gv11CE.M53C1[m0020]) + " Exchange unless you are visiting the planet " + Trim(gv11CE.M53C1[m0020]) + ".";
+            frm_Box0.FillElastic.Caption = Trim(game.planetNames[m0020]) + " Exchange";
+            frm_Box0.b_Message.Caption = "\n" + "Sorry, but you cannot buy or sell shares on the " + Trim(game.planetNames[m0020]) + " Exchange unless you are visiting the planet " + Trim(game.planetNames[m0020]) + ".";
             await frm_Box0.Show(1);
-        } else if (gv11CE.M54BF[gv11CE.M53A9[gv11CE.M53E5]] == -1) {
-            if (gv0060.M4C47 == -1) {
+        } else if (game.stockCrashed[game.planet[game.currentPlayer]] == -1) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "bad.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "bad.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
             frm_Box1.FillElastic.Caption = "Stock Market Crash!!!";
-            frm_Box1.b_Message.Caption = "The Stock Market on planet " + Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]]) + " crashed today !!! Everyone who owned stock in the " + Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]]) + " Exchange lost their entire investment. Emperor Dred Nicolson has intervened and shut down the " + Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]]) + " Exchange for one week. The Stock Exchange Board is working around the clock on restoring the " + Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]]) + " Exchange to 1000 points by next week. This, however, will come at a high price. No investors are expected to have their losses refunded.";
+            frm_Box1.b_Message.Caption = "The Stock Market on planet " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + " crashed today !!! Everyone who owned stock in the " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + " Exchange lost their entire investment. Emperor Dred Nicolson has intervened and shut down the " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + " Exchange for one week. The Stock Exchange Board is working around the clock on restoring the " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + " Exchange to 1000 points by next week. This, however, will come at a high price. No investors are expected to have their losses refunded.";
             await frm_Box1.Show(1);
         } else {
-            if (gv11CE.M5522 < 15) {
-                l00E0 = gv11CE.M54DA[gv11CE.M53A9[gv11CE.M53E5]][gv11CE.M5522];
+            if (game.turn < 15) {
+                l00E0 = game.stockPrices[game.planet[game.currentPlayer]][game.turn];
             } else {
-                l00E0 = gv11CE.M54DA[gv11CE.M53A9[gv11CE.M53E5]][15];
+                l00E0 = game.stockPrices[game.planet[game.currentPlayer]][15];
             }
-            if ((l00E0 - gv0BF2.M4ECB[gv11CE.M53A9[gv11CE.M53E5]]) >= 0) {
-                l00DE = await fn01A0(0, Format(gv0BF2.M4ED9[gv11CE.M53A9[gv11CE.M53E5]], "##0"), 0.25 * gv0BF2.M4ED9[gv11CE.M53A9[gv11CE.M53E5]], gv0BF2.M4ED9[gv11CE.M53A9[gv11CE.M53E5]], "Enter the number of shares you wish to sell on the " + Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]]) + " Exchange. If you sell all of your shares right now, you stand to make a profit of " + Format((l00E0 - gv0BF2.M4ECB[gv11CE.M53A9[gv11CE.M53E5]]) * gv0BF2.M4ED9[gv11CE.M53A9[gv11CE.M53E5]], "#,#0") + " kubars less the brokerage fees.", Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]]) + " Exchange");
+            if ((l00E0 - player.shareAvgCost[game.planet[game.currentPlayer]]) >= 0) {
+                l00DE = await fn01A0(0, Format(player.shares[game.planet[game.currentPlayer]], "##0"), 0.25 * player.shares[game.planet[game.currentPlayer]], player.shares[game.planet[game.currentPlayer]], "Enter the number of shares you wish to sell on the " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + " Exchange. If you sell all of your shares right now, you stand to make a profit of " + Format((l00E0 - player.shareAvgCost[game.planet[game.currentPlayer]]) * player.shares[game.planet[game.currentPlayer]], "#,#0") + " kubars less the brokerage fees.", Trim(game.planetNames[game.planet[game.currentPlayer]]) + " Exchange");
             } else {
-                l00DE = await fn01A0(0, Format(gv0BF2.M4ED9[gv11CE.M53A9[gv11CE.M53E5]], "##0"), 0.25 * gv0BF2.M4ED9[gv11CE.M53A9[gv11CE.M53E5]], gv0BF2.M4ED9[gv11CE.M53A9[gv11CE.M53E5]], "Enter the number of shares you wish to sell on the " + Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]]) + " Exchange. If you sell all of your shares right now, you stand to take a loss of " + Format(-(l00E0 - gv0BF2.M4ECB[gv11CE.M53A9[gv11CE.M53E5]]) * gv0BF2.M4ED9[gv11CE.M53A9[gv11CE.M53E5]], "#,#0") + " kubars less the brokerage fees.", Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]]) + " Exchange");
+                l00DE = await fn01A0(0, Format(player.shares[game.planet[game.currentPlayer]], "##0"), 0.25 * player.shares[game.planet[game.currentPlayer]], player.shares[game.planet[game.currentPlayer]], "Enter the number of shares you wish to sell on the " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + " Exchange. If you sell all of your shares right now, you stand to take a loss of " + Format(-(l00E0 - player.shareAvgCost[game.planet[game.currentPlayer]]) * player.shares[game.planet[game.currentPlayer]], "#,#0") + " kubars less the brokerage fees.", Trim(game.planetNames[game.planet[game.currentPlayer]]) + " Exchange");
             }
             if (l00DE == -3333) {
                 m001A = "";
@@ -245,33 +245,33 @@ function (me) {
                 m001A = "";
             } else if (l00DE == 0) {
                 m001A = "\n" + "\n" + "NOTE:" + "\n" + "You didn't sell any shares.";
-            } else if (l00DE > gv0BF2.M4ED9[gv11CE.M53A9[gv11CE.M53E5]]) {
-                if (gv0060.M4C47 == -1) {
+            } else if (l00DE > player.shares[game.planet[game.currentPlayer]]) {
+                if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "neutral.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "neutral.wav";
                     b_Sound.Command = "Open";
                     b_Sound.Command = "Play";
                 }
                 m001A = "\n" + "\n" + "NOTE:" + "\n" + "You didn't sell any shares.";
                 sub3022(m0020);
-                if (gv0BF2.M4ED9[gv11CE.M53A9[gv11CE.M53E5]] == 1) {
-                    frm_MsgBox.FillElastic.Caption = "\n" + "You don't own that much. You can only sell " + Format(gv0BF2.M4ED9[gv11CE.M53A9[gv11CE.M53E5]], "#,#0") + " share.";
+                if (player.shares[game.planet[game.currentPlayer]] == 1) {
+                    frm_MsgBox.FillElastic.Caption = "\n" + "You don't own that much. You can only sell " + Format(player.shares[game.planet[game.currentPlayer]], "#,#0") + " share.";
                 } else {
-                    frm_MsgBox.FillElastic.Caption = "\n" + "You don't own that much. You can only sell " + Format(gv0BF2.M4ED9[gv11CE.M53A9[gv11CE.M53E5]], "#,#0") + " shares.";
+                    frm_MsgBox.FillElastic.Caption = "\n" + "You don't own that much. You can only sell " + Format(player.shares[game.planet[game.currentPlayer]], "#,#0") + " shares.";
                 }
                 await frm_MsgBox.Show(1);
             } else {
-                l00E2 = (l00E0 - gv0BF2.M4ECB[gv11CE.M53A9[gv11CE.M53E5]]) * l00DE;
-                gv0BF2.M4ED9[gv11CE.M53A9[gv11CE.M53E5]] = gv0BF2.M4ED9[gv11CE.M53A9[gv11CE.M53E5]] - l00DE;
-                if (gv0BF2.M4ED9[gv11CE.M53A9[gv11CE.M53E5]] == 0) {
-                    gv0BF2.M4ECB[gv11CE.M53A9[gv11CE.M53E5]] = 0;
+                l00E2 = (l00E0 - player.shareAvgCost[game.planet[game.currentPlayer]]) * l00DE;
+                player.shares[game.planet[game.currentPlayer]] = player.shares[game.planet[game.currentPlayer]] - l00DE;
+                if (player.shares[game.planet[game.currentPlayer]] == 0) {
+                    player.shareAvgCost[game.planet[game.currentPlayer]] = 0;
                 }
                 if (l00E2 > 0) {
                     frm_Box1.FillElastic.Caption = "You Made Money!";
                     frm_Box1.b_Message.Caption = "Congratulations, you made a profit of " + Format(l00E2, "#,#0") + " kubars!" + "\n" + "\n" + "Despite the fact that you made a profit, you must still pay a brokerage fee. Every time you buy or sell stock, you must pay your broker a 1% commission on the total transaction amount (" + Format(l00DE * l00E0, "#,#0") + " kubars). Hence, the commission comes out to be " + Format(0.01 * l00DE * l00E0, "#,#0") + " kubars. Sorry, but brokers do not work for free.";
-                    if (gv0060.M4C47 == -1) {
+                    if (settings.soundOn == -1) {
                         b_Sound.Command = "Close";
-                        b_Sound.FileName = Trim(gv09F0.M4C15) + "gamble.wav";
+                        b_Sound.FileName = Trim(paths.soundDir) + "gamble.wav";
                         b_Sound.Command = "Open";
                         b_Sound.Command = "Play";
                     }
@@ -279,9 +279,9 @@ function (me) {
                 } else if (l00E2 == 0) {
                     frm_Box1.FillElastic.Caption = "You Broke Even";
                     frm_Box1.b_Message.Caption = "You broke even with a profit of exactly " + Format(l00E2, "#,#0") + " kubars!" + "\n" + "\n" + "Despite the fact that you didn't make any money, you must still pay a brokerage fee. Every time you buy or sell stock, you must pay your broker a 1% commission on the total transaction amount (" + Format(l00DE * l00E0, "#,#0") + " kubars). Hence, the commission comes out to be " + Format(0.01 * l00DE * l00E0, "#,#0") + " kubars. Sorry, but brokers do not work for free.";
-                    if (gv0060.M4C47 == -1) {
+                    if (settings.soundOn == -1) {
                         b_Sound.Command = "Close";
-                        b_Sound.FileName = Trim(gv09F0.M4C15) + "neutral.wav";
+                        b_Sound.FileName = Trim(paths.soundDir) + "neutral.wav";
                         b_Sound.Command = "Open";
                         b_Sound.Command = "Play";
                     }
@@ -289,22 +289,22 @@ function (me) {
                 } else {
                     frm_Box1.FillElastic.Caption = "You Lost Money!";
                     frm_Box1.b_Message.Caption = "I'm sorry to say you suffered a loss of " + Format(-1 * l00E2, "#,#0") + " kubars!" + "\n" + "\n" + "Despite the fact that you lost money, you must still pay a brokerage fee. Every time you buy or sell stock, you must pay your broker a 1% commission on the total transaction amount (" + Format(l00DE * l00E0, "#,#0") + " kubars). Hence, the commission comes out to be " + Format(0.01 * l00DE * l00E0, "#,#0") + " kubars. Sorry, but brokers do not work for free.";
-                    if (gv0060.M4C47 == -1) {
+                    if (settings.soundOn == -1) {
                         b_Sound.Command = "Close";
-                        b_Sound.FileName = Trim(gv09F0.M4C15) + "bad7.wav";
+                        b_Sound.FileName = Trim(paths.soundDir) + "bad7.wav";
                         b_Sound.Command = "Open";
                         b_Sound.Command = "Play";
                     }
                     m001A = "\n" + "\n" + "NOTE:" + "\n" + "You lost " + Format(-l00E2, "#,#0") + " kubars";
                 }
                 await frm_Box1.Show(1);
-                if (gv0060.M4C47 == -1) {
+                if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "stock.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "stock.wav";
                     b_Sound.Command = "Open";
                     b_Sound.Command = "Play";
                 }
-                gv0BF2.M4CF9 = gv0BF2.M4CF9 + (l00DE * l00E0);
+                player.cash = player.cash + (l00DE * l00E0);
                 await sub015C(0.01 * l00DE * l00E0, 0);
             }
         }
@@ -325,9 +325,9 @@ function (me) {
         frm_BoxCol1.FillElastic.Caption = "Your Shares" + "\n" + "On Each Planet";
         frm_BoxCol1.b_Col1.Caption = "";
         for (l00FE = 0; l00FE <= 6; l00FE++) {
-            frm_BoxCol1.b_Col1.Caption = frm_BoxCol1.b_Col1.Caption + gv11CE.M53C1[l00FE] + "\n";
+            frm_BoxCol1.b_Col1.Caption = frm_BoxCol1.b_Col1.Caption + game.planetNames[l00FE] + "\n";
         }
-        frm_BoxCol1.b_Col2.Caption = Format(gv0BF2.M4ED9[0], "#,#0") + "  shares" + "\n" + Format(gv0BF2.M4ED9[1], "#,#0") + "  shares" + "\n" + Format(gv0BF2.M4ED9[2], "#,#0") + "  shares" + "\n" + Format(gv0BF2.M4ED9[3], "#,#0") + "  shares" + "\n" + Format(gv0BF2.M4ED9[4], "#,#0") + "  shares" + "\n" + Format(gv0BF2.M4ED9[5], "#,#0") + "  shares" + "\n" + Format(gv0BF2.M4ED9[6], "#,#0") + "  shares";
+        frm_BoxCol1.b_Col2.Caption = Format(player.shares[0], "#,#0") + "  shares" + "\n" + Format(player.shares[1], "#,#0") + "  shares" + "\n" + Format(player.shares[2], "#,#0") + "  shares" + "\n" + Format(player.shares[3], "#,#0") + "  shares" + "\n" + Format(player.shares[4], "#,#0") + "  shares" + "\n" + Format(player.shares[5], "#,#0") + "  shares" + "\n" + Format(player.shares[6], "#,#0") + "  shares";
         await frm_BoxCol1.Show(1);
     }
 
@@ -357,34 +357,34 @@ function (me) {
             b_Chart.ColorData = 7;
             b_Chart.ColorData = 15;
             for (l011C = 0; l011C <= 6; l011C++) {
-                b_Chart.LegendText = gv11CE.M53C1[l011C];
+                b_Chart.LegendText = game.planetNames[l011C];
             }
-            if (gv11CE.M5522 < 15) {
-                b_Chart.NumPoints = gv11CE.M5522 + 1;
+            if (game.turn < 15) {
+                b_Chart.NumPoints = game.turn + 1;
             } else {
                 b_Chart.NumPoints = 15;
             }
-            if (gv11CE.M5522 < 15) {
-                for (l011C = 0; l011C <= gv11CE.M5522; l011C++) {
+            if (game.turn < 15) {
+                for (l011C = 0; l011C <= game.turn; l011C++) {
                     b_Chart.LabelText = Format(l011C, "#,#0");
                 }
             } else {
                 for (l011C = 1; l011C <= 15; l011C++) {
-                    b_Chart.LabelText = Format(Add(l011C, (gv11CE.M5522 - 15)), "#,#0");
+                    b_Chart.LabelText = Format(Add(l011C, (game.turn - 15)), "#,#0");
                 }
             }
             for (l011C = 0; l011C <= 6; l011C++) {
-                if (gv11CE.M5522 < 15) {
-                    for (l011E = 0; l011E <= gv11CE.M5522; l011E++) {
+                if (game.turn < 15) {
+                    for (l011E = 0; l011E <= game.turn; l011E++) {
                         if (l011E == 0) {
                             b_Chart.GraphData = 1000;
                         } else {
-                            b_Chart.GraphData = gv11CE.M54DA[l011C][l011E];
+                            b_Chart.GraphData = game.stockPrices[l011C][l011E];
                         }
                     }
                 } else {
                     for (l011E = 1; l011E <= 15; l011E++) {
-                        b_Chart.GraphData = gv11CE.M54DA[l011C][l011E];
+                        b_Chart.GraphData = game.stockPrices[l011C][l011E];
                     }
                 }
             }
@@ -410,31 +410,31 @@ function (me) {
                 b_Chart.ColorData = 15;
             }
             b_Chart.LegendText = "";
-            if (gv11CE.M5522 < 15) {
-                b_Chart.NumPoints = gv11CE.M5522 + 1;
+            if (game.turn < 15) {
+                b_Chart.NumPoints = game.turn + 1;
             } else {
                 b_Chart.NumPoints = 15;
             }
-            if (gv11CE.M5522 < 15) {
-                for (l011C = 0; l011C <= gv11CE.M5522; l011C++) {
+            if (game.turn < 15) {
+                for (l011C = 0; l011C <= game.turn; l011C++) {
                     b_Chart.LabelText = Format(l011C, "#,#0");
                 }
             } else {
                 for (l011C = 1; l011C <= 15; l011C++) {
-                    b_Chart.LabelText = Format(Add(l011C, (gv11CE.M5522 - 15)), "#,#0");
+                    b_Chart.LabelText = Format(Add(l011C, (game.turn - 15)), "#,#0");
                 }
             }
-            if (gv11CE.M5522 < 15) {
-                for (l011E = 0; l011E <= gv11CE.M5522; l011E++) {
+            if (game.turn < 15) {
+                for (l011E = 0; l011E <= game.turn; l011E++) {
                     if (l011E == 0) {
                         b_Chart.GraphData = 1000;
                     } else {
-                        b_Chart.GraphData = gv11CE.M54DA[pv011A][l011E];
+                        b_Chart.GraphData = game.stockPrices[pv011A][l011E];
                     }
                 }
             } else {
                 for (l011E = 1; l011E <= 15; l011E++) {
-                    b_Chart.GraphData = gv11CE.M54DA[pv011A][l011E];
+                    b_Chart.GraphData = game.stockPrices[pv011A][l011E];
                 }
             }
             b_Chart.DrawMode = 2;
@@ -451,7 +451,7 @@ function (me) {
         const mc013E = 16711935;
         const mc0142 = 65535;
         if (pv0128 == 7) {
-            pv0128 = gv11CE.M53A9[gv11CE.M53E5];
+            pv0128 = game.planet[game.currentPlayer];
         }
         if (pv0128 == 0) {
             b_Message.ForeColor = mc012C;
@@ -468,13 +468,13 @@ function (me) {
         } else if (pv0128 == 6) {
             b_Message.ForeColor = mc002A;
         }
-        if (pv0128 == gv11CE.M53A9[gv11CE.M53E5]) {
+        if (pv0128 == game.planet[game.currentPlayer]) {
             l012A = m001A;
         }
-        if (gv11CE.M5522 <= 15) {
-            b_Message.Caption = "The " + Trim(gv11CE.M53C1[pv0128]) + " Exchange" + "\n" + "\n" + "Planetary" + "\n" + "Stock Market" + "\n" + "\n" + "Current Price:" + "\n" + Format(gv11CE.M54DA[pv0128][gv11CE.M5522], "#,#0") + "\n" + "\n" + "Price You Paid:" + "\n" + Format(gv0BF2.M4ECB[pv0128], "#,#0") + "\n" + "\n" + "Your Stock:" + "\n" + Format(gv0BF2.M4ED9[pv0128], "#,#0") + " shares" + "\n" + "\n" + "Cash:  " + "\n" + Format(gv0BF2.M4CF9, "#,#0") + " kubars" + "\n" + "\n" + "Bank:  " + "\n" + Format(gv0BF2.M4E9E, "#,#0") + " kubars" + "\n" + "\n" + "Loan:  " + "\n" + Format(gv0BF2.M4DA3, "#,#0") + " kubars" + l012A;
+        if (game.turn <= 15) {
+            b_Message.Caption = "The " + Trim(game.planetNames[pv0128]) + " Exchange" + "\n" + "\n" + "Planetary" + "\n" + "Stock Market" + "\n" + "\n" + "Current Price:" + "\n" + Format(game.stockPrices[pv0128][game.turn], "#,#0") + "\n" + "\n" + "Price You Paid:" + "\n" + Format(player.shareAvgCost[pv0128], "#,#0") + "\n" + "\n" + "Your Stock:" + "\n" + Format(player.shares[pv0128], "#,#0") + " shares" + "\n" + "\n" + "Cash:  " + "\n" + Format(player.cash, "#,#0") + " kubars" + "\n" + "\n" + "Bank:  " + "\n" + Format(player.bankBalance, "#,#0") + " kubars" + "\n" + "\n" + "Loan:  " + "\n" + Format(player.loan, "#,#0") + " kubars" + l012A;
         } else {
-            b_Message.Caption = "The " + Trim(gv11CE.M53C1[pv0128]) + " Exchange" + "\n" + "\n" + "Planetary" + "\n" + "Stock Market" + "\n" + "\n" + "Current Price:" + "\n" + Format(gv11CE.M54DA[pv0128][15], "#,#0") + "\n" + "\n" + "Price You Paid:" + "\n" + Format(gv0BF2.M4ECB[pv0128], "#,#0") + "\n" + "\n" + "Your Stock:" + "\n" + Format(gv0BF2.M4ED9[pv0128], "#,#0") + " shares" + "\n" + "\n" + "Cash:  " + "\n" + Format(gv0BF2.M4CF9, "#,#0") + " kubars" + "\n" + "\n" + "Bank:  " + "\n" + Format(gv0BF2.M4E9E, "#,#0") + " kubars" + "\n" + "\n" + "Loan:  " + "\n" + Format(gv0BF2.M4DA3, "#,#0") + " kubars" + l012A;
+            b_Message.Caption = "The " + Trim(game.planetNames[pv0128]) + " Exchange" + "\n" + "\n" + "Planetary" + "\n" + "Stock Market" + "\n" + "\n" + "Current Price:" + "\n" + Format(game.stockPrices[pv0128][15], "#,#0") + "\n" + "\n" + "Price You Paid:" + "\n" + Format(player.shareAvgCost[pv0128], "#,#0") + "\n" + "\n" + "Your Stock:" + "\n" + Format(player.shares[pv0128], "#,#0") + " shares" + "\n" + "\n" + "Cash:  " + "\n" + Format(player.cash, "#,#0") + " kubars" + "\n" + "\n" + "Bank:  " + "\n" + Format(player.bankBalance, "#,#0") + " kubars" + "\n" + "\n" + "Loan:  " + "\n" + Format(player.loan, "#,#0") + " kubars" + l012A;
         }
     }
 
@@ -484,33 +484,33 @@ function (me) {
         if (m001E == 0) {
             m001E = -1;
             for (l0146 = 0; l0146 <= 6; l0146++) {
-                if (gv11CE.M54BF[l0146] == -1) {
+                if (game.stockCrashed[l0146] == -1) {
                     frm_Box1.FillElastic.Caption = "Stock Market Crash!!!";
-                    frm_Box1.b_Message.Caption = "The Stock Market on planet " + gv11CE.M53C1[l0146] + " crashed today!!! Everyone who owned stock in the " + gv11CE.M53C1[l0146] + " Exchange lost their entire investment. Emperor Dred Nicolson has intervened and shut down the " + gv11CE.M53C1[l0146] + " Exchange for one week. The Stock Exchange Board is working around the clock on restoring the " + gv11CE.M53C1[l0146] + " Exchange to 1000 points by next week. This, however, will come at a high price. No investors are expected to have their losses refunded.";
+                    frm_Box1.b_Message.Caption = "The Stock Market on planet " + game.planetNames[l0146] + " crashed today!!! Everyone who owned stock in the " + game.planetNames[l0146] + " Exchange lost their entire investment. Emperor Dred Nicolson has intervened and shut down the " + game.planetNames[l0146] + " Exchange for one week. The Stock Exchange Board is working around the clock on restoring the " + game.planetNames[l0146] + " Exchange to 1000 points by next week. This, however, will come at a high price. No investors are expected to have their losses refunded.";
                     await frm_Box1.Show(1);
-                    m001A = "\n" + "\n" + "NOTE:" + "\n" + "The " + gv11CE.M53C1[l0146] + " Exchange Crashed!";
+                    m001A = "\n" + "\n" + "NOTE:" + "\n" + "The " + game.planetNames[l0146] + " Exchange Crashed!";
                 }
             }
-            if (gv11CE.M5362 == 1000) {
-                if (gv11CE.M5522 <= 15) {
-                    l0148 = gv11CE.M54DA[gv11CE.M5376][gv11CE.M5522] - gv11CE.M54DA[gv11CE.M5376][gv11CE.M5522 - 1];
+            if (game.newsEvent == 1000) {
+                if (game.turn <= 15) {
+                    l0148 = game.stockPrices[game.newsPlanet][game.turn] - game.stockPrices[game.newsPlanet][game.turn - 1];
                 } else {
-                    l0148 = gv11CE.M54DA[gv11CE.M5376][15] - gv11CE.M54DA[gv11CE.M5376][14];
+                    l0148 = game.stockPrices[game.newsPlanet][15] - game.stockPrices[game.newsPlanet][14];
                 }
-                frm_Box1.FillElastic.Caption = Trim(gv11CE.M53C1[gv11CE.M5376]) + " Exchange Soars!";
-                frm_Box1.b_Message.Caption = "The " + Trim(gv11CE.M53C1[gv11CE.M5376]) + " Exchange shot up this week!!! The average share price gained an amazing " + Format(l0148, "#,#0") + " points on heavy trading. We have reports from the " + Trim(gv11CE.M53C1[gv11CE.M5376]) + " Exchange that a number of big investors made a tidy profit on this unexpected market shift.";
+                frm_Box1.FillElastic.Caption = Trim(game.planetNames[game.newsPlanet]) + " Exchange Soars!";
+                frm_Box1.b_Message.Caption = "The " + Trim(game.planetNames[game.newsPlanet]) + " Exchange shot up this week!!! The average share price gained an amazing " + Format(l0148, "#,#0") + " points on heavy trading. We have reports from the " + Trim(game.planetNames[game.newsPlanet]) + " Exchange that a number of big investors made a tidy profit on this unexpected market shift.";
                 await frm_Box1.Show(1);
-                m001A = "\n" + "\n" + "NOTE:" + "\n" + "The " + gv11CE.M53C1[gv11CE.M5376] + " Exchange Takes Off!";
-            } else if (gv11CE.M5362 == 1001) {
-                if (gv11CE.M5522 <= 15) {
-                    l0148 = gv11CE.M54DA[gv11CE.M5376][gv11CE.M5522 - 1] - gv11CE.M54DA[gv11CE.M5376][gv11CE.M5522];
+                m001A = "\n" + "\n" + "NOTE:" + "\n" + "The " + game.planetNames[game.newsPlanet] + " Exchange Takes Off!";
+            } else if (game.newsEvent == 1001) {
+                if (game.turn <= 15) {
+                    l0148 = game.stockPrices[game.newsPlanet][game.turn - 1] - game.stockPrices[game.newsPlanet][game.turn];
                 } else {
-                    l0148 = gv11CE.M54DA[gv11CE.M5376][14] - gv11CE.M54DA[gv11CE.M5376][15];
+                    l0148 = game.stockPrices[game.newsPlanet][14] - game.stockPrices[game.newsPlanet][15];
                 }
-                frm_Box1.FillElastic.Caption = Trim(gv11CE.M53C1[gv11CE.M5376]) + " Exchange Plummets!";
-                frm_Box1.b_Message.Caption = "The " + Trim(gv11CE.M53C1[gv11CE.M5376]) + " Exchange plummeted this week, as the average share price fell " + Format(l0148, "#,#0") + " points. We have reports from the " + Trim(gv11CE.M53C1[gv11CE.M5376]) + " Exchange that a number of big investors lost a fortune in this unexpected down-turn.";
+                frm_Box1.FillElastic.Caption = Trim(game.planetNames[game.newsPlanet]) + " Exchange Plummets!";
+                frm_Box1.b_Message.Caption = "The " + Trim(game.planetNames[game.newsPlanet]) + " Exchange plummeted this week, as the average share price fell " + Format(l0148, "#,#0") + " points. We have reports from the " + Trim(game.planetNames[game.newsPlanet]) + " Exchange that a number of big investors lost a fortune in this unexpected down-turn.";
                 await frm_Box1.Show(1);
-                m001A = "\n" + "\n" + "NOTE:" + "\n" + "The " + gv11CE.M53C1[gv11CE.M5376] + " Exchange Nose Dives!";
+                m001A = "\n" + "\n" + "NOTE:" + "\n" + "The " + game.planetNames[game.newsPlanet] + " Exchange Nose Dives!";
             }
         }
         me.MousePointer = mc0126;
@@ -530,18 +530,18 @@ function (me) {
         m001E = 0;
         l0150 = 0;
         for (l014C = 0; l014C <= 6; l014C++) {
-            if (gv11CE.M54BF[l014C] == -1) {
+            if (game.stockCrashed[l014C] == -1) {
                 l0150 = -1;
             }
         }
         m0020 = 7;
         sub49B2(m0020);
         sub3022(m0020);
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             if (l0150 == -1) {
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "stokcrsh.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "stokcrsh.wav";
             } else {
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "stock.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "stock.wav";
             }
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";

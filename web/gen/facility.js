@@ -49,9 +49,9 @@ function (me) {
 
     async function b_Help_Click() {
         me.MousePointer = mc0022;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -96,9 +96,9 @@ function (me) {
         let l0096 = 0;
         let l0098 = 0;
         let l009A = 0;
-        if (gv0060.M4C47 == -1 && b_Sound.Tag == "First Sound = True") {
+        if (settings.soundOn == -1 && b_Sound.Tag == "First Sound = True") {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "ping1.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "ping1.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -106,15 +106,15 @@ function (me) {
         if (m001A == 7) {
             b_Message.Caption = "Click on the PLANET ICONS to see the FACILITIES located on each planet.";
         } else {
-            b_Message.Caption = "Facilities on " + UCase(Trim(gv11CE.M53C1[m001A]));
+            b_Message.Caption = "Facilities on " + UCase(Trim(game.planetNames[m001A]));
         }
         l009A = 0;
-        for (l0094 = 1; l0094 <= gv11CE.M53EF; l0094++) {
-            if (gv11CE.M5299[l0094] == 0) {
+        for (l0094 = 1; l0094 <= game.numPlayers; l0094++) {
+            if (game.graphShowCompany[l0094] == 0) {
                 l009A = l009A + 1;
             }
         }
-        m001E = l009A + gv11CE.M5390;
+        m001E = l009A + game.numRivals;
         b_Grid.Cols = 4;
         b_Grid.Rows = m001E + 1;
         for (l0094 = 0; l0094 <= 3; l0094++) {
@@ -128,7 +128,7 @@ function (me) {
                 if (m001A == 7) {
                     b_Grid.Text = "Facilities";
                 } else {
-                    b_Grid.Text = "Facilities on " + Trim(gv11CE.M53C1[m001A]);
+                    b_Grid.Text = "Facilities on " + Trim(game.planetNames[m001A]);
                 }
             } else if (l0094 == 2) {
                 b_Grid.Text = "Fees (kubars)";
@@ -139,55 +139,55 @@ function (me) {
         for (l0094 = 0; l0094 <= 3; l0094++) {
             b_Grid.Col = l0094;
             l009A = 0;
-            for (l0096 = 1; l0096 <= gv11CE.M53EF; l0096++) {
-                if (gv11CE.M5299[l0096] == 0) {
+            for (l0096 = 1; l0096 <= game.numPlayers; l0096++) {
+                if (game.graphShowCompany[l0096] == 0) {
                     l009A = l009A + 1;
                     b_Grid.Row = l009A;
                     if (l0094 == 0) {
-                        b_Grid.Text = Trim(gv11CE.M5401[l0096]);
+                        b_Grid.Text = Trim(game.companyNames[l0096]);
                     } else if (l0094 == 1) {
                         if (m001A == 7) {
                             b_Grid.Text = "-----";
                         } else {
-                            b_Grid.Text = Format(gv11CE.M5452[l0096][m001A], "#,#0");
+                            b_Grid.Text = Format(game.facilitiesOwned[l0096][m001A], "#,#0");
                         }
                     } else if (l0094 == 2) {
                         if (m001A == 7) {
                             b_Grid.Text = "-----";
                         } else {
-                            b_Grid.Text = Format(gv11CE.M5464[l0096][m001A], "#,#0");
+                            b_Grid.Text = Format(game.facilityFees[l0096][m001A], "#,#0");
                         }
                     } else if (l0094 == 3) {
                         if (m001A == 7) {
                             b_Grid.Text = "-----";
                         } else {
-                            b_Grid.Text = Format(gv11CE.M5479[l0096][m001A], "#,#0");
+                            b_Grid.Text = Format(game.facilityRevenue[l0096][m001A], "#,#0");
                         }
                     }
                 }
             }
-            for (l0098 = 1; l0098 <= gv11CE.M5390; l0098++) {
+            for (l0098 = 1; l0098 <= game.numRivals; l0098++) {
                 l009A = l009A + 1;
                 b_Grid.Row = l009A;
                 if (l0094 == 0) {
-                    b_Grid.Text = Trim(gv1EB2.M5579[l0098]);
+                    b_Grid.Text = Trim(rivals.companyNames[l0098]);
                 } else if (l0094 == 1) {
                     if (m001A == 7) {
                         b_Grid.Text = "-----";
                     } else {
-                        b_Grid.Text = Format(gv1EB2.M55AF[l0098][m001A], "#,#0");
+                        b_Grid.Text = Format(rivals.facilitiesOwned[l0098][m001A], "#,#0");
                     }
                 } else if (l0094 == 2) {
                     if (m001A == 7) {
                         b_Grid.Text = "-----";
                     } else {
-                        b_Grid.Text = Format(gv1EB2.M55BB[l0098][m001A], "#,#0");
+                        b_Grid.Text = Format(rivals.facilityFees[l0098][m001A], "#,#0");
                     }
                 } else if (l0094 == 3) {
                     if (m001A == 7) {
                         b_Grid.Text = "-----";
                     } else {
-                        b_Grid.Text = Format(gv1EB2.M55CA[l0098][m001A], "#,#0");
+                        b_Grid.Text = Format(rivals.facilityRevenue[l0098][m001A], "#,#0");
                     }
                 }
             }
@@ -205,7 +205,7 @@ function (me) {
         l00B4 = Screen.Width * 0.99;
         b_Grid.ColWidth[0] = l00B4 / 3.3;
         for (l00B8 = 0; l00B8 <= m001E; l00B8++) {
-            b_Grid.RowHeight[l00B8] = l00B0 / (gv11CE.M53EF + gv11CE.M5390 + 1);
+            b_Grid.RowHeight[l00B8] = l00B0 / (game.numPlayers + game.numRivals + 1);
         }
         for (l00B8 = 1; l00B8 <= 3; l00B8++) {
             b_Grid.ColWidth[l00B8] = (l00B4 - (l00B4 / 3.3)) / 3;
@@ -228,8 +228,8 @@ function (me) {
         b_Sound.Tag = "First Sound = False";
         m001A = 7;
         for (l00C0 = 0; l00C0 <= 6; l00C0++) {
-            b_Planet[l00C0].Picture = LoadPicture(Trim(gv09F0.M4BF5) + gv11CE.M53C1[l00C0] + "1.bmp");
-            b_Planet[l00C0].Caption = gv11CE.M53C1[l00C0];
+            b_Planet[l00C0].Picture = LoadPicture(Trim(paths.imageDir) + game.planetNames[l00C0] + "1.bmp");
+            b_Planet[l00C0].Caption = game.planetNames[l00C0];
         }
         sub30FA();
         sub3113();

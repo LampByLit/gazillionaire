@@ -36,7 +36,7 @@ async function fn01A0(pv000E, p0010, p0012, p0014, p0016, p0018) {
         await frm_InputBox.Show(1);
         l001A = CLng(Val(frm_InputBox.b_Text.Text));
         if (l001A < 0 && l001A != -3333) {
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_MsgBox.FillElastic.Caption = "\n" + "Nice try, but you cannot input a negative amount.";
@@ -49,7 +49,7 @@ async function fn01A0(pv000E, p0010, p0012, p0014, p0016, p0018) {
         return ret;
     } catch (e) {
         Err.Catch(e);
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             Beep();
         }
         frm_MsgBox.FillElastic.Caption = "\n" + "The number you entered is too large. Please try again.";

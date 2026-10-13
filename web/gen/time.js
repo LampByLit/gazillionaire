@@ -36,7 +36,7 @@ function (me) {
         me.MousePointer = mc0024;
         b_Timer.Enabled = 0;
         FillElastic.Visible = 0;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         await Unload(me);
@@ -52,9 +52,9 @@ function (me) {
 
     async function b_Help_Click() {
         me.MousePointer = mc0024;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -73,7 +73,7 @@ function (me) {
 
     function b_Next_Click() {
         me.MousePointer = mc0024;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         m001C = m001C + 1;
@@ -97,7 +97,7 @@ function (me) {
 
     function b_Previous_Click() {
         me.MousePointer = mc0024;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         m001C = m001C - 1;
@@ -121,9 +121,9 @@ function (me) {
 
     function b_Timer_Timer() {
         if (m001A == 1) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "clock2.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "clock2.bmp");
         } else if (m001A == 2) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "clock.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "clock.bmp");
         }
         m001A = m001A + 1;
         if (m001A == 3) {
@@ -132,9 +132,9 @@ function (me) {
     }
 
     function sub2F85() {
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "clock.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "clock.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -160,7 +160,7 @@ function (me) {
         } else if (m001C == 3) {
             b_Message.Caption = "On the same token, any event that occurred before Emperor Dred was born is referred to as B.B. (BEFORE the BIRTH). A quick historical overview goes as follows: Bass Nicolson (Emperor Dred's grandfather) ruled Gogg from 600 B.B. until 103 B.B., then Hork Nicolson (Bass' son) took power and ruled from 103 B.B. until 3 A.B., when he was assassinated. From 3 A.B. until 24 A.B., there was chaos in the Imperial Government. Then in 24 A.B. the military intervened and reinstated Dred Nicolson to the throne.";
         } else if (m001C == 4) {
-            b_Message.Caption = "According to our records you are " + Format(gv0BF2.M4CC3 + (gv11CE.M5522 / 50), "#,#0") + " kuku years old (don't worry, most Kukubians live to be well over 500). The date is " + Format(gv11CE.M52D6, "#,#0") + " A.B., and your trading company has been in business " + Format(gv11CE.M5522 + 1, "#,#0") + " kuku weeks. Every time you want to trade commodities between two planets, it takes approximately one kuku week of your valuable time. On average you spend between 16 and 48 kuku hours travelling from one planet to another and 5 kuku days conducting business on the planet.";
+            b_Message.Caption = "According to our records you are " + Format(player.age + (game.turn / 50), "#,#0") + " kuku years old (don't worry, most Kukubians live to be well over 500). The date is " + Format(game.year, "#,#0") + " A.B., and your trading company has been in business " + Format(game.turn + 1, "#,#0") + " kuku weeks. Every time you want to trade commodities between two planets, it takes approximately one kuku week of your valuable time. On average you spend between 16 and 48 kuku hours travelling from one planet to another and 5 kuku days conducting business on the planet.";
         } else if (m001C == 5) {
             b_Message.Caption = "One final piece of trivia... Other systems in the Galaxy of Gogg begin their calendars with the Supreme Commander's wedding day, or the first time the Supreme Commander hunted wild space snakes, or any other day the Supreme Commander deems important. The only problem with this method is that it becomes very confusing when you are travelling from system to system. Fortunately, for this game, you will not have to leave the Kukubian solar system.";
         }
@@ -177,7 +177,7 @@ function (me) {
     }
 
     function Form_Load() {
-        Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "clock.bmp");
+        Image1.Picture = LoadPicture(Trim(paths.imageDir) + "clock.bmp");
         m001C = 1;
         m0020 = 5;
         sub2F85();

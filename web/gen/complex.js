@@ -72,29 +72,29 @@ function (me) {
 
     function Form_Load() {
         let l0060 = "";
-        b_Percent.FloodPercent = (gv11CE.M4FFC / 17) * 100;
-        if (gv11CE.M4FFC + 1 == 8) {
+        b_Percent.FloodPercent = (game.complexity / 17) * 100;
+        if (game.complexity + 1 == 8) {
             l0060 = "PASSENGERS";
-        } else if (gv11CE.M4FFC + 1 == 9) {
+        } else if (game.complexity + 1 == 9) {
             l0060 = "CREW";
-        } else if (gv11CE.M4FFC + 1 == 10) {
+        } else if (game.complexity + 1 == 10) {
             l0060 = "ADVERTISING";
-        } else if (gv11CE.M4FFC + 1 == 11) {
+        } else if (game.complexity + 1 == 11) {
             l0060 = "TAXES";
-        } else if (gv11CE.M4FFC + 1 == 12) {
+        } else if (game.complexity + 1 == 12) {
             l0060 = "BANK";
-        } else if (gv11CE.M4FFC + 1 == 13) {
+        } else if (game.complexity + 1 == 13) {
             l0060 = "WAREHOUSE";
-        } else if (gv11CE.M4FFC + 1 == 14) {
+        } else if (game.complexity + 1 == 14) {
             l0060 = "EXPLORE PLANETS";
-        } else if (gv11CE.M4FFC + 1 == 15) {
+        } else if (game.complexity + 1 == 15) {
             l0060 = "DISTANCE CHART";
-        } else if (gv11CE.M4FFC + 1 == 16) {
+        } else if (game.complexity + 1 == 16) {
             l0060 = "FACILITIES";
-        } else if (gv11CE.M4FFC + 1 == 17) {
+        } else if (game.complexity + 1 == 17) {
             l0060 = "STOCK MARKET";
         }
-        b_Message.Caption = "The game complexity is currently set at " + Format((gv11CE.M4FFC / 17) * 100, "#,#0") + "%. If you choose to make the game MORE COMPLEX, a new FUNCTION will be added to the game. The next function that will be added is " + l0060 + ".";
+        b_Message.Caption = "The game complexity is currently set at " + Format((game.complexity / 17) * 100, "#,#0") + "%. If you choose to make the game MORE COMPLEX, a new FUNCTION will be added to the game. The next function that will be added is " + l0060 + ".";
     }
 
     return {

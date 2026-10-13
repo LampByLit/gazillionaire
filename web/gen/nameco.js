@@ -41,22 +41,22 @@ function (me) {
     async function sub050F() {
         me.MousePointer = mc0036;
         if (InputCompanyName.Text == "" || InputCompanyName.Text == " ") {
-            gv11CE.M5401[m001A] = FixStr("Player " + Format(m001A, "#") + " Inc.", 20);
+            game.companyNames[m001A] = FixStr("Player " + Format(m001A, "#") + " Inc.", 20);
         } else {
-            gv11CE.M5401[m001A] = FixStr(InputCompanyName.Text, 20);
+            game.companyNames[m001A] = FixStr(InputCompanyName.Text, 20);
         }
         sub014C(m001A);
         m001A = m001A + 1;
-        if (m001A == gv11CE.M53EF) {
+        if (m001A == game.numPlayers) {
             me.Tag = "Continue";
         }
-        if (m001A <= gv11CE.M53EF) {
-            if (gv0060.M4C47 == -1) {
+        if (m001A <= game.numPlayers) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
                 if ((Mod(m001A, 2)) == 0) {
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "ping4.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "ping4.wav";
                 } else {
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "ping3.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "ping3.wav";
                 }
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
@@ -82,17 +82,17 @@ function (me) {
         sub00CD();
         sub00E5();
         for (l0062 = 1; l0062 <= 6; l0062++) {
-            gv11CE.M5384[l0062] = gv0BF2.M4CF9 + gv0BF2.M4E9E - gv0BF2.M4DA3 - gv0BF2.M4FBD;
-            gv1EB2.M4CF9[l0062] = gv0BF2.M4CF9 + gv0BF2.M4E9E - gv0BF2.M4DA3 - gv0BF2.M4FBD;
-            gv1EB2.M5384[l0062] = gv1EB2.M4CF9[l0062];
+            game.netWorth[l0062] = player.cash + player.bankBalance - player.loan - player.zinnLoan;
+            rivals.cash[l0062] = player.cash + player.bankBalance - player.loan - player.zinnLoan;
+            rivals.netWorth[l0062] = rivals.cash[l0062];
         }
-        for (l0062 = 1; l0062 <= gv11CE.M53EF; l0062++) {
-            gv11CE.M5441[l0062][0] = CLng(gv11CE.M5384[l0062] + (0.01 * l0062 * gv11CE.M5384[l0062]));
-            gv11CE.M5441[l0062][1] = gv11CE.M5384[l0062];
+        for (l0062 = 1; l0062 <= game.numPlayers; l0062++) {
+            game.netWorthHistory[l0062][0] = CLng(game.netWorth[l0062] + (0.01 * l0062 * game.netWorth[l0062]));
+            game.netWorthHistory[l0062][1] = game.netWorth[l0062];
         }
-        for (l0062 = 1; l0062 <= gv11CE.M5390; l0062++) {
-            gv1EB2.M55A4[l0062][0] = CLng(gv1EB2.M5384[l0062] - (0.01 * l0062 * gv1EB2.M5384[l0062]));
-            gv1EB2.M55A4[l0062][1] = gv1EB2.M5384[l0062];
+        for (l0062 = 1; l0062 <= game.numRivals; l0062++) {
+            rivals.netWorthHistory[l0062][0] = CLng(rivals.netWorth[l0062] - (0.01 * l0062 * rivals.netWorth[l0062]));
+            rivals.netWorthHistory[l0062][1] = rivals.netWorth[l0062];
         }
     }
 
@@ -114,7 +114,7 @@ function (me) {
             await sub050F();
         } else if (KeyAscii == Asc("&")) {
             KeyAscii = 0;
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
         }
@@ -123,10 +123,10 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = mc0036;
-        FillElastic.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "stars1.bmp");
-        if (gv0060.M4C47 == -1) {
+        FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "stars1.bmp");
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "ping3.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "ping3.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }

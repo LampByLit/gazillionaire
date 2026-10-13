@@ -19,18 +19,18 @@ function (me) {
         me.MousePointer = mc0022;
         l0020 = 0;
         for (l001E = 0; l001E <= 6; l001E++) {
-            if (gv11CE.M5522 <= 15) {
-                l0020 = l0020 + gv0BF2.M4ED9[l001E] * gv11CE.M54DA[l001E][gv11CE.M5522];
+            if (game.turn <= 15) {
+                l0020 = l0020 + player.shares[l001E] * game.stockPrices[l001E][game.turn];
             } else {
-                l0020 = l0020 + gv0BF2.M4ED9[l001E] * gv11CE.M54DA[l001E][15];
+                l0020 = l0020 + player.shares[l001E] * game.stockPrices[l001E][15];
             }
         }
-        if (gv11CE.M5299[gv11CE.M53E5] == 0) {
-            gv11CE.M5384[gv11CE.M53E5] = l0020 + gv0BF2.M4CF9 + gv0BF2.M4E9E - gv0BF2.M4DA3 - gv0BF2.M4FBD;
+        if (game.graphShowCompany[game.currentPlayer] == 0) {
+            game.netWorth[game.currentPlayer] = l0020 + player.cash + player.bankBalance - player.loan - player.zinnLoan;
         } else {
-            gv11CE.M5384[gv11CE.M53E5] = 0;
+            game.netWorth[game.currentPlayer] = 0;
         }
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         await Load(frm_Travel2);

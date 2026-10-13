@@ -57,15 +57,15 @@ function (me) {
 
     function b_Timer_Timer() {
         if (m001A == 1) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "zinn2.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zinn2.bmp");
         } else if (m001A == 2) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "zinn3.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zinn3.bmp");
         } else if (m001A == 3) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "zinn3.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zinn3.bmp");
         } else if (m001A == 4) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "zinn2.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zinn2.bmp");
         } else if (m001A == 5) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "ZINN.BMP");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ZINN.BMP");
         }
         m001A = m001A + 1;
         if (m001A == 6) {
@@ -115,7 +115,7 @@ function (me) {
         me.MousePointer = mc001E;
         m001A = 1;
         m001C = 1;
-        Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "ZINN.BMP");
+        Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ZINN.BMP");
         me.Tag = "NO";
     }
 

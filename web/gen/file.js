@@ -39,12 +39,12 @@ function (me) {
         frm_BoxPort.b_Yes.Visible = 0;
         frm_BoxPort.b_No.Visible = 0;
         frm_BoxPort.b_OK.Visible = -1;
-        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "lavamind.bmp");
+        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(paths.imageDir) + "lavamind.bmp");
         frm_BoxPort.b_Title.Caption = "An Introduction to LavaMind";
         frm_BoxPort.b_Message.Caption = "LavaMind was founded in January of 1994 by Naomi Kokubo and Steven Hoffman. The company is a partnership located in San Francisco, California. To date, all of LavaMind's projects have been self-funded." + "\n" + "\n" + "LavaMind operates on two basic principles:  1) It produces titles based on original content;  2) It will not take in any outside funding which will compromise the integrity of its work." + "\n" + "\n" + "The goal of LavaMind is to provide alternative entertainment with original characters, stories, design and game-play. In the long term, LavaMind hopes to build a reputation around the uniqueness, individuality and quality of its work.";
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             frm_BoxPort.b_Sound.Command = "Close";
-            frm_BoxPort.b_Sound.FileName = Trim(gv09F0.M4C15) + "ooom.wav";
+            frm_BoxPort.b_Sound.FileName = Trim(paths.soundDir) + "ooom.wav";
             frm_BoxPort.b_Sound.Command = "Open";
             frm_BoxPort.b_Sound.Command = "Play";
         }
@@ -52,12 +52,12 @@ function (me) {
         frm_BoxPort.b_Yes.Visible = 0;
         frm_BoxPort.b_No.Visible = 0;
         frm_BoxPort.b_OK.Visible = -1;
-        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "zap.bmp");
+        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(paths.imageDir) + "zap.bmp");
         frm_BoxPort.b_Title.Caption = "LavaMind's Other Games";
         frm_BoxPort.b_Message.Caption = "If you like Gazillionaire, you'll love Zapitalism! Zapitalism takes place in the Archipelago of Mermadan on the island of Zapinalia. Queen Keshi Keshi Gomu, the ruler of Zapinalia, has decided to open up the island's economy to foreign imports for the first time in a thousand years. Your job is to make millions buying and selling everything from imported lumber fish to precious mamo vapor. With the profit you earn dealing in exotic goods, you can expand your operation. But watch out--you must match wits against five other companies in a race to build a commercial empire. These competitors can either be controlled by computer players or human players. Zapitalism is designed for both Windows 3.1 and Windows 95, has play-by-email functionality over the Net, and is being distributed world-wide on CD-ROM.";
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             frm_BoxPort.b_Sound.Command = "Close";
-            frm_BoxPort.b_Sound.FileName = Trim(gv09F0.M4C15) + "zap.wav";
+            frm_BoxPort.b_Sound.FileName = Trim(paths.soundDir) + "zap.wav";
             frm_BoxPort.b_Sound.Command = "Open";
             frm_BoxPort.b_Sound.Command = "Play";
         }
@@ -65,12 +65,12 @@ function (me) {
         frm_BoxPort.b_Yes.Visible = 0;
         frm_BoxPort.b_No.Visible = 0;
         frm_BoxPort.b_OK.Visible = -1;
-        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "www.bmp");
+        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(paths.imageDir) + "www.bmp");
         frm_BoxPort.b_Title.Caption = "LavaMind's Web Sites";
         frm_BoxPort.b_Message.Caption = "In addition to CD-ROM entertainment, LavaMind has a number of popular web sites:" + "\n" + "\n" + "1)  The LavaMind Web Site" + "\n" + "http://www.lavamind.com" + "\n" + "\n" + "2)  The Gazillionaire Web Site" + "\n" + "http://www.gazillionaire.com" + "\n" + "\n" + "3)  The Zapitalism Web Site" + "\n" + "http://www.zapitalism.com" + "\n" + "\n" + "4)  The Virtual Pet Cemetery" + "\n" + "http://www.lavamind.com/pet.html" + "\n" + "\n" + "5)  The Volcanic Gallery" + "\n" + "http://www.lavamind.com/volcanic.html" + "\n" + "\n" + "6)  Utterly Outrageous Recipes" + "\n" + "http://www.zapitalism.com/food.html";
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             frm_BoxPort.b_Sound.Command = "Close";
-            frm_BoxPort.b_Sound.FileName = Trim(gv09F0.M4C15) + "tilo.wav";
+            frm_BoxPort.b_Sound.FileName = Trim(paths.soundDir) + "tilo.wav";
             frm_BoxPort.b_Sound.Command = "Open";
             frm_BoxPort.b_Sound.Command = "Play";
         }
@@ -78,12 +78,12 @@ function (me) {
         frm_BoxPort.b_Yes.Visible = 0;
         frm_BoxPort.b_No.Visible = 0;
         frm_BoxPort.b_OK.Visible = -1;
-        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "lavamind.bmp");
+        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(paths.imageDir) + "lavamind.bmp");
         frm_BoxPort.b_Title.Caption = "LavaMind's Business Philosophy";
         frm_BoxPort.b_Message.Caption = "LavaMind is seeking to fill a niche in the entertainment market by providing distinctly different content." + "\n" + "\n" + "One of the fundamental philosophies of the company is to produce original material. LavaMind does not believe in licensing existing characters from other media, such as film, TV, comics and books, unless the company has a large degree of creative flexibility." + "\n" + "\n" + "This is both a business decision and a personal decision. LavaMind is constantly looking to develop fresh characters, concepts and stories. The founders of LavaMind believe the process of creating is as important as the final result, and they are looking to work with people and companies who have a similar vision.";
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             frm_BoxPort.b_Sound.Command = "Close";
-            frm_BoxPort.b_Sound.FileName = Trim(gv09F0.M4C15) + "nosh.wav";
+            frm_BoxPort.b_Sound.FileName = Trim(paths.soundDir) + "nosh.wav";
             frm_BoxPort.b_Sound.Command = "Open";
             frm_BoxPort.b_Sound.Command = "Play";
         }
@@ -115,8 +115,8 @@ function (me) {
 
     async function b_Email_Click() {
         me.MousePointer = mc001C;
-        if (gv11CE.M52F2 == 0) {
-            if (gv11CE.M5334 == 0) {
+        if (game.isEmailGame == 0) {
+            if (game.saveSlot == 0) {
                 frm_BoxYesNo.FillElastic.Caption = "\n" + "WARNING:  This game has not been saved yet. If you load a new game now, you will lose the current game's data. Are you sure you want to load a new game?";
                 await frm_BoxYesNo.Show(1);
                 if (frm_BoxYesNo.Tag == "YES") {
@@ -135,7 +135,7 @@ function (me) {
                 await Unload(me);
             }
         } else {
-            if (Trim(gv11CE.M52FB) == "") {
+            if (Trim(game.emailFileName) == "") {
                 frm_BoxYesNo.FillElastic.Caption = "\n" + "WARNING:  This game has not been saved yet. If you load a new game now, you will lose the current game's data. Are you sure you want to load a new game?";
                 await frm_BoxYesNo.Show(1);
                 if (frm_BoxYesNo.Tag == "YES") {
@@ -181,9 +181,9 @@ function (me) {
 
     async function b_Help_Click() {
         me.MousePointer = mc001C;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -202,8 +202,8 @@ function (me) {
 
     async function b_Load_Click() {
         me.MousePointer = mc001C;
-        if (gv11CE.M52F2 == 0) {
-            if (gv11CE.M5334 == 0) {
+        if (game.isEmailGame == 0) {
+            if (game.saveSlot == 0) {
                 frm_BoxYesNo.FillElastic.Caption = "\n" + "WARNING:  This game has not been saved yet. If you load a new game now, you will lose the current game's data. Are you sure you want to load a new game?";
                 await frm_BoxYesNo.Show(1);
                 if (frm_BoxYesNo.Tag == "YES") {
@@ -224,7 +224,7 @@ function (me) {
                 await Unload(me);
             }
         } else {
-            if (Trim(gv11CE.M52FB) == "") {
+            if (Trim(game.emailFileName) == "") {
                 frm_BoxYesNo.FillElastic.Caption = "\n" + "WARNING:  This game has not been saved yet. If you load a new game now, you will lose the current game's data. Are you sure you want to load a new game?";
                 await frm_BoxYesNo.Show(1);
                 if (frm_BoxYesNo.Tag == "YES") {
@@ -257,8 +257,8 @@ function (me) {
 
     async function b_New_Click() {
         me.MousePointer = mc001C;
-        if (gv11CE.M52F2 == 0) {
-            if (gv11CE.M5334 == 0) {
+        if (game.isEmailGame == 0) {
+            if (game.saveSlot == 0) {
                 frm_BoxYesNo.FillElastic.Caption = "\n" + "WARNING:  This game has not been saved yet. If you start a new game now, you will lose the current game's data. Are you sure you want to start a new game?";
                 await frm_BoxYesNo.Show(1);
                 if (frm_BoxYesNo.Tag == "YES") {
@@ -277,7 +277,7 @@ function (me) {
                 await Unload(me);
             }
         } else {
-            if (Trim(gv11CE.M52FB) == "") {
+            if (Trim(game.emailFileName) == "") {
                 frm_BoxYesNo.FillElastic.Caption = "\n" + "WARNING:  This game has not been saved yet. If you start a new game now, you will lose the current game's data. Are you sure you want to start a new game?";
                 await frm_BoxYesNo.Show(1);
                 if (frm_BoxYesNo.Tag == "YES") {
@@ -307,8 +307,8 @@ function (me) {
     }
 
     async function b_Quit_Click() {
-        if (gv11CE.M52F2 == 0) {
-            if (gv11CE.M5334 == 0) {
+        if (game.isEmailGame == 0) {
+            if (game.saveSlot == 0) {
                 frm_BoxYesNo.FillElastic.Caption = "\n" + "WARNING:  This game has not been saved yet. If you quit now, you will lose the current game's data. Are you sure you want to quit?";
                 await frm_BoxYesNo.Show(1);
                 if (frm_BoxYesNo.Tag == "YES") {
@@ -325,7 +325,7 @@ function (me) {
                 End();
             }
         } else {
-            if (Trim(gv11CE.M52FB) == "") {
+            if (Trim(game.emailFileName) == "") {
                 frm_BoxYesNo.FillElastic.Caption = "\n" + "WARNING:  This game has not been saved yet. If you quit now, you will lose the current game's data. Are you sure you want to quit?";
                 await frm_BoxYesNo.Show(1);
                 if (frm_BoxYesNo.Tag == "YES") {
@@ -354,8 +354,8 @@ function (me) {
 
     async function b_Save_Click() {
         me.MousePointer = mc001C;
-        if (gv11CE.M52F2 == 0) {
-            if (gv11CE.M5334 == 0) {
+        if (game.isEmailGame == 0) {
+            if (game.saveSlot == 0) {
                 frm_Box1.FillElastic.Caption = "Auto Save";
                 frm_Box1.b_Message.Caption = "We have incorporated an AUTO SAVE feature into Gazillionaire. If you save this game once, the AUTO SAVE feature will be activated for the current game. This way you don't have to worry about saving this particular game ever again. The computer will automatically save this game when you load another game, quit this game, start a new game or end your turn.";
                 await frm_Box1.Show(1);
@@ -368,8 +368,8 @@ function (me) {
                 await frm_MainMenu.Show();
                 await Unload(me);
             }
-        } else if (gv11CE.M52F2 == -1) {
-            if (Trim(gv11CE.M52FB) == "") {
+        } else if (game.isEmailGame == -1) {
+            if (Trim(game.emailFileName) == "") {
                 FillElastic.Visible = 0;
                 frm_SaveEmail.Tag = "MAIN MENU";
                 await frm_SaveEmail.Show();
@@ -393,7 +393,7 @@ function (me) {
 
     async function b_ShortCuts_Click() {
         me.MousePointer = mc001C;
-        if (gv11CE.M4FFC >= gv11CE.M50E8 || gv11CE.M552A == 0) {
+        if (game.complexity >= game.unlockExplore || game.tutorialMode == 0) {
             await frm_Quick.Show();
             await Unload(me);
         } else {
@@ -423,7 +423,7 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = mc001C;
-        FillElastic.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "STARS3.BMP");
+        FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "STARS3.BMP");
     }
 
     function Label1_Click() {

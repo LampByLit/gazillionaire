@@ -41,9 +41,9 @@ function (me) {
     async function b_Configuration_Click() {
         me.MousePointer = mc001A;
         await frm_Config.Show(1);
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "lavamind.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "lavamind.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -68,19 +68,19 @@ function (me) {
 
     async function b_LavaMind_Click() {
         me.MousePointer = mc001A;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         FillElastic.Visible = 0;
         frm_BoxPort.b_Yes.Visible = 0;
         frm_BoxPort.b_No.Visible = 0;
         frm_BoxPort.b_OK.Visible = -1;
-        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "lavamind.bmp");
+        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(paths.imageDir) + "lavamind.bmp");
         frm_BoxPort.b_Title.Caption = "How to Contact" + "\n" + "LavaMind";
         frm_BoxPort.b_Message.Caption = "If you want to get in touch with LavaMind, just send email to the following addresses:" + "\n" + "\n" + "General Info (Auto Reply):" + "\n" + "info@lavamind.com" + "\n" + "\n" + "Tech Support:" + "\n" + "support@lavamind.com" + "\n" + "\n" + "Customer Service:" + "\n" + "service@lavamind.com" + "\n" + "\n" + "Sales:" + "\n" + "sales@lavamind.com" + "\n" + "\n" + "More LavaMind Games:" + "\n" + "games@lavamind.com";
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             frm_BoxPort.b_Sound.Command = "Close";
-            frm_BoxPort.b_Sound.FileName = Trim(gv09F0.M4C15) + "hork.wav";
+            frm_BoxPort.b_Sound.FileName = Trim(paths.soundDir) + "hork.wav";
             frm_BoxPort.b_Sound.Command = "Open";
             frm_BoxPort.b_Sound.Command = "Play";
         }
@@ -88,20 +88,20 @@ function (me) {
         frm_BoxPort.b_Yes.Visible = 0;
         frm_BoxPort.b_No.Visible = 0;
         frm_BoxPort.b_OK.Visible = -1;
-        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "www.bmp");
+        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(paths.imageDir) + "www.bmp");
         frm_BoxPort.b_Title.Caption = "The LavaMind" + "\n" + "Web Sites";
         frm_BoxPort.b_Message.Caption = "A great way to get information about LavaMind is to come and visit the LavaMind Web Sites." + "\n" + "\n" + "These sites are dedicated to games and entertainment. They are packed with graphics, short stories, reviews, movie material, a Virtual Pet Cemetery and even a lunatic or two." + "\n" + "\n" + "These sites also contain information on ordering LavaMind's other games as well as sneak previews of upcoming games." + "\n" + "\n" + "http://www.gazillionaire.com" + "\n" + "http://www.zapitalism.com" + "\n" + "http://www.lavamind.com" + "\n" + "\n" + "email:  web@lavamind.com";
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             frm_BoxPort.b_Sound.Command = "Close";
-            frm_BoxPort.b_Sound.FileName = Trim(gv09F0.M4C15) + "tilo.wav";
+            frm_BoxPort.b_Sound.FileName = Trim(paths.soundDir) + "tilo.wav";
             frm_BoxPort.b_Sound.Command = "Open";
             frm_BoxPort.b_Sound.Command = "Play";
         }
         await frm_BoxPort.Show(1);
         FillElastic.Visible = -1;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "lavamind.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "lavamind.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -155,11 +155,11 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = mc001A;
-        b_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "logo.bmp");
+        b_Image.Picture = LoadPicture(Trim(paths.imageDir) + "logo.bmp");
         me.Tag = "";
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "lavamind.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "lavamind.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }

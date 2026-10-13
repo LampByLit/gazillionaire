@@ -83,16 +83,16 @@ function (me) {
         let l007C = 0;
         const mc0096 = 1;
         me.MousePointer = mc001E;
-        if (gv0BF2.M4CF9 == 0) {
-            if (gv0060.M4C47 == -1) {
+        if (player.cash == 0) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Mr. Zinn";
             frm_Box0.b_Message.Caption = "\n" + "You don't have any money. Check your cash.";
             await frm_Box0.Show(1);
             l007A = 0;
-        } else if (gv0BF2.M4FBD == 0) {
-            if (gv0060.M4C47 == -1) {
+        } else if (player.zinnLoan == 0) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Mr. Zinn";
@@ -100,42 +100,42 @@ function (me) {
             await frm_Box0.Show(1);
             l007A = 0;
         } else {
-            if (gv0BF2.M4CF9 <= gv0BF2.M4FBD) {
-                l007C = gv0BF2.M4CF9;
+            if (player.cash <= player.zinnLoan) {
+                l007C = player.cash;
             } else {
-                l007C = gv0BF2.M4FBD;
+                l007C = player.zinnLoan;
             }
             l007A = await fn01A0(0, "", 0.25 * l007C, l007C, "Enter the amount you wish to pay back:", "Pay Back Zinn Loan");
         }
         if (l007A == 0) {
         } else if (l007A == -3333) {
-        } else if (l007A > gv0BF2.M4CF9) {
-            if (gv0060.M4C47 == -1) {
+        } else if (l007A > player.cash) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Mr. Zinn";
             frm_Box0.b_Message.Caption = "\n" + "You don't have enough money. Check your cash.";
             await frm_Box0.Show(1);
-        } else if (l007A >= gv0BF2.M4FBD) {
-            if (gv0060.M4C47 == -1) {
+        } else if (l007A >= player.zinnLoan) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "zinn.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "zinn.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
             b_Timer.Enabled = -1;
-            gv0BF2.M4CF9 = gv0BF2.M4CF9 - gv0BF2.M4FBD;
-            gv0BF2.M4FBD = 0;
+            player.cash = player.cash - player.zinnLoan;
+            player.zinnLoan = 0;
         } else {
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "zinn.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "zinn.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
             b_Timer.Enabled = -1;
-            gv0BF2.M4FBD = gv0BF2.M4FBD - l007A;
-            gv0BF2.M4CF9 = gv0BF2.M4CF9 - l007A;
+            player.zinnLoan = player.zinnLoan - l007A;
+            player.cash = player.cash - l007A;
         }
         sub0C5C();
         me.MousePointer = mc0096;
@@ -151,40 +151,40 @@ function (me) {
 
     async function b_PayBackMax_Click() {
         me.MousePointer = mc001E;
-        if (gv0BF2.M4CF9 == 0) {
-            if (gv0060.M4C47 == -1) {
+        if (player.cash == 0) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Mr. Zinn";
             frm_Box0.b_Message.Caption = "\n" + "You don't have any money. Check your cash.";
             await frm_Box0.Show(1);
-        } else if (gv0BF2.M4FBD == 0) {
-            if (gv0060.M4C47 == -1) {
+        } else if (player.zinnLoan == 0) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Mr. Zinn";
             frm_Box0.b_Message.Caption = "\n" + "You don't owe Mr. Zinn any money.";
             await frm_Box0.Show(1);
-        } else if (gv0BF2.M4CF9 >= gv0BF2.M4FBD) {
-            if (gv0060.M4C47 == -1) {
+        } else if (player.cash >= player.zinnLoan) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "zinn.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "zinn.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
             b_Timer.Enabled = -1;
-            gv0BF2.M4CF9 = gv0BF2.M4CF9 - gv0BF2.M4FBD;
-            gv0BF2.M4FBD = 0;
-        } else if (gv0BF2.M4FBD > gv0BF2.M4CF9) {
-            if (gv0060.M4C47 == -1) {
+            player.cash = player.cash - player.zinnLoan;
+            player.zinnLoan = 0;
+        } else if (player.zinnLoan > player.cash) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "zinn.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "zinn.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
             b_Timer.Enabled = -1;
-            gv0BF2.M4FBD = gv0BF2.M4FBD - gv0BF2.M4CF9;
-            gv0BF2.M4CF9 = 0;
+            player.zinnLoan = player.zinnLoan - player.cash;
+            player.cash = 0;
         }
         sub0C5C();
         me.MousePointer = mc0096;
@@ -200,15 +200,15 @@ function (me) {
 
     function b_Timer_Timer() {
         if (m001A == 1) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "zinn2.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zinn2.bmp");
         } else if (m001A == 2) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "zinn3.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zinn3.bmp");
         } else if (m001A == 3) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "zinn3.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zinn3.bmp");
         } else if (m001A == 4) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "zinn2.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zinn2.bmp");
         } else if (m001A == 5) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "ZINN.BMP");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ZINN.BMP");
         }
         m001A = m001A + 1;
         if (m001A == 6) {
@@ -229,23 +229,23 @@ function (me) {
 
     async function sub0AFB() {
         me.MousePointer = mc001E;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
         frm_Box2.FillElastic.Caption = "Help (Mr. Zinn's Loan)";
-        frm_Box2.b_Message.Caption = "Mr. Zinn is a wealthy and somewhat fickle financier. He made his fortune as a merchant on Zile, and now he wants to expand his business." + "\n" + "\n" + "Mr. Zinn is willing to loan you money at " + Format(gv0BF2.M4FD4 * 100, "#,#0") + "% interest per week. The interest is charged every time you leave a planet and travel to a new planet, and this amount is added to your total debt." + "\n" + "\n" + "Under no circumstances must you allow this loan to exceed the maximum CREDIT LIMIT of " + Format(gv0BF2.M4FC9, "#,#0") + " kubars. If you ever allow your loan to exceed this CREDIT LIMIT, Mr. Zinn will repossess your ship, which will force you into BANKRUPTCY and cause you to lose the game.";
+        frm_Box2.b_Message.Caption = "Mr. Zinn is a wealthy and somewhat fickle financier. He made his fortune as a merchant on Zile, and now he wants to expand his business." + "\n" + "\n" + "Mr. Zinn is willing to loan you money at " + Format(player.zinnRate * 100, "#,#0") + "% interest per week. The interest is charged every time you leave a planet and travel to a new planet, and this amount is added to your total debt." + "\n" + "\n" + "Under no circumstances must you allow this loan to exceed the maximum CREDIT LIMIT of " + Format(player.zinnCreditLimit, "#,#0") + " kubars. If you ever allow your loan to exceed this CREDIT LIMIT, Mr. Zinn will repossess your ship, which will force you into BANKRUPTCY and cause you to lose the game.";
         await frm_Box2.Show(1);
     }
 
     function sub0C5C() {
-        b_Loan.Caption = "  Loan Amount:   " + Format(gv0BF2.M4FBD, "#,#0");
-        b_Credit.Caption = "  Credit Limit:   " + Format(gv0BF2.M4FC9, "#,#0");
-        b_InterestRate.Caption = "  Interest Rate:   " + Format(100 * gv0BF2.M4FD4, "#,#0") + "% per week";
-        b_Cash.Caption = "  Cash:   " + Format(gv0BF2.M4CF9, "#,#0");
-        b_Interest.Caption = "  Interest Paid (last week):   " + Format(gv0BF2.M4FE0, "#,#0");
+        b_Loan.Caption = "  Loan Amount:   " + Format(player.zinnLoan, "#,#0");
+        b_Credit.Caption = "  Credit Limit:   " + Format(player.zinnCreditLimit, "#,#0");
+        b_InterestRate.Caption = "  Interest Rate:   " + Format(100 * player.zinnRate, "#,#0") + "% per week";
+        b_Cash.Caption = "  Cash:   " + Format(player.cash, "#,#0");
+        b_Interest.Caption = "  Interest Paid (last week):   " + Format(player.zinnInterest, "#,#0");
     }
 
     function Form_Activate() {
@@ -262,7 +262,7 @@ function (me) {
         me.MousePointer = mc001E;
         m001A = 1;
         m001C = 1;
-        Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "ZINN.BMP");
+        Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ZINN.BMP");
         sub0C5C();
     }
 

@@ -67,9 +67,9 @@ function (me) {
 
     async function b_Help1_Click() {
         me.MousePointer = mc001C;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -162,19 +162,19 @@ function (me) {
         b_Commodity.BackColor = 0xFFFF80;
         b_Passenger.BackColor = 0xC0C0C0;
         b_Passenger.Tag = "Passenger Selected = False";
-        if (gv0BF2.M4CAA == 0) {
+        if (player.commodityAdChoice == 0) {
             b_None.Value = -1;
-        } else if (gv0BF2.M4CAA == 1000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.commodityAdChoice == 1000 * (game.shipSize[game.currentPlayer] / 400)) {
             b_Fliers.Value = -1;
-        } else if (gv0BF2.M4CAA == 2000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.commodityAdChoice == 2000 * (game.shipSize[game.currentPlayer] / 400)) {
             b_Newspaper.Value = -1;
-        } else if (gv0BF2.M4CAA == 3000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.commodityAdChoice == 3000 * (game.shipSize[game.currentPlayer] / 400)) {
             b_Magazine.Value = -1;
-        } else if (gv0BF2.M4CAA == 4000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.commodityAdChoice == 4000 * (game.shipSize[game.currentPlayer] / 400)) {
             b_Radio.Value = -1;
-        } else if (gv0BF2.M4CAA == 5000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.commodityAdChoice == 5000 * (game.shipSize[game.currentPlayer] / 400)) {
             b_TV.Value = -1;
-        } else if (gv0BF2.M4CAA == 10000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.commodityAdChoice == 10000 * (game.shipSize[game.currentPlayer] / 400)) {
             b_Everything.Value = -1;
         }
         me.MousePointer = mc00EA;
@@ -184,60 +184,60 @@ function (me) {
         let l00EC = "";
         let l00EE = "";
         me.MousePointer = mc001C;
-        b_Message.FloodPercent = 100 * (gv0BF2.M4C89 / (2 * 10000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)));
-        if (gv0BF2.M4C89 == 1) {
-            b_Advertising.Caption = "   Advertising For Next Planet:  " + Format(gv0BF2.M4C89, "#,#0") + " kubar";
-        } else if (gv0BF2.M4C89 == 0) {
+        b_Message.FloodPercent = 100 * (player.adSpendTotal / (2 * 10000 * (game.shipSize[game.currentPlayer] / 400)));
+        if (player.adSpendTotal == 1) {
+            b_Advertising.Caption = "   Advertising For Next Planet:  " + Format(player.adSpendTotal, "#,#0") + " kubar";
+        } else if (player.adSpendTotal == 0) {
             b_Advertising.Caption = "   Advertising For Next Planet:  None";
         } else {
-            b_Advertising.Caption = "   Advertising For Next Planet:  " + Format(gv0BF2.M4C89, "#,#0") + " kubars";
+            b_Advertising.Caption = "   Advertising For Next Planet:  " + Format(player.adSpendTotal, "#,#0") + " kubars";
         }
-        if (gv0BF2.M4CF9 == 1) {
-            b_Cash.Caption = "   Cash:  " + Format(gv0BF2.M4CF9, "#,#0") + " kubar";
+        if (player.cash == 1) {
+            b_Cash.Caption = "   Cash:  " + Format(player.cash, "#,#0") + " kubar";
         } else {
-            b_Cash.Caption = "   Cash:  " + Format(gv0BF2.M4CF9, "#,#0") + " kubars";
+            b_Cash.Caption = "   Cash:  " + Format(player.cash, "#,#0") + " kubars";
         }
-        if (gv0BF2.M4C89 == 0) {
+        if (player.adSpendTotal == 0) {
             b_Message.Caption = "Click on 'PLACE AN AD' to advertise for the next planet.";
-            b_PlaceAd4.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "LIGHT2.ICO");
-            b_PlaceAd5.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "LIGHT2.ICO");
+            b_PlaceAd4.Picture = LoadPicture(Trim(paths.imageDir) + "LIGHT2.ICO");
+            b_PlaceAd5.Picture = LoadPicture(Trim(paths.imageDir) + "LIGHT2.ICO");
         } else {
-            if (gv0BF2.M4C89 == 1) {
-                b_Message.Caption = "Current Advertising = " + Format(gv0BF2.M4C89, "#,#0") + " kubar";
+            if (player.adSpendTotal == 1) {
+                b_Message.Caption = "Current Advertising = " + Format(player.adSpendTotal, "#,#0") + " kubar";
             } else {
-                b_Message.Caption = "Current Advertising = " + Format(gv0BF2.M4C89, "#,#0") + " kubars";
+                b_Message.Caption = "Current Advertising = " + Format(player.adSpendTotal, "#,#0") + " kubars";
             }
-            b_PlaceAd4.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "LIGHT1.ICO");
-            b_PlaceAd5.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "LIGHT1.ICO");
+            b_PlaceAd4.Picture = LoadPicture(Trim(paths.imageDir) + "LIGHT1.ICO");
+            b_PlaceAd5.Picture = LoadPicture(Trim(paths.imageDir) + "LIGHT1.ICO");
         }
-        if (gv0BF2.M4C63 == 0) {
+        if (player.passengerAdSpend == 0) {
             l00EC = "None";
-        } else if (gv0BF2.M4C63 == 1000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.passengerAdSpend == 1000 * (game.shipSize[game.currentPlayer] / 400)) {
             l00EC = "Fliers";
-        } else if (gv0BF2.M4C63 == 2000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.passengerAdSpend == 2000 * (game.shipSize[game.currentPlayer] / 400)) {
             l00EC = "Newspaper";
-        } else if (gv0BF2.M4C63 == 3000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.passengerAdSpend == 3000 * (game.shipSize[game.currentPlayer] / 400)) {
             l00EC = "Magazine";
-        } else if (gv0BF2.M4C63 == 4000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.passengerAdSpend == 4000 * (game.shipSize[game.currentPlayer] / 400)) {
             l00EC = "Radio";
-        } else if (gv0BF2.M4C63 == 5000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.passengerAdSpend == 5000 * (game.shipSize[game.currentPlayer] / 400)) {
             l00EC = "TV";
-        } else if (gv0BF2.M4C63 == 10000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.passengerAdSpend == 10000 * (game.shipSize[game.currentPlayer] / 400)) {
             l00EC = "Everything";
         }
-        if (gv0BF2.M4C76 == 0) {
+        if (player.commodityAdSpend == 0) {
             l00EE = "None";
-        } else if (gv0BF2.M4C76 == 1000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.commodityAdSpend == 1000 * (game.shipSize[game.currentPlayer] / 400)) {
             l00EE = "Fliers";
-        } else if (gv0BF2.M4C76 == 2000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.commodityAdSpend == 2000 * (game.shipSize[game.currentPlayer] / 400)) {
             l00EE = "Newspaper";
-        } else if (gv0BF2.M4C76 == 3000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.commodityAdSpend == 3000 * (game.shipSize[game.currentPlayer] / 400)) {
             l00EE = "Magazine";
-        } else if (gv0BF2.M4C76 == 4000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.commodityAdSpend == 4000 * (game.shipSize[game.currentPlayer] / 400)) {
             l00EE = "Radio";
-        } else if (gv0BF2.M4C76 == 5000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.commodityAdSpend == 5000 * (game.shipSize[game.currentPlayer] / 400)) {
             l00EE = "TV";
-        } else if (gv0BF2.M4C76 == 10000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.commodityAdSpend == 10000 * (game.shipSize[game.currentPlayer] / 400)) {
             l00EE = "Everything";
         }
         b_PassengerLabel.Caption = "   Passenger Advertising:  " + l00EC;
@@ -250,19 +250,19 @@ function (me) {
         b_Passenger.BackColor = 0xFFFF80;
         b_Commodity.BackColor = 0xC0C0C0;
         b_Passenger.Tag = "Passenger Selected = True";
-        if (gv0BF2.M4C9C == 0) {
+        if (player.passengerAdChoice == 0) {
             b_None.Value = -1;
-        } else if (gv0BF2.M4C9C == 1000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.passengerAdChoice == 1000 * (game.shipSize[game.currentPlayer] / 400)) {
             b_Fliers.Value = -1;
-        } else if (gv0BF2.M4C9C == 2000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.passengerAdChoice == 2000 * (game.shipSize[game.currentPlayer] / 400)) {
             b_Newspaper.Value = -1;
-        } else if (gv0BF2.M4C9C == 3000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.passengerAdChoice == 3000 * (game.shipSize[game.currentPlayer] / 400)) {
             b_Magazine.Value = -1;
-        } else if (gv0BF2.M4C9C == 4000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.passengerAdChoice == 4000 * (game.shipSize[game.currentPlayer] / 400)) {
             b_Radio.Value = -1;
-        } else if (gv0BF2.M4C9C == 5000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.passengerAdChoice == 5000 * (game.shipSize[game.currentPlayer] / 400)) {
             b_TV.Value = -1;
-        } else if (gv0BF2.M4C9C == 10000 * (gv11CE.M54B3[gv11CE.M53E5] / 400)) {
+        } else if (player.passengerAdChoice == 10000 * (game.shipSize[game.currentPlayer] / 400)) {
             b_Everything.Value = -1;
         }
         me.MousePointer = mc00EA;
@@ -270,33 +270,33 @@ function (me) {
 
     async function sub3632() {
         me.MousePointer = mc001C;
-        if ((gv0BF2.M4CF9 + gv0BF2.M4C89) == 0) {
-            if (gv0060.M4C47 == -1) {
+        if ((player.cash + player.adSpendTotal) == 0) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Advertising";
             frm_Box0.b_Message.Caption = "\n" + "You don't have any money. Check your cash.";
             await frm_Box0.Show(1);
-        } else if ((gv0BF2.M4C9C + gv0BF2.M4CAA) > (gv0BF2.M4CF9 + gv0BF2.M4C89)) {
-            if (gv0060.M4C47 == -1) {
+        } else if ((player.passengerAdChoice + player.commodityAdChoice) > (player.cash + player.adSpendTotal)) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Advertising";
             frm_Box0.b_Message.Caption = "\n" + "You don't have enough money. Check your cash.";
             await frm_Box0.Show(1);
         } else {
-            if (gv0060.M4C47 == -1 && gv0BF2.M4C9C != 0 || gv0BF2.M4CAA != 0) {
+            if (settings.soundOn == -1 && player.passengerAdChoice != 0 || player.commodityAdChoice != 0) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "advert.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "advert.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
-            gv0BF2.M4CF9 = gv0BF2.M4CF9 + gv0BF2.M4C89;
-            gv0BF2.M4C63 = gv0BF2.M4C9C;
-            gv0BF2.M4CB8 = CLng(gv0BF2.M4C63 / 125);
-            gv0BF2.M4C76 = gv0BF2.M4CAA;
-            gv0BF2.M4C89 = gv0BF2.M4C76 + gv0BF2.M4C63;
-            gv0BF2.M4CF9 = gv0BF2.M4CF9 - gv0BF2.M4C89;
+            player.cash = player.cash + player.adSpendTotal;
+            player.passengerAdSpend = player.passengerAdChoice;
+            player.adExtraPassengers = CLng(player.passengerAdSpend / 125);
+            player.commodityAdSpend = player.commodityAdChoice;
+            player.adSpendTotal = player.commodityAdSpend + player.passengerAdSpend;
+            player.cash = player.cash - player.adSpendTotal;
         }
         sub371C();
         me.MousePointer = mc00EA;
@@ -305,35 +305,35 @@ function (me) {
     function sub3533() {
         if (b_Passenger.Tag == "Passenger Selected = True") {
             if (b_None.Value == -1) {
-                gv0BF2.M4C9C = 0;
+                player.passengerAdChoice = 0;
             } else if (b_Fliers.Value == -1) {
-                gv0BF2.M4C9C = CLng(1000 * (gv11CE.M54B3[gv11CE.M53E5] / 400));
+                player.passengerAdChoice = CLng(1000 * (game.shipSize[game.currentPlayer] / 400));
             } else if (b_Newspaper.Value == -1) {
-                gv0BF2.M4C9C = CLng(2000 * (gv11CE.M54B3[gv11CE.M53E5] / 400));
+                player.passengerAdChoice = CLng(2000 * (game.shipSize[game.currentPlayer] / 400));
             } else if (b_Magazine.Value == -1) {
-                gv0BF2.M4C9C = CLng(3000 * (gv11CE.M54B3[gv11CE.M53E5] / 400));
+                player.passengerAdChoice = CLng(3000 * (game.shipSize[game.currentPlayer] / 400));
             } else if (b_Radio.Value == -1) {
-                gv0BF2.M4C9C = CLng(4000 * (gv11CE.M54B3[gv11CE.M53E5] / 400));
+                player.passengerAdChoice = CLng(4000 * (game.shipSize[game.currentPlayer] / 400));
             } else if (b_TV.Value == -1) {
-                gv0BF2.M4C9C = CLng(5000 * (gv11CE.M54B3[gv11CE.M53E5] / 400));
+                player.passengerAdChoice = CLng(5000 * (game.shipSize[game.currentPlayer] / 400));
             } else if (b_Everything.Value == -1) {
-                gv0BF2.M4C9C = CLng(10000 * (gv11CE.M54B3[gv11CE.M53E5] / 400));
+                player.passengerAdChoice = CLng(10000 * (game.shipSize[game.currentPlayer] / 400));
             }
         } else {
             if (b_None.Value == -1) {
-                gv0BF2.M4CAA = 0;
+                player.commodityAdChoice = 0;
             } else if (b_Fliers.Value == -1) {
-                gv0BF2.M4CAA = CLng(1000 * (gv11CE.M54B3[gv11CE.M53E5] / 400));
+                player.commodityAdChoice = CLng(1000 * (game.shipSize[game.currentPlayer] / 400));
             } else if (b_Newspaper.Value == -1) {
-                gv0BF2.M4CAA = CLng(2000 * (gv11CE.M54B3[gv11CE.M53E5] / 400));
+                player.commodityAdChoice = CLng(2000 * (game.shipSize[game.currentPlayer] / 400));
             } else if (b_Magazine.Value == -1) {
-                gv0BF2.M4CAA = CLng(3000 * (gv11CE.M54B3[gv11CE.M53E5] / 400));
+                player.commodityAdChoice = CLng(3000 * (game.shipSize[game.currentPlayer] / 400));
             } else if (b_Radio.Value == -1) {
-                gv0BF2.M4CAA = CLng(4000 * (gv11CE.M54B3[gv11CE.M53E5] / 400));
+                player.commodityAdChoice = CLng(4000 * (game.shipSize[game.currentPlayer] / 400));
             } else if (b_TV.Value == -1) {
-                gv0BF2.M4CAA = CLng(5000 * (gv11CE.M54B3[gv11CE.M53E5] / 400));
+                player.commodityAdChoice = CLng(5000 * (game.shipSize[game.currentPlayer] / 400));
             } else if (b_Everything.Value == -1) {
-                gv0BF2.M4CAA = CLng(10000 * (gv11CE.M54B3[gv11CE.M53E5] / 400));
+                player.commodityAdChoice = CLng(10000 * (game.shipSize[game.currentPlayer] / 400));
             }
         }
     }
@@ -354,12 +354,12 @@ function (me) {
         sub3601();
         sub371C();
         b_None.Caption = "Do Not Advertise (0 kubars)";
-        b_Fliers.Caption = "Fliers (" + Format(1000 * (gv11CE.M54B3[gv11CE.M53E5] / 400), "#,#0") + " kubars)";
-        b_Newspaper.Caption = "Newspaper (" + Format(2000 * (gv11CE.M54B3[gv11CE.M53E5] / 400), "#,#0") + " kubars)";
-        b_Magazine.Caption = "Magazine (" + Format(3000 * (gv11CE.M54B3[gv11CE.M53E5] / 400), "#,#0") + " kubars)";
-        b_Radio.Caption = "Radio (" + Format(4000 * (gv11CE.M54B3[gv11CE.M53E5] / 400), "#,#0") + " kubars)";
-        b_TV.Caption = "TV (" + Format(5000 * (gv11CE.M54B3[gv11CE.M53E5] / 400), "#,#0") + " kubars)";
-        b_Everything.Caption = "Everything (" + Format(10000 * (gv11CE.M54B3[gv11CE.M53E5] / 400), "#,#0") + " kubars)";
+        b_Fliers.Caption = "Fliers (" + Format(1000 * (game.shipSize[game.currentPlayer] / 400), "#,#0") + " kubars)";
+        b_Newspaper.Caption = "Newspaper (" + Format(2000 * (game.shipSize[game.currentPlayer] / 400), "#,#0") + " kubars)";
+        b_Magazine.Caption = "Magazine (" + Format(3000 * (game.shipSize[game.currentPlayer] / 400), "#,#0") + " kubars)";
+        b_Radio.Caption = "Radio (" + Format(4000 * (game.shipSize[game.currentPlayer] / 400), "#,#0") + " kubars)";
+        b_TV.Caption = "TV (" + Format(5000 * (game.shipSize[game.currentPlayer] / 400), "#,#0") + " kubars)";
+        b_Everything.Caption = "Everything (" + Format(10000 * (game.shipSize[game.currentPlayer] / 400), "#,#0") + " kubars)";
         me.MousePointer = mc00EA;
     }
 

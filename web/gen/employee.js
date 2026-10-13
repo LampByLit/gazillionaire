@@ -126,15 +126,15 @@ function (me) {
 
     function b_Timer_Timer() {
         if (m001A == 1) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "crew.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "crew.bmp");
         } else if (m001A == 2) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "crew2.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "crew2.bmp");
         } else if (m001A == 3) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "crew3.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "crew3.bmp");
         } else if (m001A == 4) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "crew2.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "crew2.bmp");
         } else if (m001A == 5) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "crew.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "crew.bmp");
         }
         m001A = m001A + 1;
         if (m001A == 6) {
@@ -152,28 +152,28 @@ function (me) {
     }
 
     function sub1731() {
-        b_Employee.Caption = "      Number of Employees (Crew):   " + Format(gv0BF2.M4D01, "#,#0");
-        b_Salary.Caption = "      Weekly Salary per Person:   " + Format(gv0BF2.M4D09, "#,#0");
-        b_Total.Caption = "      Total Wages Owed:   " + Format(gv0BF2.M4D17, "#,#0");
-        b_Cash.Caption = "      Cash:   " + Format(gv0BF2.M4CF9, "#,#0");
+        b_Employee.Caption = "      Number of Employees (Crew):   " + Format(player.crewSize, "#,#0");
+        b_Salary.Caption = "      Weekly Salary per Person:   " + Format(player.crewSalary, "#,#0");
+        b_Total.Caption = "      Total Wages Owed:   " + Format(player.wagesOwed, "#,#0");
+        b_Cash.Caption = "      Cash:   " + Format(player.cash, "#,#0");
     }
 
     async function sub16C3() {
         me.MousePointer = mc001E;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         b_Message.ForeColor = mc00DC;
-        if (gv0BF2.M4D17 == 0) {
-            if (gv0060.M4C47 == -1) {
+        if (player.wagesOwed == 0) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Employees";
             frm_Box0.b_Message.Caption = "\n" + "You don't owe your employees any money. Check total wages owed.";
             await frm_Box0.Show(1);
             b_Message.Caption = "You don't owe your employees any money.";
-        } else if (gv0BF2.M4D17 > gv0BF2.M4CF9) {
-            if (gv0060.M4C47 == -1) {
+        } else if (player.wagesOwed > player.cash) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Employees";
@@ -181,16 +181,16 @@ function (me) {
             await frm_Box0.Show(1);
             b_Message.Caption = "You don't have enough money.";
         } else {
-            if (gv0BF2.M4D17 == 1) {
-                b_Message.Caption = "You paid your employees " + Format(gv0BF2.M4D17, "#,#0") + " kubar.";
+            if (player.wagesOwed == 1) {
+                b_Message.Caption = "You paid your employees " + Format(player.wagesOwed, "#,#0") + " kubar.";
             } else {
-                b_Message.Caption = "You paid your employees " + Format(gv0BF2.M4D17, "#,#0") + " kubars.";
+                b_Message.Caption = "You paid your employees " + Format(player.wagesOwed, "#,#0") + " kubars.";
             }
-            gv0BF2.M4CF9 = gv0BF2.M4CF9 - gv0BF2.M4D17;
-            gv0BF2.M4D17 = 0;
-            if (gv0060.M4C47 == -1) {
+            player.cash = player.cash - player.wagesOwed;
+            player.wagesOwed = 0;
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "crew.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "crew.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
@@ -202,23 +202,23 @@ function (me) {
 
     async function sub0AFB() {
         me.MousePointer = mc001E;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
         frm_Box1.FillElastic.Caption = "Help (Crew)";
-        frm_Box1.b_Message.Caption = "The number of employees you have depends on the size and type of your ship. Your company currently employs " + Format(gv0BF2.M4D01, "#,#0") + " crew members. You must pay each employee a weekly salary of " + Format(gv0BF2.M4D09, "#,#0") + " kubars. You will not be required to hire any additional employees until you purchase a larger ship.";
+        frm_Box1.b_Message.Caption = "The number of employees you have depends on the size and type of your ship. Your company currently employs " + Format(player.crewSize, "#,#0") + " crew members. You must pay each employee a weekly salary of " + Format(player.crewSalary, "#,#0") + " kubars. You will not be required to hire any additional employees until you purchase a larger ship.";
         await frm_Box1.Show(1);
     }
 
     function sub174A() {
         if (m001A == -1) {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "crew.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "crew.bmp");
             m001A = 0;
         } else {
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "crew2.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "crew2.bmp");
             m001A = -1;
         }
     }
@@ -238,15 +238,15 @@ function (me) {
         m001C = 0;
         m001A = 1;
         b_Message.Caption = "";
-        Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "crew.bmp");
-        if (gv0BF2.M4D17 >= gv0BF2.M4D01 * gv0BF2.M4D09 * 4) {
+        Image1.Picture = LoadPicture(Trim(paths.imageDir) + "crew.bmp");
+        if (player.wagesOwed >= player.crewSize * player.crewSalary * 4) {
             b_Message.ForeColor = mc00F2;
             b_Message.Caption = "Your crew demands that you pay them their salary!";
-        } else if ((gv0BF2.M4D01 * gv0BF2.M4D09 * 3) <= gv0BF2.M4D17 && gv0BF2.M4D17 < (gv0BF2.M4D01 * gv0BF2.M4D09 * 4)) {
+        } else if ((player.crewSize * player.crewSalary * 3) <= player.wagesOwed && player.wagesOwed < (player.crewSize * player.crewSalary * 4)) {
             b_Message.Caption = "Your crew appears to be upset over the fact that you haven't paid them.";
-        } else if ((gv0BF2.M4D01 * gv0BF2.M4D09 * 2) <= gv0BF2.M4D17 && gv0BF2.M4D17 < (gv0BF2.M4D01 * gv0BF2.M4D09 * 3)) {
+        } else if ((player.crewSize * player.crewSalary * 2) <= player.wagesOwed && player.wagesOwed < (player.crewSize * player.crewSalary * 3)) {
             b_Message.Caption = "Your crew seems mildly annoyed over the fact that you haven't paid them.";
-        } else if (gv0BF2.M4D17 < (gv0BF2.M4D01 * gv0BF2.M4D09 * 2)) {
+        } else if (player.wagesOwed < (player.crewSize * player.crewSalary * 2)) {
             b_Message.Caption = "Your crew's morale is high and everyone seems to be happy.";
         }
         sub1731();

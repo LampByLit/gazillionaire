@@ -48,8 +48,8 @@ function (me) {
 
     async function b_Game1_Click() {
         me.MousePointer = mc0032;
-        me.Tag = Str(gv11CE.M5334);
-        gv11CE.M5334 = 1;
+        me.Tag = Str(game.saveSlot);
+        game.saveSlot = 1;
         await frm_SaveBox.Show();
         sub277B();
         me.MousePointer = mc006E;
@@ -65,8 +65,8 @@ function (me) {
 
     async function b_Game2_Click() {
         me.MousePointer = mc0032;
-        me.Tag = Str(gv11CE.M5334);
-        gv11CE.M5334 = 2;
+        me.Tag = Str(game.saveSlot);
+        game.saveSlot = 2;
         await frm_SaveBox.Show();
         sub277B();
         me.MousePointer = mc006E;
@@ -82,8 +82,8 @@ function (me) {
 
     async function b_Game3_Click() {
         me.MousePointer = mc0032;
-        me.Tag = Str(gv11CE.M5334);
-        gv11CE.M5334 = 3;
+        me.Tag = Str(game.saveSlot);
+        game.saveSlot = 3;
         await frm_SaveBox.Show();
         sub277B();
         me.MousePointer = mc006E;
@@ -99,8 +99,8 @@ function (me) {
 
     async function b_Game4_Click() {
         me.MousePointer = mc0032;
-        me.Tag = Str(gv11CE.M5334);
-        gv11CE.M5334 = 4;
+        me.Tag = Str(game.saveSlot);
+        game.saveSlot = 4;
         await frm_SaveBox.Show();
         sub277B();
         me.MousePointer = mc006E;
@@ -116,8 +116,8 @@ function (me) {
 
     async function b_Game5_Click() {
         me.MousePointer = mc0032;
-        me.Tag = Str(gv11CE.M5334);
-        gv11CE.M5334 = 5;
+        me.Tag = Str(game.saveSlot);
+        game.saveSlot = 5;
         await frm_SaveBox.Show();
         sub277B();
         me.MousePointer = mc006E;
@@ -133,9 +133,9 @@ function (me) {
 
     async function b_Help_Click() {
         me.MousePointer = mc0032;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -164,7 +164,7 @@ function (me) {
     function sub2792() {
         let l0116 = 0;
         for (l0116 = 1; l0116 <= 5; l0116++) {
-            FileOpen(6, Trim(gv09F0.M4C05) + "GAME" + Trim(Format(l0116, "#,#0")));
+            FileOpen(6, Trim(paths.saveDir) + "GAME" + Trim(Format(l0116, "#,#0")));
             m001C[l0116] = FileGet(6, 1, m001C[l0116]);
             FileClose(6);
         }
@@ -173,7 +173,7 @@ function (me) {
     function sub27C6() {
         let l0118 = 0;
         for (l0118 = 1; l0118 <= 5; l0118++) {
-            FileOpen(5, Trim(gv09F0.M4C05) + "GAME" + Trim(Format(l0118, "#,#0")));
+            FileOpen(5, Trim(paths.saveDir) + "GAME" + Trim(Format(l0118, "#,#0")));
             FilePut(5, 1, m001C[l0118]);
             FileClose(5);
         }
@@ -185,7 +185,7 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = mc0032;
-        FillElastic.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "STARS4.BMP");
+        FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "STARS4.BMP");
         sub2792();
         sub277B();
     }

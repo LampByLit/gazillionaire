@@ -30,18 +30,18 @@ function (me) {
     async function b_NewEmail_Click() {
         me.MousePointer = mc001A;
         FillElastic.Visible = 0;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         frm_BoxPort.b_Yes.Visible = 0;
         frm_BoxPort.b_No.Visible = 0;
         frm_BoxPort.b_OK.Visible = -1;
-        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "email.bmp");
+        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(paths.imageDir) + "email.bmp");
         frm_BoxPort.b_Title.Caption = "Play-By-Email";
         frm_BoxPort.b_Message.Caption = "Gazillionaire Deluxe can be played by emailing a game file back and forth between the various players. To do this, you must have email software with an ATTACH FILE function." + "\n" + "\n" + "At the beginning of each turn, you will be prompted to save your game, then email the game file to the next player." + "\n" + "\n" + "Because the game file is compact, it is easy to transfer it over a local area network, or post it to a news group, or simply save it on a floppy disk and pass it along to the other players." + "\n" + "\n" + "It shouldn't be too difficult to find a play-by-email partner if you post a message to any of the 'game forums' on AOL, CompuServe, Prodigy, MSN or the Net.";
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             frm_BoxPort.b_Sound.Command = "Close";
-            frm_BoxPort.b_Sound.FileName = Trim(gv09F0.M4C15) + "email.wav";
+            frm_BoxPort.b_Sound.FileName = Trim(paths.soundDir) + "email.wav";
             frm_BoxPort.b_Sound.Command = "Open";
             frm_BoxPort.b_Sound.Command = "Play";
         }
@@ -49,19 +49,19 @@ function (me) {
         frm_BoxPort.b_Yes.Visible = -1;
         frm_BoxPort.b_No.Visible = -1;
         frm_BoxPort.b_OK.Visible = 0;
-        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "email.bmp");
+        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(paths.imageDir) + "email.bmp");
         frm_BoxPort.b_Title.Caption = "Play-By-Email";
         frm_BoxPort.b_Message.Caption = "Before you start a play-by-email game, you must first contact the other players and agree on the following:" + "\n" + "\n" + "1) What is the difficulty level?" + "\n" + "\n" + "2) How many human players?" + "\n" + "\n" + "3) What planets will there be?" + "\n" + "\n" + "4) Each player's company name?" + "\n" + "\n" + "5) What ship will each player use?" + "\n" + "\n" + "6) What is each player's email address?" + "\n" + "\n" + "Are you ready to begin an email game? Only answer YES if you have all the information required.";
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             frm_BoxPort.b_Sound.Command = "Close";
-            frm_BoxPort.b_Sound.FileName = Trim(gv09F0.M4C15) + "event.wav";
+            frm_BoxPort.b_Sound.FileName = Trim(paths.soundDir) + "event.wav";
             frm_BoxPort.b_Sound.Command = "Open";
             frm_BoxPort.b_Sound.Command = "Play";
         }
         await frm_BoxPort.Show(1);
         if (frm_BoxPort.Tag == "YES") {
             me.MousePointer = mc001A;
-            gv11CE.M52F2 = -1;
+            game.isEmailGame = -1;
             await Unload(frm_BoxPort);
             await frm_Level.Show();
             await Unload(me);
@@ -82,7 +82,7 @@ function (me) {
     async function b_NewGame_Click() {
         me.MousePointer = mc001A;
         FillElastic.Visible = 0;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         await frm_Level.Show();
@@ -100,7 +100,7 @@ function (me) {
     async function b_OldEmail_Click() {
         me.MousePointer = mc001A;
         FillElastic.Visible = 0;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         frm_LoadEmail.Tag = "BeginGame";
@@ -119,7 +119,7 @@ function (me) {
     async function b_OldGame_Click() {
         me.MousePointer = mc001A;
         FillElastic.Visible = 0;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         frm_LoadGame.Tag = "BeginGame";
@@ -137,7 +137,7 @@ function (me) {
 
     function b_Quit_Click() {
         FillElastic.Visible = 0;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         End();
@@ -154,20 +154,20 @@ function (me) {
     async function b_ViewCredits_Click() {
         me.MousePointer = mc001A;
         FillElastic.Visible = 0;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         frm_BoxPort.b_Yes.Visible = 0;
         frm_BoxPort.b_No.Visible = 0;
         frm_BoxPort.b_OK.Visible = -1;
-        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "photo1.bmp");
+        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(paths.imageDir) + "photo1.bmp");
         frm_BoxPort.b_OK.Caption = "Continue";
         frm_BoxPort.b_Title.Caption = "Production Credits";
         frm_BoxPort.b_Title.CaptionPos = 1;
         frm_BoxPort.b_Message.Caption = "Steven Hoffman and Naomi Kokubo produced, programmed and designed Gazillionaire, including writing the stories, creating 70% of the artwork, designing the sound and, of course, debugging the code." + "\n" + "\n" + "Gazillionaire was a 100% independent, self-funded production." + "\n" + "\n" + "If it weren't for the emotional and financial support of friends and family, who are listed on the next few pages, it would not have been possible to complete this project.";
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             frm_BoxPort.b_Sound.Command = "Close";
-            frm_BoxPort.b_Sound.FileName = Trim(gv09F0.M4C15) + "ooom.wav";
+            frm_BoxPort.b_Sound.FileName = Trim(paths.soundDir) + "ooom.wav";
             frm_BoxPort.b_Sound.Command = "Open";
             frm_BoxPort.b_Sound.Command = "Play";
         }
@@ -175,14 +175,14 @@ function (me) {
         frm_BoxPort.b_Yes.Visible = 0;
         frm_BoxPort.b_No.Visible = 0;
         frm_BoxPort.b_OK.Visible = -1;
-        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "thanks.bmp");
+        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(paths.imageDir) + "thanks.bmp");
         frm_BoxPort.b_OK.Caption = "Continue";
         frm_BoxPort.b_Title.Caption = "Special Thanks To";
         frm_BoxPort.b_Title.CaptionPos = 1;
         frm_BoxPort.b_Message.Caption = "Mike and Sharna Hoffman" + "\n" + "Tats and Yoshiko Kokubo" + "\n" + "Sid and Rose Rosenthal" + "\n" + "Douglas Hoffman" + "\n" + "William I. Schwartz" + "\n" + "Jamie Bouldin" + "\n" + "Shahrokh Ghodsi" + "\n" + "Tracy Fullerton" + "\n" + "Brian Goggin" + "\n" + "Aya and David Spievack" + "\n" + "Scott and Judy Alberts" + "\n" + "Francois and Valerie Bertrand" + "\n" + "Jeff Buchanan" + "\n" + "Christopher Wetherington" + "\n" + "Shelly Smith" + "\n" + "Brett Bunn" + "\n" + "David Hoffman";
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             frm_BoxPort.b_Sound.Command = "Close";
-            frm_BoxPort.b_Sound.FileName = Trim(gv09F0.M4C15) + "bass.wav";
+            frm_BoxPort.b_Sound.FileName = Trim(paths.soundDir) + "bass.wav";
             frm_BoxPort.b_Sound.Command = "Open";
             frm_BoxPort.b_Sound.Command = "Play";
         }
@@ -190,14 +190,14 @@ function (me) {
         frm_BoxPort.b_Yes.Visible = 0;
         frm_BoxPort.b_No.Visible = 0;
         frm_BoxPort.b_OK.Visible = -1;
-        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "music.bmp");
+        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(paths.imageDir) + "music.bmp");
         frm_BoxPort.b_OK.Caption = "Continue";
         frm_BoxPort.b_Title.Caption = "Music & Sound";
         frm_BoxPort.b_Title.CaptionPos = 1;
         frm_BoxPort.b_Message.Caption = "Composers:" + "\n" + "Mikako Endo   jendo@aol.com" + "\n" + "Alex Igoudin" + "\n" + "\n" + "Sound Designers:" + "\n" + "Naomi Kokubo and Steven Hoffman" + "\n" + "\n" + "Music and Sound Libraries:" + "\n" + "Fresh Music Library" + "\n" + "Sound Ideas" + "\n" + "Sherwood Music" + "\n" + "Hollywood Edge" + "\n" + "BeachWare" + "\n" + "ELS Productions" + "\n" + "AMUG's Music Madness" + "\n" + "Media Design Interactive" + "\n" + "Aris Entertainment" + "\n" + "Essex Interactive Media" + "\n" + "Accurate Research Inc." + "\n" + "InterActive Publishing Corp.";
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             frm_BoxPort.b_Sound.Command = "Close";
-            frm_BoxPort.b_Sound.FileName = Trim(gv09F0.M4C15) + "tilo.wav";
+            frm_BoxPort.b_Sound.FileName = Trim(paths.soundDir) + "tilo.wav";
             frm_BoxPort.b_Sound.Command = "Open";
             frm_BoxPort.b_Sound.Command = "Play";
         }
@@ -205,14 +205,14 @@ function (me) {
         frm_BoxPort.b_Yes.Visible = 0;
         frm_BoxPort.b_No.Visible = 0;
         frm_BoxPort.b_OK.Visible = -1;
-        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "lavamind.bmp");
+        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(paths.imageDir) + "lavamind.bmp");
         frm_BoxPort.b_OK.Caption = "Continue";
         frm_BoxPort.b_Title.Caption = "Contributing Artists";
         frm_BoxPort.b_Title.CaptionPos = 1;
         frm_BoxPort.b_Message.Caption = "The artists listed below contributed either sketches, drawings or computer generated artwork to the production." + "\n" + "\n" + "Judy Wilson" + "\n" + "Rhode Montijo" + "\n" + "Christopher Riddle" + "\n" + "Kelly Krantz" + "\n" + "Kitahara" + "\n" + "Elias Delia" + "\n" + "\n" + "Naomi Kokubo" + "\n" + "Steven Hoffman";
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             frm_BoxPort.b_Sound.Command = "Close";
-            frm_BoxPort.b_Sound.FileName = Trim(gv09F0.M4C15) + "queg.wav";
+            frm_BoxPort.b_Sound.FileName = Trim(paths.soundDir) + "queg.wav";
             frm_BoxPort.b_Sound.Command = "Open";
             frm_BoxPort.b_Sound.Command = "Play";
         }
@@ -220,14 +220,14 @@ function (me) {
         frm_BoxPort.b_Yes.Visible = 0;
         frm_BoxPort.b_No.Visible = 0;
         frm_BoxPort.b_OK.Visible = -1;
-        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "photo2.bmp");
+        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(paths.imageDir) + "photo2.bmp");
         frm_BoxPort.b_OK.Caption = "Continue";
         frm_BoxPort.b_Title.Caption = "Game Testers";
         frm_BoxPort.b_Title.CaptionPos = 1;
         frm_BoxPort.b_Message.Caption = "Stephen Eldred  (shown left)" + "\n" + "Randy Ludensky  (next page)" + "\n" + "Tim Emmerich" + "\n" + "Tim \"Lord Gek\" Jordan" + "\n" + "Vicki Young" + "\n" + "Danny Shui Hang Lo" + "\n" + "Ivan R. Hsieh" + "\n" + "Yuko Nishina" + "\n" + "Andy Thompson" + "\n" + "Jeff Poehlmann" + "\n" + "Ron and Autumn Luscinski" + "\n" + "Chris Zimmerman" + "\n" + "Mike Daoud" + "\n" + "Pete Lee Wilson" + "\n" + "Scott Schulz" + "\n" + "Chris Burch" + "\n" + "Robert F. Thompson" + "\n" + "Josh Landy" + "\n" + "Otto Helwig" + "\n" + "Noriko Strochack" + "\n" + "Tracy and Augusto Sarti" + "\n" + "Jeff Carlson";
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             frm_BoxPort.b_Sound.Command = "Close";
-            frm_BoxPort.b_Sound.FileName = Trim(gv09F0.M4C15) + "xeen.wav";
+            frm_BoxPort.b_Sound.FileName = Trim(paths.soundDir) + "xeen.wav";
             frm_BoxPort.b_Sound.Command = "Open";
             frm_BoxPort.b_Sound.Command = "Play";
         }
@@ -235,14 +235,14 @@ function (me) {
         frm_BoxPort.b_Yes.Visible = 0;
         frm_BoxPort.b_No.Visible = 0;
         frm_BoxPort.b_OK.Visible = -1;
-        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "photo3.bmp");
+        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(paths.imageDir) + "photo3.bmp");
         frm_BoxPort.b_OK.Caption = "Continue";
         frm_BoxPort.b_Title.Caption = "LavaMind Studios!";
         frm_BoxPort.b_Title.CaptionPos = 1;
         frm_BoxPort.b_Message.Caption = "If you ever wondered what LavaMind Studios looks like, this is it." + "\n" + "\n" + "LavaMind designed Gazillionaire to be a family game that would appeal to all ages and all types of people, from adults, to kids, to hard-core gamers. In addition, we felt it was important to make a non-violent game. There are just too many blood and guts games out there, which require little or no thought. We wanted the players to think about what it takes to run their own business, manage their finances, and act responsibly. Hopefully, that is what we achieved." + "\n" + "\n" + "We only hope you enjoy playing Gazillionaire as much as we enjoyed creating it.";
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             frm_BoxPort.b_Sound.Command = "Close";
-            frm_BoxPort.b_Sound.FileName = Trim(gv09F0.M4C15) + "hork.wav";
+            frm_BoxPort.b_Sound.FileName = Trim(paths.soundDir) + "hork.wav";
             frm_BoxPort.b_Sound.Command = "Open";
             frm_BoxPort.b_Sound.Command = "Play";
         }
@@ -250,14 +250,14 @@ function (me) {
         frm_BoxPort.b_Yes.Visible = 0;
         frm_BoxPort.b_No.Visible = 0;
         frm_BoxPort.b_OK.Visible = -1;
-        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "coolboy.dib");
+        frm_BoxPort.b_Image.Picture = LoadPicture(Trim(paths.imageDir) + "coolboy.dib");
         frm_BoxPort.b_OK.Caption = "Continue";
         frm_BoxPort.b_Title.Caption = "Coolboy";
         frm_BoxPort.b_Title.CaptionPos = 1;
         frm_BoxPort.b_Message.Caption = "If you think the graphics in our games are weird, wacky and fun, wait until you see our T-shirts, mouse pads and hats!" + "\n" + "\n" + "Coolboy Inc. now has half a dozen different designs featuring images and artwork from LavaMind's games." + "\n" + "\n" + "If you want to check out some of the designs, just go to" + "\n" + "\n" + "http://www.coolboy.com" + "\n" + "\n" + "or try out the HTML brochure on the Gazillionaire Deluxe CD-ROM by going to directory /lavamind/gaz2/coolboy and clicking on page1.htm with your web browser.";
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             frm_BoxPort.b_Sound.Command = "Close";
-            frm_BoxPort.b_Sound.FileName = Trim(gv09F0.M4C15) + "nosh.wav";
+            frm_BoxPort.b_Sound.FileName = Trim(paths.soundDir) + "nosh.wav";
             frm_BoxPort.b_Sound.Command = "Open";
             frm_BoxPort.b_Sound.Command = "Play";
         }
@@ -280,195 +280,195 @@ function (me) {
         let l00F0 = 0;
         let l00F2 = "";
         const mc00FE = 1;
-        gv0BF2.M4C63 = 0;
-        gv0BF2.M4C76 = 0;
-        gv0BF2.M4C89 = 0;
-        gv0BF2.M4C9C = 0;
-        gv0BF2.M4CAA = 0;
-        gv0BF2.M4CB8 = 0;
-        gv0BF2.M4CC3 = fn01AE(17, 50);
+        player.passengerAdSpend = 0;
+        player.commodityAdSpend = 0;
+        player.adSpendTotal = 0;
+        player.passengerAdChoice = 0;
+        player.commodityAdChoice = 0;
+        player.adExtraPassengers = 0;
+        player.age = fn01AE(17, 50);
         for (l00EA = 0; l00EA <= 2; l00EA++) {
             for (l00EC = 0; l00EC <= 5; l00EC++) {
-                gv0BF2.M4CCA[l00EA][l00EC] = 0;
-                gv0BF2.M4CD2[l00EA][l00EC] = 0;
+                player.cargo[l00EA][l00EC] = 0;
+                player.cargoAvgCost[l00EA][l00EC] = 0;
             }
         }
-        gv0BF2.M4CDB = 0;
-        gv0BF2.M4CE8 = 100;
-        gv0BF2.M4CF9 = 0;
-        gv0BF2.M4D01 = 4;
-        gv0BF2.M4D09 = 1500;
-        gv0BF2.M4D17 = 0;
-        gv0BF2.M4D28 = FixStr("", 64);
-        gv0BF2.M4D38 = 50;
-        gv0BF2.M4D45 = -1;
-        gv0BF2.M4D56 = 50;
-        gv0BF2.M4D5E = 50;
-        gv0BF2.M4D6E = 0;
-        gv0BF2.M4D7B = 15;
-        l00F0 = gv0BF2.M4D7B * 1000;
-        gv0BF2.M4D92 = fn01AE(gv0BF2.M4D7B, l00F0);
-        gv0BF2.M4DA3 = 0;
-        gv0BF2.M4DAB = 0.05;
-        gv0BF2.M4DB7 = 0;
-        gv0BF2.M4DC7 = 100000;
-        gv0BF2.M4EF2 = 0;
-        gv0BF2.M4F00 = 8;
-        gv0BF2.M4F15 = 0;
-        gv0BF2.M4F1E = 1000;
-        gv0BF2.M4F31 = 1000;
-        gv0BF2.M4F47 = 0;
-        gv0BF2.M4F53 = 0;
-        gv0BF2.M4DD2 = 0;
-        gv0BF2.M4DE4 = 0;
-        gv0BF2.M4DF0 = 0;
-        gv0BF2.M4E00 = 0;
-        gv0BF2.M4E0D = 0;
-        gv0BF2.M4E1A = 0;
-        gv0BF2.M4E2E = 0;
-        gv0BF2.M4E3B = 0;
-        gv0BF2.M4E48 = 0;
-        gv0BF2.M4E57 = 0;
-        gv0BF2.M4E6A = 0;
-        gv0BF2.M4E76 = 0;
-        gv0BF2.M4E88 = fn01AE(1, 100);
-        gv0BF2.M4E92 = FixStr("", 20);
-        gv0BF2.M4E9E = 0;
-        gv0BF2.M4EA9 = 0.01;
-        gv0BF2.M4EB8 = 0;
+        player.cargoTotal = 0;
+        player.cargoCapacity = 100;
+        player.cash = 0;
+        player.crewSize = 4;
+        player.crewSalary = 1500;
+        player.wagesOwed = 0;
+        player.emailAddress = FixStr("", 64);
+        player.luck = 50;
+        player.luckIsTemporary = -1;
+        player.fuel = 50;
+        player.fuelCapacity = 50;
+        player.insured = 0;
+        player.insuranceRate = 15;
+        l00F0 = player.insuranceRate * 1000;
+        player.insuranceCost = fn01AE(player.insuranceRate, l00F0);
+        player.loan = 0;
+        player.loanRate = 0.05;
+        player.loanInterest = 0;
+        player.creditLimit = 100000;
+        player.passengersAboard = 0;
+        player.passengerCapacity = 8;
+        player.passengersWaiting = 0;
+        player.nextTicketPrice = 1000;
+        player.ticketPrice = 1000;
+        player.passengersBoarded = 0;
+        player.specialDone = 0;
+        player.quickWarehouse = 0;
+        player.quickMarket = 0;
+        player.quickDeposit = 0;
+        player.quickBank = 0;
+        player.quickLoan = 0;
+        player.quickAdvertise = 0;
+        player.quickCrew = 0;
+        player.quickFuel = 0;
+        player.quickTravel = 0;
+        player.quickPassengers = 0;
+        player.quickTaxes = 0;
+        player.quickInsurance = 0;
+        player.arrivalRoll = fn01AE(1, 100);
+        player.playerName = FixStr("", 20);
+        player.bankBalance = 0;
+        player.bankRate = 0.01;
+        player.bankInterest = 0;
         for (l00EA = 0; l00EA <= 6; l00EA++) {
-            gv0BF2.M4ECB[l00EA] = 0;
-            gv0BF2.M4ED9[l00EA] = 0;
+            player.shareAvgCost[l00EA] = 0;
+            player.shares[l00EA] = 0;
         }
-        gv0BF2.M4EE2 = -1;
-        gv0BF2.M4F68 = 0;
-        gv0BF2.M4F72 = 0;
-        gv0BF2.M4F79 = 50;
+        player.supplyChartPlanet = -1;
+        player.tariffsOwed = 0;
+        player.passengerTaxOwed = 0;
+        player.warehouseCapacity = 50;
         for (l00EA = 0; l00EA <= 6; l00EA++) {
             for (l00EC = 0; l00EC <= 2; l00EC++) {
                 for (l00EE = 0; l00EE <= 5; l00EE++) {
-                    gv0BF2.M4F8B[l00EA][l00EC][l00EE] = 0;
-                    gv0BF2.M4F98[l00EA][l00EC][l00EE] = 0;
+                    player.warehouseStock[l00EA][l00EC][l00EE] = 0;
+                    player.warehouseAvgCost[l00EA][l00EC][l00EE] = 0;
                 }
             }
-            gv0BF2.M4FAF[l00EA] = 0;
+            player.warehouseUsed[l00EA] = 0;
         }
-        gv0BF2.M4FBD = 0;
-        gv0BF2.M4FC9 = 200000;
-        gv0BF2.M4FD4 = 0.04;
-        gv0BF2.M4FE0 = 0;
-        gv11CE.M4FFC = 1;
-        gv11CE.M500C = 2;
-        gv11CE.M501C = 3;
-        gv11CE.M502E = 4;
-        gv11CE.M503E = 5;
-        gv11CE.M5053 = 6;
-        gv11CE.M5067 = 7;
-        gv11CE.M5077 = 8;
-        gv11CE.M508D = 9;
-        gv11CE.M509D = 10;
-        gv11CE.M50B4 = 11;
-        gv11CE.M50C3 = 12;
-        gv11CE.M50D3 = 13;
-        gv11CE.M50E8 = 14;
-        gv11CE.M50FB = 15;
-        gv11CE.M510F = 16;
-        gv11CE.M5123 = 17;
-        gv11CE.M5134[0] = 0;
+        player.zinnLoan = 0;
+        player.zinnCreditLimit = 200000;
+        player.zinnRate = 0.04;
+        player.zinnInterest = 0;
+        game.complexity = 1;
+        game.unlockZinnLoan = 2;
+        game.unlockSupply = 3;
+        game.unlockLoan = 4;
+        game.unlockInsurance = 5;
+        game.unlockViewCity = 6;
+        game.unlockFuel = 7;
+        game.unlockPassengers = 8;
+        game.unlockCrew = 9;
+        game.unlockAdvertising = 10;
+        game.unlockTaxes = 11;
+        game.unlockBank = 12;
+        game.unlockWarehouse = 13;
+        game.unlockExplore = 14;
+        game.unlockDistanceChart = 15;
+        game.unlockFacilities = 16;
+        game.unlockStocks = 17;
+        game.planetSupplyBoost[0] = 0;
         for (l00EA = 1; l00EA <= 6; l00EA++) {
-            gv11CE.M5134[l00EA] = 0;
-            gv11CE.M5299[l00EA] = 0;
-            gv11CE.M5401[l00EA] = FixStr(" ", 20);
+            game.planetSupplyBoost[l00EA] = 0;
+            game.graphShowCompany[l00EA] = 0;
+            game.companyNames[l00EA] = FixStr(" ", 20);
         }
-        gv11CE.M513F = 0;
-        gv11CE.M514A = 0;
-        gv11CE.M5159 = 0;
-        gv11CE.M516B = 0;
-        gv11CE.M5181 = 0;
-        gv11CE.M5197 = 0;
-        gv11CE.M51B1 = 0;
-        gv11CE.M51C3 = 0;
-        gv11CE.M51D5 = 0;
-        gv11CE.M51EB = 0;
-        gv11CE.M5201 = 0;
-        gv11CE.M5218 = 0;
-        gv11CE.M5231 = 0;
-        gv11CE.M5247 = 0;
-        gv11CE.M5262 = 0;
-        gv11CE.M527F = 0;
-        gv11CE.M52A5[0][0] = FixStr("Cantaloupe", 11);
-        gv11CE.M52A5[0][1] = FixStr("Jelly Beans", 11);
-        gv11CE.M52A5[0][2] = FixStr("Moon Ferns", 11);
-        gv11CE.M52A5[0][3] = FixStr("Frog Legs", 11);
-        gv11CE.M52A5[0][4] = FixStr("Whip Cream", 11);
-        gv11CE.M52A5[0][5] = FixStr("Babel Seeds", 11);
-        gv11CE.M52A5[1][0] = FixStr("Diapers", 11);
-        gv11CE.M52A5[1][1] = FixStr("Umbrellas", 11);
-        gv11CE.M52A5[1][2] = FixStr("Toasters", 11);
-        gv11CE.M52A5[1][3] = FixStr("Polyester", 11);
-        gv11CE.M52A5[1][4] = FixStr("Hair Tonic", 11);
-        gv11CE.M52A5[1][5] = FixStr("Lava Lamps", 11);
-        gv11CE.M52A5[2][0] = FixStr("Oxygen", 11);
-        gv11CE.M52A5[2][1] = FixStr("Oggle Sand", 11);
-        gv11CE.M52A5[2][2] = FixStr("Kryptoons", 11);
-        gv11CE.M52A5[2][3] = FixStr("X Fuels", 11);
-        gv11CE.M52A5[2][4] = FixStr("Gems", 11);
-        gv11CE.M52A5[2][5] = FixStr("Exotic", 11);
+        game.auctionType = 0;
+        game.lastAuctionType = 0;
+        game.auctionWinner = 0;
+        game.auctionRunnerUp = 0;
+        game.lastAuctionWinner = 0;
+        game.lastAuctionRunnerUp = 0;
+        game.auctionTopBid = 0;
+        game.auctionSecondBid = 0;
+        game.lastAuctionTopBid = 0;
+        game.lastAuctionSecondBid = 0;
+        game.auctionFacility = 0;
+        game.auctionPlanet = 0;
+        game.auctionFacilityRevenue = 0;
+        game.lastAuctionFacility = 0;
+        game.lastAuctionPlanet = 0;
+        game.lastAuctionFacilityRevenue = 0;
+        game.commodityNames[0][0] = FixStr("Cantaloupe", 11);
+        game.commodityNames[0][1] = FixStr("Jelly Beans", 11);
+        game.commodityNames[0][2] = FixStr("Moon Ferns", 11);
+        game.commodityNames[0][3] = FixStr("Frog Legs", 11);
+        game.commodityNames[0][4] = FixStr("Whip Cream", 11);
+        game.commodityNames[0][5] = FixStr("Babel Seeds", 11);
+        game.commodityNames[1][0] = FixStr("Diapers", 11);
+        game.commodityNames[1][1] = FixStr("Umbrellas", 11);
+        game.commodityNames[1][2] = FixStr("Toasters", 11);
+        game.commodityNames[1][3] = FixStr("Polyester", 11);
+        game.commodityNames[1][4] = FixStr("Hair Tonic", 11);
+        game.commodityNames[1][5] = FixStr("Lava Lamps", 11);
+        game.commodityNames[2][0] = FixStr("Oxygen", 11);
+        game.commodityNames[2][1] = FixStr("Oggle Sand", 11);
+        game.commodityNames[2][2] = FixStr("Kryptoons", 11);
+        game.commodityNames[2][3] = FixStr("X Fuels", 11);
+        game.commodityNames[2][4] = FixStr("Gems", 11);
+        game.commodityNames[2][5] = FixStr("Exotic", 11);
         for (l00EA = 0; l00EA <= 6; l00EA++) {
             for (l00EC = 0; l00EC <= 2; l00EC++) {
                 for (l00EE = 0; l00EE <= 5; l00EE++) {
-                    gv11CE.M52B0[l00EA][l00EC][l00EE] = fn01AE(0, 100);
-                    gv11CE.M52B8[l00EA][l00EC][l00EE] = 0;
-                    gv11CE.M52C0[l00EA][l00EC][l00EE] = 0;
+                    game.supplyPercent[l00EA][l00EC][l00EE] = fn01AE(0, 100);
+                    game.prices[l00EA][l00EC][l00EE] = 0;
+                    game.available[l00EA][l00EC][l00EE] = 0;
                 }
             }
         }
-        gv11CE.M52C8 = 0;
-        gv11CE.M52D6 = 139;
-        gv11CE.M52F2 = 0;
-        gv11CE.M52FB = FixStr("", 12);
-        gv11CE.M52E2 = 0.02;
+        game.marketDifficulty = 0;
+        game.year = 139;
+        game.isEmailGame = 0;
+        game.emailFileName = FixStr("", 12);
+        game.exportTariff = 0.02;
         for (l00EA = 1; l00EA <= 6; l00EA++) {
-            gv11CE.M530C[l00EA] = 5;
+            game.engineSpeed[l00EA] = 5;
         }
-        gv11CE.M5316 = 200;
+        game.fuelBasePrice = 200;
         for (l00EA = 0; l00EA <= 6; l00EA++) {
-            gv11CE.M5328[l00EA] = fn01AE(gv11CE.M5316, gv11CE.M5316 * 10);
+            game.fuelPrice[l00EA] = fn01AE(game.fuelBasePrice, game.fuelBasePrice * 10);
         }
-        gv11CE.M5334 = 0;
-        gv11CE.M533C = 0;
-        gv11CE.M5349 = 0.03;
-        gv11CE.M5359 = 1;
-        gv11CE.M5362 = fn01AE(1, 124);
-        gv11CE.M536A = fn01AE(1, 100);
-        gv11CE.M5376 = fn01AE(0, 6);
+        game.saveSlot = 0;
+        game.weeklyEventRoll = 0;
+        game.importTariff = 0.03;
+        game.skillLevel = 1;
+        game.newsEvent = fn01AE(1, 124);
+        game.weeklyRoll = fn01AE(1, 100);
+        game.newsPlanet = fn01AE(0, 6);
         for (l00EA = 1; l00EA <= 6; l00EA++) {
-            gv11CE.M5384[l00EA] = 0;
+            game.netWorth[l00EA] = 0;
         }
-        gv11CE.M5390 = 6;
-        gv11CE.M53E5 = 1;
-        gv11CE.M53EF = 1;
-        gv11CE.M542C = 1;
+        game.numRivals = 6;
+        game.currentPlayer = 1;
+        game.numPlayers = 1;
+        game.turnOrderPos = 1;
         for (l00EA = 1; l00EA <= 6; l00EA++) {
-            gv11CE.M53A9[l00EA] = CInt(l00EA - 1);
-            gv11CE.M53B3[l00EA] = CInt(l00EA);
-            gv11CE.M540F[l00EA] = CLng(l00EA);
-            gv11CE.M541E[l00EA] = CInt(l00EA);
+            game.planet[l00EA] = CInt(l00EA - 1);
+            game.previousPlanet[l00EA] = CInt(l00EA);
+            game.turnOrder[l00EA] = CLng(l00EA);
+            game.shipType[l00EA] = CInt(l00EA);
         }
         for (l00EA = 1; l00EA <= 6; l00EA++) {
             for (l00EC = 0; l00EC <= 6; l00EC++) {
-                gv11CE.M5452[l00EA][l00EC] = 0;
-                gv11CE.M5464[l00EA][l00EC] = 0;
-                gv11CE.M5479[l00EA][l00EC] = 0;
+                game.facilitiesOwned[l00EA][l00EC] = 0;
+                game.facilityFees[l00EA][l00EC] = 0;
+                game.facilityRevenue[l00EA][l00EC] = 0;
             }
         }
-        gv11CE.M53C1[0] = FixStr("Vexx", 4);
-        gv11CE.M53C1[1] = FixStr("Pyke", 4);
-        gv11CE.M53C1[2] = FixStr("Mira", 4);
-        gv11CE.M53C1[3] = FixStr("Stye", 4);
-        gv11CE.M53C1[4] = FixStr("Loro", 4);
-        gv11CE.M53C1[5] = FixStr("Zile", 4);
-        gv11CE.M53C1[6] = FixStr("Frac", 4);
+        game.planetNames[0] = FixStr("Vexx", 4);
+        game.planetNames[1] = FixStr("Pyke", 4);
+        game.planetNames[2] = FixStr("Mira", 4);
+        game.planetNames[3] = FixStr("Stye", 4);
+        game.planetNames[4] = FixStr("Loro", 4);
+        game.planetNames[5] = FixStr("Zile", 4);
+        game.planetNames[6] = FixStr("Frac", 4);
         for (l00EE = 1; l00EE <= 6; l00EE++) {
             for (l00EA = 0; l00EA <= 6; l00EA++) {
                 {
@@ -504,99 +504,99 @@ function (me) {
                     }
                 }
                 for (l00EC = 0; l00EC <= 6; l00EC++) {
-                    if (l00F2 == gv11CE.M53C1[l00EC]) {
+                    if (l00F2 == game.planetNames[l00EC]) {
                         l00F2 = "do not replace";
                     }
                 }
                 if (l00F2 == "do not replace") {
                 } else {
-                    gv11CE.M53C1[l00EA] = FixStr(l00F2, 4);
+                    game.planetNames[l00EA] = FixStr(l00F2, 4);
                 }
             }
         }
-        gv11CE.M53CF[0] = 3;
-        gv11CE.M53DA[0] = 18;
-        gv11CE.M53CF[1] = 23;
-        gv11CE.M53DA[1] = 9;
-        gv11CE.M53CF[2] = 5;
-        gv11CE.M53DA[2] = 6;
-        gv11CE.M53CF[3] = 12;
-        gv11CE.M53DA[3] = 16;
-        gv11CE.M53CF[4] = 14;
-        gv11CE.M53DA[4] = 2;
-        gv11CE.M53CF[5] = 15;
-        gv11CE.M53DA[5] = 10;
-        gv11CE.M53CF[6] = 21;
-        gv11CE.M53DA[6] = 19;
-        gv11CE.M539E = 0.15;
-        gv11CE.M5492 = 0;
-        gv11CE.M54A2 = 0;
-        gv11CE.M54CD = -1;
+        game.planetX[0] = 3;
+        game.planetY[0] = 18;
+        game.planetX[1] = 23;
+        game.planetY[1] = 9;
+        game.planetX[2] = 5;
+        game.planetY[2] = 6;
+        game.planetX[3] = 12;
+        game.planetY[3] = 16;
+        game.planetX[4] = 14;
+        game.planetY[4] = 2;
+        game.planetX[5] = 15;
+        game.planetY[5] = 10;
+        game.planetX[6] = 21;
+        game.planetY[6] = 19;
+        game.passengerTaxRate = 0.15;
+        game.weeklySales = 0;
+        game.weeklyProfit = 0;
+        game.canBuyStock = -1;
         for (l00EA = 0; l00EA <= 6; l00EA++) {
-            gv11CE.M54BF[l00EA] = 0;
-            gv11CE.M54E8[l00EA] = 50;
+            game.stockCrashed[l00EA] = 0;
+            game.stockStrength[l00EA] = 50;
             for (l00EC = 1; l00EC <= 15; l00EC++) {
-                gv11CE.M54DA[l00EA][l00EC] = CLng(1600 - (100 * l00EA));
+                game.stockPrices[l00EA][l00EC] = CLng(1600 - (100 * l00EA));
             }
         }
         for (l00EA = 1; l00EA <= 6; l00EA++) {
-            gv11CE.M54B3[l00EA] = 400;
-            gv11CE.M54F6[l00EA] = 0;
-            gv11CE.M5504[l00EA] = 1;
-            gv11CE.M5515[l00EA] = 0;
+            game.shipSize[l00EA] = 400;
+            game.travelTime[l00EA] = 0;
+            game.travelDelay[l00EA] = 1;
+            game.turnDone[l00EA] = 0;
         }
-        gv11CE.M5522 = 1;
-        gv11CE.M552A = 0;
-        gv11CE.M5533 = fn01AE(1, 70);
-        gv11CE.M553E = fn01AE(0, 6);
-        gv11CE.M554F = 0;
-        gv11CE.M5559 = 1000000;
+        game.turn = 1;
+        game.tutorialMode = 0;
+        game.weatherEvent = fn01AE(1, 70);
+        game.weatherPlanet = fn01AE(0, 6);
+        game.winner = 0;
+        game.goalNetWorth = 1000000;
         for (l00EA = 1; l00EA <= 6; l00EA++) {
-            gv1EB2.M5384[l00EA] = 0;
+            rivals.netWorth[l00EA] = 0;
             if (l00EA == 1) {
-                gv1EB2.M530C[l00EA] = 5;
+                rivals.engineSpeed[l00EA] = 5;
             } else if (l00EA == 2) {
-                gv1EB2.M530C[l00EA] = 5;
+                rivals.engineSpeed[l00EA] = 5;
             } else if (l00EA == 3) {
-                gv1EB2.M530C[l00EA] = 5;
+                rivals.engineSpeed[l00EA] = 5;
             } else if (l00EA == 4) {
-                gv1EB2.M530C[l00EA] = 4;
+                rivals.engineSpeed[l00EA] = 4;
             } else if (l00EA == 5) {
-                gv1EB2.M530C[l00EA] = 5;
+                rivals.engineSpeed[l00EA] = 5;
             } else if (l00EA == 6) {
-                gv1EB2.M530C[l00EA] = 6;
+                rivals.engineSpeed[l00EA] = 6;
             }
-            gv1EB2.M53A9[l00EA] = CInt(l00EA);
-            gv1EB2.M54F6[l00EA] = 0;
-            gv1EB2.M5515[l00EA] = 0;
-            gv1EB2.M5588[l00EA] = 0;
-            gv1EB2.M5593[l00EA] = 0;
-            gv1EB2.M4CCA[l00EA] = 0;
-            gv1EB2.M54B3[l00EA] = 400;
-            gv1EB2.M4CF9[l00EA] = 0;
-            gv1EB2.M559E[l00EA] = 100;
+            rivals.planet[l00EA] = CInt(l00EA);
+            rivals.travelTime[l00EA] = 0;
+            rivals.turnDone[l00EA] = 0;
+            rivals.cargoCategory[l00EA] = 0;
+            rivals.cargoItem[l00EA] = 0;
+            rivals.cargo[l00EA] = 0;
+            rivals.shipSize[l00EA] = 400;
+            rivals.cash[l00EA] = 0;
+            rivals.intelligence[l00EA] = 100;
         }
         for (l00EA = 1; l00EA <= 6; l00EA++) {
             for (l00EC = 0; l00EC <= 6; l00EC++) {
-                gv1EB2.M55AF[l00EA][l00EC] = 0;
-                gv1EB2.M55BB[l00EA][l00EC] = 0;
-                gv1EB2.M55CA[l00EA][l00EC] = 0;
-                gv1EB2.M4ED9[l00EA][l00EC] = 0;
+                rivals.facilitiesOwned[l00EA][l00EC] = 0;
+                rivals.facilityFees[l00EA][l00EC] = 0;
+                rivals.facilityRevenue[l00EA][l00EC] = 0;
+                rivals.shares[l00EA][l00EC] = 0;
             }
         }
-        gv1EB2.M5579[1] = FixStr("Trading Corp. IV", 16);
-        gv1EB2.M5579[2] = FixStr("Gizzy Shipping", 16);
-        gv1EB2.M5579[3] = FixStr("Vandergriff Ltd.", 16);
-        gv1EB2.M5579[4] = FixStr("Puffer Inc.", 16);
-        gv1EB2.M5579[5] = FixStr("Roke Transport", 16);
-        gv1EB2.M5579[6] = FixStr("Hoff Miester", 16);
+        rivals.companyNames[1] = FixStr("Trading Corp. IV", 16);
+        rivals.companyNames[2] = FixStr("Gizzy Shipping", 16);
+        rivals.companyNames[3] = FixStr("Vandergriff Ltd.", 16);
+        rivals.companyNames[4] = FixStr("Puffer Inc.", 16);
+        rivals.companyNames[5] = FixStr("Roke Transport", 16);
+        rivals.companyNames[6] = FixStr("Hoff Miester", 16);
     }
 
     function Form_Activate() {
         me.MousePointer = mc00FE;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "begin.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "begin.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -605,7 +605,7 @@ function (me) {
     function Form_Load() {
         me.MousePointer = mc001A;
         Randomize();
-        FillElastic.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "STARS2.BMP");
+        FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "STARS2.BMP");
         sub472D();
         b_NewGame.Caption = "Start New Game";
         b_OldGame.Caption = "Continue Old Game";

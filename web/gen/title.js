@@ -36,11 +36,11 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = mc001A;
-        FillElastic.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "title.bmp");
+        FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "title.bmp");
         Label2.Caption = "Produced, Designed and Programmed" + "\n" + "by" + "\n" + "Naomi Kokubo" + "\n" + "Steven Hoffman" + "\n" + "\n" + "Version 1/1/97" + "\n" + "Copyright (c) 1994 - 1997 LavaMind." + "\n" + "All rights reserved.";
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "pyke.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "pyke.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }

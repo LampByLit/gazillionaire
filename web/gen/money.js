@@ -217,9 +217,9 @@ function (me) {
 
     async function sub0AFB() {
         me.MousePointer = mc0124;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -253,7 +253,7 @@ function (me) {
     async function sub1135() {
         me.MousePointer = mc0124;
         FillElastic.Visible = 0;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         frm_Opponents.Tag = "Money";
@@ -283,17 +283,17 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = mc0124;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            if (gv11CE.M541E[gv11CE.M53E5] <= 6) {
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "ship" + Trim(Str(gv11CE.M541E[gv11CE.M53E5])) + ".wav";
+            if (game.shipType[game.currentPlayer] <= 6) {
+                b_Sound.FileName = Trim(paths.soundDir) + "ship" + Trim(Str(game.shipType[game.currentPlayer])) + ".wav";
             } else {
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "ship" + Trim(Str(gv11CE.M541E[gv11CE.M53E5] - 6)) + ".wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "ship" + Trim(Str(game.shipType[game.currentPlayer] - 6)) + ".wav";
             }
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
-        Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "coins.wmf");
+        Image1.Picture = LoadPicture(Trim(paths.imageDir) + "coins.wmf");
     }
 
     async function sub1531() {
@@ -303,34 +303,34 @@ function (me) {
         try {
             l0170 = 0;
             for (l0172 = 0; l0172 <= 6; l0172++) {
-                if (gv11CE.M5522 <= 15) {
-                    l0170 = l0170 + gv0BF2.M4ED9[l0172] * gv11CE.M54DA[l0172][gv11CE.M5522];
+                if (game.turn <= 15) {
+                    l0170 = l0170 + player.shares[l0172] * game.stockPrices[l0172][game.turn];
                 } else {
-                    l0170 = l0170 + gv0BF2.M4ED9[l0172] * gv11CE.M54DA[l0172][15];
+                    l0170 = l0170 + player.shares[l0172] * game.stockPrices[l0172][15];
                 }
             }
-            if (gv11CE.M5299[gv11CE.M53E5] == 0) {
-                gv11CE.M5384[gv11CE.M53E5] = l0170 + gv0BF2.M4CF9 + gv0BF2.M4E9E - gv0BF2.M4DA3 - gv0BF2.M4FBD;
+            if (game.graphShowCompany[game.currentPlayer] == 0) {
+                game.netWorth[game.currentPlayer] = l0170 + player.cash + player.bankBalance - player.loan - player.zinnLoan;
             } else {
-                gv11CE.M5384[gv11CE.M53E5] = 0;
+                game.netWorth[game.currentPlayer] = 0;
             }
-            b_CurrentNetworth.Caption = "   Net Worth:   " + Format(gv11CE.M5384[gv11CE.M53E5], "#,#0");
-            if (gv11CE.M5359 == 1) {
+            b_CurrentNetworth.Caption = "   Net Worth:   " + Format(game.netWorth[game.currentPlayer], "#,#0");
+            if (game.skillLevel == 1) {
                 l0178 = "Tutorial";
-            } else if (gv11CE.M5359 == 2) {
+            } else if (game.skillLevel == 2) {
                 l0178 = "Novice";
-            } else if (gv11CE.M5359 == 3) {
+            } else if (game.skillLevel == 3) {
                 l0178 = "Beginner";
-            } else if (gv11CE.M5359 == 4) {
+            } else if (game.skillLevel == 4) {
                 l0178 = "Intermediate";
-            } else if (gv11CE.M5359 == 5) {
+            } else if (game.skillLevel == 5) {
                 l0178 = "Expert";
-            } else if (gv11CE.M5359 == 6) {
+            } else if (game.skillLevel == 6) {
                 l0178 = "Master";
             }
             b_GameLevel.Caption = "   Game Level:   " + l0178;
-            l0170 = CLng((gv11CE.M5384[gv11CE.M53E5]) / 50000);
-            if (gv11CE.M5384[gv11CE.M53E5] < 0) {
+            l0170 = CLng((game.netWorth[game.currentPlayer]) / 50000);
+            if (game.netWorth[game.currentPlayer] < 0) {
                 if (l0170 < 0) {
                     l0170 = l0170 * (-1);
                 }
@@ -359,7 +359,7 @@ function (me) {
                     l0178 = "Destitute";
                 }
                 b_Status.Caption = "   Company Status:   " + l0178;
-            } else if (gv11CE.M5384[gv11CE.M53E5] >= 0) {
+            } else if (game.netWorth[game.currentPlayer] >= 0) {
                 if (l0170 > 20) {
                     l0170 = 20;
                 }

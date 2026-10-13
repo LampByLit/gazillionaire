@@ -27,12 +27,12 @@ function (me) {
         const mc0066 = 4210752;
         me.MousePointer = mc001C;
         FillElastic.Visible = 0;
-        if (gv11CE.M513F == 1) {
+        if (game.auctionType == 1) {
             LB342E: while (true) {
-                l0024 = await fn01A0(0, "0", 10000, 50000, UCase(Trim(gv11CE.M5401[gv11CE.M53E5])) + "\n" + "Current Ship Size: " + Format(gv11CE.M54B3[gv11CE.M53E5], "#,#0") + " tons" + "\n" + "Your Cash: " + Format(gv0BF2.M4CF9, "#,#0") + " kubars" + "\n" + "Your Savings: " + Format(gv0BF2.M4E9E, "#,#0") + " kubars" + "\n" + "Your Loan: " + Format(gv0BF2.M4DA3, "#,#0") + " kubars" + "\n" + "Loan Credit Limit: " + Format(gv0BF2.M4DC7, "#,#0") + " kubars", "Ship Auction");
+                l0024 = await fn01A0(0, "0", 10000, 50000, UCase(Trim(game.companyNames[game.currentPlayer])) + "\n" + "Current Ship Size: " + Format(game.shipSize[game.currentPlayer], "#,#0") + " tons" + "\n" + "Your Cash: " + Format(player.cash, "#,#0") + " kubars" + "\n" + "Your Savings: " + Format(player.bankBalance, "#,#0") + " kubars" + "\n" + "Your Loan: " + Format(player.loan, "#,#0") + " kubars" + "\n" + "Loan Credit Limit: " + Format(player.creditLimit, "#,#0") + " kubars", "Ship Auction");
                 if (l0024 == -3333 || l0024 == 0) {
                     l0024 = 0;
-                } else if (l0024 > (gv0BF2.M4CF9 + gv0BF2.M4E9E + gv0BF2.M4DC7 - gv0BF2.M4DA3) || l0024 > 200000) {
+                } else if (l0024 > (player.cash + player.bankBalance + player.creditLimit - player.loan) || l0024 > 200000) {
                     frm_BoxYesNo.FillElastic.Caption = "\n" + "Are you sure you want to bid " + Format(l0024, "#,#0") + " kubars?";
                     await frm_BoxYesNo.Show(1);
                     if (frm_BoxYesNo.Tag == "YES") {
@@ -42,25 +42,25 @@ function (me) {
                         continue LB342E;
                     }
                 }
-                if (l0024 >= gv11CE.M51B1) {
-                    gv11CE.M51C3 = gv11CE.M51B1;
-                    gv11CE.M516B = gv11CE.M5159;
-                } else if (l0024 > gv11CE.M51C3) {
-                    gv11CE.M51C3 = l0024;
-                    gv11CE.M516B = gv11CE.M53E5;
+                if (l0024 >= game.auctionTopBid) {
+                    game.auctionSecondBid = game.auctionTopBid;
+                    game.auctionRunnerUp = game.auctionWinner;
+                } else if (l0024 > game.auctionSecondBid) {
+                    game.auctionSecondBid = l0024;
+                    game.auctionRunnerUp = game.currentPlayer;
                 }
-                if (l0024 >= gv11CE.M51B1) {
-                    gv11CE.M51B1 = l0024;
-                    gv11CE.M5159 = gv11CE.M53E5;
+                if (l0024 >= game.auctionTopBid) {
+                    game.auctionTopBid = l0024;
+                    game.auctionWinner = game.currentPlayer;
                 }
                 break;
             }
-        } else if (gv11CE.M513F == 2) {
+        } else if (game.auctionType == 2) {
             LB384C: while (true) {
-                l0024 = await fn01A0(0, "0", 5 * gv11CE.M5231, 30 * gv11CE.M5231, fn2D8D(gv11CE.M5201) + " on " + Trim(gv11CE.M53C1[gv11CE.M5218]) + "\n" + "Facility Revenue: " + Format(gv11CE.M5231, "#,#0") + " kubars/ship" + "\n" + "Your Cash: " + Format(gv0BF2.M4CF9, "#,#0") + " kubars" + "\n" + "Your Savings: " + Format(gv0BF2.M4E9E, "#,#0") + " kubars" + "\n" + "Your Loan: " + Format(gv0BF2.M4DA3, "#,#0") + " kubars" + "\n" + "Loan Credit Limit: " + Format(gv0BF2.M4DC7, "#,#0") + " kubars", Trim(gv11CE.M5401[gv11CE.M53E5]) + " enter your secret bid!");
+                l0024 = await fn01A0(0, "0", 5 * game.auctionFacilityRevenue, 30 * game.auctionFacilityRevenue, fn2D8D(game.auctionFacility) + " on " + Trim(game.planetNames[game.auctionPlanet]) + "\n" + "Facility Revenue: " + Format(game.auctionFacilityRevenue, "#,#0") + " kubars/ship" + "\n" + "Your Cash: " + Format(player.cash, "#,#0") + " kubars" + "\n" + "Your Savings: " + Format(player.bankBalance, "#,#0") + " kubars" + "\n" + "Your Loan: " + Format(player.loan, "#,#0") + " kubars" + "\n" + "Loan Credit Limit: " + Format(player.creditLimit, "#,#0") + " kubars", Trim(game.companyNames[game.currentPlayer]) + " enter your secret bid!");
                 if (l0024 == -3333 || l0024 == 0) {
                     l0024 = 0;
-                } else if (l0024 > (gv0BF2.M4CF9 + gv0BF2.M4E9E + gv0BF2.M4DC7 - gv0BF2.M4DA3) || l0024 > 200000) {
+                } else if (l0024 > (player.cash + player.bankBalance + player.creditLimit - player.loan) || l0024 > 200000) {
                     frm_BoxYesNo.FillElastic.Caption = "\n" + "Are you sure you want to bid " + Format(l0024, "#,#0") + " kubars?";
                     await frm_BoxYesNo.Show(1);
                     if (frm_BoxYesNo.Tag == "YES") {
@@ -70,16 +70,16 @@ function (me) {
                         continue LB384C;
                     }
                 }
-                if (l0024 >= gv11CE.M51B1) {
-                    gv11CE.M51C3 = gv11CE.M51B1;
-                    gv11CE.M516B = gv11CE.M5159;
-                } else if (l0024 > gv11CE.M51C3) {
-                    gv11CE.M51C3 = l0024;
-                    gv11CE.M516B = gv11CE.M53E5;
+                if (l0024 >= game.auctionTopBid) {
+                    game.auctionSecondBid = game.auctionTopBid;
+                    game.auctionRunnerUp = game.auctionWinner;
+                } else if (l0024 > game.auctionSecondBid) {
+                    game.auctionSecondBid = l0024;
+                    game.auctionRunnerUp = game.currentPlayer;
                 }
-                if (l0024 >= gv11CE.M51B1) {
-                    gv11CE.M51B1 = l0024;
-                    gv11CE.M5159 = gv11CE.M53E5;
+                if (l0024 >= game.auctionTopBid) {
+                    game.auctionTopBid = l0024;
+                    game.auctionWinner = game.currentPlayer;
                 }
                 break;
             }
@@ -325,26 +325,26 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = mc001C;
-        if (gv11CE.M513F == 1) {
-            if (gv0060.M4C47 == -1) {
+        if (game.auctionType == 1) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "auction2.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "auction2.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "loan1.bmp");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "loan1.bmp");
             b_ImageLable.Caption = "Trader's Union Official";
             b_Message.Caption = "SHIP AUCTION:" + "\n" + "\n" + "The Trader's Union is auctioning off a 200-ton ship upgrade to the highest bidder. The company that purchases this upgrade will be able to trade in their old ship for a new, larger ship." + "\n" + "\n" + "You must now input your SECRET bid (players not making a bid should close their eyes). You will be notified of the auction results at the beginning of your next turn.";
-        } else if (gv11CE.M513F == 2) {
-            if (gv0060.M4C47 == -1) {
+        } else if (game.auctionType == 2) {
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "auction.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "auction.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
-            Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "DRED.BMP");
+            Image1.Picture = LoadPicture(Trim(paths.imageDir) + "DRED.BMP");
             b_ImageLable.Caption = "Emperor Dred Nicolson";
-            b_Message.Caption = "In an attempt to promote free trade in the Kukubian Colonies, The Emperor is privatizing government-owned facilities. This week, Dred is auctioning off the " + UCase(fn2D8D(gv11CE.M5201)) + " on " + UCase(Trim(gv11CE.M53C1[gv11CE.M5218])) + " to the highest bidder. The company that buys the facility can charge other companies " + Format(gv11CE.M5231, "#,#0") + " kubars every time they visit " + Trim(gv11CE.M53C1[gv11CE.M5218]) + "." + "\n" + "\n" + "You must now input your SECRET bid (players not making a bid should close their eyes). You will be notified of the auction results at the beginning of your next turn.";
+            b_Message.Caption = "In an attempt to promote free trade in the Kukubian Colonies, The Emperor is privatizing government-owned facilities. This week, Dred is auctioning off the " + UCase(fn2D8D(game.auctionFacility)) + " on " + UCase(Trim(game.planetNames[game.auctionPlanet])) + " to the highest bidder. The company that buys the facility can charge other companies " + Format(game.auctionFacilityRevenue, "#,#0") + " kubars every time they visit " + Trim(game.planetNames[game.auctionPlanet]) + "." + "\n" + "\n" + "You must now input your SECRET bid (players not making a bid should close their eyes). You will be notified of the auction results at the beginning of your next turn.";
         }
     }
 

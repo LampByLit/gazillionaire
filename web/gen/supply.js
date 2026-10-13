@@ -68,7 +68,7 @@ function (me) {
             m001A = mc0026;
             frm_Market.Tag = "Marketplace";
             b_GoodsOnShip.Caption = "Show Cargo";
-            b_TitleBar.Caption = "Commodity Supply (All Goods on " + Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]]) + ")";
+            b_TitleBar.Caption = "Commodity Supply (All Goods on " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + ")";
         } else {
             m001A = mc0022;
             frm_Market.Tag = "Show Cargo";
@@ -101,36 +101,36 @@ function (me) {
         const mc0092 = 65535;
         const mc009C = 255;
         if (Button != 2 && Button != 4) {
-            gv0BF2.M4EE2 = -1;
+            player.supplyChartPlanet = -1;
             l0082 = CLng(b_Grid.Col);
             b_Grid.Row = 0;
             for (l0086 = 1; l0086 <= 7; l0086++) {
                 b_Grid.ColAlignment[l0086] = 2;
                 b_Grid.Col = l0086;
-                b_Grid.Text = Trim(gv11CE.M53C1[l0086 - 1]);
-                if ((l0086 - 1) != gv11CE.M53A9[gv11CE.M53E5]) {
+                b_Grid.Text = Trim(game.planetNames[l0086 - 1]);
+                if ((l0086 - 1) != game.planet[game.currentPlayer]) {
                     b_Grid.Picture = LoadPicture("");
                 }
             }
             b_Grid.Col = l0082;
-            if ((l0082 - 1) != gv11CE.M53A9[gv11CE.M53E5]) {
-                gv0BF2.M4EE2 = CInt(b_Grid.Col - 1);
+            if ((l0082 - 1) != game.planet[game.currentPlayer]) {
+                player.supplyChartPlanet = CInt(b_Grid.Col - 1);
                 b_Grid.Picture = Image3.Picture;
                 b_Message.ForeColor = mc0092;
-                l0084 = CLng(Sqr(((gv11CE.M53CF[gv11CE.M53A9[gv11CE.M53E5]] - gv11CE.M53CF[gv0BF2.M4EE2])) ** (2) + ((gv11CE.M53DA[gv11CE.M53A9[gv11CE.M53E5]] - gv11CE.M53DA[gv0BF2.M4EE2])) ** (2)));
-                b_Message.Caption = "The distance from " + UCase(Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]])) + " to " + UCase(Trim(gv11CE.M53C1[gv0BF2.M4EE2])) + " is " + Format(l0084, "#,#0") + " million kuters.";
-            } else if ((l0082 - 1) == gv11CE.M53A9[gv11CE.M53E5]) {
+                l0084 = CLng(Sqr(((game.planetX[game.planet[game.currentPlayer]] - game.planetX[player.supplyChartPlanet])) ** (2) + ((game.planetY[game.planet[game.currentPlayer]] - game.planetY[player.supplyChartPlanet])) ** (2)));
+                b_Message.Caption = "The distance from " + UCase(Trim(game.planetNames[game.planet[game.currentPlayer]])) + " to " + UCase(Trim(game.planetNames[player.supplyChartPlanet])) + " is " + Format(l0084, "#,#0") + " million kuters.";
+            } else if ((l0082 - 1) == game.planet[game.currentPlayer]) {
                 b_Message.ForeColor = mc009C;
-                b_Message.Caption = "You are currently on planet " + UCase(Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]])) + ".";
+                b_Message.Caption = "You are currently on planet " + UCase(Trim(game.planetNames[game.planet[game.currentPlayer]])) + ".";
             }
         }
     }
 
     async function b_Help_Click() {
         me.MousePointer = mc0028;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -156,7 +156,7 @@ function (me) {
             }
             b_Grid.RemoveItem(l00C2);
         }
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         await frm_Market.Show();
@@ -176,27 +176,27 @@ function (me) {
         let l00D8 = 0;
         const mc00DA = 65280;
         const mc00DE = 16711935;
-        gv0BF2.M4EE2 = -1;
+        player.supplyChartPlanet = -1;
         l00D4 = CLng(b_Grid.Col);
         b_Grid.Row = 0;
         for (l00D8 = 1; l00D8 <= 7; l00D8++) {
             b_Grid.ColAlignment[l00D8] = 2;
             b_Grid.Col = l00D8;
-            b_Grid.Text = Trim(gv11CE.M53C1[l00D8 - 1]);
-            if ((l00D8 - 1) != gv11CE.M53A9[gv11CE.M53E5]) {
+            b_Grid.Text = Trim(game.planetNames[l00D8 - 1]);
+            if ((l00D8 - 1) != game.planet[game.currentPlayer]) {
                 b_Grid.Picture = LoadPicture("");
             }
         }
         b_Grid.Col = l00D4;
-        if ((l00D4 - 1) != gv11CE.M53A9[gv11CE.M53E5]) {
-            gv0BF2.M4EE2 = CInt(b_Grid.Col - 1);
+        if ((l00D4 - 1) != game.planet[game.currentPlayer]) {
+            player.supplyChartPlanet = CInt(b_Grid.Col - 1);
             b_Grid.Picture = Image3.Picture;
             b_Message.ForeColor = mc00DA;
-            l00D6 = CLng(Sqr(((gv11CE.M53CF[gv11CE.M53A9[gv11CE.M53E5]] - gv11CE.M53CF[gv0BF2.M4EE2])) ** (2) + ((gv11CE.M53DA[gv11CE.M53A9[gv11CE.M53E5]] - gv11CE.M53DA[gv0BF2.M4EE2])) ** (2)));
-            b_Message.Caption = "The distance from " + UCase(Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]])) + " to " + UCase(Trim(gv11CE.M53C1[gv0BF2.M4EE2])) + " is " + Format(l00D6, "#,#0") + " million kuters.";
-        } else if ((l00D4 - 1) == gv11CE.M53A9[gv11CE.M53E5]) {
+            l00D6 = CLng(Sqr(((game.planetX[game.planet[game.currentPlayer]] - game.planetX[player.supplyChartPlanet])) ** (2) + ((game.planetY[game.planet[game.currentPlayer]] - game.planetY[player.supplyChartPlanet])) ** (2)));
+            b_Message.Caption = "The distance from " + UCase(Trim(game.planetNames[game.planet[game.currentPlayer]])) + " to " + UCase(Trim(game.planetNames[player.supplyChartPlanet])) + " is " + Format(l00D6, "#,#0") + " million kuters.";
+        } else if ((l00D4 - 1) == game.planet[game.currentPlayer]) {
             b_Message.ForeColor = mc00DE;
-            b_Message.Caption = "You are currently on planet " + UCase(Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]])) + ".";
+            b_Message.Caption = "You are currently on planet " + UCase(Trim(game.planetNames[game.planet[game.currentPlayer]])) + ".";
         }
     }
 
@@ -214,7 +214,7 @@ function (me) {
         } else if (m001A == mc0022) {
             for (l00E2 = 0; l00E2 <= 2; l00E2++) {
                 for (l00E4 = 0; l00E4 <= 5; l00E4++) {
-                    if (gv0BF2.M4CCA[l00E2][l00E4] != 0) {
+                    if (player.cargo[l00E2][l00E4] != 0) {
                         m001C = m001C + 1;
                     }
                 }
@@ -222,7 +222,7 @@ function (me) {
         } else if (m001A == mc0024) {
             for (l00E2 = 0; l00E2 <= 2; l00E2++) {
                 for (l00E4 = 0; l00E4 <= 5; l00E4++) {
-                    if (gv11CE.M52C0[gv11CE.M53A9[gv11CE.M53E5]][l00E2][l00E4] != 0) {
+                    if (game.available[game.planet[game.currentPlayer]][l00E2][l00E4] != 0) {
                         m001C = m001C + 1;
                     }
                 }
@@ -230,7 +230,7 @@ function (me) {
         } else if (m001A == mc0026) {
             for (l00E2 = 0; l00E2 <= 2; l00E2++) {
                 for (l00E4 = 0; l00E4 <= 5; l00E4++) {
-                    if (gv11CE.M52C0[gv11CE.M53A9[gv11CE.M53E5]][l00E2][l00E4] != 0 || gv0BF2.M4CCA[l00E2][l00E4] != 0) {
+                    if (game.available[game.planet[game.currentPlayer]][l00E2][l00E4] != 0 || player.cargo[l00E2][l00E4] != 0) {
                         m001C = m001C + 1;
                     }
                 }
@@ -251,19 +251,19 @@ function (me) {
         for (l00E2 = 1; l00E2 <= 7; l00E2++) {
             b_Grid.ColAlignment[l00E2] = 2;
             b_Grid.Col = l00E2;
-            b_Grid.Text = Trim(gv11CE.M53C1[l00E2 - 1]);
-            if ((l00E2 - 1) == gv11CE.M53A9[gv11CE.M53E5]) {
+            b_Grid.Text = Trim(game.planetNames[l00E2 - 1]);
+            if ((l00E2 - 1) == game.planet[game.currentPlayer]) {
                 b_Grid.Picture = Image2.Picture;
             }
         }
-        if (gv0BF2.M4EE2 != -1) {
-            b_Grid.Col = gv0BF2.M4EE2 + 1;
+        if (player.supplyChartPlanet != -1) {
+            b_Grid.Col = player.supplyChartPlanet + 1;
             b_Grid.Picture = Image3.Picture;
         }
-        b_CargoOnShip.Caption = "ship's cargo bay = " + Format(100 * gv0BF2.M4CDB / gv0BF2.M4CE8, "#,#0") + "% filled (" + Format(gv0BF2.M4CDB, "#,#0") + "/" + Format(gv0BF2.M4CE8, "#,#0") + ")";
-        b_CargoOnShip.FloodPercent = (gv0BF2.M4CDB / gv0BF2.M4CE8) * 100;
-        b_Cash.Caption = "Cash: " + Format(gv0BF2.M4CF9, "#,#0");
-        b_Profit.Caption = "Profit: " + Format(gv11CE.M54A2, "#,#0");
+        b_CargoOnShip.Caption = "ship's cargo bay = " + Format(100 * player.cargoTotal / player.cargoCapacity, "#,#0") + "% filled (" + Format(player.cargoTotal, "#,#0") + "/" + Format(player.cargoCapacity, "#,#0") + ")";
+        b_CargoOnShip.FloodPercent = (player.cargoTotal / player.cargoCapacity) * 100;
+        b_Cash.Caption = "Cash: " + Format(player.cash, "#,#0");
+        b_Profit.Caption = "Profit: " + Format(game.weeklyProfit, "#,#0");
         for (l00E2 = 0; l00E2 <= 7; l00E2++) {
             b_Grid.Col = l00E2;
             l00E8 = 0;
@@ -273,33 +273,33 @@ function (me) {
                         l00E8 = l00E8 + 1;
                         b_Grid.Row = l00E8;
                         if (l00E2 == 0) {
-                            b_Grid.Text = Trim(gv11CE.M52A5[l00E4][l00E6]);
+                            b_Grid.Text = Trim(game.commodityNames[l00E4][l00E6]);
                         } else {
-                            b_Grid.Text = Format(gv11CE.M52B0[l00E2 - 1][l00E4][l00E6], "#,#0") + "%";
+                            b_Grid.Text = Format(game.supplyPercent[l00E2 - 1][l00E4][l00E6], "#,#0") + "%";
                         }
-                    } else if (gv0BF2.M4CCA[l00E4][l00E6] != 0 && m001A == mc0022) {
+                    } else if (player.cargo[l00E4][l00E6] != 0 && m001A == mc0022) {
                         l00E8 = l00E8 + 1;
                         b_Grid.Row = l00E8;
                         if (l00E2 == 0) {
-                            b_Grid.Text = Trim(gv11CE.M52A5[l00E4][l00E6]);
+                            b_Grid.Text = Trim(game.commodityNames[l00E4][l00E6]);
                         } else {
-                            b_Grid.Text = Format(gv11CE.M52B0[l00E2 - 1][l00E4][l00E6], "#,#0") + "%";
+                            b_Grid.Text = Format(game.supplyPercent[l00E2 - 1][l00E4][l00E6], "#,#0") + "%";
                         }
-                    } else if (gv11CE.M52C0[gv11CE.M53A9[gv11CE.M53E5]][l00E4][l00E6] != 0 && m001A == mc0024) {
+                    } else if (game.available[game.planet[game.currentPlayer]][l00E4][l00E6] != 0 && m001A == mc0024) {
                         l00E8 = l00E8 + 1;
                         b_Grid.Row = l00E8;
                         if (l00E2 == 0) {
-                            b_Grid.Text = Trim(gv11CE.M52A5[l00E4][l00E6]);
+                            b_Grid.Text = Trim(game.commodityNames[l00E4][l00E6]);
                         } else {
-                            b_Grid.Text = Format(gv11CE.M52B0[l00E2 - 1][l00E4][l00E6], "#,#0") + "%";
+                            b_Grid.Text = Format(game.supplyPercent[l00E2 - 1][l00E4][l00E6], "#,#0") + "%";
                         }
-                    } else if (gv11CE.M52C0[gv11CE.M53A9[gv11CE.M53E5]][l00E4][l00E6] != 0 || gv0BF2.M4CCA[l00E4][l00E6] != 0 && m001A == mc0026) {
+                    } else if (game.available[game.planet[game.currentPlayer]][l00E4][l00E6] != 0 || player.cargo[l00E4][l00E6] != 0 && m001A == mc0026) {
                         l00E8 = l00E8 + 1;
                         b_Grid.Row = l00E8;
                         if (l00E2 == 0) {
-                            b_Grid.Text = Trim(gv11CE.M52A5[l00E4][l00E6]);
+                            b_Grid.Text = Trim(game.commodityNames[l00E4][l00E6]);
                         } else {
-                            b_Grid.Text = Format(gv11CE.M52B0[l00E2 - 1][l00E4][l00E6], "#,#0") + "%";
+                            b_Grid.Text = Format(game.supplyPercent[l00E2 - 1][l00E4][l00E6], "#,#0") + "%";
                         }
                     }
                 }
@@ -310,15 +310,15 @@ function (me) {
             for (l00E6 = 0; l00E6 <= 5; l00E6++) {
                 if (m001A == mc0020) {
                     l00E8 = l00E8 + 1;
-                    l00EC = gv11CE.M52B0[0][l00E4][l00E6];
+                    l00EC = game.supplyPercent[0][l00E4][l00E6];
                     for (l00EA = 2; l00EA <= 7; l00EA++) {
-                        if (l00EC > gv11CE.M52B0[l00EA - 1][l00E4][l00E6]) {
-                            l00EC = gv11CE.M52B0[l00EA - 1][l00E4][l00E6];
+                        if (l00EC > game.supplyPercent[l00EA - 1][l00E4][l00E6]) {
+                            l00EC = game.supplyPercent[l00EA - 1][l00E4][l00E6];
                         }
                     }
                     b_Grid.Row = l00E8;
                     for (l00EA = 1; l00EA <= 7; l00EA++) {
-                        if (gv11CE.M52B0[l00EA - 1][l00E4][l00E6] == l00EC) {
+                        if (game.supplyPercent[l00EA - 1][l00E4][l00E6] == l00EC) {
                             b_Grid.Col = l00EA;
                             b_Grid.Picture = Image1.Picture;
                         } else {
@@ -330,17 +330,17 @@ function (me) {
                             }
                         }
                     }
-                } else if (gv0BF2.M4CCA[l00E4][l00E6] != 0 && m001A == mc0022) {
+                } else if (player.cargo[l00E4][l00E6] != 0 && m001A == mc0022) {
                     l00E8 = l00E8 + 1;
-                    l00EC = gv11CE.M52B0[0][l00E4][l00E6];
+                    l00EC = game.supplyPercent[0][l00E4][l00E6];
                     for (l00EA = 2; l00EA <= 7; l00EA++) {
-                        if (l00EC > gv11CE.M52B0[l00EA - 1][l00E4][l00E6]) {
-                            l00EC = gv11CE.M52B0[l00EA - 1][l00E4][l00E6];
+                        if (l00EC > game.supplyPercent[l00EA - 1][l00E4][l00E6]) {
+                            l00EC = game.supplyPercent[l00EA - 1][l00E4][l00E6];
                         }
                     }
                     b_Grid.Row = l00E8;
                     for (l00EA = 1; l00EA <= 7; l00EA++) {
-                        if (gv11CE.M52B0[l00EA - 1][l00E4][l00E6] == l00EC) {
+                        if (game.supplyPercent[l00EA - 1][l00E4][l00E6] == l00EC) {
                             b_Grid.Col = l00EA;
                             b_Grid.Picture = Image1.Picture;
                         } else {
@@ -352,17 +352,17 @@ function (me) {
                             }
                         }
                     }
-                } else if (gv11CE.M52C0[gv11CE.M53A9[gv11CE.M53E5]][l00E4][l00E6] != 0 && m001A == mc0024) {
+                } else if (game.available[game.planet[game.currentPlayer]][l00E4][l00E6] != 0 && m001A == mc0024) {
                     l00E8 = l00E8 + 1;
-                    l00EC = gv11CE.M52B0[0][l00E4][l00E6];
+                    l00EC = game.supplyPercent[0][l00E4][l00E6];
                     for (l00EA = 2; l00EA <= 7; l00EA++) {
-                        if (l00EC > gv11CE.M52B0[l00EA - 1][l00E4][l00E6]) {
-                            l00EC = gv11CE.M52B0[l00EA - 1][l00E4][l00E6];
+                        if (l00EC > game.supplyPercent[l00EA - 1][l00E4][l00E6]) {
+                            l00EC = game.supplyPercent[l00EA - 1][l00E4][l00E6];
                         }
                     }
                     b_Grid.Row = l00E8;
                     for (l00EA = 1; l00EA <= 7; l00EA++) {
-                        if (gv11CE.M52B0[l00EA - 1][l00E4][l00E6] == l00EC) {
+                        if (game.supplyPercent[l00EA - 1][l00E4][l00E6] == l00EC) {
                             b_Grid.Col = l00EA;
                             b_Grid.Picture = Image1.Picture;
                         } else {
@@ -374,17 +374,17 @@ function (me) {
                             }
                         }
                     }
-                } else if (gv11CE.M52C0[gv11CE.M53A9[gv11CE.M53E5]][l00E4][l00E6] != 0 || gv0BF2.M4CCA[l00E4][l00E6] != 0 && m001A == mc0026) {
+                } else if (game.available[game.planet[game.currentPlayer]][l00E4][l00E6] != 0 || player.cargo[l00E4][l00E6] != 0 && m001A == mc0026) {
                     l00E8 = l00E8 + 1;
-                    l00EC = gv11CE.M52B0[0][l00E4][l00E6];
+                    l00EC = game.supplyPercent[0][l00E4][l00E6];
                     for (l00EA = 2; l00EA <= 7; l00EA++) {
-                        if (l00EC > gv11CE.M52B0[l00EA - 1][l00E4][l00E6]) {
-                            l00EC = gv11CE.M52B0[l00EA - 1][l00E4][l00E6];
+                        if (l00EC > game.supplyPercent[l00EA - 1][l00E4][l00E6]) {
+                            l00EC = game.supplyPercent[l00EA - 1][l00E4][l00E6];
                         }
                     }
                     b_Grid.Row = l00E8;
                     for (l00EA = 1; l00EA <= 7; l00EA++) {
-                        if (gv11CE.M52B0[l00EA - 1][l00E4][l00E6] == l00EC) {
+                        if (game.supplyPercent[l00EA - 1][l00E4][l00E6] == l00EC) {
                             b_Grid.Col = l00EA;
                             b_Grid.Picture = Image1.Picture;
                         } else {
@@ -442,12 +442,12 @@ function (me) {
         } else {
             m001A = mc0026;
             b_GoodsOnShip.Caption = "Show Cargo";
-            b_TitleBar.Caption = "Commodity Supply (All Goods on " + Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]]) + ")";
+            b_TitleBar.Caption = "Commodity Supply (All Goods on " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + ")";
         }
         sub1C28();
         sub1C3F();
         b_Message.ForeColor = mc011C;
-        if (gv0BF2.M4CDB == 0) {
+        if (player.cargoTotal == 0) {
             b_Message.Caption = "ADVICE: First buy a commodity with a low Market Price before looking at this chart.";
         } else {
             b_Message.Caption = "If the % is low, the goods are rare on the planet, and the price tends to be higher.";

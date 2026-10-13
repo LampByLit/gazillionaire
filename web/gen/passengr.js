@@ -100,10 +100,10 @@ function (me) {
     }
 
     async function b_PickUpPassengers_Click() {
-        if (gv0BF2.M4F15 > 0) {
+        if (player.passengersWaiting > 0) {
             await sub1019();
         } else {
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Passengers";
@@ -137,24 +137,24 @@ function (me) {
     }
 
     function sub10D5() {
-        if (gv0BF2.M4F47 == 0) {
+        if (player.passengersBoarded == 0) {
             {
-                const sel = (Mod(gv0BF2.M4E88, 2)) + 1;
+                const sel = (Mod(player.arrivalRoll, 2)) + 1;
                 if (sel == 1) {
-                    gv0BF2.M4F15 = CLng((gv0BF2.M4F00 / 2) * (1 + (gv0BF2.M4E88 / 100)));
+                    player.passengersWaiting = CLng((player.passengerCapacity / 2) * (1 + (player.arrivalRoll / 100)));
                 } else if (sel == 2) {
-                    gv0BF2.M4F15 = CLng((gv0BF2.M4F00 / 2) * (gv0BF2.M4E88 / 100));
+                    player.passengersWaiting = CLng((player.passengerCapacity / 2) * (player.arrivalRoll / 100));
                 }
             }
-            if (gv0BF2.M4F15 < 1) {
-                gv0BF2.M4F15 = 1;
+            if (player.passengersWaiting < 1) {
+                player.passengersWaiting = 1;
             }
-            if (gv0BF2.M4F31 > 5000) {
-                gv0BF2.M4F15 = 0;
+            if (player.ticketPrice > 5000) {
+                player.passengersWaiting = 0;
             }
-            gv0BF2.M4EF2 = gv0BF2.M4F15;
-            if (gv0BF2.M4EF2 > gv0BF2.M4F00) {
-                gv0BF2.M4EF2 = gv0BF2.M4F00;
+            player.passengersAboard = player.passengersWaiting;
+            if (player.passengersAboard > player.passengerCapacity) {
+                player.passengersAboard = player.passengerCapacity;
             }
             sub10E2();
         }
@@ -162,67 +162,67 @@ function (me) {
 
     async function sub0AFB() {
         me.MousePointer = mc001A;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
         frm_Box1.FillElastic.Caption = "Help (Carry Passengers)";
-        frm_Box1.b_Message.Caption = "Your ship can accommodate up to " + Format(gv0BF2.M4F00, "#,#0") + " passengers. You can charge as much or as little as you like for tickets. If your ticket price is too high, nobody will want to travel on your ship. On the other hand, if your ticket price is too low, it will be difficult to make a profit. In the future, you may be given the opportunity to buy a larger ship. The general rule is the larger your ship, the more passengers you can carry.";
+        frm_Box1.b_Message.Caption = "Your ship can accommodate up to " + Format(player.passengerCapacity, "#,#0") + " passengers. You can charge as much or as little as you like for tickets. If your ticket price is too high, nobody will want to travel on your ship. On the other hand, if your ticket price is too low, it will be difficult to make a profit. In the future, you may be given the opportunity to buy a larger ship. The general rule is the larger your ship, the more passengers you can carry.";
         await frm_Box1.Show(1);
     }
 
     function sub10E2() {
         me.MousePointer = mc001A;
-        if (gv0BF2.M4F47 == -1) {
-            b_PassengerGauge.FloodPercent = 100 * (gv0BF2.M4EF2 / gv0BF2.M4F00);
-            b_PassengerGauge.Caption = "Passengers on Ship:  " + Format(gv0BF2.M4EF2, "#,#0");
-            b_PassengerProfit.Caption = "        Profit this Week:  " + Format(gv0BF2.M4F31 * gv0BF2.M4EF2, "#,#0");
-            b_PassengersWaiting.Caption = "        Passengers Waiting:  " + Format(gv0BF2.M4F15 - gv0BF2.M4EF2, "#,#0");
-            if ((gv0BF2.M4F15 - gv0BF2.M4EF2) > 0) {
-                image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "HANDUP1.ICO");
+        if (player.passengersBoarded == -1) {
+            b_PassengerGauge.FloodPercent = 100 * (player.passengersAboard / player.passengerCapacity);
+            b_PassengerGauge.Caption = "Passengers on Ship:  " + Format(player.passengersAboard, "#,#0");
+            b_PassengerProfit.Caption = "        Profit this Week:  " + Format(player.ticketPrice * player.passengersAboard, "#,#0");
+            b_PassengersWaiting.Caption = "        Passengers Waiting:  " + Format(player.passengersWaiting - player.passengersAboard, "#,#0");
+            if ((player.passengersWaiting - player.passengersAboard) > 0) {
+                image1.Picture = LoadPicture(Trim(paths.imageDir) + "HANDUP1.ICO");
             } else {
-                image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "MAN.ICO");
+                image1.Picture = LoadPicture(Trim(paths.imageDir) + "MAN.ICO");
             }
-            image2.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "WOMAN.ICO");
+            image2.Picture = LoadPicture(Trim(paths.imageDir) + "WOMAN.ICO");
         } else {
             b_PassengerGauge.FloodPercent = 0;
             b_PassengerGauge.Caption = "Passengers on Ship:  0";
             b_PassengerProfit.Caption = "        Profit this Week:  0";
-            b_PassengersWaiting.Caption = "        Passengers Waiting:  " + Format(gv0BF2.M4F15, "#,#0");
-            if (gv0BF2.M4F15 == 0) {
-                image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "MAN.ICO");
-                image2.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "WOMAN.ICO");
+            b_PassengersWaiting.Caption = "        Passengers Waiting:  " + Format(player.passengersWaiting, "#,#0");
+            if (player.passengersWaiting == 0) {
+                image1.Picture = LoadPicture(Trim(paths.imageDir) + "MAN.ICO");
+                image2.Picture = LoadPicture(Trim(paths.imageDir) + "WOMAN.ICO");
             } else {
-                image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "HANDUP1.ICO");
-                image2.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "HANDUP2.ICO");
+                image1.Picture = LoadPicture(Trim(paths.imageDir) + "HANDUP1.ICO");
+                image2.Picture = LoadPicture(Trim(paths.imageDir) + "HANDUP2.ICO");
             }
         }
-        b_profitPerPassenger.Caption = "        Ticket Price this Week:  " + Format(gv0BF2.M4F31, "#,#0");
-        b_PassengerCapacity.Caption = "Passenger Capacity:    " + Format(gv0BF2.M4F00, "#,#0");
-        b_SetTicketPrice.Caption = "Set TICKET PRICE for next planet at " + Format(gv0BF2.M4F1E, "#,#0") + " kubars";
+        b_profitPerPassenger.Caption = "        Ticket Price this Week:  " + Format(player.ticketPrice, "#,#0");
+        b_PassengerCapacity.Caption = "Passenger Capacity:    " + Format(player.passengerCapacity, "#,#0");
+        b_SetTicketPrice.Caption = "Set TICKET PRICE for next planet at " + Format(player.nextTicketPrice, "#,#0") + " kubars";
         me.MousePointer = mc00EC;
     }
 
     async function sub1019() {
         me.MousePointer = mc001A;
-        if (gv0BF2.M4F47 == 0) {
-            if (gv0BF2.M4EF2 > 0) {
-                if (gv0060.M4C47 == -1) {
+        if (player.passengersBoarded == 0) {
+            if (player.passengersAboard > 0) {
+                if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "pickup.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "pickup.wav";
                     b_Sound.Command = "Open";
                     b_Sound.Command = "Play";
                 }
             }
-            gv0BF2.M4F47 = -1;
-            gv0BF2.M4CF9 = gv0BF2.M4CF9 + gv0BF2.M4F31 * gv0BF2.M4EF2;
-            if (gv11CE.M552A == 0 || gv11CE.M4FFC >= gv11CE.M50B4) {
-                gv0BF2.M4F72 = CLng(gv0BF2.M4F72 + (gv0BF2.M4F31 * gv0BF2.M4EF2 * gv11CE.M539E));
+            player.passengersBoarded = -1;
+            player.cash = player.cash + player.ticketPrice * player.passengersAboard;
+            if (game.tutorialMode == 0 || game.complexity >= game.unlockTaxes) {
+                player.passengerTaxOwed = CLng(player.passengerTaxOwed + (player.ticketPrice * player.passengersAboard * game.passengerTaxRate));
             }
         } else {
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Passengers";
@@ -237,20 +237,20 @@ function (me) {
     async function sub1087() {
         let l00F2 = 0;
         me.MousePointer = mc001A;
-        l00F2 = await fn01A0(0, Str(gv0BF2.M4F1E), 1000, 5000, "Enter new ticket price:", "Ticket Price");
+        l00F2 = await fn01A0(0, Str(player.nextTicketPrice), 1000, 5000, "Enter new ticket price:", "Ticket Price");
         if (l00F2 == -3333) {
         } else if (l00F2 < 100) {
-            if (gv0060.M4C47 == -1) {
+            if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Passengers";
             frm_Box0.b_Message.Caption = "\n" + "You cannot charge less than 100 kubars per ticket.";
             await frm_Box0.Show(1);
         } else {
-            gv0BF2.M4F1E = CLng(l00F2);
-            if (gv0060.M4C47 == -1) {
+            player.nextTicketPrice = CLng(l00F2);
+            if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "ticket.wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "ticket.wav";
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
@@ -273,7 +273,7 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = mc001A;
-        shipImage.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "ship" + Trim(Str(gv11CE.M541E[gv11CE.M53E5])) + ".bmp");
+        shipImage.Picture = LoadPicture(Trim(paths.imageDir) + "ship" + Trim(Str(game.shipType[game.currentPlayer])) + ".bmp");
         sub10E2();
     }
 

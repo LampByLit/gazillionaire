@@ -3,7 +3,7 @@
 
 async function Main() {
     if (App.PrevInstance) {
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             Beep();
         }
         await MsgBox("You can only have one instance of Gazillionaire running at a time.", 16, "Warning");

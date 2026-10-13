@@ -32,16 +32,16 @@ function (me) {
         frm_Box1Port.b_No.Visible = 0;
         frm_Box1Port.b_OK.Visible = -1;
         frm_Box1Port.b_Container.BackColor = 0xC0;
-        frm_Box1Port.Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "NEWS.BMP");
+        frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "NEWS.BMP");
         frm_Box1Port.b_ImageLable.Caption = "Headline News";
-        if ((gv0BF2.M4CF9 + gv0BF2.M4E9E + gv0BF2.M4DC7) < gv0BF2.M4DA3) {
-            frm_Box1Port.b_Message.Caption = "Big news on the financial front. " + Trim(gv11CE.M5401[gv11CE.M53E5]) + " has gone bankrupt! Our sources inform us that all the assets are being liquidated to pay off creditors." + "\n" + "\n" + "We have reports of angry citizens taking to the streets demanding a full investigation, but there is little anyone can do." + "\n" + "\n" + Trim(gv11CE.M5401[gv11CE.M53E5]) + " is too deeply in debt to continue operating, and no financial institution is willing to loan it any more money.";
+        if ((player.cash + player.bankBalance + player.creditLimit) < player.loan) {
+            frm_Box1Port.b_Message.Caption = "Big news on the financial front. " + Trim(game.companyNames[game.currentPlayer]) + " has gone bankrupt! Our sources inform us that all the assets are being liquidated to pay off creditors." + "\n" + "\n" + "We have reports of angry citizens taking to the streets demanding a full investigation, but there is little anyone can do." + "\n" + "\n" + Trim(game.companyNames[game.currentPlayer]) + " is too deeply in debt to continue operating, and no financial institution is willing to loan it any more money.";
         } else {
-            frm_Box1Port.b_Message.Caption = "Big news on the financial front. " + Trim(gv11CE.M5401[gv11CE.M53E5]) + " has gone bankrupt!" + "\n" + "\n" + "Our sources inform us that the government has revoked " + Trim(gv11CE.M5401[gv11CE.M53E5]) + "'s trading license because it has exceeded its credit limit." + "\n" + "\n" + "Apparently, " + Trim(gv11CE.M5401[gv11CE.M53E5]) + " had enough money to keep its loan below the credit limit, but for some unknown reason, it refused to pay. A full investigation is now underway to determine just what went wrong with " + Trim(gv11CE.M5401[gv11CE.M53E5]) + ".";
+            frm_Box1Port.b_Message.Caption = "Big news on the financial front. " + Trim(game.companyNames[game.currentPlayer]) + " has gone bankrupt!" + "\n" + "\n" + "Our sources inform us that the government has revoked " + Trim(game.companyNames[game.currentPlayer]) + "'s trading license because it has exceeded its credit limit." + "\n" + "\n" + "Apparently, " + Trim(game.companyNames[game.currentPlayer]) + " had enough money to keep its loan below the credit limit, but for some unknown reason, it refused to pay. A full investigation is now underway to determine just what went wrong with " + Trim(game.companyNames[game.currentPlayer]) + ".";
         }
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "news.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "news.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -49,9 +49,9 @@ function (me) {
         await Load(frm_LineGraph);
         frm_LineGraph.Tag = "BANKRUPT";
         frm_LineGraph.b_Help.Visible = 0;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "bankrupt.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "bankrupt.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
@@ -62,26 +62,26 @@ function (me) {
         frm_Box1Port.b_No.Visible = 0;
         frm_Box1Port.b_OK.Visible = -1;
         frm_Box1Port.b_Container.BackColor = 0xC0;
-        frm_Box1Port.Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "DRED.BMP");
+        frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "DRED.BMP");
         frm_Box1Port.b_ImageLable.Caption = "Emperor Dred Nicolson";
-        frm_Box1Port.b_Message.Caption = "The latest word from the capital is that Supreme Commander Dred Nicolson is terribly upset over the bankruptcy." + "\n" + "\n" + "The Supreme Commander addressed the Kukubian Senate this morning, saying that what happened to " + Trim(gv11CE.M5401[gv11CE.M53E5]) + " is a big setback for the Empire." + "\n" + "\n" + "At the end of the speech, Dred Nicolson promised to do his best to support the remaining companies and see that the Kukubian Colonies continue to grow and prosper.";
-        if (gv0060.M4C47 == -1) {
+        frm_Box1Port.b_Message.Caption = "The latest word from the capital is that Supreme Commander Dred Nicolson is terribly upset over the bankruptcy." + "\n" + "\n" + "The Supreme Commander addressed the Kukubian Senate this morning, saying that what happened to " + Trim(game.companyNames[game.currentPlayer]) + " is a big setback for the Empire." + "\n" + "\n" + "At the end of the speech, Dred Nicolson promised to do his best to support the remaining companies and see that the Kukubian Colonies continue to grow and prosper.";
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "good3.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "good3.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
         await frm_Box1Port.Show(1);
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         l001E = 0;
-        for (l001A = 1; l001A <= gv11CE.M53EF; l001A++) {
-            if (gv11CE.M5299[l001A] == -1) {
+        for (l001A = 1; l001A <= game.numPlayers; l001A++) {
+            if (game.graphShowCompany[l001A] == -1) {
                 l001E = l001E + 1;
             }
         }
-        if (l001E == gv11CE.M53EF) {
+        if (l001E == game.numPlayers) {
             await frm_Bankrupt2.Show();
             await Unload(me);
         } else {
@@ -110,19 +110,19 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = mc0020;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            if (gv11CE.M541E[gv11CE.M53E5] <= 6) {
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "ship" + Trim(Str(gv11CE.M541E[gv11CE.M53E5])) + ".wav";
+            if (game.shipType[game.currentPlayer] <= 6) {
+                b_Sound.FileName = Trim(paths.soundDir) + "ship" + Trim(Str(game.shipType[game.currentPlayer])) + ".wav";
             } else {
-                b_Sound.FileName = Trim(gv09F0.M4C15) + "ship" + Trim(Str(gv11CE.M541E[gv11CE.M53E5] - 6)) + ".wav";
+                b_Sound.FileName = Trim(paths.soundDir) + "ship" + Trim(Str(game.shipType[game.currentPlayer] - 6)) + ".wav";
             }
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
-        gv11CE.M5299[gv11CE.M53E5] = -1;
-        Image1.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "LOSE.BMP");
-        b_Company.Caption = Trim(gv11CE.M5401[gv11CE.M53E5]) + " Bankrupts!!!";
+        game.graphShowCompany[game.currentPlayer] = -1;
+        Image1.Picture = LoadPicture(Trim(paths.imageDir) + "LOSE.BMP");
+        b_Company.Caption = Trim(game.companyNames[game.currentPlayer]) + " Bankrupts!!!";
     }
 
     return {

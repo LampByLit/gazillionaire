@@ -526,48 +526,48 @@ function (me) {
         const mc0338 = 11;
         const mc0360 = 1;
         me.MousePointer = mc0338;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         b_Advertising.BackColor = 0x8000;
-        if (gv0BF2.M4E1A == 0 || pv0336 == 2) {
+        if (player.quickAdvertise == 0 || pv0336 == 2) {
             FillElastic.Visible = 0;
             await frm_Advertising.Show();
         } else {
-            if ((gv0BF2.M4CF9 + gv0BF2.M4C89) == 0) {
-                if (gv0060.M4C47 == -1) {
+            if ((player.cash + player.adSpendTotal) == 0) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Advertising";
                 frm_Box0.b_Message.Caption = "\n" + "You don't have any money. Check your cash.";
                 await frm_Box0.Show(1);
-            } else if ((gv0BF2.M4C9C + gv0BF2.M4CAA) > (gv0BF2.M4CF9 + gv0BF2.M4C89)) {
-                if (gv0060.M4C47 == -1) {
+            } else if ((player.passengerAdChoice + player.commodityAdChoice) > (player.cash + player.adSpendTotal)) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Advertising";
                 frm_Box0.b_Message.Caption = "\n" + "You don't have enough money to advertise. Check your cash.";
                 await frm_Box0.Show(1);
-            } else if (gv0BF2.M4C9C == 0 && gv0BF2.M4CAA == 0) {
-                if (gv0060.M4C47 == -1) {
+            } else if (player.passengerAdChoice == 0 && player.commodityAdChoice == 0) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Advertising";
                 frm_Box0.b_Message.Caption = "\n" + "You haven't set your advertising yet. Before you can place an ad, you must first set your advertising.";
                 await frm_Box0.Show(1);
             } else {
-                if (gv0060.M4C47 == -1 && gv0BF2.M4C9C != 0 || gv0BF2.M4CAA != 0) {
+                if (settings.soundOn == -1 && player.passengerAdChoice != 0 || player.commodityAdChoice != 0) {
                     b_Sound.Command = "Close";
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "advert.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "advert.wav";
                     b_Sound.Command = "Open";
                     b_Sound.Command = "Play";
                 }
-                gv0BF2.M4CF9 = gv0BF2.M4CF9 + gv0BF2.M4C89;
-                gv0BF2.M4C63 = gv0BF2.M4C9C;
-                gv0BF2.M4CB8 = CLng(gv0BF2.M4C63 / 125);
-                gv0BF2.M4C76 = gv0BF2.M4CAA;
-                gv0BF2.M4C89 = gv0BF2.M4C76 + gv0BF2.M4C63;
-                gv0BF2.M4CF9 = gv0BF2.M4CF9 - gv0BF2.M4C89;
+                player.cash = player.cash + player.adSpendTotal;
+                player.passengerAdSpend = player.passengerAdChoice;
+                player.adExtraPassengers = CLng(player.passengerAdSpend / 125);
+                player.commodityAdSpend = player.commodityAdChoice;
+                player.adSpendTotal = player.commodityAdSpend + player.passengerAdSpend;
+                player.cash = player.cash - player.adSpendTotal;
             }
             sub4157();
             me.MousePointer = mc0360;
@@ -577,43 +577,43 @@ function (me) {
     async function sub3810(pv0362) {
         pv0362 = CInt(pv0362);
         me.MousePointer = mc0338;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         b_Bank.BackColor = 0x800000;
-        if (gv0BF2.M4E00 == 0 || pv0362 == 2) {
+        if (player.quickBank == 0 || pv0362 == 2) {
             FillElastic.Visible = 0;
             await frm_Bank.Show();
         } else {
-            if (gv0BF2.M4CF9 >= gv0BF2.M4E9E) {
-                if (gv0BF2.M4CF9 == 0) {
-                    if (gv0060.M4C47 == -1) {
+            if (player.cash >= player.bankBalance) {
+                if (player.cash == 0) {
+                    if (settings.soundOn == -1) {
                         Beep();
                     }
                 } else {
-                    if (gv0060.M4C47 == -1) {
+                    if (settings.soundOn == -1) {
                         b_Sound.Command = "Close";
-                        b_Sound.FileName = Trim(gv09F0.M4C15) + "bank.wav";
+                        b_Sound.FileName = Trim(paths.soundDir) + "bank.wav";
                         b_Sound.Command = "Open";
                         b_Sound.Command = "Play";
                     }
-                    gv0BF2.M4E9E = gv0BF2.M4E9E + gv0BF2.M4CF9;
-                    gv0BF2.M4CF9 = 0;
+                    player.bankBalance = player.bankBalance + player.cash;
+                    player.cash = 0;
                 }
             } else {
-                if (gv0BF2.M4E9E == 0) {
-                    if (gv0060.M4C47 == -1) {
+                if (player.bankBalance == 0) {
+                    if (settings.soundOn == -1) {
                         Beep();
                     }
                 } else {
-                    if (gv0060.M4C47 == -1) {
+                    if (settings.soundOn == -1) {
                         b_Sound.Command = "Close";
-                        b_Sound.FileName = Trim(gv09F0.M4C15) + "bank2.wav";
+                        b_Sound.FileName = Trim(paths.soundDir) + "bank2.wav";
                         b_Sound.Command = "Open";
                         b_Sound.Command = "Play";
                     }
-                    gv0BF2.M4CF9 = gv0BF2.M4CF9 + gv0BF2.M4E9E;
-                    gv0BF2.M4E9E = 0;
+                    player.cash = player.cash + player.bankBalance;
+                    player.bankBalance = 0;
                 }
             }
             sub4157();
@@ -623,41 +623,41 @@ function (me) {
 
     function sub0F2D() {
         {
-            const sel = (Mod(gv11CE.M536A, 2)) + 1;
+            const sel = (Mod(game.weeklyRoll, 2)) + 1;
             if (sel == 1) {
-                gv11CE.M5328[gv11CE.M53A9[gv11CE.M53E5]] = CLng(((gv11CE.M5316 * 10) / 2) * (gv11CE.M536A / 100));
+                game.fuelPrice[game.planet[game.currentPlayer]] = CLng(((game.fuelBasePrice * 10) / 2) * (game.weeklyRoll / 100));
             } else if (sel == 2) {
-                gv11CE.M5328[gv11CE.M53A9[gv11CE.M53E5]] = CLng(((gv11CE.M5316 * 10) / 2) * (1 + (gv11CE.M536A / 100)));
+                game.fuelPrice[game.planet[game.currentPlayer]] = CLng(((game.fuelBasePrice * 10) / 2) * (1 + (game.weeklyRoll / 100)));
             }
         }
-        if (gv11CE.M5328[gv11CE.M53A9[gv11CE.M53E5]] < gv11CE.M5316) {
-            gv11CE.M5328[gv11CE.M53A9[gv11CE.M53E5]] = gv11CE.M5316;
+        if (game.fuelPrice[game.planet[game.currentPlayer]] < game.fuelBasePrice) {
+            game.fuelPrice[game.planet[game.currentPlayer]] = game.fuelBasePrice;
         }
-        if (gv11CE.M5328[gv11CE.M53A9[gv11CE.M53E5]] > (10 * gv11CE.M5316)) {
-            gv11CE.M5328[gv11CE.M53A9[gv11CE.M53E5]] = (10 * gv11CE.M5316);
+        if (game.fuelPrice[game.planet[game.currentPlayer]] > (10 * game.fuelBasePrice)) {
+            game.fuelPrice[game.planet[game.currentPlayer]] = (10 * game.fuelBasePrice);
         }
         sub4157();
     }
 
     function sub10D5() {
-        if (gv0BF2.M4F47 == 0) {
+        if (player.passengersBoarded == 0) {
             {
-                const sel = (Mod(gv0BF2.M4E88, 2)) + 1;
+                const sel = (Mod(player.arrivalRoll, 2)) + 1;
                 if (sel == 1) {
-                    gv0BF2.M4F15 = CLng((gv0BF2.M4F00 / 2) * (1 + (gv0BF2.M4E88 / 100)));
+                    player.passengersWaiting = CLng((player.passengerCapacity / 2) * (1 + (player.arrivalRoll / 100)));
                 } else if (sel == 2) {
-                    gv0BF2.M4F15 = CLng((gv0BF2.M4F00 / 2) * (gv0BF2.M4E88 / 100));
+                    player.passengersWaiting = CLng((player.passengerCapacity / 2) * (player.arrivalRoll / 100));
                 }
             }
-            if (gv0BF2.M4F15 < 1) {
-                gv0BF2.M4F15 = 1;
+            if (player.passengersWaiting < 1) {
+                player.passengersWaiting = 1;
             }
-            if (gv0BF2.M4F31 > 5000) {
-                gv0BF2.M4F15 = 0;
+            if (player.ticketPrice > 5000) {
+                player.passengersWaiting = 0;
             }
-            gv0BF2.M4EF2 = gv0BF2.M4F15;
-            if (gv0BF2.M4EF2 > gv0BF2.M4F00) {
-                gv0BF2.M4EF2 = gv0BF2.M4F00;
+            player.passengersAboard = player.passengersWaiting;
+            if (player.passengersAboard > player.passengerCapacity) {
+                player.passengersAboard = player.passengerCapacity;
             }
             sub4157();
         }
@@ -665,18 +665,18 @@ function (me) {
 
     function sub190A() {
         {
-            const sel = (Mod(gv11CE.M536A, 2)) + 1;
+            const sel = (Mod(game.weeklyRoll, 2)) + 1;
             if (sel == 1) {
-                gv0BF2.M4D92 = CLng(((gv0BF2.M4D7B * 1000) / 2) * (1 + (gv11CE.M536A / 100)));
+                player.insuranceCost = CLng(((player.insuranceRate * 1000) / 2) * (1 + (game.weeklyRoll / 100)));
             } else if (sel == 2) {
-                gv0BF2.M4D92 = CLng(((gv0BF2.M4D7B * 1000) / 2) * (gv11CE.M536A / 100));
+                player.insuranceCost = CLng(((player.insuranceRate * 1000) / 2) * (game.weeklyRoll / 100));
             }
         }
-        if (gv0BF2.M4D92 < gv0BF2.M4D7B) {
-            gv0BF2.M4D92 = gv0BF2.M4D7B;
+        if (player.insuranceCost < player.insuranceRate) {
+            player.insuranceCost = player.insuranceRate;
         }
-        if (gv0BF2.M4D92 > (1000 * gv0BF2.M4D7B)) {
-            gv0BF2.M4D92 = 1000 * gv0BF2.M4D7B;
+        if (player.insuranceCost > (1000 * player.insuranceRate)) {
+            player.insuranceCost = 1000 * player.insuranceRate;
         }
         sub4157();
     }
@@ -684,34 +684,34 @@ function (me) {
     async function sub387A(pv036C) {
         pv036C = CInt(pv036C);
         me.MousePointer = mc0338;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         b_Employee.BackColor = 0x8000;
-        if (gv0BF2.M4E2E == 0 || pv036C == 2) {
+        if (player.quickCrew == 0 || pv036C == 2) {
             FillElastic.Visible = 0;
             await frm_Employee.Show();
         } else {
-            if (gv0BF2.M4D17 == 0) {
-                if (gv0060.M4C47 == -1) {
+            if (player.wagesOwed == 0) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Employees";
                 frm_Box0.b_Message.Caption = "\n" + "You don't owe your employees any money. Check total wages owed.";
                 await frm_Box0.Show(1);
-            } else if (gv0BF2.M4D17 > gv0BF2.M4CF9) {
-                if (gv0060.M4C47 == -1) {
+            } else if (player.wagesOwed > player.cash) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Employees";
                 frm_Box0.b_Message.Caption = "\n" + "You don't have enough money to pay your employees. Check your cash.";
                 await frm_Box0.Show(1);
             } else {
-                gv0BF2.M4CF9 = gv0BF2.M4CF9 - gv0BF2.M4D17;
-                gv0BF2.M4D17 = 0;
-                if (gv0060.M4C47 == -1) {
+                player.cash = player.cash - player.wagesOwed;
+                player.wagesOwed = 0;
+                if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "crew.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "crew.wav";
                     b_Sound.Command = "Open";
                     b_Sound.Command = "Play";
                 }
@@ -723,7 +723,7 @@ function (me) {
 
     async function sub38EE() {
         me.MousePointer = mc0338;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         FillElastic.Visible = 0;
@@ -734,39 +734,39 @@ function (me) {
         let l037C = 0;
         pv0376 = CInt(pv0376);
         me.MousePointer = mc0338;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         b_FuelTank.FloodColor = 0xFF;
         b_FuelTank.BackColor = 0xC0C0C0;
-        if (gv0BF2.M4E3B == 0 || pv0376 == 2) {
+        if (player.quickFuel == 0 || pv0376 == 2) {
             FillElastic.Visible = 0;
             await frm_Fuel.Show();
         } else {
-            l037C = gv0BF2.M4D5E - gv0BF2.M4D56;
-            if ((l037C * gv11CE.M5328[gv11CE.M53A9[gv11CE.M53E5]]) > gv0BF2.M4CF9) {
-                if (gv0060.M4C47 == -1) {
+            l037C = player.fuelCapacity - player.fuel;
+            if ((l037C * game.fuelPrice[game.planet[game.currentPlayer]]) > player.cash) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Fuel";
                 frm_Box0.b_Message.Caption = "\n" + "You don't have enough money to buy fuel. Check your cash.";
                 await frm_Box0.Show(1);
             } else if (l037C == 0) {
-                if (gv0060.M4C47 == -1) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Fuel";
                 frm_Box0.b_Message.Caption = "\n" + "Your tank is already full.";
                 await frm_Box0.Show(1);
             } else {
-                if (gv0060.M4C47 == -1) {
+                if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "fuel.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "fuel.wav";
                     b_Sound.Command = "Open";
                     b_Sound.Command = "Play";
                 }
-                gv0BF2.M4D56 = gv0BF2.M4D56 + l037C;
-                gv0BF2.M4CF9 = gv0BF2.M4CF9 - (l037C * gv11CE.M5328[gv11CE.M53A9[gv11CE.M53E5]]);
+                player.fuel = player.fuel + l037C;
+                player.cash = player.cash - (l037C * game.fuelPrice[game.planet[game.currentPlayer]]);
             }
             sub4157();
             me.MousePointer = mc0360;
@@ -775,7 +775,7 @@ function (me) {
 
     async function sub3A11() {
         me.MousePointer = mc0338;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         FillElastic.Visible = 0;
@@ -784,13 +784,13 @@ function (me) {
 
     async function sub0AFB() {
         me.MousePointer = mc0338;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(gv09F0.M4C15) + "help.wav";
+            b_Sound.FileName = Trim(paths.soundDir) + "help.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
-        if (gv11CE.M4FFC < gv11CE.M508D && gv11CE.M552A == -1) {
+        if (game.complexity < game.unlockCrew && game.tutorialMode == -1) {
             frm_Box2.FillElastic.Caption = "Help (Main Menu)";
             frm_Box2.b_Message.Caption = "The MAIN MENU is the heart of the game. From this menu you can access every major sub-menu." + "\n" + "\n" + "If you are a first time player and want help learning the game, try clicking on the GETTING STARTED button." + "\n" + "\n" + "If you want to save your game, quit or start a new game, click on the FILE OPTIONS button." + "\n" + "\n" + "In addition to this, most sub-menus contain a context sensitive HELP button. If you have any questions, just click on the HELP buttons, and they should explain each menu in more detail.";
             await frm_Box2.Show(1);
@@ -804,44 +804,44 @@ function (me) {
     async function sub3B01(pv038A) {
         pv038A = CInt(pv038A);
         me.MousePointer = mc0338;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         b_Insurance.BackColor = 0x8000;
-        if (gv0BF2.M4E76 == 0 || pv038A == 2) {
+        if (player.quickInsurance == 0 || pv038A == 2) {
             FillElastic.Visible = 0;
             await frm_Insurance.Show();
         } else {
-            if (gv0BF2.M4D6E == -1) {
-                if (gv0060.M4C47 == -1) {
+            if (player.insured == -1) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Insurance";
                 frm_Box0.b_Message.Caption = "\n" + "You already purchased Voyager's Insurance.";
                 await frm_Box0.Show(1);
-            } else if (gv0BF2.M4CF9 == 0) {
-                if (gv0060.M4C47 == -1) {
+            } else if (player.cash == 0) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Insurance";
                 frm_Box0.b_Message.Caption = "\n" + "You don't have any money. Check your cash.";
                 await frm_Box0.Show(1);
-            } else if (gv0BF2.M4D92 > gv0BF2.M4CF9) {
-                if (gv0060.M4C47 == -1) {
+            } else if (player.insuranceCost > player.cash) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Insurance";
                 frm_Box0.b_Message.Caption = "\n" + "You don't have enough money to buy insurance. Check your cash.";
                 await frm_Box0.Show(1);
             } else {
-                gv0BF2.M4D6E = -1;
-                if (gv0060.M4C47 == -1) {
+                player.insured = -1;
+                if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "insure.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "insure.wav";
                     b_Sound.Command = "Open";
                     b_Sound.Command = "Play";
                 }
-                gv0BF2.M4CF9 = gv0BF2.M4CF9 - gv0BF2.M4D92;
+                player.cash = player.cash - player.insuranceCost;
             }
             sub4157();
             me.MousePointer = mc0360;
@@ -850,7 +850,7 @@ function (me) {
 
     async function sub3B58() {
         me.MousePointer = mc0338;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         FillElastic.Visible = 0;
@@ -862,63 +862,63 @@ function (me) {
         let l039A = 0;
         pv0398 = CInt(pv0398);
         me.MousePointer = mc0338;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         b_Loan.BackColor = 0x800000;
-        if (gv0BF2.M4E0D == 0 || pv0398 == 2) {
+        if (player.quickLoan == 0 || pv0398 == 2) {
             FillElastic.Visible = 0;
             await frm_Loan.Show();
         } else {
-            if (gv0BF2.M4CF9 > 0 && gv0BF2.M4DA3 > 0) {
-                if (gv0BF2.M4CF9 == 0) {
-                    if (gv0060.M4C47 == -1) {
+            if (player.cash > 0 && player.loan > 0) {
+                if (player.cash == 0) {
+                    if (settings.soundOn == -1) {
                         Beep();
                     }
-                } else if (gv0BF2.M4DA3 == 0) {
-                    if (gv0060.M4C47 == -1) {
+                } else if (player.loan == 0) {
+                    if (settings.soundOn == -1) {
                         Beep();
                     }
-                } else if (gv0BF2.M4CF9 >= gv0BF2.M4DA3) {
-                    if (gv0060.M4C47 == -1) {
+                } else if (player.cash >= player.loan) {
+                    if (settings.soundOn == -1) {
                         b_Sound.Command = "Close";
-                        b_Sound.FileName = Trim(gv09F0.M4C15) + "loan.wav";
+                        b_Sound.FileName = Trim(paths.soundDir) + "loan.wav";
                         b_Sound.Command = "Open";
                         b_Sound.Command = "Play";
                     }
-                    gv0BF2.M4CF9 = gv0BF2.M4CF9 - gv0BF2.M4DA3;
-                    gv0BF2.M4DA3 = 0;
-                } else if (gv0BF2.M4DA3 > gv0BF2.M4CF9) {
-                    if (gv0060.M4C47 == -1) {
+                    player.cash = player.cash - player.loan;
+                    player.loan = 0;
+                } else if (player.loan > player.cash) {
+                    if (settings.soundOn == -1) {
                         b_Sound.Command = "Close";
-                        b_Sound.FileName = Trim(gv09F0.M4C15) + "loan.wav";
+                        b_Sound.FileName = Trim(paths.soundDir) + "loan.wav";
                         b_Sound.Command = "Open";
                         b_Sound.Command = "Play";
                     }
-                    gv0BF2.M4DA3 = gv0BF2.M4DA3 - gv0BF2.M4CF9;
-                    gv0BF2.M4CF9 = 0;
+                    player.loan = player.loan - player.cash;
+                    player.cash = 0;
                 }
             } else {
-                if (gv0BF2.M4DA3 >= gv0BF2.M4DC7) {
-                    if (gv0060.M4C47 == -1) {
+                if (player.loan >= player.creditLimit) {
+                    if (settings.soundOn == -1) {
                         Beep();
                     }
                 } else {
-                    l039A = gv0BF2.M4DC7 - gv0BF2.M4DA3;
+                    l039A = player.creditLimit - player.loan;
                 }
                 if (l039A == 0) {
-                    if (gv0060.M4C47 == -1) {
+                    if (settings.soundOn == -1) {
                         Beep();
                     }
                 } else {
-                    if (gv0060.M4C47 == -1) {
+                    if (settings.soundOn == -1) {
                         b_Sound.Command = "Close";
-                        b_Sound.FileName = Trim(gv09F0.M4C15) + "loan.wav";
+                        b_Sound.FileName = Trim(paths.soundDir) + "loan.wav";
                         b_Sound.Command = "Open";
                         b_Sound.Command = "Play";
                     }
-                    gv0BF2.M4DA3 = gv0BF2.M4DA3 + l039A;
-                    gv0BF2.M4CF9 = gv0BF2.M4CF9 + l039A;
+                    player.loan = player.loan + l039A;
+                    player.cash = player.cash + l039A;
                 }
             }
             sub4157();
@@ -930,159 +930,159 @@ function (me) {
         let l03A0 = 0;
         const mc03A2 = 255;
         const mc03A6 = 16777215;
-        if (gv0BF2.M4DA3 > gv0BF2.M4DC7) {
+        if (player.loan > player.creditLimit) {
             b_Loan.ForeColor = mc03A2;
         } else {
             b_Loan.ForeColor = mc03A6;
         }
-        if (gv0BF2.M4FBD > gv0BF2.M4FC9) {
+        if (player.zinnLoan > player.zinnCreditLimit) {
             b_ZinnLoan.ForeColor = mc03A2;
         } else {
             b_ZinnLoan.ForeColor = mc03A6;
         }
-        if (gv0BF2.M4D17 >= gv0BF2.M4D01 * gv0BF2.M4D09 * 4) {
+        if (player.wagesOwed >= player.crewSize * player.crewSalary * 4) {
             b_Employee.ForeColor = 0xC0;
         } else {
             b_Employee.ForeColor = mc03A6;
         }
-        if ((gv0BF2.M4F68 + gv0BF2.M4F72) >= (35 * gv11CE.M54B3[gv11CE.M53E5])) {
+        if ((player.tariffsOwed + player.passengerTaxOwed) >= (35 * game.shipSize[game.currentPlayer])) {
             b_Tax.ForeColor = 0xC0;
         } else {
             b_Tax.ForeColor = mc03A6;
         }
-        b_CompanyName.Caption = Trim(gv11CE.M5401[gv11CE.M53E5]);
-        if (gv11CE.M552A == -1 && gv11CE.M4FFC < gv11CE.M501C) {
+        b_CompanyName.Caption = Trim(game.companyNames[game.currentPlayer]);
+        if (game.tutorialMode == -1 && game.complexity < game.unlockSupply) {
             b_Supply.Caption = " ";
             b_Supply_Image.Visible = 0;
             b_Supply.Enabled = 0;
         }
-        if (gv0BF2.M4CF9 > 999999999) {
-            b_Money.Caption = "                  Money:   " + Format(gv0BF2.M4CF9, "#,#0");
+        if (player.cash > 999999999) {
+            b_Money.Caption = "                  Money:   " + Format(player.cash, "#,#0");
         } else {
-            b_Money.Caption = "                  Money:   " + Format(gv0BF2.M4CF9, "#,#0") + " cash";
+            b_Money.Caption = "                  Money:   " + Format(player.cash, "#,#0") + " cash";
         }
-        b_LeavePlanet1.Caption = "Journey (Leave " + Trim(gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]]) + ")";
-        if (gv11CE.M552A == -1 && gv11CE.M4FFC < gv11CE.M50E8 && gv11CE.M4FFC >= gv11CE.M5053) {
+        b_LeavePlanet1.Caption = "Journey (Leave " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + ")";
+        if (game.tutorialMode == -1 && game.complexity < game.unlockExplore && game.complexity >= game.unlockViewCity) {
             b_ViewCity.Visible = -1;
         } else {
             b_ViewCity.Visible = 0;
         }
-        if (gv11CE.M552A == -1 && gv11CE.M4FFC < gv11CE.M50E8) {
+        if (game.tutorialMode == -1 && game.complexity < game.unlockExplore) {
             b_Explore.Visible = 0;
         } else {
             b_Explore.Caption = "                  Explore Planet";
         }
-        if (gv11CE.M552A == -1 && gv11CE.M4FFC < gv11CE.M502E) {
+        if (game.tutorialMode == -1 && game.complexity < game.unlockLoan) {
             b_Loan.Caption = " ";
             b_Loan_Image.Visible = 0;
             b_Loan.Enabled = 0;
         } else {
-            b_Loan.Caption = "                  Loan:   " + Format(gv0BF2.M4DA3, "#,#0");
+            b_Loan.Caption = "                  Loan:   " + Format(player.loan, "#,#0");
         }
-        if (gv11CE.M552A == -1 && gv11CE.M4FFC < gv11CE.M500C) {
+        if (game.tutorialMode == -1 && game.complexity < game.unlockZinnLoan) {
             b_ZinnLoan.Caption = " ";
             b_ZinnLoan_Image.Visible = 0;
             b_ZinnLoan.Enabled = 0;
         } else {
-            b_ZinnLoan.Caption = "                  Zinn's Loan:   " + Format(gv0BF2.M4FBD, "#,#0");
+            b_ZinnLoan.Caption = "                  Zinn's Loan:   " + Format(player.zinnLoan, "#,#0");
         }
         b_Stock.Caption = "                  Stock Market";
-        if (gv11CE.M552A == -1 && gv11CE.M4FFC < gv11CE.M50C3) {
+        if (game.tutorialMode == -1 && game.complexity < game.unlockBank) {
             b_Bank.Caption = " ";
             b_Bank_Image.Visible = 0;
             b_Bank.Enabled = 0;
         } else {
-            b_Bank.Caption = "                  Bank:   " + Format(gv0BF2.M4E9E, "#,#0");
+            b_Bank.Caption = "                  Bank:   " + Format(player.bankBalance, "#,#0");
         }
-        if (gv11CE.M552A == -1 && gv11CE.M4FFC < gv11CE.M5077) {
+        if (game.tutorialMode == -1 && game.complexity < game.unlockPassengers) {
             b_Passengers.Caption = " ";
             b_Passengers_Image.Visible = 0;
             b_Passengers.Enabled = 0;
         } else {
-            if (gv0BF2.M4F47 == -1) {
-                b_Passengers.Caption = "                  Pickup Passengers:  " + Format(gv0BF2.M4F15 - gv0BF2.M4EF2, "#,#0");
+            if (player.passengersBoarded == -1) {
+                b_Passengers.Caption = "                  Pickup Passengers:  " + Format(player.passengersWaiting - player.passengersAboard, "#,#0");
             } else {
-                b_Passengers.Caption = "                  Pickup Passengers:  " + Format(gv0BF2.M4F15, "#,#0");
+                b_Passengers.Caption = "                  Pickup Passengers:  " + Format(player.passengersWaiting, "#,#0");
             }
             l03A0 = fn01AE(1, 2);
-            if (gv0BF2.M4F47 == -1 || gv0BF2.M4F15 == 0) {
+            if (player.passengersBoarded == -1 || player.passengersWaiting == 0) {
                 if (l03A0 == 1) {
-                    b_Passengers_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "MAN.ICO");
+                    b_Passengers_Image.Picture = LoadPicture(Trim(paths.imageDir) + "MAN.ICO");
                 } else {
-                    b_Passengers_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "WOMAN.ICO");
+                    b_Passengers_Image.Picture = LoadPicture(Trim(paths.imageDir) + "WOMAN.ICO");
                 }
             } else {
                 if (l03A0 == 1) {
-                    b_Passengers_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "HANDUP1.ICO");
+                    b_Passengers_Image.Picture = LoadPicture(Trim(paths.imageDir) + "HANDUP1.ICO");
                 } else {
-                    b_Passengers_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "HANDUP2.ICO");
+                    b_Passengers_Image.Picture = LoadPicture(Trim(paths.imageDir) + "HANDUP2.ICO");
                 }
             }
         }
-        if (gv11CE.M552A == -1 && gv11CE.M4FFC < gv11CE.M5067) {
+        if (game.tutorialMode == -1 && game.complexity < game.unlockFuel) {
             b_FuelCost.Visible = 0;
             b_Fuel_Image.Visible = 0;
             b_FuelTank.Visible = 0;
             b_FuelContainer.Enabled = 0;
         } else {
-            b_FuelCost.Caption = "Fuel Cost: " + Format(gv11CE.M5328[gv11CE.M53A9[gv11CE.M53E5]], "#,#0");
-            b_FuelTank.FloodPercent = 100 * (gv0BF2.M4D56 / gv0BF2.M4D5E);
-            if (gv0BF2.M4D56 < ((gv11CE.M54B3[gv11CE.M53E5] / 100) + 11)) {
+            b_FuelCost.Caption = "Fuel Cost: " + Format(game.fuelPrice[game.planet[game.currentPlayer]], "#,#0");
+            b_FuelTank.FloodPercent = 100 * (player.fuel / player.fuelCapacity);
+            if (player.fuel < ((game.shipSize[game.currentPlayer] / 100) + 11)) {
                 b_FuelTank.Caption = " LOW on Fuel";
             } else {
                 b_FuelTank.Caption = "Fuel Tank";
             }
         }
-        if (gv11CE.M552A == -1 && gv11CE.M4FFC < gv11CE.M508D) {
+        if (game.tutorialMode == -1 && game.complexity < game.unlockCrew) {
             b_Employee.Visible = 0;
         } else {
-            b_Employee.Caption = "                  Crew Wages Owed:   " + Format(gv0BF2.M4D17, "#,#0");
+            b_Employee.Caption = "                  Crew Wages Owed:   " + Format(player.wagesOwed, "#,#0");
         }
-        if (gv11CE.M552A == 0 || gv11CE.M4FFC >= gv11CE.M508D) {
+        if (game.tutorialMode == 0 || game.complexity >= game.unlockCrew) {
             b_GettingStarted.Visible = 0;
         }
-        if (gv11CE.M552A == -1 && gv11CE.M4FFC < gv11CE.M509D) {
+        if (game.tutorialMode == -1 && game.complexity < game.unlockAdvertising) {
             b_Advertising.Caption = " ";
             b_Advertising_Image.Visible = 0;
             b_Advertising.Enabled = 0;
         } else {
             b_Advertising.Caption = "                  Advertise for Next Planet";
-            if (gv0BF2.M4C63 > 0 || gv0BF2.M4C76 > 0) {
-                b_Advertising_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "LIGHT1.ICO");
+            if (player.passengerAdSpend > 0 || player.commodityAdSpend > 0) {
+                b_Advertising_Image.Picture = LoadPicture(Trim(paths.imageDir) + "LIGHT1.ICO");
             } else {
-                b_Advertising_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "LIGHT2.ICO");
+                b_Advertising_Image.Picture = LoadPicture(Trim(paths.imageDir) + "LIGHT2.ICO");
             }
         }
-        if (gv11CE.M552A == -1 && gv11CE.M4FFC < gv11CE.M50B4) {
+        if (game.tutorialMode == -1 && game.complexity < game.unlockTaxes) {
             b_Tax.Caption = " ";
             b_Tax_Image.Visible = 0;
             b_Tax.Enabled = 0;
         } else {
-            b_Tax.Caption = "                  Taxes Owed:   " + Format(gv0BF2.M4F72 + gv0BF2.M4F68, "#,#0");
+            b_Tax.Caption = "                  Taxes Owed:   " + Format(player.passengerTaxOwed + player.tariffsOwed, "#,#0");
         }
-        if (gv11CE.M552A == -1 && gv11CE.M4FFC < gv11CE.M503E) {
+        if (game.tutorialMode == -1 && game.complexity < game.unlockInsurance) {
             b_Insurance.Caption = " ";
             b_Insurance_Image.Visible = 0;
             b_Insurance.Enabled = 0;
         } else {
-            if (gv0BF2.M4D6E == -1) {
-                b_Insurance.Caption = "                  Insurance/Cost:   Yes/" + Format(gv0BF2.M4D92, "#,#0");
+            if (player.insured == -1) {
+                b_Insurance.Caption = "                  Insurance/Cost:   Yes/" + Format(player.insuranceCost, "#,#0");
             } else {
-                b_Insurance.Caption = "                  Insurance/Cost:   None/" + Format(gv0BF2.M4D92, "#,#0");
+                b_Insurance.Caption = "                  Insurance/Cost:   None/" + Format(player.insuranceCost, "#,#0");
             }
         }
-        if (gv11CE.M552A == -1 && gv11CE.M4FFC < gv11CE.M50D3) {
+        if (game.tutorialMode == -1 && game.complexity < game.unlockWarehouse) {
             b_Warehouse.Caption = " ";
             b_Warehouse_Image.Visible = 0;
             b_Warehouse.Enabled = 0;
         } else {
-            if (gv0BF2.M4FAF[gv11CE.M53A9[gv11CE.M53E5]] > 0) {
-                b_Warehouse_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "KEY.ICO");
+            if (player.warehouseUsed[game.planet[game.currentPlayer]] > 0) {
+                b_Warehouse_Image.Picture = LoadPicture(Trim(paths.imageDir) + "KEY.ICO");
             } else {
-                b_Warehouse_Image.Picture = LoadPicture(Trim(gv09F0.M4BF5) + "LOCK.ICO");
+                b_Warehouse_Image.Picture = LoadPicture(Trim(paths.imageDir) + "LOCK.ICO");
             }
         }
-        if (gv11CE.M552A == -1 && gv11CE.M4FFC < gv11CE.M5123) {
+        if (game.tutorialMode == -1 && game.complexity < game.unlockStocks) {
             b_Stock.Caption = " ";
             b_Stock_Image.Visible = 0;
             b_Stock.Enabled = 0;
@@ -1091,7 +1091,7 @@ function (me) {
 
     async function sub3C4F() {
         me.MousePointer = mc0338;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         FillElastic.Visible = 0;
@@ -1100,7 +1100,7 @@ function (me) {
 
     async function sub3CBA() {
         me.MousePointer = mc0338;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         FillElastic.Visible = 0;
@@ -1110,31 +1110,31 @@ function (me) {
     async function sub3D76(pv0408) {
         pv0408 = CInt(pv0408);
         me.MousePointer = mc0338;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         b_Passengers.BackColor = 0x8000;
-        if (gv0BF2.M4E57 == 0 || pv0408 == 2) {
+        if (player.quickPassengers == 0 || pv0408 == 2) {
             FillElastic.Visible = 0;
             await frm_Passengers.Show();
         } else {
-            if (gv0BF2.M4F15 > 0) {
-                if (gv0BF2.M4F47 == 0) {
-                    if (gv0BF2.M4EF2 > 0) {
-                        if (gv0060.M4C47 == -1) {
+            if (player.passengersWaiting > 0) {
+                if (player.passengersBoarded == 0) {
+                    if (player.passengersAboard > 0) {
+                        if (settings.soundOn == -1) {
                             b_Sound.Command = "Close";
-                            b_Sound.FileName = Trim(gv09F0.M4C15) + "pickup.wav";
+                            b_Sound.FileName = Trim(paths.soundDir) + "pickup.wav";
                             b_Sound.Command = "Open";
                             b_Sound.Command = "Play";
                         }
                     }
-                    gv0BF2.M4F47 = -1;
-                    gv0BF2.M4CF9 = gv0BF2.M4CF9 + gv0BF2.M4F31 * gv0BF2.M4EF2;
-                    if (gv11CE.M552A == 0 || gv11CE.M4FFC >= gv11CE.M50B4) {
-                        gv0BF2.M4F72 = CLng(gv0BF2.M4F72 + (gv0BF2.M4F31 * gv0BF2.M4EF2 * gv11CE.M539E));
+                    player.passengersBoarded = -1;
+                    player.cash = player.cash + player.ticketPrice * player.passengersAboard;
+                    if (game.tutorialMode == 0 || game.complexity >= game.unlockTaxes) {
+                        player.passengerTaxOwed = CLng(player.passengerTaxOwed + (player.ticketPrice * player.passengersAboard * game.passengerTaxRate));
                     }
                 } else {
-                    if (gv0060.M4C47 == -1) {
+                    if (settings.soundOn == -1) {
                         Beep();
                     }
                     frm_Box0.FillElastic.Caption = "Passengers";
@@ -1143,7 +1143,7 @@ function (me) {
                 }
                 sub4157();
             } else {
-                if (gv0060.M4C47 == -1) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Passengers";
@@ -1156,7 +1156,7 @@ function (me) {
 
     async function sub3DC9() {
         me.MousePointer = mc0338;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         FillElastic.Visible = 0;
@@ -1165,7 +1165,7 @@ function (me) {
 
     async function sub3E47() {
         me.MousePointer = mc0338;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         FillElastic.Visible = 0;
@@ -1175,45 +1175,45 @@ function (me) {
     async function sub3ED1(pv0416) {
         pv0416 = CInt(pv0416);
         me.MousePointer = mc0338;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         b_Tax.BackColor = 0x8000;
-        if (gv0BF2.M4E6A == 0 || pv0416 == 2) {
+        if (player.quickTaxes == 0 || pv0416 == 2) {
             FillElastic.Visible = 0;
             await frm_Tax.Show();
         } else {
-            if ((gv0BF2.M4F72 + gv0BF2.M4F68) == 0) {
-                if (gv0060.M4C47 == -1) {
+            if ((player.passengerTaxOwed + player.tariffsOwed) == 0) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Taxes";
                 frm_Box0.b_Message.Caption = "\n" + "You don't owe the government any money.";
                 await frm_Box0.Show(1);
-            } else if (gv0BF2.M4CF9 == 0) {
-                if (gv0060.M4C47 == -1) {
+            } else if (player.cash == 0) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Taxes";
                 frm_Box0.b_Message.Caption = "\n" + "You don't have any money. Check your cash.";
                 await frm_Box0.Show(1);
-            } else if (gv0BF2.M4CF9 < (gv0BF2.M4F72 + gv0BF2.M4F68)) {
-                if (gv0060.M4C47 == -1) {
+            } else if (player.cash < (player.passengerTaxOwed + player.tariffsOwed)) {
+                if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Taxes";
                 frm_Box0.b_Message.Caption = "\n" + "You don't have enough money to pay your taxes. Check your cash.";
                 await frm_Box0.Show(1);
             } else {
-                gv0BF2.M4CF9 = gv0BF2.M4CF9 - (gv0BF2.M4F72 + gv0BF2.M4F68);
-                if (gv0060.M4C47 == -1) {
+                player.cash = player.cash - (player.passengerTaxOwed + player.tariffsOwed);
+                if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
-                    b_Sound.FileName = Trim(gv09F0.M4C15) + "tax2.wav";
+                    b_Sound.FileName = Trim(paths.soundDir) + "tax2.wav";
                     b_Sound.Command = "Open";
                     b_Sound.Command = "Play";
                 }
-                gv0BF2.M4F72 = 0;
-                gv0BF2.M4F68 = 0;
+                player.passengerTaxOwed = 0;
+                player.tariffsOwed = 0;
             }
             sub4157();
             me.MousePointer = mc0360;
@@ -1222,7 +1222,7 @@ function (me) {
 
     async function sub3F13() {
         me.MousePointer = mc0338;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         FillElastic.Visible = 0;
@@ -1232,7 +1232,7 @@ function (me) {
 
     async function sub3FBD() {
         me.MousePointer = mc0338;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         FillElastic.Visible = 0;
@@ -1245,7 +1245,7 @@ function (me) {
 
     async function sub404D() {
         me.MousePointer = mc0338;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         FillElastic.Visible = 0;
@@ -1254,7 +1254,7 @@ function (me) {
 
     async function sub40C7() {
         me.MousePointer = mc0338;
-        if (gv0060.M4C47 == -1) {
+        if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         FillElastic.Visible = 0;
@@ -1280,7 +1280,7 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = mc0338;
-        b_LeavePlanet2.Picture = LoadPicture(Trim(gv09F0.M4BF5) + gv11CE.M53C1[gv11CE.M53A9[gv11CE.M53E5]] + "2.bmp");
+        b_LeavePlanet2.Picture = LoadPicture(Trim(paths.imageDir) + game.planetNames[game.planet[game.currentPlayer]] + "2.bmp");
     }
 
     return {

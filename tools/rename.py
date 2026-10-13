@@ -110,10 +110,21 @@ def load_names():
     return data
 
 
-def validate(scope, mapping, taken):
-    """taken = (identifiers, properties) already used in this scope. Returns error strings."""
+def record_fields(globals_js):
+    """field -> set of record types (constructor functions in globals.js) that contain it."""
+    out = {}
+    for typ, body in re.findall(r"^function (\w+)\(\) \{\s*return \{(.*?)\};", globals_js, re.M | re.S):
+        for field in re.findall(r"^\s+(\w+):", body, re.M):
+            out.setdefault(field, set()).add(typ)
+    return out
+
+
+def validate(scope, mapping, taken, types=None):
+    """taken = (identifiers, properties) already used in this scope. Returns error strings.
+    Two fields may share a new name when no record type contains both (e.g. game.netWorth / rivals.netWorth)."""
     errs = []
     idents, props = taken
+    types = types or {}
     seen = {}
     for old, new in mapping.items():
         is_field = bool(FIELD.match(old))
@@ -123,9 +134,10 @@ def validate(scope, mapping, taken):
             errs.append(f"{scope}: {old} -> {new!r} is not a usable name")
         elif (new in props) if is_field else (new in idents):
             errs.append(f"{scope}: {old} -> {new} collides with an existing name")
-        if (is_field, new) in seen:
-            errs.append(f"{scope}: {seen[is_field, new]} and {old} both -> {new}")
-        seen[is_field, new] = old
+        for other in seen.get((is_field, new), []):
+            if not is_field or types.get(old, set()) & types.get(other, set()):
+                errs.append(f"{scope}: {other} and {old} both -> {new}")
+        seen.setdefault((is_field, new), []).append(old)
     return errs
 
 
@@ -153,7 +165,7 @@ def main():
     all_idents = {n for text in [vbjs, *files.values()] for p, n in tokens(text) if not p}
     all_props = {n for text in [vbjs, *files.values()] for p, n in tokens(text) if p}
     all_props |= {k for text in files.values() for k in re.findall(r"^\s+(\w+): ", text, re.M)}
-    errs += validate("global", pending_global, (all_idents, all_props))
+    errs += validate("global", pending_global, (all_idents, all_props), record_fields(files["globals.js"]))
     vb_idents = declared(vbjs, 0) | set(pending_global.values())
     vb_idents |= {n for f, t in files.items() if f == "globals.js" or f.startswith("module") for n in declared(t, 0)}
 
