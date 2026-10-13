@@ -101,7 +101,7 @@ function (me) {
     const { b_1b, b_1d } = me.controls;
     const HOURGLASS = 11;
     const ARROW_CURSOR = 1;
-    let m001A = 0;
+    let animStep = 0;
 
     async function b_Exit_Click() {
         me.MousePointer = HOURGLASS;
@@ -121,7 +121,7 @@ function (me) {
     }
 
     async function b_Gizzy_Click() {
-        await sub3191(2);
+        await setRivalIntelligence(2);
     }
 
     function b_Gizzy_MouseDown(Button, Shift, X, Y) {
@@ -133,7 +133,7 @@ function (me) {
     }
 
     async function b_Hoff_Click() {
-        await sub3191(6);
+        await setRivalIntelligence(6);
     }
 
     function b_Hoff_MouseDown(Button, Shift, X, Y) {
@@ -145,7 +145,7 @@ function (me) {
     }
 
     async function b_Puffer_Click() {
-        await sub3191(4);
+        await setRivalIntelligence(4);
     }
 
     function b_Puffer_MouseDown(Button, Shift, X, Y) {
@@ -157,7 +157,7 @@ function (me) {
     }
 
     async function b_Roke_Click() {
-        await sub3191(5);
+        await setRivalIntelligence(5);
     }
 
     function b_Roke_MouseDown(Button, Shift, X, Y) {
@@ -169,7 +169,7 @@ function (me) {
     }
 
     async function b_Trading_Click() {
-        await sub3191(1);
+        await setRivalIntelligence(1);
     }
 
     function b_Trading_MouseDown(Button, Shift, X, Y) {
@@ -181,7 +181,7 @@ function (me) {
     }
 
     async function b_Vander_Click() {
-        await sub3191(3);
+        await setRivalIntelligence(3);
     }
 
     function b_Vander_MouseDown(Button, Shift, X, Y) {
@@ -192,31 +192,31 @@ function (me) {
         b_Vander.BackColor = 0x400000;
     }
 
-    async function sub3191(pv00D6) {
-        let l00D8 = 0;
-        let l00DA = "";
-        pv00D6 = CInt(pv00D6);
-        if (pv00D6 == 1) {
-            l00DA = "Trading Corp. IV";
-        } else if (pv00D6 == 2) {
-            l00DA = "Gizzy";
-        } else if (pv00D6 == 3) {
-            l00DA = "Vandergriff";
-        } else if (pv00D6 == 4) {
-            l00DA = "Puffer";
-        } else if (pv00D6 == 5) {
-            l00DA = "Roke";
-        } else if (pv00D6 == 6) {
-            l00DA = "Hoff Miester";
+    async function setRivalIntelligence(rival) {
+        let newIntelligence = 0;
+        let rivalName = "";
+        rival = CInt(rival);
+        if (rival == 1) {
+            rivalName = "Trading Corp. IV";
+        } else if (rival == 2) {
+            rivalName = "Gizzy";
+        } else if (rival == 3) {
+            rivalName = "Vandergriff";
+        } else if (rival == 4) {
+            rivalName = "Puffer";
+        } else if (rival == 5) {
+            rivalName = "Roke";
+        } else if (rival == 6) {
+            rivalName = "Hoff Miester";
         }
-        l00D8 = await askNumber(0, Str(rivals.intelligence[pv00D6]), 25, 200, l00DA + "'s intelligence can range from 25% to 200%." + "\n" + "\n" + "Currently, " + l00DA + "'s intelligence is set at " + Str(rivals.intelligence[pv00D6]) + "%.", " ");
-        if (l00D8 == -3333) {
-        } else if (l00D8 < 25) {
-            rivals.intelligence[pv00D6] = 25;
-        } else if (l00D8 > 200) {
-            rivals.intelligence[pv00D6] = 200;
+        newIntelligence = await askNumber(0, Str(rivals.intelligence[rival]), 25, 200, rivalName + "'s intelligence can range from 25% to 200%." + "\n" + "\n" + "Currently, " + rivalName + "'s intelligence is set at " + Str(rivals.intelligence[rival]) + "%.", " ");
+        if (newIntelligence == -3333) {
+        } else if (newIntelligence < 25) {
+            rivals.intelligence[rival] = 25;
+        } else if (newIntelligence > 200) {
+            rivals.intelligence[rival] = 200;
         } else {
-            rivals.intelligence[pv00D6] = l00D8;
+            rivals.intelligence[rival] = newIntelligence;
         }
     }
 
@@ -238,7 +238,7 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = HOURGLASS;
-        m001A = 1;
+        animStep = 1;
         b_Image1Container.Visible = 0;
         b_Container1.Visible = -1;
         b_Image2Container.Visible = 0;
@@ -263,11 +263,11 @@ function (me) {
     }
 
     function Timer1_Timer() {
-        m001A = m001A + 1;
-        if (m001A >= 14) {
-            m001A = 1;
+        animStep = animStep + 1;
+        if (animStep >= 14) {
+            animStep = 1;
         }
-        if (m001A == 1) {
+        if (animStep == 1) {
             Timer1.Interval = 8000;
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "op2.bmp");
             b_Image1Container.Visible = -1;
@@ -278,12 +278,12 @@ function (me) {
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
-        } else if (m001A == 2) {
+        } else if (animStep == 2) {
             Timer1.Interval = 500;
             Image1.Picture = LoadPicture("");
             b_Image1Container.Visible = 0;
             b_Container1.Visible = -1;
-        } else if (m001A == 3) {
+        } else if (animStep == 3) {
             Timer1.Interval = 8000;
             Image2.Picture = LoadPicture(Trim(paths.imageDir) + "op1.bmp");
             b_Image2Container.Visible = -1;
@@ -294,12 +294,12 @@ function (me) {
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
-        } else if (m001A == 4) {
+        } else if (animStep == 4) {
             Timer1.Interval = 500;
             Image2.Picture = LoadPicture("");
             b_Image2Container.Visible = 0;
             b_Container2.Visible = -1;
-        } else if (m001A == 5) {
+        } else if (animStep == 5) {
             Timer1.Interval = 8000;
             Image3.Picture = LoadPicture(Trim(paths.imageDir) + "op3.bmp");
             b_Image3Container.Visible = -1;
@@ -310,12 +310,12 @@ function (me) {
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
-        } else if (m001A == 6) {
+        } else if (animStep == 6) {
             Timer1.Interval = 500;
             Image3.Picture = LoadPicture("");
             b_Image3Container.Visible = 0;
             b_Container3.Visible = -1;
-        } else if (m001A == 7) {
+        } else if (animStep == 7) {
             Timer1.Interval = 5500;
             Image4.Picture = LoadPicture(Trim(paths.imageDir) + "op4.bmp");
             b_Image4Container.Visible = -1;
@@ -326,12 +326,12 @@ function (me) {
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
-        } else if (m001A == 8) {
+        } else if (animStep == 8) {
             Timer1.Interval = 500;
             Image4.Picture = LoadPicture("");
             b_Image4Container.Visible = 0;
             b_Container4.Visible = -1;
-        } else if (m001A == 9) {
+        } else if (animStep == 9) {
             Timer1.Interval = 8000;
             Image5.Picture = LoadPicture(Trim(paths.imageDir) + "op5.bmp");
             b_Image5Container.Visible = -1;
@@ -342,12 +342,12 @@ function (me) {
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
-        } else if (m001A == 10) {
+        } else if (animStep == 10) {
             Timer1.Interval = 500;
             Image5.Picture = LoadPicture("");
             b_Image5Container.Visible = 0;
             b_Container5.Visible = -1;
-        } else if (m001A == 11) {
+        } else if (animStep == 11) {
             Timer1.Interval = 8000;
             Image6.Picture = LoadPicture(Trim(paths.imageDir) + "op6.bmp");
             b_Image6Container.Visible = -1;
@@ -358,12 +358,12 @@ function (me) {
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
-        } else if (m001A == 12) {
+        } else if (animStep == 12) {
             Timer1.Interval = 500;
             Image6.Picture = LoadPicture("");
             b_Image6Container.Visible = 0;
             b_Container6.Visible = -1;
-        } else if (m001A == 13) {
+        } else if (animStep == 13) {
             Timer1.Interval = 500;
             Image6.Picture = LoadPicture("");
             b_Image6Container.Visible = 0;
@@ -377,7 +377,7 @@ function (me) {
         b_Hoff_MouseUp, b_Puffer_Click, b_Puffer_MouseDown, b_Puffer_MouseUp,
         b_Roke_Click, b_Roke_MouseDown, b_Roke_MouseUp, b_Trading_Click,
         b_Trading_MouseDown, b_Trading_MouseUp, b_Vander_Click, b_Vander_MouseDown,
-        b_Vander_MouseUp, sub3191, Form_Activate, Form_KeyPress,
+        b_Vander_MouseUp, setRivalIntelligence, Form_Activate, Form_KeyPress,
         Form_Load, Timer1_Timer,
     };
 });

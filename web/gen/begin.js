@@ -20,12 +20,12 @@ function (me) {
     const { b_Quit, Label1 } = me.controls;
     const HOURGLASS = 11;
     const LIGHT_GRAY = 12632256;
-    const m0060 = 12582912;
-    const m007A = 16711680;
-    const m0098 = 8388608;
-    const m00E6 = 4194304;
+    const MEDIUM_BLUE = 12582912;
+    const BLUE = 16711680;
+    const NAVY = 8388608;
+    const DARK_NAVY = 4194304;
     const ARROW_CURSOR = 1;
-    let m00CC = 0;
+    let blackBackColor = 0;
 
     async function b_NewEmail_Click() {
         me.MousePointer = HOURGLASS;
@@ -76,7 +76,7 @@ function (me) {
     }
 
     function b_NewEmail_MouseUp(Button, Shift, X, Y) {
-        b_NewEmail.BackColor = m0060;
+        b_NewEmail.BackColor = MEDIUM_BLUE;
     }
 
     async function b_NewGame_Click() {
@@ -94,7 +94,7 @@ function (me) {
     }
 
     function b_NewGame_MouseUp(Button, Shift, X, Y) {
-        b_NewGame.BackColor = m007A;
+        b_NewGame.BackColor = BLUE;
     }
 
     async function b_OldEmail_Click() {
@@ -113,7 +113,7 @@ function (me) {
     }
 
     function b_OldEmail_MouseUp(Button, Shift, X, Y) {
-        b_OldEmail.BackColor = m0098;
+        b_OldEmail.BackColor = NAVY;
     }
 
     async function b_OldGame_Click() {
@@ -132,7 +132,7 @@ function (me) {
     }
 
     function b_OldGame_MouseUp(Button, Shift, X, Y) {
-        b_OldGame.BackColor = m0098;
+        b_OldGame.BackColor = NAVY;
     }
 
     function b_Quit_Click() {
@@ -148,7 +148,7 @@ function (me) {
     }
 
     function b_Quit_MouseUp(Button, Shift, X, Y) {
-        b_Quit.BackColor = m00CC;
+        b_Quit.BackColor = blackBackColor;
     }
 
     async function b_ViewCredits_Click() {
@@ -270,15 +270,15 @@ function (me) {
     }
 
     function b_ViewCredits_MouseUp(Button, Shift, X, Y) {
-        b_ViewCredits.BackColor = m00E6;
+        b_ViewCredits.BackColor = DARK_NAVY;
     }
 
-    function sub472D() {
-        let l00EA = 0;
-        let l00EC = 0;
-        let l00EE = 0;
-        let l00F0 = 0;
-        let l00F2 = "";
+    function initNewGame() {
+        let i = 0;
+        let j = 0;
+        let k = 0;
+        let maxInsuranceCost = 0;
+        let planetName = "";
         player.passengerAdSpend = 0;
         player.commodityAdSpend = 0;
         player.adSpendTotal = 0;
@@ -286,10 +286,10 @@ function (me) {
         player.commodityAdChoice = 0;
         player.adExtraPassengers = 0;
         player.age = randomBetween(17, 50);
-        for (l00EA = 0; l00EA <= 2; l00EA++) {
-            for (l00EC = 0; l00EC <= 5; l00EC++) {
-                player.cargo[l00EA][l00EC] = 0;
-                player.cargoAvgCost[l00EA][l00EC] = 0;
+        for (i = 0; i <= 2; i++) {
+            for (j = 0; j <= 5; j++) {
+                player.cargo[i][j] = 0;
+                player.cargoAvgCost[i][j] = 0;
             }
         }
         player.cargoTotal = 0;
@@ -305,8 +305,8 @@ function (me) {
         player.fuelCapacity = 50;
         player.insured = 0;
         player.insuranceRate = 15;
-        l00F0 = player.insuranceRate * 1000;
-        player.insuranceCost = randomBetween(player.insuranceRate, l00F0);
+        maxInsuranceCost = player.insuranceRate * 1000;
+        player.insuranceCost = randomBetween(player.insuranceRate, maxInsuranceCost);
         player.loan = 0;
         player.loanRate = 0.05;
         player.loanInterest = 0;
@@ -335,22 +335,22 @@ function (me) {
         player.bankBalance = 0;
         player.bankRate = 0.01;
         player.bankInterest = 0;
-        for (l00EA = 0; l00EA <= 6; l00EA++) {
-            player.shareAvgCost[l00EA] = 0;
-            player.shares[l00EA] = 0;
+        for (i = 0; i <= 6; i++) {
+            player.shareAvgCost[i] = 0;
+            player.shares[i] = 0;
         }
         player.supplyChartPlanet = -1;
         player.tariffsOwed = 0;
         player.passengerTaxOwed = 0;
         player.warehouseCapacity = 50;
-        for (l00EA = 0; l00EA <= 6; l00EA++) {
-            for (l00EC = 0; l00EC <= 2; l00EC++) {
-                for (l00EE = 0; l00EE <= 5; l00EE++) {
-                    player.warehouseStock[l00EA][l00EC][l00EE] = 0;
-                    player.warehouseAvgCost[l00EA][l00EC][l00EE] = 0;
+        for (i = 0; i <= 6; i++) {
+            for (j = 0; j <= 2; j++) {
+                for (k = 0; k <= 5; k++) {
+                    player.warehouseStock[i][j][k] = 0;
+                    player.warehouseAvgCost[i][j][k] = 0;
                 }
             }
-            player.warehouseUsed[l00EA] = 0;
+            player.warehouseUsed[i] = 0;
         }
         player.zinnLoan = 0;
         player.zinnCreditLimit = 200000;
@@ -374,10 +374,10 @@ function (me) {
         game.unlockFacilities = 16;
         game.unlockStocks = 17;
         game.planetSupplyBoost[0] = 0;
-        for (l00EA = 1; l00EA <= 6; l00EA++) {
-            game.planetSupplyBoost[l00EA] = 0;
-            game.graphShowCompany[l00EA] = 0;
-            game.companyNames[l00EA] = FixStr(" ", 20);
+        for (i = 1; i <= 6; i++) {
+            game.planetSupplyBoost[i] = 0;
+            game.graphShowCompany[i] = 0;
+            game.companyNames[i] = FixStr(" ", 20);
         }
         game.auctionType = 0;
         game.lastAuctionType = 0;
@@ -413,12 +413,12 @@ function (me) {
         game.commodityNames[2][3] = FixStr("X Fuels", 11);
         game.commodityNames[2][4] = FixStr("Gems", 11);
         game.commodityNames[2][5] = FixStr("Exotic", 11);
-        for (l00EA = 0; l00EA <= 6; l00EA++) {
-            for (l00EC = 0; l00EC <= 2; l00EC++) {
-                for (l00EE = 0; l00EE <= 5; l00EE++) {
-                    game.supplyPercent[l00EA][l00EC][l00EE] = randomBetween(0, 100);
-                    game.prices[l00EA][l00EC][l00EE] = 0;
-                    game.available[l00EA][l00EC][l00EE] = 0;
+        for (i = 0; i <= 6; i++) {
+            for (j = 0; j <= 2; j++) {
+                for (k = 0; k <= 5; k++) {
+                    game.supplyPercent[i][j][k] = randomBetween(0, 100);
+                    game.prices[i][j][k] = 0;
+                    game.available[i][j][k] = 0;
                 }
             }
         }
@@ -427,12 +427,12 @@ function (me) {
         game.isEmailGame = 0;
         game.emailFileName = FixStr("", 12);
         game.exportTariff = 0.02;
-        for (l00EA = 1; l00EA <= 6; l00EA++) {
-            game.engineSpeed[l00EA] = 5;
+        for (i = 1; i <= 6; i++) {
+            game.engineSpeed[i] = 5;
         }
         game.fuelBasePrice = 200;
-        for (l00EA = 0; l00EA <= 6; l00EA++) {
-            game.fuelPrice[l00EA] = randomBetween(game.fuelBasePrice, game.fuelBasePrice * 10);
+        for (i = 0; i <= 6; i++) {
+            game.fuelPrice[i] = randomBetween(game.fuelBasePrice, game.fuelBasePrice * 10);
         }
         game.saveSlot = 0;
         game.weeklyEventRoll = 0;
@@ -441,24 +441,24 @@ function (me) {
         game.newsEvent = randomBetween(1, 124);
         game.weeklyRoll = randomBetween(1, 100);
         game.newsPlanet = randomBetween(0, 6);
-        for (l00EA = 1; l00EA <= 6; l00EA++) {
-            game.netWorth[l00EA] = 0;
+        for (i = 1; i <= 6; i++) {
+            game.netWorth[i] = 0;
         }
         game.numRivals = 6;
         game.currentPlayer = 1;
         game.numPlayers = 1;
         game.turnOrderPos = 1;
-        for (l00EA = 1; l00EA <= 6; l00EA++) {
-            game.planet[l00EA] = CInt(l00EA - 1);
-            game.previousPlanet[l00EA] = CInt(l00EA);
-            game.turnOrder[l00EA] = CLng(l00EA);
-            game.shipType[l00EA] = CInt(l00EA);
+        for (i = 1; i <= 6; i++) {
+            game.planet[i] = CInt(i - 1);
+            game.previousPlanet[i] = CInt(i);
+            game.turnOrder[i] = CLng(i);
+            game.shipType[i] = CInt(i);
         }
-        for (l00EA = 1; l00EA <= 6; l00EA++) {
-            for (l00EC = 0; l00EC <= 6; l00EC++) {
-                game.facilitiesOwned[l00EA][l00EC] = 0;
-                game.facilityFees[l00EA][l00EC] = 0;
-                game.facilityRevenue[l00EA][l00EC] = 0;
+        for (i = 1; i <= 6; i++) {
+            for (j = 0; j <= 6; j++) {
+                game.facilitiesOwned[i][j] = 0;
+                game.facilityFees[i][j] = 0;
+                game.facilityRevenue[i][j] = 0;
             }
         }
         game.planetNames[0] = FixStr("Vexx", 4);
@@ -468,48 +468,48 @@ function (me) {
         game.planetNames[4] = FixStr("Loro", 4);
         game.planetNames[5] = FixStr("Zile", 4);
         game.planetNames[6] = FixStr("Frac", 4);
-        for (l00EE = 1; l00EE <= 6; l00EE++) {
-            for (l00EA = 0; l00EA <= 6; l00EA++) {
+        for (k = 1; k <= 6; k++) {
+            for (i = 0; i <= 6; i++) {
                 {
                     const sel = randomBetween(0, 13);
                     if (sel == 0) {
-                        l00F2 = "Vexx";
+                        planetName = "Vexx";
                     } else if (sel == 1) {
-                        l00F2 = "Pyke";
+                        planetName = "Pyke";
                     } else if (sel == 2) {
-                        l00F2 = "Mira";
+                        planetName = "Mira";
                     } else if (sel == 3) {
-                        l00F2 = "Stye";
+                        planetName = "Stye";
                     } else if (sel == 4) {
-                        l00F2 = "Loro";
+                        planetName = "Loro";
                     } else if (sel == 5) {
-                        l00F2 = "Zile";
+                        planetName = "Zile";
                     } else if (sel == 6) {
-                        l00F2 = "Frac";
+                        planetName = "Frac";
                     } else if (sel == 7) {
-                        l00F2 = "Tilo";
+                        planetName = "Tilo";
                     } else if (sel == 8) {
-                        l00F2 = "Queg";
+                        planetName = "Queg";
                     } else if (sel == 9) {
-                        l00F2 = "Xeen";
+                        planetName = "Xeen";
                     } else if (sel == 10) {
-                        l00F2 = "Ooom";
+                        planetName = "Ooom";
                     } else if (sel == 11) {
-                        l00F2 = "Hork";
+                        planetName = "Hork";
                     } else if (sel == 12) {
-                        l00F2 = "Bass";
+                        planetName = "Bass";
                     } else if (sel == 13) {
-                        l00F2 = "Nosh";
+                        planetName = "Nosh";
                     }
                 }
-                for (l00EC = 0; l00EC <= 6; l00EC++) {
-                    if (l00F2 == game.planetNames[l00EC]) {
-                        l00F2 = "do not replace";
+                for (j = 0; j <= 6; j++) {
+                    if (planetName == game.planetNames[j]) {
+                        planetName = "do not replace";
                     }
                 }
-                if (l00F2 == "do not replace") {
+                if (planetName == "do not replace") {
                 } else {
-                    game.planetNames[l00EA] = FixStr(l00F2, 4);
+                    game.planetNames[i] = FixStr(planetName, 4);
                 }
             }
         }
@@ -531,18 +531,18 @@ function (me) {
         game.weeklySales = 0;
         game.weeklyProfit = 0;
         game.canBuyStock = -1;
-        for (l00EA = 0; l00EA <= 6; l00EA++) {
-            game.stockCrashed[l00EA] = 0;
-            game.stockStrength[l00EA] = 50;
-            for (l00EC = 1; l00EC <= 15; l00EC++) {
-                game.stockPrices[l00EA][l00EC] = CLng(1600 - (100 * l00EA));
+        for (i = 0; i <= 6; i++) {
+            game.stockCrashed[i] = 0;
+            game.stockStrength[i] = 50;
+            for (j = 1; j <= 15; j++) {
+                game.stockPrices[i][j] = CLng(1600 - (100 * i));
             }
         }
-        for (l00EA = 1; l00EA <= 6; l00EA++) {
-            game.shipSize[l00EA] = 400;
-            game.travelTime[l00EA] = 0;
-            game.travelDelay[l00EA] = 1;
-            game.turnDone[l00EA] = 0;
+        for (i = 1; i <= 6; i++) {
+            game.shipSize[i] = 400;
+            game.travelTime[i] = 0;
+            game.travelDelay[i] = 1;
+            game.turnDone[i] = 0;
         }
         game.turn = 1;
         game.tutorialMode = 0;
@@ -550,37 +550,37 @@ function (me) {
         game.weatherPlanet = randomBetween(0, 6);
         game.winner = 0;
         game.goalNetWorth = 1000000;
-        for (l00EA = 1; l00EA <= 6; l00EA++) {
-            rivals.netWorth[l00EA] = 0;
-            if (l00EA == 1) {
-                rivals.engineSpeed[l00EA] = 5;
-            } else if (l00EA == 2) {
-                rivals.engineSpeed[l00EA] = 5;
-            } else if (l00EA == 3) {
-                rivals.engineSpeed[l00EA] = 5;
-            } else if (l00EA == 4) {
-                rivals.engineSpeed[l00EA] = 4;
-            } else if (l00EA == 5) {
-                rivals.engineSpeed[l00EA] = 5;
-            } else if (l00EA == 6) {
-                rivals.engineSpeed[l00EA] = 6;
+        for (i = 1; i <= 6; i++) {
+            rivals.netWorth[i] = 0;
+            if (i == 1) {
+                rivals.engineSpeed[i] = 5;
+            } else if (i == 2) {
+                rivals.engineSpeed[i] = 5;
+            } else if (i == 3) {
+                rivals.engineSpeed[i] = 5;
+            } else if (i == 4) {
+                rivals.engineSpeed[i] = 4;
+            } else if (i == 5) {
+                rivals.engineSpeed[i] = 5;
+            } else if (i == 6) {
+                rivals.engineSpeed[i] = 6;
             }
-            rivals.planet[l00EA] = CInt(l00EA);
-            rivals.travelTime[l00EA] = 0;
-            rivals.turnDone[l00EA] = 0;
-            rivals.cargoCategory[l00EA] = 0;
-            rivals.cargoItem[l00EA] = 0;
-            rivals.cargo[l00EA] = 0;
-            rivals.shipSize[l00EA] = 400;
-            rivals.cash[l00EA] = 0;
-            rivals.intelligence[l00EA] = 100;
+            rivals.planet[i] = CInt(i);
+            rivals.travelTime[i] = 0;
+            rivals.turnDone[i] = 0;
+            rivals.cargoCategory[i] = 0;
+            rivals.cargoItem[i] = 0;
+            rivals.cargo[i] = 0;
+            rivals.shipSize[i] = 400;
+            rivals.cash[i] = 0;
+            rivals.intelligence[i] = 100;
         }
-        for (l00EA = 1; l00EA <= 6; l00EA++) {
-            for (l00EC = 0; l00EC <= 6; l00EC++) {
-                rivals.facilitiesOwned[l00EA][l00EC] = 0;
-                rivals.facilityFees[l00EA][l00EC] = 0;
-                rivals.facilityRevenue[l00EA][l00EC] = 0;
-                rivals.shares[l00EA][l00EC] = 0;
+        for (i = 1; i <= 6; i++) {
+            for (j = 0; j <= 6; j++) {
+                rivals.facilitiesOwned[i][j] = 0;
+                rivals.facilityFees[i][j] = 0;
+                rivals.facilityRevenue[i][j] = 0;
+                rivals.shares[i][j] = 0;
             }
         }
         rivals.companyNames[1] = FixStr("Trading Corp. IV", 16);
@@ -605,7 +605,7 @@ function (me) {
         me.MousePointer = HOURGLASS;
         Randomize();
         FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "STARS2.BMP");
-        sub472D();
+        initNewGame();
         b_NewGame.Caption = "Start New Game";
         b_OldGame.Caption = "Continue Old Game";
         b_NewEmail.Caption = "Start New Email Game";
@@ -621,7 +621,7 @@ function (me) {
         b_NewGame_MouseDown, b_NewGame_MouseUp, b_OldEmail_Click, b_OldEmail_MouseDown,
         b_OldEmail_MouseUp, b_OldGame_Click, b_OldGame_MouseDown, b_OldGame_MouseUp,
         b_Quit_Click, b_Quit_MouseDown, b_Quit_MouseUp, b_ViewCredits_Click,
-        b_ViewCredits_MouseDown, b_ViewCredits_MouseUp, sub472D, Form_Activate,
+        b_ViewCredits_MouseDown, b_ViewCredits_MouseUp, initNewGame, Form_Activate,
         Form_Load, Label1_Click,
     };
 });

@@ -22,19 +22,19 @@ function (me) {
     const { b_Game4, b_Game5, Label2, Label1 } = me.controls;
     const HOURGLASS = 11;
     const LIGHT_GRAY = 12632256;
-    const m00A0 = 16711680;
-    const m00BA = 12582912;
-    const m00D4 = 8388608;
-    const m0104 = 4194304;
+    const BLUE = 16711680;
+    const MEDIUM_BLUE = 12582912;
+    const DARK_BLUE = 8388608;
+    const DARKER_BLUE = 4194304;
     const ARROW_CURSOR = 1;
-    let m001C = Space(23);
-    let m0036 = DimArray([5], () => Space(20));
-    let m004C = 0;
-    let m0086 = 0;
+    let fileHeader = Space(23);
+    let slotNames = DimArray([5], () => Space(20));
+    let previousSlot = 0;
+    let buttonUpColor = 0;
 
     async function b_Exit_Click() {
         me.MousePointer = HOURGLASS;
-        game.saveSlot = m004C;
+        game.saveSlot = previousSlot;
         if (me.Tag == "BeginGame") {
             me.Tag = "";
             FillElastic.Visible = 0;
@@ -52,13 +52,13 @@ function (me) {
     }
 
     function b_Exit_MouseUp(Button, Shift, X, Y) {
-        b_Exit.BackColor = m0086;
+        b_Exit.BackColor = buttonUpColor;
     }
 
     async function b_Game1_Click() {
         me.MousePointer = HOURGLASS;
         game.saveSlot = 1;
-        await sub2652();
+        await loadSlot();
     }
 
     function b_Game1_MouseDown(Button, Shift, X, Y) {
@@ -66,13 +66,13 @@ function (me) {
     }
 
     function b_Game1_MouseUp(Button, Shift, X, Y) {
-        b_Game1.BackColor = m00A0;
+        b_Game1.BackColor = BLUE;
     }
 
     async function b_Game2_Click() {
         me.MousePointer = HOURGLASS;
         game.saveSlot = 2;
-        await sub2652();
+        await loadSlot();
     }
 
     function b_Game2_MouseDown(Button, Shift, X, Y) {
@@ -80,13 +80,13 @@ function (me) {
     }
 
     function b_Game2_MouseUp(Button, Shift, X, Y) {
-        b_Game2.BackColor = m00BA;
+        b_Game2.BackColor = MEDIUM_BLUE;
     }
 
     async function b_Game3_Click() {
         me.MousePointer = HOURGLASS;
         game.saveSlot = 3;
-        await sub2652();
+        await loadSlot();
     }
 
     function b_Game3_MouseDown(Button, Shift, X, Y) {
@@ -94,13 +94,13 @@ function (me) {
     }
 
     function b_Game3_MouseUp(Button, Shift, X, Y) {
-        b_Game3.BackColor = m00D4;
+        b_Game3.BackColor = DARK_BLUE;
     }
 
     async function b_Game4_Click() {
         me.MousePointer = HOURGLASS;
         game.saveSlot = 4;
-        await sub2652();
+        await loadSlot();
     }
 
     function b_Game4_MouseDown(Button, Shift, X, Y) {
@@ -108,13 +108,13 @@ function (me) {
     }
 
     function b_Game4_MouseUp(Button, Shift, X, Y) {
-        b_Game4.BackColor = m00D4;
+        b_Game4.BackColor = DARK_BLUE;
     }
 
     async function b_Game5_Click() {
         me.MousePointer = HOURGLASS;
         game.saveSlot = 5;
-        await sub2652();
+        await loadSlot();
     }
 
     function b_Game5_MouseDown(Button, Shift, X, Y) {
@@ -122,7 +122,7 @@ function (me) {
     }
 
     function b_Game5_MouseUp(Button, Shift, X, Y) {
-        b_Game5.BackColor = m0104;
+        b_Game5.BackColor = DARKER_BLUE;
     }
 
     async function b_Help_Click() {
@@ -143,22 +143,22 @@ function (me) {
     }
 
     function b_Help_MouseUp(Button, Shift, X, Y) {
-        b_Help.BackColor = m0086;
+        b_Help.BackColor = buttonUpColor;
     }
 
-    async function sub2652() {
-        if (Trim(m0036[game.saveSlot]) == ".......") {
+    async function loadSlot() {
+        if (Trim(slotNames[game.saveSlot]) == ".......") {
             if (settings.soundOn == -1) {
                 Beep();
             }
             frm_MsgBox.FillElastic.Caption = "\n" + "You cannot load an empty file. Before you can load a game, you must first save the game.";
             await frm_MsgBox.Show(1);
-            game.saveSlot = m004C;
+            game.saveSlot = previousSlot;
             me.MousePointer = ARROW_CURSOR;
         } else {
             me.MousePointer = HOURGLASS;
-            await sub276D();
-            if (m001C != "GAZ DELUXE NORMAL GAME ") {
+            await readSaveFile();
+            if (fileHeader != "GAZ DELUXE NORMAL GAME ") {
                 me.MousePointer = ARROW_CURSOR;
                 return;
             }
@@ -168,37 +168,37 @@ function (me) {
         }
     }
 
-    function sub277B() {
+    function showSlotNames() {
         b_Exit.Caption = "Exit Without Loading";
-        b_Game1.Caption = Trim(m0036[1]);
-        b_Game2.Caption = Trim(m0036[2]);
-        b_Game3.Caption = Trim(m0036[3]);
-        b_Game4.Caption = Trim(m0036[4]);
-        b_Game5.Caption = Trim(m0036[5]);
+        b_Game1.Caption = Trim(slotNames[1]);
+        b_Game2.Caption = Trim(slotNames[2]);
+        b_Game3.Caption = Trim(slotNames[3]);
+        b_Game4.Caption = Trim(slotNames[4]);
+        b_Game5.Caption = Trim(slotNames[5]);
     }
 
-    function sub2792() {
-        let l013C = 0;
-        for (l013C = 1; l013C <= 5; l013C++) {
-            FileOpen(6, Trim(paths.saveDir) + "GAME" + Trim(Format(l013C, "#,#0")));
-            m0036[l013C] = FileGet(6, 1, m0036[l013C]);
+    function readSlotNames() {
+        let slot = 0;
+        for (slot = 1; slot <= 5; slot++) {
+            FileOpen(6, Trim(paths.saveDir) + "GAME" + Trim(Format(slot, "#,#0")));
+            slotNames[slot] = FileGet(6, 1, slotNames[slot]);
             FileClose(6);
         }
     }
 
-    async function sub276D() {
-        let l013E = 0;
+    async function readSaveFile() {
+        let playerIndex = 0;
         try {
             FileOpen(2, Trim(paths.saveDir) + "GAME" + Trim(Format(game.saveSlot, "#0")) + ".DAT");
-            m001C = FileGet(2, 1, m001C);
-            if (m001C != "GAZ DELUXE NORMAL GAME ") {
+            fileHeader = FileGet(2, 1, fileHeader);
+            if (fileHeader != "GAZ DELUXE NORMAL GAME ") {
                 throw new VBError(0);
             }
             game = FileGet(2, null, game);
             rivals = FileGet(2, null, rivals);
-            for (l013E = 1; l013E <= game.numPlayers; l013E++) {
+            for (playerIndex = 1; playerIndex <= game.numPlayers; playerIndex++) {
                 player = FileGet(2, null, player);
-                storePlayer(l013E);
+                storePlayer(playerIndex);
             }
             FileClose(2);
             loadPlayer(game.currentPlayer);
@@ -216,11 +216,11 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = HOURGLASS;
-        m004C = game.saveSlot;
-        m001C = FixStr("", 23);
+        previousSlot = game.saveSlot;
+        fileHeader = FixStr("", 23);
         FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "STARS5.BMP");
-        sub2792();
-        sub277B();
+        readSlotNames();
+        showSlotNames();
     }
 
     function Label2_Click() {
@@ -233,7 +233,7 @@ function (me) {
         b_Game2_MouseUp, b_Game3_Click, b_Game3_MouseDown, b_Game3_MouseUp,
         b_Game4_Click, b_Game4_MouseDown, b_Game4_MouseUp, b_Game5_Click,
         b_Game5_MouseDown, b_Game5_MouseUp, b_Help_Click, b_Help_MouseDown,
-        b_Help_MouseUp, sub2652, sub277B, sub2792,
-        sub276D, Form_Activate, Form_Load, Label2_Click,
+        b_Help_MouseUp, loadSlot, showSlotNames, readSlotNames,
+        readSaveFile, Form_Activate, Form_Load, Label2_Click,
     };
 });

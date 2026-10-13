@@ -12,10 +12,10 @@ function (me) {
     const { FillElastic, Timer1, Image1, b_Sound } = me.controls;
     const HOURGLASS = 11;
     const ARROW_CURSOR = 1;
-    let m001A = 0;
+    let blackColor = 0;
 
-    async function sub050F() {
-        me.BackColor = m001A;
+    async function goToTravel1() {
+        me.BackColor = blackColor;
         me.MousePointer = HOURGLASS;
         Image1.Left = Add(Screen.Width, 1000);
         Timer1.Enabled = 0;
@@ -29,7 +29,7 @@ function (me) {
     }
 
     async function FillElastic_Click() {
-        await sub050F();
+        await goToTravel1();
     }
 
     function Form_Activate() {
@@ -37,7 +37,7 @@ function (me) {
     }
 
     async function Form_KeyPress(KeyAscii) {
-        await sub050F();
+        await goToTravel1();
     }
 
     function Form_Load() {
@@ -67,11 +67,11 @@ function (me) {
     }
 
     async function Form_MouseDown(Button, Shift, X, Y) {
-        await sub050F();
+        await goToTravel1();
     }
 
     async function Image1_Click() {
-        await sub050F();
+        await goToTravel1();
     }
 
     async function Timer1_Timer() {
@@ -92,7 +92,7 @@ function (me) {
     }
 
     return {
-        sub050F, FillElastic_Click, Form_Activate, Form_KeyPress,
+        goToTravel1, FillElastic_Click, Form_Activate, Form_KeyPress,
         Form_Load, Form_MouseDown, Image1_Click, Timer1_Timer,
     };
 });

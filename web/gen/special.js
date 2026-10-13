@@ -26,9 +26,9 @@ function (me) {
     const HOURGLASS = 11;
     const ARROW_CURSOR = 1;
     const RED = 255;
-    const m00E4 = 16711680;
-    let m001A = 0;
-    let m001C = 0;
+    const BLUE = 16711680;
+    let animFrame = 0;
+    let frameCount = 0;
 
     async function b_Button_Click() {
         me.MousePointer = HOURGLASS;
@@ -36,7 +36,7 @@ function (me) {
             frm_Explore.Tag = "RETURN TO MAIN MENU";
             await b_Exit_Click();
         } else {
-            await sub03A7();
+            await doPlanetSpecial();
             me.MousePointer = ARROW_CURSOR;
         }
     }
@@ -91,235 +91,235 @@ function (me) {
 
     function b_Timer_Timer() {
         if (game.planetNames[game.planet[game.currentPlayer]] == "Vexx") {
-            if (m001A == 1) {
+            if (animFrame == 1) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "asian2.bmp");
-            } else if (m001A == 2) {
+            } else if (animFrame == 2) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "asian.bmp");
             }
-            m001A = m001A + 1;
-            if (m001A == 3) {
-                m001A = 1;
+            animFrame = animFrame + 1;
+            if (animFrame == 3) {
+                animFrame = 1;
             }
-            m001C = m001C + 1;
-            if (m001C == 5) {
+            frameCount = frameCount + 1;
+            if (frameCount == 5) {
                 b_Timer.Enabled = 0;
             }
         } else if (game.planetNames[game.planet[game.currentPlayer]] == "Pyke") {
-            if (m001A == 1) {
+            if (animFrame == 1) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "mech2.bmp");
-            } else if (m001A == 2) {
+            } else if (animFrame == 2) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "MECH.BMP");
             }
-            m001A = m001A + 1;
-            if (m001A == 3) {
-                m001A = 1;
+            animFrame = animFrame + 1;
+            if (animFrame == 3) {
+                animFrame = 1;
             }
-            m001C = m001C + 1;
-            if (m001C == 5) {
+            frameCount = frameCount + 1;
+            if (frameCount == 5) {
                 b_Timer.Enabled = 0;
             }
         } else if (game.planetNames[game.planet[game.currentPlayer]] == "Mira") {
-            if (m001A == 1) {
+            if (animFrame == 1) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "MONK1.BMP");
-            } else if (m001A == 2) {
+            } else if (animFrame == 2) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "MONK.BMP");
             }
-            m001A = m001A + 1;
-            if (m001A == 3) {
-                m001A = 1;
+            animFrame = animFrame + 1;
+            if (animFrame == 3) {
+                animFrame = 1;
             }
-            m001C = m001C + 1;
-            if (m001C == 5) {
+            frameCount = frameCount + 1;
+            if (frameCount == 5) {
                 b_Timer.Enabled = 0;
             }
         } else if (game.planetNames[game.planet[game.currentPlayer]] == "Stye") {
-            if (m001A == 1) {
+            if (animFrame == 1) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "loan2.bmp");
-            } else if (m001A == 2) {
+            } else if (animFrame == 2) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "loan2.bmp");
-            } else if (m001A == 3) {
+            } else if (animFrame == 3) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "loan2.bmp");
-            } else if (m001A == 4) {
+            } else if (animFrame == 4) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "loan1.bmp");
             }
-            m001A = m001A + 1;
-            if (m001A == 5) {
-                m001A = 1;
+            animFrame = animFrame + 1;
+            if (animFrame == 5) {
+                animFrame = 1;
             }
-            m001C = m001C + 1;
-            if (m001C == 5) {
+            frameCount = frameCount + 1;
+            if (frameCount == 5) {
                 b_Timer.Enabled = 0;
             }
         } else if (game.planetNames[game.planet[game.currentPlayer]] == "Loro") {
-            if (m001A == 1) {
+            if (animFrame == 1) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "peelia2.bmp");
-            } else if (m001A == 2) {
+            } else if (animFrame == 2) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "PEELIA.BMP");
             }
-            m001A = m001A + 1;
-            if (m001A == 3) {
-                m001A = 1;
+            animFrame = animFrame + 1;
+            if (animFrame == 3) {
+                animFrame = 1;
             }
         } else if (game.planetNames[game.planet[game.currentPlayer]] == "Zile") {
-            if (m001A == 1) {
+            if (animFrame == 1) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zinn2.bmp");
-            } else if (m001A == 2) {
+            } else if (animFrame == 2) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zinn3.bmp");
-            } else if (m001A == 3) {
+            } else if (animFrame == 3) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zinn3.bmp");
-            } else if (m001A == 4) {
+            } else if (animFrame == 4) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zinn2.bmp");
-            } else if (m001A == 5) {
+            } else if (animFrame == 5) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zinn.bmp");
             }
-            m001A = m001A + 1;
-            if (m001A == 6) {
-                m001A = 1;
+            animFrame = animFrame + 1;
+            if (animFrame == 6) {
+                animFrame = 1;
             }
-            m001C = m001C + 1;
-            if (m001C == 6) {
+            frameCount = frameCount + 1;
+            if (frameCount == 6) {
                 b_Timer.Enabled = 0;
             }
         } else if (game.planetNames[game.planet[game.currentPlayer]] == "Frac") {
-            if (m001A == 1) {
+            if (animFrame == 1) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "insure3.bmp");
-            } else if (m001A == 2) {
+            } else if (animFrame == 2) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "insure.bmp");
-            } else if (m001A == 3) {
+            } else if (animFrame == 3) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "insure3.bmp");
-            } else if (m001A == 4) {
+            } else if (animFrame == 4) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "insure2.bmp");
-            } else if (m001A == 5) {
+            } else if (animFrame == 5) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "insure.bmp");
             }
-            m001A = m001A + 1;
-            if (m001A == 6) {
-                m001A = 1;
+            animFrame = animFrame + 1;
+            if (animFrame == 6) {
+                animFrame = 1;
             }
-            m001C = m001C + 1;
-            if (m001C == 6) {
+            frameCount = frameCount + 1;
+            if (frameCount == 6) {
                 b_Timer.Enabled = 0;
             }
         } else if (game.planetNames[game.planet[game.currentPlayer]] == "Ooom") {
-            if (m001A == 1) {
+            if (animFrame == 1) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "sooth2.bmp");
-            } else if (m001A == 2) {
+            } else if (animFrame == 2) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "sooth1.bmp");
-            } else if (m001A == 3) {
+            } else if (animFrame == 3) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "sooth1.bmp");
-            } else if (m001A == 4) {
+            } else if (animFrame == 4) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "sooth1.bmp");
-            } else if (m001A == 5) {
+            } else if (animFrame == 5) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "sooth2.bmp");
-            } else if (m001A == 6) {
+            } else if (animFrame == 6) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "sooth3.bmp");
             }
-            m001A = m001A + 1;
-            if (m001A == 7) {
-                m001A = 1;
+            animFrame = animFrame + 1;
+            if (animFrame == 7) {
+                animFrame = 1;
             }
-            m001C = m001C + 1;
-            if (m001C == 7) {
+            frameCount = frameCount + 1;
+            if (frameCount == 7) {
                 b_Timer.Enabled = 0;
             }
         } else if (game.planetNames[game.planet[game.currentPlayer]] == "Tilo") {
-            if (m001A == 1) {
+            if (animFrame == 1) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "dealer2.bmp");
-            } else if (m001A == 2) {
+            } else if (animFrame == 2) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "dealer1.bmp");
-            } else if (m001A == 3) {
+            } else if (animFrame == 3) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "dealer3.bmp");
-            } else if (m001A == 4) {
+            } else if (animFrame == 4) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "dealer1.bmp");
             }
-            m001A = m001A + 1;
-            if (m001A == 5) {
-                m001A = 1;
+            animFrame = animFrame + 1;
+            if (animFrame == 5) {
+                animFrame = 1;
             }
-            m001C = m001C + 1;
-            if (m001C == 5) {
+            frameCount = frameCount + 1;
+            if (frameCount == 5) {
                 b_Timer.Enabled = 0;
             }
         } else if (game.planetNames[game.planet[game.currentPlayer]] == "Xeen") {
-            if (m001A == 1) {
+            if (animFrame == 1) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "mechan1.bmp");
-            } else if (m001A == 2) {
+            } else if (animFrame == 2) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "mechan2.bmp");
-            } else if (m001A == 3) {
+            } else if (animFrame == 3) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "mechan1.bmp");
-            } else if (m001A == 4) {
+            } else if (animFrame == 4) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "mechan3.bmp");
             }
-            m001A = m001A + 1;
-            if (m001A == 5) {
-                m001A = 1;
+            animFrame = animFrame + 1;
+            if (animFrame == 5) {
+                animFrame = 1;
             }
         } else if (game.planetNames[game.planet[game.currentPlayer]] == "Queg") {
-            if (m001A == 1) {
+            if (animFrame == 1) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "cornu2.bmp");
-            } else if (m001A == 2) {
+            } else if (animFrame == 2) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "cornu2.bmp");
-            } else if (m001A == 3) {
+            } else if (animFrame == 3) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "cornu1.bmp");
             }
-            m001A = m001A + 1;
-            if (m001A == 4) {
-                m001A = 1;
+            animFrame = animFrame + 1;
+            if (animFrame == 4) {
+                animFrame = 1;
             }
-            m001C = m001C + 1;
-            if (m001C == 4) {
+            frameCount = frameCount + 1;
+            if (frameCount == 4) {
                 b_Timer.Enabled = 0;
             }
         } else if (game.planetNames[game.planet[game.currentPlayer]] == "Bass") {
-            if (m001A == 1) {
+            if (animFrame == 1) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "broker2.bmp");
-            } else if (m001A == 2) {
+            } else if (animFrame == 2) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "broker2.bmp");
-            } else if (m001A == 3) {
+            } else if (animFrame == 3) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "broker1.bmp");
             }
-            m001A = m001A + 1;
-            if (m001A == 4) {
-                m001A = 1;
+            animFrame = animFrame + 1;
+            if (animFrame == 4) {
+                animFrame = 1;
             }
-            m001C = m001C + 1;
-            if (m001C == 4) {
+            frameCount = frameCount + 1;
+            if (frameCount == 4) {
                 b_Timer.Enabled = 0;
             }
         } else if (game.planetNames[game.planet[game.currentPlayer]] == "Nosh") {
-            if (m001A == 1) {
+            if (animFrame == 1) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zobrok2.bmp");
-            } else if (m001A == 2) {
+            } else if (animFrame == 2) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zobrok3.bmp");
-            } else if (m001A == 3) {
+            } else if (animFrame == 3) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zobrok4.bmp");
             }
-            m001A = m001A + 1;
-            if (m001A == 4) {
-                m001A = 1;
+            animFrame = animFrame + 1;
+            if (animFrame == 4) {
+                animFrame = 1;
             }
-            m001C = m001C + 1;
-            if (m001C == 4) {
+            frameCount = frameCount + 1;
+            if (frameCount == 4) {
                 b_Timer.Enabled = 0;
             }
         } else if (game.planetNames[game.planet[game.currentPlayer]] == "Hork") {
-            if (m001A == 1) {
+            if (animFrame == 1) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "agent2.bmp");
-            } else if (m001A == 2) {
+            } else if (animFrame == 2) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "agent2.bmp");
-            } else if (m001A == 3) {
+            } else if (animFrame == 3) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "agent1.bmp");
             }
-            m001A = m001A + 1;
-            if (m001A == 4) {
-                m001A = 1;
+            animFrame = animFrame + 1;
+            if (animFrame == 4) {
+                animFrame = 1;
             }
         }
     }
 
-    function sub0451() {
-        let l009C = 0;
-        let l009E = "";
+    function visitStockBroker() {
+        let planet = 0;
+        let advice = "";
         b_Timer.Enabled = -1;
         if (((Mod(game.turn, 6)) + 1) == 1) {
             if (settings.soundOn == -1) {
@@ -356,25 +356,25 @@ function (me) {
                 }
             }
         } else {
-            l009E = "";
-            for (l009C = 0; l009C <= 6; l009C++) {
-                l009E = l009E + Trim(game.planetNames[l009C]) + " Exchange = ";
-                if (game.stockStrength[l009C] <= 20) {
-                    l009E = l009E + "very strong sell";
-                } else if (game.stockStrength[l009C] <= 30) {
-                    l009E = l009E + "strong sell";
-                } else if (game.stockStrength[l009C] <= 40) {
-                    l009E = l009E + "sell";
-                } else if (game.stockStrength[l009C] <= 60) {
-                    l009E = l009E + "hold";
-                } else if (game.stockStrength[l009C] <= 70) {
-                    l009E = l009E + "buy";
-                } else if (game.stockStrength[l009C] <= 80) {
-                    l009E = l009E + "strong buy";
+            advice = "";
+            for (planet = 0; planet <= 6; planet++) {
+                advice = advice + Trim(game.planetNames[planet]) + " Exchange = ";
+                if (game.stockStrength[planet] <= 20) {
+                    advice = advice + "very strong sell";
+                } else if (game.stockStrength[planet] <= 30) {
+                    advice = advice + "strong sell";
+                } else if (game.stockStrength[planet] <= 40) {
+                    advice = advice + "sell";
+                } else if (game.stockStrength[planet] <= 60) {
+                    advice = advice + "hold";
+                } else if (game.stockStrength[planet] <= 70) {
+                    advice = advice + "buy";
+                } else if (game.stockStrength[planet] <= 80) {
+                    advice = advice + "strong buy";
                 } else {
-                    l009E = l009E + "very strong buy";
+                    advice = advice + "very strong buy";
                 }
-                l009E = l009E + "\n";
+                advice = advice + "\n";
             }
             if (settings.soundOn == -1) {
                 frm_Explore.b_Sound.Command = "Close";
@@ -385,16 +385,16 @@ function (me) {
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
-            b_Message.Caption = "Your stock broker gives you the following recommendations:" + "\n" + "\n" + l009E;
+            b_Message.Caption = "Your stock broker gives you the following recommendations:" + "\n" + "\n" + advice;
             player.specialDone = 0;
         }
         b_Button.Caption = "Return to Main Menu";
     }
 
-    async function sub045B() {
-        let l00AC = 0;
+    async function askLowerPremiums() {
+        let adjustment = 0;
         b_Timer.Enabled = -1;
-        l00AC = CLng(player.arrivalRoll) * player.cargoCapacity * 4;
+        adjustment = CLng(player.arrivalRoll) * player.cargoCapacity * 4;
         {
             const sel = randomBetween(1, 30);
             if (sel == 1) {
@@ -532,8 +532,8 @@ function (me) {
                     b_Sound.Command = "Open";
                     b_Sound.Command = "Play";
                 }
-                b_Message.Caption = "Your Insurance Agent explains to you that he has found a grave mistake. For the past few months, Voyager's Insurance has been under-charging you. In fact, you owe them " + Format(l00AC, "#,#0") + " kubars.";
-                await spend(l00AC, 0);
+                b_Message.Caption = "Your Insurance Agent explains to you that he has found a grave mistake. For the past few months, Voyager's Insurance has been under-charging you. In fact, you owe them " + Format(adjustment, "#,#0") + " kubars.";
+                await spend(adjustment, 0);
             } else if (sel == 21) {
                 if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
@@ -589,57 +589,57 @@ function (me) {
                     b_Sound.Command = "Open";
                     b_Sound.Command = "Play";
                 }
-                b_Message.Caption = "Your insurance agent reviews your records and informs you that there has been a grave mistake. The Voyager's Insurance Company has been overcharging you for the past several months. To your surprise, you are due a refund in the amount of " + Format(l00AC, "#,#0") + " kubars!";
-                player.cash = player.cash + l00AC;
+                b_Message.Caption = "Your insurance agent reviews your records and informs you that there has been a grave mistake. The Voyager's Insurance Company has been overcharging you for the past several months. To your surprise, you are due a refund in the amount of " + Format(adjustment, "#,#0") + " kubars!";
+                player.cash = player.cash + adjustment;
             }
         }
         b_Button.Caption = "Return to Main Menu";
     }
 
-    async function sub0465() {
-        let l00AE = 0;
-        let l00B0 = "";
+    async function doMediaEvent() {
+        let payment = 0;
+        let soundFile = "";
         b_Timer.Enabled = 0;
-        l00AE = randomBetween(25, 75) * game.shipSize[game.currentPlayer];
+        payment = randomBetween(25, 75) * game.shipSize[game.currentPlayer];
         {
             const sel = randomBetween(1, 3);
             if (sel == 1) {
                 {
                     const sel2 = ((Mod(player.arrivalRoll, 10)) + 1);
                     if (sel2 == 1) {
-                        b_Message.Caption = "You appear on Evy Ev's Planet Chat, the hottest daytime TV talk show. Evy's topic of the day is self-made entrepreneurs, and you are the star of the show. This helps to boost your company's reputation and nets you " + Format(l00AE, "#,#0") + " kubars.";
-                        player.cash = player.cash + l00AE;
-                        l00B0 = "agent.wav";
+                        b_Message.Caption = "You appear on Evy Ev's Planet Chat, the hottest daytime TV talk show. Evy's topic of the day is self-made entrepreneurs, and you are the star of the show. This helps to boost your company's reputation and nets you " + Format(payment, "#,#0") + " kubars.";
+                        player.cash = player.cash + payment;
+                        soundFile = "agent.wav";
                     } else if (sel2 == 2) {
-                        b_Message.Caption = "Thanks to your agent, you end up on prime time TV selling jelly beans. Selling candy to kids on interplanetary TV isn't your idea of the perfect job, but it winds up paying you " + Format(l00AE, "#,#0") + " kubars.";
-                        player.cash = player.cash + l00AE;
-                        l00B0 = "agent.wav";
+                        b_Message.Caption = "Thanks to your agent, you end up on prime time TV selling jelly beans. Selling candy to kids on interplanetary TV isn't your idea of the perfect job, but it winds up paying you " + Format(payment, "#,#0") + " kubars.";
+                        player.cash = player.cash + payment;
+                        soundFile = "agent.wav";
                     } else if (sel2 == 3) {
                         b_Message.Caption = "You spend the afternoon at an orphanage bouncing Borly Balls with Kukubia's most famous sports star. The kids at the orphanage love it, but you wind up with a sore back the next morning.";
-                        l00B0 = "agent2.wav";
+                        soundFile = "agent2.wav";
                     } else if (sel2 == 4) {
                         b_Message.Caption = "The Ministry of Travel says it has planned a new promotion to get Kukubians moving, and they wind up using your company as an example of what can be achieved. This free advertising significantly boosts your company's reputation.";
-                        l00B0 = "agent.wav";
+                        soundFile = "agent.wav";
                     } else if (sel2 == 5) {
                         b_Message.Caption = "You meet with a journalist from the Astral Reporter, Kukubia's largest newspaper. To your surprise, the reporter writes a glowing article, making you out to be some sort of financial genius.";
-                        l00B0 = "agent.wav";
+                        soundFile = "agent.wav";
                     } else if (sel2 == 6) {
-                        b_Message.Caption = "You get booked on the Geeg Matiss Extravaganza, Kukubia's most popular late night TV show. You wind up talking all about the silly products you import and export. Not only is the show a hit, but you are paid " + Format(l00AE, "#,#0") + " kubars.";
-                        player.cash = player.cash + l00AE;
-                        l00B0 = "agent.wav";
+                        b_Message.Caption = "You get booked on the Geeg Matiss Extravaganza, Kukubia's most popular late night TV show. You wind up talking all about the silly products you import and export. Not only is the show a hit, but you are paid " + Format(payment, "#,#0") + " kubars.";
+                        player.cash = player.cash + payment;
+                        soundFile = "agent.wav";
                     } else if (sel2 == 7) {
                         b_Message.Caption = "To your horror, you get stuck in a debate with the Cosmic Consumer Caucus, a notorious consumer watchdog. However, instead of bashing you for charging outrageously high passenger fares, they laud you for your efforts to keep costs down and serve the public.";
-                        l00B0 = "agent.wav";
+                        soundFile = "agent.wav";
                     } else if (sel2 == 8) {
-                        b_Message.Caption = "Apparently, your agent thinks a story with the Interplanetary Inquirer, Kukubia's most ridiculous gossip rag, won't do you much harm. The paper winds up printing an erroneous story all about how you are a robot in disguise. The good part is that they pay you " + Format(l00AE, "#,#0") + " kubars, and the story is so silly no one actually believes it.";
-                        player.cash = player.cash + l00AE;
-                        l00B0 = "agent.wav";
+                        b_Message.Caption = "Apparently, your agent thinks a story with the Interplanetary Inquirer, Kukubia's most ridiculous gossip rag, won't do you much harm. The paper winds up printing an erroneous story all about how you are a robot in disguise. The good part is that they pay you " + Format(payment, "#,#0") + " kubars, and the story is so silly no one actually believes it.";
+                        player.cash = player.cash + payment;
+                        soundFile = "agent.wav";
                     } else if (sel2 == 9) {
                         b_Message.Caption = "You appear on the well respected Planet Line News, Kukubia's premier news series. The topic for the evening is Trade Regulations, and you have a lot to say. This goes over well with the audience, and you gain some good publicity.";
-                        l00B0 = "agent.wav";
+                        soundFile = "agent.wav";
                     } else if (sel2 == 10) {
                         b_Message.Caption = "You are invited to attend the Ceremony of the Stars. Everyone is there from Mr. Zinn to the Imperial Magistrate. You spend the evening mingling with the rich and famous.";
-                        l00B0 = "agent.wav";
+                        soundFile = "agent.wav";
                     }
                 }
             } else if (sel == 2) {
@@ -647,36 +647,36 @@ function (me) {
                     const sel2 = ((Mod(player.arrivalRoll, 10)) + 1);
                     if (sel2 == 1) {
                         b_Message.Caption = "You are excited to appear on the hottest daytime TV talk show in Kukubia. The only problem is that the topic is ruthless merchants, and you turn out to be the villain.";
-                        l00B0 = "bad7.wav";
+                        soundFile = "bad7.wav";
                     } else if (sel2 == 2) {
-                        b_Message.Caption = "Your agent lands you a job promoting underwear on prime time TV. You are forced to walk around virtually naked, making silly poses. The only positive thing is that you get paid " + Format(l00AE, "#,#0") + " kubars.";
-                        player.cash = player.cash + l00AE;
-                        l00B0 = "agent.wav";
+                        b_Message.Caption = "Your agent lands you a job promoting underwear on prime time TV. You are forced to walk around virtually naked, making silly poses. The only positive thing is that you get paid " + Format(payment, "#,#0") + " kubars.";
+                        player.cash = player.cash + payment;
+                        soundFile = "agent.wav";
                     } else if (sel2 == 3) {
-                        b_Message.Caption = "You end up at a charity sports benefit batting around Borly Balls with Kukubia's most famous sports star. After fifteen minutes, you get slammed in the head with a Borly Ball and have to be rushed to the hospital. You aren't seriously injured, but the ambulance bill comes to " + Format(l00AE, "#,#0") + " kubars.";
-                        await spend(l00AE, 0);
-                        l00B0 = "bad7.wav";
+                        b_Message.Caption = "You end up at a charity sports benefit batting around Borly Balls with Kukubia's most famous sports star. After fifteen minutes, you get slammed in the head with a Borly Ball and have to be rushed to the hospital. You aren't seriously injured, but the ambulance bill comes to " + Format(payment, "#,#0") + " kubars.";
+                        await spend(payment, 0);
+                        soundFile = "bad7.wav";
                     } else if (sel2 == 4) {
                         b_Message.Caption = "Your agent books you on an interplanetary TV show with the Ministry of Travel. The only problem is that the topic of discussion is smuggling illegal aliens. The Ministry accuses you of engaging in smuggling operations, and the show winds up doing more harm than good to your public image.";
-                        l00B0 = "bad7.wav";
+                        soundFile = "bad7.wav";
                     } else if (sel2 == 5) {
                         b_Message.Caption = "Your agent schedules a meeting for you with a journalist from the Astral Reporter. The problem is that the reporter believes you are responsible for inflating the price of passenger fares between the planets. The next day, an article appears, which makes you out to be a robber baron.";
-                        l00B0 = "bad7.wav";
+                        soundFile = "bad7.wav";
                     } else if (sel2 == 6) {
                         b_Message.Caption = "You get booked on the Geeg Matiss Extravaganza, Kukubia's most popular late night talk show. The only problem is that you make a complete fool of yourself. The more you talk, the worse off you appear.";
-                        l00B0 = "bad7.wav";
+                        soundFile = "bad7.wav";
                     } else if (sel2 == 7) {
                         b_Message.Caption = "You have no idea what your agent was thinking when she scheduled an interview with the Cosmic Consumer Caucus. Apparently, they are waging a war on passenger fair price fixing, and you are put in the awkward position of defending your prices.";
-                        l00B0 = "bad7.wav";
+                        soundFile = "bad7.wav";
                     } else if (sel2 == 8) {
                         b_Message.Caption = "You should have known better than to do an interview with the Interplanetary Inquirer, Kukubia's most notorious gossip rag. The magazine winds up painting you as an obsessive money miser, who has billions of kubars stashed away in illegal bank accounts.";
-                        l00B0 = "bad7.wav";
+                        soundFile = "bad7.wav";
                     } else if (sel2 == 9) {
                         b_Message.Caption = "It just so happens that Planet Line News is doing a feature on underpaid employees. They trot out all your workers, including the Union Boss, and have them talk for an hour about how little they are getting paid.";
-                        l00B0 = "bad7.wav";
+                        soundFile = "bad7.wav";
                     } else if (sel2 == 10) {
                         b_Message.Caption = "You are thrilled to be invited to the Ceremony of the Stars, until you actually show up and discover that nobody wants to talk to you.";
-                        l00B0 = "agent2.wav";
+                        soundFile = "agent2.wav";
                     }
                 }
             } else if (sel == 3) {
@@ -684,35 +684,35 @@ function (me) {
                     const sel2 = ((Mod(player.arrivalRoll, 10)) + 1);
                     if (sel2 == 1) {
                         b_Message.Caption = "You are lucky enough to get booked on the hottest daytime TV talk show. You spend the entire time explaining how your company provides the best service at the lowest cost.";
-                        l00B0 = "agent.wav";
+                        soundFile = "agent.wav";
                     } else if (sel2 == 2) {
-                        b_Message.Caption = "To your surprise, you wind up doing a commercial for the computer game Zapitalism on prime time TV. Not only do you get to tell everyone how much you love playing Zapitalism, but LavaMind ends up paying you " + Format(l00AE, "#,#0") + " kubars.";
-                        player.cash = player.cash + l00AE;
-                        l00B0 = "agent.wav";
+                        b_Message.Caption = "To your surprise, you wind up doing a commercial for the computer game Zapitalism on prime time TV. Not only do you get to tell everyone how much you love playing Zapitalism, but LavaMind ends up paying you " + Format(payment, "#,#0") + " kubars.";
+                        player.cash = player.cash + payment;
+                        soundFile = "agent.wav";
                     } else if (sel2 == 3) {
                         b_Message.Caption = "Your agent books a lunch meeting for you with Kukubia's most famous sports star. You have such a pleasant time that the sports star volunteers to help promote your company at his next big game.";
-                        l00B0 = "agent.wav";
+                        soundFile = "agent.wav";
                     } else if (sel2 == 4) {
                         b_Message.Caption = "You don't know how your agent does it, but she manages to tie your company in with a new government travel program being sponsored by the Ministry of Travel. The Ministry promises to recommend your company to its civil servants, who commute regularly between the planets.";
-                        l00B0 = "agent.wav";
+                        soundFile = "agent.wav";
                     } else if (sel2 == 5) {
                         b_Message.Caption = "You meet with a journalist from the Astral Reporter, Kukubia's largest newspaper. You are prepared to tell your entire life story, but the journalist merely asks you a few questions about your ship size and cargo capacity, then leaves.";
-                        l00B0 = "agent2.wav";
+                        soundFile = "agent2.wav";
                     } else if (sel2 == 6) {
                         b_Message.Caption = "You get all dressed up and are ready to appear on late night TV. However, when you show up at the studio, you are informed that you have been replaced by Peelia Veelia. Sorry, but that's show biz!";
-                        l00B0 = "agent2.wav";
+                        soundFile = "agent2.wav";
                     } else if (sel2 == 7) {
                         b_Message.Caption = "You show up at a meeting with the Cosmic Consumer Caucus, a consumer watchdog group. You expect them to focus on your excellent safety record, but instead they merely talk about ways to improve service.";
-                        l00B0 = "agent2.wav";
+                        soundFile = "agent2.wav";
                     } else if (sel2 == 8) {
                         b_Message.Caption = "Your agent has signed you up to do an interview with the Interplanetary Inquirer, Kukubia's most notorious gossip rag. However, when you show up, they are not interested in you at all.";
-                        l00B0 = "agent2.wav";
+                        soundFile = "agent2.wav";
                     } else if (sel2 == 9) {
                         b_Message.Caption = "When you arrive at Planet Line News, Kukubia's premier TV news show, you are expecting an in-depth interview. However, it turns out to be only a sound bite.";
-                        l00B0 = "agent2.wav";
+                        soundFile = "agent2.wav";
                     } else if (sel2 == 10) {
                         b_Message.Caption = "You show up at the Ceremony of the Stars expecting to be treated like a king. However, you wind up spending an uneventful evening trapped in a crowd of people trying to catch a glimpse of the Emperor.";
-                        l00B0 = "agent2.wav";
+                        soundFile = "agent2.wav";
                     }
                 }
             }
@@ -722,15 +722,15 @@ function (me) {
         }
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
-            b_Sound.FileName = Trim(paths.soundDir) + l00B0;
+            b_Sound.FileName = Trim(paths.soundDir) + soundFile;
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
         b_Button.Caption = "Return to Main Menu";
     }
 
-    async function sub046F() {
-        let l00B2 = 0;
+    async function grantShipLeave() {
+        let damages = 0;
         {
             const sel = randomBetween(1, 30);
             if (sel == 1) {
@@ -772,9 +772,9 @@ function (me) {
                     b_Sound.Command = "Open";
                     b_Sound.Command = "Play";
                 }
-                l00B2 = randomBetween(500, 2000) * player.crewSize;
-                b_Message.Caption = "Your crew gets into a fight with a rowdy bunch of Lepro Ulps and winds up in jail. It costs you " + Format(l00B2, "#,#0") + " kubars to bail them out. What a vacation!";
-                await spend(l00B2, 0);
+                damages = randomBetween(500, 2000) * player.crewSize;
+                b_Message.Caption = "Your crew gets into a fight with a rowdy bunch of Lepro Ulps and winds up in jail. It costs you " + Format(damages, "#,#0") + " kubars to bail them out. What a vacation!";
+                await spend(damages, 0);
             } else if (sel == 6 || sel == 7) {
                 if (player.crewSalary > 1000) {
                     if (settings.soundOn == -1) {
@@ -860,9 +860,9 @@ function (me) {
                     b_Sound.Command = "Open";
                     b_Sound.Command = "Play";
                 }
-                l00B2 = randomBetween(500, 2000) * player.crewSize;
-                b_Message.Caption = "Two of your crew members get carried away while having fun at a beach side resort and manage to sink a 30 foot sun bathing raft. You can't imagine how they did this, but it ends up costing you " + Format(l00B2, "#,#0") + " kubars.";
-                await spend(l00B2, 0);
+                damages = randomBetween(500, 2000) * player.crewSize;
+                b_Message.Caption = "Two of your crew members get carried away while having fun at a beach side resort and manage to sink a 30 foot sun bathing raft. You can't imagine how they did this, but it ends up costing you " + Format(damages, "#,#0") + " kubars.";
+                await spend(damages, 0);
             } else if (sel == 21 || sel == 22) {
                 if (player.crewSalary > 1000) {
                     if (settings.soundOn == -1) {
@@ -915,7 +915,7 @@ function (me) {
         b_Button.Caption = "Return to Main Menu";
     }
 
-    function sub0479() {
+    function visitGrandSages() {
         b_Timer.Enabled = -1;
         {
             const sel = randomBetween(1, 30);
@@ -1196,10 +1196,10 @@ function (me) {
         b_Button.Caption = "Return to Main Menu";
     }
 
-    async function sub0483() {
-        let l00B4 = 0;
+    async function buyDiscountFuel() {
+        let discountPrice = 0;
         b_Timer.Enabled = -1;
-        l00B4 = CLng(game.fuelPrice[game.planet[game.currentPlayer]] * (1 - ((10 + (player.arrivalRoll / 2)) / 100)));
+        discountPrice = CLng(game.fuelPrice[game.planet[game.currentPlayer]] * (1 - ((10 + (player.arrivalRoll / 2)) / 100)));
         if ((player.fuelCapacity - player.fuel) == 0) {
             if (settings.soundOn == -1) {
                 frm_Explore.b_Sound.Command = "Close";
@@ -1249,17 +1249,17 @@ function (me) {
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
-            b_Message.Caption = "Zobrok fills up your tank, saving you a total of " + Format((player.fuelCapacity - player.fuel) * (game.fuelPrice[game.planet[game.currentPlayer]] - l00B4), "#,#0") + " kubars.";
-            await spend((l00B4 * (player.fuelCapacity - player.fuel)), 0);
+            b_Message.Caption = "Zobrok fills up your tank, saving you a total of " + Format((player.fuelCapacity - player.fuel) * (game.fuelPrice[game.planet[game.currentPlayer]] - discountPrice), "#,#0") + " kubars.";
+            await spend((discountPrice * (player.fuelCapacity - player.fuel)), 0);
             player.fuel = player.fuelCapacity;
         }
         b_Button.Caption = "Return to Main Menu";
     }
 
-    async function sub048D() {
-        let l00B6 = 0;
+    async function readFortune() {
+        let fortuneFee = 0;
         b_Timer.Enabled = -1;
-        l00B6 = CLng(CLng(player.arrivalRoll) * (game.shipSize[game.currentPlayer] / 10));
+        fortuneFee = CLng(CLng(player.arrivalRoll) * (game.shipSize[game.currentPlayer] / 10));
         if (((Mod(game.turn, 5)) + 1) == 1) {
             if (settings.soundOn == -1) {
                 frm_Explore.b_Sound.Command = "Close";
@@ -1304,7 +1304,7 @@ function (me) {
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
-            await spend(l00B6, 0);
+            await spend(fortuneFee, 0);
             if (player.luck <= 20) {
                 b_Message.Caption = "The Soothsayer lays his sticky yellow fingers against your forehead and starts screaming wildly! Breaking away, the Soothsayer falls to the ground, then shouts out that you are cursed. You are headed for death and destruction. If you value your life, you must seek out a blessing right away before something terrible happens.";
             } else if (player.luck <= 25) {
@@ -1327,44 +1327,44 @@ function (me) {
                 if (randomBetween(1, 2) == 1) {
                     b_Message.Caption = "The Soothsayer performs the standard reading and comes back with good news. Your aura is positive. In fact, it's well above average. You can rest assured the odds are in your favor.";
                 } else {
-                    b_Message.Caption = "The Soothsayer explains that your aura is positive and may lead to some good fortune. As luck would have it, on your way home from the Soothsayer, you find a wallet stuffed with " + Format(l00B6 * 5, "#,#0") + " kubars and no ID. When you take this to the local police, they tell you that no one has reported a lost wallet, so you can keep the money.";
-                    player.cash = player.cash + (l00B6 * 5);
+                    b_Message.Caption = "The Soothsayer explains that your aura is positive and may lead to some good fortune. As luck would have it, on your way home from the Soothsayer, you find a wallet stuffed with " + Format(fortuneFee * 5, "#,#0") + " kubars and no ID. When you take this to the local police, they tell you that no one has reported a lost wallet, so you can keep the money.";
+                    player.cash = player.cash + (fortuneFee * 5);
                 }
             } else if (player.luck <= 70) {
                 if (randomBetween(1, 2) == 1) {
                     b_Message.Caption = "The Soothsayer sits on your back and begins pulling out small hairs with a tweezers. This doesn't hurt, but you find it rather strange. After examining these hairs for several hours, the Soothsayer says things are looking up. Your energy levels are on the rise. You aren't the most blessed person ever, but you don't have anything to worry about.";
                 } else {
-                    b_Message.Caption = "The Soothsayer explains that your aura is above average and good fortune is bound to come your way. That night, when you return to your ship, you find out that one of your passengers was a wealthy foreign monarch, and he was so impressed with your company that he has given you a gift of " + Format(l00B6 * 10, "#,#0") + " kubars.";
-                    player.cash = player.cash + (l00B6 * 10);
+                    b_Message.Caption = "The Soothsayer explains that your aura is above average and good fortune is bound to come your way. That night, when you return to your ship, you find out that one of your passengers was a wealthy foreign monarch, and he was so impressed with your company that he has given you a gift of " + Format(fortuneFee * 10, "#,#0") + " kubars.";
+                    player.cash = player.cash + (fortuneFee * 10);
                 }
             } else if (player.luck <= 75) {
                 if (randomBetween(1, 2) == 1) {
                     b_Message.Caption = "The Soothsayer reads your aura, then congratulates you on a fine showing. Your aura is very positive, and you should expect good fortune in the next few weeks. At least, the odds are stacked in your favor.";
                 } else {
-                    b_Message.Caption = "The Soothsayer explains that your aura is very positive, and the chance of bad luck occurring is rather remote. This is why you aren't surprised when a reckless driver slams into your taxi on the way home, then offers to pay you " + Format(l00B6 * 15, "#,#0") + " kubars if you promise not to sue him. To make matters better, you aren't even injured in the accident.";
-                    player.cash = player.cash + (l00B6 * 15);
+                    b_Message.Caption = "The Soothsayer explains that your aura is very positive, and the chance of bad luck occurring is rather remote. This is why you aren't surprised when a reckless driver slams into your taxi on the way home, then offers to pay you " + Format(fortuneFee * 15, "#,#0") + " kubars if you promise not to sue him. To make matters better, you aren't even injured in the accident.";
+                    player.cash = player.cash + (fortuneFee * 15);
                 }
             } else if (player.luck <= 80) {
                 if (randomBetween(1, 2) == 1) {
                     b_Message.Caption = "The Soothsayer wraps your entire body up in wet rags, which smell like vinegar. After several hours, he returns with a big grin on his face. Your energy levels are fantastic. In fact, you are radiating such positive energy that you can expect good things to come in the near future.";
                 } else {
-                    b_Message.Caption = "The Soothsayer explains that you have an extremely positive aura and should encounter a string of good luck. It just so happens that only minutes later you receive a phone call from the Governor of Ooom, pledging to give your company " + Format(l00B6 * 20, "#,#0") + " kubars in financial aid with no strings attached!";
-                    player.cash = player.cash + (l00B6 * 20);
+                    b_Message.Caption = "The Soothsayer explains that you have an extremely positive aura and should encounter a string of good luck. It just so happens that only minutes later you receive a phone call from the Governor of Ooom, pledging to give your company " + Format(fortuneFee * 20, "#,#0") + " kubars in financial aid with no strings attached!";
+                    player.cash = player.cash + (fortuneFee * 20);
                 }
             } else {
                 if (randomBetween(1, 2) == 1) {
                     b_Message.Caption = "The Soothsayer asks you to stand in a bucket of mouth wash. This lasts only two minutes, then the Soothsayer jumps up and hysterically hugs you. Your energy levels are off the charts! Falling to his knees the Soothsayer begins kissing your toes, which now smell like peppermint. You have the most positive energy levels the Soothsayer has seen in the past 10 months!!! You are truly blessed.";
                 } else {
-                    b_Message.Caption = "The Soothsayer explains that you have an extraordinarily positive aura and are truly blessed. The next day, you are fortunate enough to receive a " + Format(l00B6 * 25, "#,#0") + " kubar refund from the Imperial Tax Office. They explain that they made a mistake in your taxes and have refunded you the difference plus compensation.";
-                    player.cash = player.cash + (l00B6 * 25);
+                    b_Message.Caption = "The Soothsayer explains that you have an extraordinarily positive aura and are truly blessed. The next day, you are fortunate enough to receive a " + Format(fortuneFee * 25, "#,#0") + " kubar refund from the Imperial Tax Office. They explain that they made a mistake in your taxes and have refunded you the difference plus compensation.";
+                    player.cash = player.cash + (fortuneFee * 25);
                 }
             }
         }
         b_Button.Caption = "Return to Main Menu";
     }
 
-    async function sub0497() {
-        let l00B8 = "";
+    async function buyFasterEngine() {
+        let slogan = "";
         b_Timer.Enabled = -1;
         if (((Mod(game.weeklyRoll, 4)) + 1) == 1) {
             if (settings.soundOn == -1) {
@@ -1414,80 +1414,80 @@ function (me) {
             {
                 const sel = randomBetween(1, 15);
                 if (sel == 1) {
-                    l00B8 = "This should help speed things up!";
+                    slogan = "This should help speed things up!";
                 } else if (sel == 2) {
-                    l00B8 = "Faster is better!";
+                    slogan = "Faster is better!";
                 } else if (sel == 3) {
-                    l00B8 = "It pays to be first!";
+                    slogan = "It pays to be first!";
                 } else if (sel == 4) {
-                    l00B8 = "L-Tech is the best!";
+                    slogan = "L-Tech is the best!";
                 } else if (sel == 5) {
-                    l00B8 = "It's worth every kubar!";
+                    slogan = "It's worth every kubar!";
                 } else if (sel == 6) {
-                    l00B8 = "The early bird gets the worm!";
+                    slogan = "The early bird gets the worm!";
                 } else if (sel == 7) {
-                    l00B8 = "There's a need for speed!";
+                    slogan = "There's a need for speed!";
                 } else if (sel == 8) {
-                    l00B8 = "Got to keep up with the Jones!";
+                    slogan = "Got to keep up with the Jones!";
                 } else if (sel == 9) {
-                    l00B8 = "Time is money!";
+                    slogan = "Time is money!";
                 } else if (sel == 10) {
-                    l00B8 = "You can never be too fast!";
+                    slogan = "You can never be too fast!";
                 } else if (sel == 11) {
-                    l00B8 = "The race is on!";
+                    slogan = "The race is on!";
                 } else if (sel == 12) {
-                    l00B8 = "Okay, now you're moving!";
+                    slogan = "Okay, now you're moving!";
                 } else if (sel == 13) {
-                    l00B8 = "A kuarp a day keeps the competition at bay!";
+                    slogan = "A kuarp a day keeps the competition at bay!";
                 } else if (sel == 14) {
-                    l00B8 = "Now you're cooking!";
+                    slogan = "Now you're cooking!";
                 } else if (sel == 15) {
-                    l00B8 = "Full speed ahead!";
+                    slogan = "Full speed ahead!";
                 }
             }
-            b_Message.Caption = "You just purchased L-Tech's super " + Format(game.engineSpeed[game.currentPlayer] + 1, "#,#0") + " kuarp engine for " + Format(((CLng(player.arrivalRoll) * CLng(game.weeklyRoll)) * 6), "#,#0") + " kubars. " + l00B8;
+            b_Message.Caption = "You just purchased L-Tech's super " + Format(game.engineSpeed[game.currentPlayer] + 1, "#,#0") + " kuarp engine for " + Format(((CLng(player.arrivalRoll) * CLng(game.weeklyRoll)) * 6), "#,#0") + " kubars. " + slogan;
             await spend(((CLng(player.arrivalRoll) * CLng(game.weeklyRoll)) * 6), 0);
             game.engineSpeed[game.currentPlayer] = game.engineSpeed[game.currentPlayer] + 1;
         }
         b_Button.Caption = "Return to Main Menu";
     }
 
-    async function sub04A1() {
-        let l00BA = 0;
-        let l00BC = 0;
-        let l00BE = 0;
-        let l00C0 = 0;
-        let l00C2 = 0;
-        let l00C4 = 0;
-        let l00C6 = 0;
-        let l00C8 = 0;
-        let l00CA = 0;
+    async function buyFromCornucopia() {
+        let category = 0;
+        let item = 0;
+        let tons = 0;
+        let pricePerTon = 0;
+        let c = 0;
+        let i = 0;
+        let step = 0;
+        let minPrice = 0;
+        let maxPrice = 0;
         b_Timer.Enabled = -1;
-        l00BA = Mod(game.turn, 3);
-        l00BC = Mod(player.arrivalRoll, 6);
-        l00C6 = 0;
-        l00C8 = 0;
-        l00CA = 0;
-        for (l00C2 = 0; l00C2 <= 2; l00C2++) {
-            for (l00C4 = 0; l00C4 <= 5; l00C4++) {
-                l00C6 = l00C6 + 5;
-                l00C8 = (game.marketDifficulty + 1) * l00C6;
-                l00CA = l00CA + 40;
-                if (l00C2 == l00BA && l00C4 == l00BC) {
-                    l00C2 = 2;
-                    l00C4 = 5;
+        category = Mod(game.turn, 3);
+        item = Mod(player.arrivalRoll, 6);
+        step = 0;
+        minPrice = 0;
+        maxPrice = 0;
+        for (c = 0; c <= 2; c++) {
+            for (i = 0; i <= 5; i++) {
+                step = step + 5;
+                minPrice = (game.marketDifficulty + 1) * step;
+                maxPrice = maxPrice + 40;
+                if (c == category && i == item) {
+                    c = 2;
+                    i = 5;
                 }
             }
         }
-        l00BE = CLng((player.cargoCapacity * CLng(player.arrivalRoll)) / 100);
-        if (l00BE < (player.cargoCapacity / 2)) {
-            l00BE = CLng((player.cargoCapacity / 2));
+        tons = CLng((player.cargoCapacity * CLng(player.arrivalRoll)) / 100);
+        if (tons < (player.cargoCapacity / 2)) {
+            tons = CLng((player.cargoCapacity / 2));
         }
-        l00C0 = CLng(l00C8 + ((l00CA - l00C8) * (game.weeklyRoll / 100)));
-        if (l00C0 > game.prices[game.planet[game.currentPlayer]][l00BA][l00BC]) {
-            l00C0 = game.prices[game.planet[game.currentPlayer]][l00BA][l00BC];
+        pricePerTon = CLng(minPrice + ((maxPrice - minPrice) * (game.weeklyRoll / 100)));
+        if (pricePerTon > game.prices[game.planet[game.currentPlayer]][category][item]) {
+            pricePerTon = game.prices[game.planet[game.currentPlayer]][category][item];
         }
-        if (l00BE > (player.cargoCapacity - player.cargoTotal)) {
+        if (tons > (player.cargoCapacity - player.cargoTotal)) {
             if (settings.soundOn == -1) {
                 frm_Explore.b_Sound.Command = "Close";
             }
@@ -1497,7 +1497,7 @@ function (me) {
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
-            b_Message.Caption = "You cannot purchase " + Format(l00BE, "#,#0") + " tons of cargo because your ship only has room for " + Format(player.cargoCapacity - player.cargoTotal, "#,#0") + " tons. Before you purchase any goods from Lady Cornucopia, you must first make room by unloading some of the cargo from your ship. Lady Cornucopia insists upon selling all or nothing.";
+            b_Message.Caption = "You cannot purchase " + Format(tons, "#,#0") + " tons of cargo because your ship only has room for " + Format(player.cargoCapacity - player.cargoTotal, "#,#0") + " tons. Before you purchase any goods from Lady Cornucopia, you must first make room by unloading some of the cargo from your ship. Lady Cornucopia insists upon selling all or nothing.";
             player.specialDone = 0;
         } else if (((Mod(game.weeklyRoll, 5)) + 1) == 1) {
             if (settings.soundOn == -1) {
@@ -1543,16 +1543,16 @@ function (me) {
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
-            b_Message.Caption = "You just purchased " + Format(l00BE, "#,#0") + " tons of " + Trim(game.commodityNames[l00BA][l00BC]) + " at " + Format(l00C0, "#,#0") + " kubars/ton." + "\n" + "\n" + "You spent a total of " + Format(l00BE * l00C0, "#,#0") + " kubars." + "\n" + "\n" + "Have fun with the " + Trim(game.commodityNames[l00BA][l00BC]) + ".";
-            player.cargoAvgCost[l00BA][l00BC] = CLng((player.cargoAvgCost[l00BA][l00BC] * player.cargo[l00BA][l00BC] + (l00C0 * l00BE)) / (player.cargo[l00BA][l00BC] + l00BE));
-            await spend(l00BE * l00C0, 0);
-            player.cargoTotal = player.cargoTotal + l00BE;
-            player.cargo[l00BA][l00BC] = player.cargo[l00BA][l00BC] + l00BE;
+            b_Message.Caption = "You just purchased " + Format(tons, "#,#0") + " tons of " + Trim(game.commodityNames[category][item]) + " at " + Format(pricePerTon, "#,#0") + " kubars/ton." + "\n" + "\n" + "You spent a total of " + Format(tons * pricePerTon, "#,#0") + " kubars." + "\n" + "\n" + "Have fun with the " + Trim(game.commodityNames[category][item]) + ".";
+            player.cargoAvgCost[category][item] = CLng((player.cargoAvgCost[category][item] * player.cargo[category][item] + (pricePerTon * tons)) / (player.cargo[category][item] + tons));
+            await spend(tons * pricePerTon, 0);
+            player.cargoTotal = player.cargoTotal + tons;
+            player.cargo[category][item] = player.cargo[category][item] + tons;
         }
         b_Button.Caption = "Return to Main Menu";
     }
 
-    async function sub03A7() {
+    async function doPlanetSpecial() {
         if (player.specialDone == -1) {
             frm_Box0.FillElastic.Caption = "Planet Special";
             frm_Box0.b_Message.Caption = "\n" + "You have already completed your PLANET SPECIAL for this turn. Try again next turn.";
@@ -1563,56 +1563,56 @@ function (me) {
                 if (settings.soundOn == -1) {
                     frm_Explore.b_Sound.Command = "Close";
                 }
-                sub04AB();
+                petitionMagistrate();
             } else if (game.planetNames[game.planet[game.currentPlayer]] == "Pyke") {
                 if (settings.soundOn == -1) {
                     frm_Explore.b_Sound.Command = "Close";
                 }
-                await sub0497();
+                await buyFasterEngine();
             } else if (game.planetNames[game.planet[game.currentPlayer]] == "Mira") {
                 if (settings.soundOn == -1) {
                     frm_Explore.b_Sound.Command = "Close";
                 }
-                sub0479();
+                visitGrandSages();
             } else if (game.planetNames[game.planet[game.currentPlayer]] == "Stye") {
                 if (settings.soundOn == -1) {
                     frm_Explore.b_Sound.Command = "Close";
                 }
-                sub04B5();
+                askTradersUnion();
             } else if (game.planetNames[game.planet[game.currentPlayer]] == "Loro") {
                 if (settings.soundOn == -1) {
                     frm_Explore.b_Sound.Command = "Close";
                 }
-                await sub046F();
+                await grantShipLeave();
             } else if (game.planetNames[game.planet[game.currentPlayer]] == "Zile") {
                 if (settings.soundOn == -1) {
                     frm_Explore.b_Sound.Command = "Close";
                 }
-                sub04BF();
+                askZinnFavor();
             } else if (game.planetNames[game.planet[game.currentPlayer]] == "Frac") {
                 if (settings.soundOn == -1) {
                     frm_Explore.b_Sound.Command = "Close";
                 }
-                await sub045B();
+                await askLowerPremiums();
             } else if (game.planetNames[game.planet[game.currentPlayer]] == "Tilo") {
-                await sub04C9();
+                await gamble();
             } else if (game.planetNames[game.planet[game.currentPlayer]] == "Queg") {
-                await sub04A1();
+                await buyFromCornucopia();
             } else if (game.planetNames[game.planet[game.currentPlayer]] == "Xeen") {
-                await sub04D3();
+                await upgradeShip();
             } else if (game.planetNames[game.planet[game.currentPlayer]] == "Ooom") {
-                await sub048D();
+                await readFortune();
             } else if (game.planetNames[game.planet[game.currentPlayer]] == "Hork") {
-                await sub0465();
+                await doMediaEvent();
             } else if (game.planetNames[game.planet[game.currentPlayer]] == "Bass") {
-                sub0451();
+                visitStockBroker();
             } else if (game.planetNames[game.planet[game.currentPlayer]] == "Nosh") {
-                await sub0483();
+                await buyDiscountFuel();
             }
         }
     }
 
-    function sub04B5() {
+    function askTradersUnion() {
         b_Timer.Enabled = -1;
         {
             const sel = randomBetween(1, 31);
@@ -1955,13 +1955,13 @@ function (me) {
         b_Button.Caption = "Return to Main Menu";
     }
 
-    async function sub04C9() {
-        let l00D0 = 0;
-        let l00D2 = 0;
+    async function gamble() {
+        let wager = 0;
+        let initialWager = 0;
         const RED = 255;
-        const m00E4 = 16711680;
+        const BLUE = 16711680;
         if (((Mod(game.weeklyRoll, 6)) + 1) == 1) {
-            m001C = 0;
+            frameCount = 0;
             b_Timer.Enabled = -1;
             if (settings.soundOn == -1) {
                 frm_Explore.b_Sound.Command = "Close";
@@ -1991,11 +1991,11 @@ function (me) {
                 }
             }
         } else {
-            m001C = 0;
+            frameCount = 0;
             b_Timer.Enabled = -1;
-            l00D0 = await askNumber(0, Format((0.05 * player.cash), "##0"), 0.25 * (0.05 * player.cash), (0.05 * player.cash), "The Casino" + "\n" + "\n" + "Enter the amount you'd like to wager.", " ");
-            l00D2 = l00D0;
-            if (l00D0 <= 0) {
+            wager = await askNumber(0, Format((0.05 * player.cash), "##0"), 0.25 * (0.05 * player.cash), (0.05 * player.cash), "The Casino" + "\n" + "\n" + "Enter the amount you'd like to wager.", " ");
+            initialWager = wager;
+            if (wager <= 0) {
                 if (settings.soundOn == -1) {
                     frm_Explore.b_Sound.Command = "Close";
                 }
@@ -2007,7 +2007,7 @@ function (me) {
                 }
                 b_Message.Caption = "You did not make a wager. The Casino Dealer politely asks you to leave and come back when you are ready to gamble.";
                 player.specialDone = 0;
-            } else if (l00D0 > player.cash) {
+            } else if (wager > player.cash) {
                 if (settings.soundOn == -1) {
                     frm_Explore.b_Sound.Command = "Close";
                 }
@@ -2019,7 +2019,7 @@ function (me) {
                 }
                 b_Message.Caption = "You cannot bet more than you have. The Casino Dealer politely asks you to leave and come back when you have enough money.";
                 player.specialDone = 0;
-            } else if (l00D0 > ((0.05 * player.cash) + 1)) {
+            } else if (wager > ((0.05 * player.cash) + 1)) {
                 if (settings.soundOn == -1) {
                     frm_Explore.b_Sound.Command = "Close";
                 }
@@ -2043,8 +2043,8 @@ function (me) {
                         b_Sound.Command = "Play";
                     }
                     b_Container.BackColor = RED;
-                    b_Message.Caption = "Sorry, but you lose. The Casino Dealer takes your " + Format(l00D0, "#,#0") + " kubars and informs you that if you want to continue gambling, you'll have to come back another time.";
-                    await spend(l00D0, 0);
+                    b_Message.Caption = "Sorry, but you lose. The Casino Dealer takes your " + Format(wager, "#,#0") + " kubars and informs you that if you want to continue gambling, you'll have to come back another time.";
+                    await spend(wager, 0);
                 } else {
                     L182D4: while (true) {
                         if (settings.soundOn == -1) {
@@ -2059,18 +2059,18 @@ function (me) {
                         frm_Box1Port.b_Yes.Visible = -1;
                         frm_Box1Port.b_No.Visible = -1;
                         frm_Box1Port.b_OK.Visible = 0;
-                        frm_Box1Port.b_Container.BackColor = m00E4;
+                        frm_Box1Port.b_Container.BackColor = BLUE;
                         frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "dealer1.bmp");
                         frm_Box1Port.b_ImageLable.Caption = "Casino Dealer";
-                        frm_Box1Port.b_Message.Caption = "You win!!! The Casino Dealer informs you that you've just won " + Format(l00D0, "#,#0") + " kubars! Under the house rules, you now have the option of going for double or nothing." + "\n" + "\n" + "Do you want to continue gambling?";
+                        frm_Box1Port.b_Message.Caption = "You win!!! The Casino Dealer informs you that you've just won " + Format(wager, "#,#0") + " kubars! Under the house rules, you now have the option of going for double or nothing." + "\n" + "\n" + "Do you want to continue gambling?";
                         await frm_Box1Port.Show(1);
                         if (frm_Box1Port.Tag == "YES") {
                             await Unload(frm_Box1Port);
-                            l00D0 = l00D0 * 2;
+                            wager = wager * 2;
                             if (randomInt(1, 2) == 1) {
                                 continue L182D4;
                             } else {
-                                m001C = 0;
+                                frameCount = 0;
                                 b_Timer.Enabled = -1;
                                 if (settings.soundOn == -1) {
                                     b_Sound.Command = "Close";
@@ -2080,11 +2080,11 @@ function (me) {
                                 }
                                 b_Container.BackColor = RED;
                                 b_Message.Caption = "Sorry, but you lose it all. The Casino Dealer politely takes your money and informs you that if you want to continue gambling, you'll have to come back next week.";
-                                await spend(l00D2, 0);
+                                await spend(initialWager, 0);
                             }
                         } else {
                             await Unload(frm_Box1Port);
-                            m001C = 0;
+                            frameCount = 0;
                             b_Timer.Enabled = -1;
                             if (settings.soundOn == -1) {
                                 b_Sound.Command = "Close";
@@ -2092,8 +2092,8 @@ function (me) {
                                 b_Sound.Command = "Open";
                                 b_Sound.Command = "Play";
                             }
-                            b_Message.Caption = "Congratulations, you just won " + Format(l00D0, "#,#0") + " kubars!" + "\n" + "\n" + "You know what they say... It's better to be lucky than smart.";
-                            player.cash = player.cash + l00D0;
+                            b_Message.Caption = "Congratulations, you just won " + Format(wager, "#,#0") + " kubars!" + "\n" + "\n" + "You know what they say... It's better to be lucky than smart.";
+                            player.cash = player.cash + wager;
                         }
                         break;
                     }
@@ -2103,7 +2103,7 @@ function (me) {
         b_Button.Caption = "Return to Main Menu";
     }
 
-    function sub04AB() {
+    function petitionMagistrate() {
         b_Timer.Enabled = -1;
         {
             const sel = randomBetween(1, 30);
@@ -2384,20 +2384,20 @@ function (me) {
         b_Button.Caption = "Return to Main Menu";
     }
 
-    async function sub04D3() {
-        let l00EA = "";
-        let l00EC = 0;
-        l00EC = (CLng(player.arrivalRoll) * CLng(game.weeklyRoll)) * 6;
+    async function upgradeShip() {
+        let upgrade = "";
+        let cost = 0;
+        cost = (CLng(player.arrivalRoll) * CLng(game.weeklyRoll)) * 6;
         {
             const sel = ((Mod(player.arrivalRoll, 4)) + 1);
             if (sel == 1) {
-                l00EA = "turbocharge your ship's engine";
+                upgrade = "turbocharge your ship's engine";
             } else if (sel == 2) {
-                l00EA = "expand your ship's cargo bay by 10 tons";
+                upgrade = "expand your ship's cargo bay by 10 tons";
             } else if (sel == 3) {
-                l00EA = "expand your ship's passenger capacity by 1 seat";
+                upgrade = "expand your ship's passenger capacity by 1 seat";
             } else if (sel == 4) {
-                l00EA = "expand your ship's fuel tank capacity by 5 tons";
+                upgrade = "expand your ship's fuel tank capacity by 5 tons";
             }
         }
         if (randomBetween(1, 3) == 1) {
@@ -2413,7 +2413,7 @@ function (me) {
             {
                 const sel = randomBetween(1, 15);
                 if (sel == 1) {
-                    b_Message.Caption = "As luck would have it, your brilliant mechanic isn't quite as smart as he thought he was. After taking apart your ship and making a big mess, he discovers it's impossible to " + l00EA + ".";
+                    b_Message.Caption = "As luck would have it, your brilliant mechanic isn't quite as smart as he thought he was. After taking apart your ship and making a big mess, he discovers it's impossible to " + upgrade + ".";
                 } else if (sel == 2) {
                     b_Message.Caption = "You show up at your mechanic's garage, and the place is a disaster. To make matters worse, your mechanic is passed out on the floor. It seems like your favorite mechanic has been having some trouble lately.";
                 } else if (sel == 3) {
@@ -2454,7 +2454,7 @@ function (me) {
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
-            await spend(l00EC, 0);
+            await spend(cost, 0);
             {
                 const sel = ((Mod(player.arrivalRoll, 4)) + 1);
                 if (sel == 1) {
@@ -2481,18 +2481,18 @@ function (me) {
             {
                 const sel = randomBetween(1, 3);
                 if (sel == 1) {
-                    b_Message.Caption = "With a few spare parts and some hard work, your mechanic manages to " + l00EA + ".";
+                    b_Message.Caption = "With a few spare parts and some hard work, your mechanic manages to " + upgrade + ".";
                 } else if (sel == 2) {
-                    b_Message.Caption = "Your mechanic is successful! In no time, he manages to " + l00EA + ".";
+                    b_Message.Caption = "Your mechanic is successful! In no time, he manages to " + upgrade + ".";
                 } else if (sel == 3) {
-                    b_Message.Caption = "Your mechanic labors day and night to " + l00EA + ". It's difficult work, but he does a fantastic job!";
+                    b_Message.Caption = "Your mechanic labors day and night to " + upgrade + ". It's difficult work, but he does a fantastic job!";
                 }
             }
         }
         b_Button.Caption = "Return to Main Menu";
     }
 
-    function sub04BF() {
+    function askZinnFavor() {
         b_Timer.Enabled = -1;
         {
             const sel = randomBetween(1, 31);
@@ -2742,18 +2742,18 @@ function (me) {
     }
 
     function Form_Load() {
-        let l00F0 = 0;
-        let l00F2 = 0;
-        let l00F4 = 0;
-        let l00F6 = 0;
-        let l00F8 = "";
-        let l0100 = 0;
-        let l0102 = 0;
-        let l0104 = 0;
-        let l0106 = 0;
-        let l0108 = 0;
-        m001C = 1;
-        m001A = 1;
+        let category = 0;
+        let item = 0;
+        let amount = 0;
+        let pricePerTon = 0;
+        let description = "";
+        let c = 0;
+        let i = 0;
+        let step = 0;
+        let minPrice = 0;
+        let maxPrice = 0;
+        frameCount = 1;
+        animFrame = 1;
         if (game.planetNames[game.planet[game.currentPlayer]] == "Vexx") {
             if (player.specialDone == -1) {
                 b_Message.Caption = "You have already completed your PLANET SPECIAL for this turn. Try again next turn.";
@@ -2829,34 +2829,34 @@ function (me) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "dealer1.bmp");
             Label1.Caption = "Casino Dealer";
         } else if (game.planetNames[game.planet[game.currentPlayer]] == "Queg") {
-            l00F0 = Mod(game.turn, 3);
-            l00F2 = Mod(player.arrivalRoll, 6);
-            l0104 = 0;
-            l0106 = 0;
-            l0108 = 0;
-            for (l0100 = 0; l0100 <= 2; l0100++) {
-                for (l0102 = 0; l0102 <= 5; l0102++) {
-                    l0104 = l0104 + 5;
-                    l0106 = (game.marketDifficulty + 1) * l0104;
-                    l0108 = l0108 + 40;
-                    if (l0100 == l00F0 && l0102 == l00F2) {
-                        l0100 = 2;
-                        l0102 = 5;
+            category = Mod(game.turn, 3);
+            item = Mod(player.arrivalRoll, 6);
+            step = 0;
+            minPrice = 0;
+            maxPrice = 0;
+            for (c = 0; c <= 2; c++) {
+                for (i = 0; i <= 5; i++) {
+                    step = step + 5;
+                    minPrice = (game.marketDifficulty + 1) * step;
+                    maxPrice = maxPrice + 40;
+                    if (c == category && i == item) {
+                        c = 2;
+                        i = 5;
                     }
                 }
             }
-            l00F4 = CLng((player.cargoCapacity * CLng(player.arrivalRoll)) / 100);
-            if (l00F4 < (player.cargoCapacity / 2)) {
-                l00F4 = CLng((player.cargoCapacity / 2));
+            amount = CLng((player.cargoCapacity * CLng(player.arrivalRoll)) / 100);
+            if (amount < (player.cargoCapacity / 2)) {
+                amount = CLng((player.cargoCapacity / 2));
             }
-            l00F6 = CLng(l0106 + ((l0108 - l0106) * (game.weeklyRoll / 100)));
-            if (l00F6 > game.prices[game.planet[game.currentPlayer]][l00F0][l00F2]) {
-                l00F6 = game.prices[game.planet[game.currentPlayer]][l00F0][l00F2];
+            pricePerTon = CLng(minPrice + ((maxPrice - minPrice) * (game.weeklyRoll / 100)));
+            if (pricePerTon > game.prices[game.planet[game.currentPlayer]][category][item]) {
+                pricePerTon = game.prices[game.planet[game.currentPlayer]][category][item];
             }
             if (player.specialDone == -1) {
                 b_Message.Caption = "You have already completed your PLANET SPECIAL for this turn. Try again next turn.";
             } else {
-                b_Message.Caption = "Queg is the infamous renegade planet. It is here that the galaxy's most notorious gangsters come to unload their wares." + "\n" + "\n" + "This week Lady Cornucopia, the ruler of Queg, offers to sell you " + Format(l00F4, "#,#0") + " tons of " + Trim(game.commodityNames[l00F0][l00F2]) + " for only " + Format(l00F6, "#,#0") + " kubars per ton." + "\n" + "\n" + "The current market price of " + Trim(game.commodityNames[l00F0][l00F2]) + " on Queg is " + Format(game.prices[game.planet[game.currentPlayer]][l00F0][l00F2], "#,#0") + " kubars per ton.";
+                b_Message.Caption = "Queg is the infamous renegade planet. It is here that the galaxy's most notorious gangsters come to unload their wares." + "\n" + "\n" + "This week Lady Cornucopia, the ruler of Queg, offers to sell you " + Format(amount, "#,#0") + " tons of " + Trim(game.commodityNames[category][item]) + " for only " + Format(pricePerTon, "#,#0") + " kubars per ton." + "\n" + "\n" + "The current market price of " + Trim(game.commodityNames[category][item]) + " on Queg is " + Format(game.prices[game.planet[game.currentPlayer]][category][item], "#,#0") + " kubars per ton.";
             }
             b_Button.Caption = "Purchase from Lady Cornucopia";
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "cornu1.bmp");
@@ -2866,30 +2866,30 @@ function (me) {
             {
                 const sel = ((Mod(player.arrivalRoll, 4)) + 1);
                 if (sel == 1) {
-                    l00F8 = "turbocharge your ship's engine";
+                    description = "turbocharge your ship's engine";
                 } else if (sel == 2) {
-                    l00F8 = "expand your ship's cargo bay by 10 tons";
+                    description = "expand your ship's cargo bay by 10 tons";
                 } else if (sel == 3) {
-                    l00F8 = "expand your ship's passenger capacity by 1 seat";
+                    description = "expand your ship's passenger capacity by 1 seat";
                 } else if (sel == 4) {
-                    l00F8 = "expand your ship's fuel tank capacity by 5 tons";
+                    description = "expand your ship's fuel tank capacity by 5 tons";
                 }
             }
-            l00F4 = (CLng(player.arrivalRoll) * CLng(game.weeklyRoll)) * 6;
+            amount = (CLng(player.arrivalRoll) * CLng(game.weeklyRoll)) * 6;
             if (player.specialDone == -1) {
                 b_Message.Caption = "You have already completed your PLANET SPECIAL for this turn. Try again next turn.";
             } else {
-                b_Message.Caption = "Xeen is one giant junkyard filled with spare parts and brilliant mechanics." + "\n" + "\n" + "Your favorite mechanic claims he has found the necessary parts and can " + l00F8 + ", but it will cost you " + Format(l00F4, "#,#0") + " kubars.";
+                b_Message.Caption = "Xeen is one giant junkyard filled with spare parts and brilliant mechanics." + "\n" + "\n" + "Your favorite mechanic claims he has found the necessary parts and can " + description + ", but it will cost you " + Format(amount, "#,#0") + " kubars.";
             }
             b_Button.Caption = "Upgrade Your Ship";
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "mechan1.bmp");
             Label1.Caption = "Your Mechanic";
         } else if (game.planetNames[game.planet[game.currentPlayer]] == "Ooom") {
-            l00F4 = CLng(CLng(player.arrivalRoll) * (game.shipSize[game.currentPlayer] / 10));
+            amount = CLng(CLng(player.arrivalRoll) * (game.shipSize[game.currentPlayer] / 10));
             if (player.specialDone == -1) {
                 b_Message.Caption = "You have already completed your PLANET SPECIAL for this turn. Try again next turn.";
             } else {
-                b_Message.Caption = "Ooom is known throughout the galaxy as the Fortune Teller's Planet. This is because the Soothsayers of Ooom have the uncanny ability to predict the future by scanning one's aura for positive or negative energy." + "\n" + "\n" + "This week the Soothsayers are charging " + Format(l00F4, "#,#0") + " kubars for their service.";
+                b_Message.Caption = "Ooom is known throughout the galaxy as the Fortune Teller's Planet. This is because the Soothsayers of Ooom have the uncanny ability to predict the future by scanning one's aura for positive or negative energy." + "\n" + "\n" + "This week the Soothsayers are charging " + Format(amount, "#,#0") + " kubars for their service.";
             }
             b_Button.Caption = "Have Your Fortune Read";
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "sooth3.bmp");
@@ -2899,31 +2899,31 @@ function (me) {
             {
                 const sel = ((Mod(player.arrivalRoll, 10)) + 1);
                 if (sel == 1) {
-                    l00F8 = "on hottest daytime TV talk show";
+                    description = "on hottest daytime TV talk show";
                 } else if (sel == 2) {
-                    l00F8 = "on prime time TV";
+                    description = "on prime time TV";
                 } else if (sel == 3) {
-                    l00F8 = "with Kukubia's most famous sports star";
+                    description = "with Kukubia's most famous sports star";
                 } else if (sel == 4) {
-                    l00F8 = "with the Ministry of Travel";
+                    description = "with the Ministry of Travel";
                 } else if (sel == 5) {
-                    l00F8 = "with a journalist from the Astral Reporter";
+                    description = "with a journalist from the Astral Reporter";
                 } else if (sel == 6) {
-                    l00F8 = "on late night TV";
+                    description = "on late night TV";
                 } else if (sel == 7) {
-                    l00F8 = "with the Cosmic Consumer Caucus";
+                    description = "with the Cosmic Consumer Caucus";
                 } else if (sel == 8) {
-                    l00F8 = "with the Interplanetary Inquirer";
+                    description = "with the Interplanetary Inquirer";
                 } else if (sel == 9) {
-                    l00F8 = "on Planet Line News";
+                    description = "on Planet Line News";
                 } else if (sel == 10) {
-                    l00F8 = "at the Ceremony of the Stars";
+                    description = "at the Ceremony of the Stars";
                 }
             }
             if (player.specialDone == -1) {
                 b_Message.Caption = "You have already completed your PLANET SPECIAL for this turn. Try again next turn.";
             } else {
-                b_Message.Caption = "Hork is the media capital of Kukubia, affectionately known as Horkywood. You have an agent, whose job is to get your company free publicity." + "\n" + "\n" + "This week your agent claims to have a mega media event scheduled for you " + l00F8 + ". Do you want to do it?";
+                b_Message.Caption = "Hork is the media capital of Kukubia, affectionately known as Horkywood. You have an agent, whose job is to get your company free publicity." + "\n" + "\n" + "This week your agent claims to have a mega media event scheduled for you " + description + ". Do you want to do it?";
             }
             b_Button.Caption = "Do it!";
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "agent1.bmp");
@@ -2958,10 +2958,10 @@ function (me) {
     return {
         b_Button_Click, b_Button_MouseDown, b_Button_MouseUp, b_Exit_Click,
         b_Exit_MouseDown, b_Exit_MouseUp, b_Help_Click, b_Help_MouseDown,
-        b_Help_MouseUp, b_Timer_Timer, sub0451, sub045B,
-        sub0465, sub046F, sub0479, sub0483,
-        sub048D, sub0497, sub04A1, sub03A7,
-        sub04B5, sub04C9, sub04AB, sub04D3,
-        sub04BF, Form_Activate, Form_KeyPress, Form_Load,
+        b_Help_MouseUp, b_Timer_Timer, visitStockBroker, askLowerPremiums,
+        doMediaEvent, grantShipLeave, visitGrandSages, buyDiscountFuel,
+        readFortune, buyFasterEngine, buyFromCornucopia, doPlanetSpecial,
+        askTradersUnion, gamble, petitionMagistrate, upgradeShip,
+        askZinnFavor, Form_Activate, Form_KeyPress, Form_Load,
     };
 });

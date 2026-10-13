@@ -22,8 +22,8 @@ function (me) {
     const { b_Yes, b_OK, b_Message } = me.controls;
     const HOURGLASS = 11;
     const ARROW_CURSOR = 1;
-    let m001A = 0;
-    let m001C = 0;
+    let zinnFrame = 0;
+    let frameCount = 0;
 
     function b_No_Click() {
         me.MousePointer = HOURGLASS;
@@ -56,31 +56,31 @@ function (me) {
     }
 
     function b_Timer_Timer() {
-        if (m001A == 1) {
+        if (zinnFrame == 1) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zinn2.bmp");
-        } else if (m001A == 2) {
+        } else if (zinnFrame == 2) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zinn3.bmp");
-        } else if (m001A == 3) {
+        } else if (zinnFrame == 3) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zinn3.bmp");
-        } else if (m001A == 4) {
+        } else if (zinnFrame == 4) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zinn2.bmp");
-        } else if (m001A == 5) {
+        } else if (zinnFrame == 5) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ZINN.BMP");
         }
-        m001A = m001A + 1;
-        if (m001A == 6) {
-            m001A = 1;
+        zinnFrame = zinnFrame + 1;
+        if (zinnFrame == 6) {
+            zinnFrame = 1;
         }
-        m001C = m001C + 1;
-        if (m001A == 3) {
+        frameCount = frameCount + 1;
+        if (zinnFrame == 3) {
             b_Timer.Interval = 200;
         } else {
             b_Timer.Interval = 1;
         }
-        if (m001C == 6) {
+        if (frameCount == 6) {
             b_Timer.Enabled = 0;
-            m001C = 1;
-            m001A = 1;
+            frameCount = 1;
+            zinnFrame = 1;
         }
     }
 
@@ -113,8 +113,8 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = HOURGLASS;
-        m001A = 1;
-        m001C = 1;
+        zinnFrame = 1;
+        frameCount = 1;
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ZINN.BMP");
         me.Tag = "NO";
     }

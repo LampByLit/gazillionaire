@@ -22,7 +22,7 @@ function (me) {
     const RED = 255;
 
     function b_All_Click() {
-        sub1D40();
+        drawAllHistory();
     }
 
     function b_All_MouseDown(Button, Shift, X, Y) {
@@ -34,16 +34,16 @@ function (me) {
     }
 
     function b_Computer_Click() {
-        let l0038 = 0;
-        let l003A = 0;
-        let l003C = 0;
+        let numWeeks = 0;
+        let i = 0;
+        let week = 0;
         const ARROW_CURSOR = 1;
         me.MousePointer = HOURGLASS;
         updateRivalNetWorth();
         Graph1.DataReset = 9;
         if (game.turn > 20) {
-            for (l003A = 20; l003A >= 0; l003A--) {
-                Graph1.LabelText = Format(game.turn - l003A, "#,#0");
+            for (i = 20; i >= 0; i--) {
+                Graph1.LabelText = Format(game.turn - i, "#,#0");
             }
         }
         Graph1.NumSets = game.numRivals;
@@ -91,21 +91,21 @@ function (me) {
             Graph1.ColorData = 9;
         }
         if (game.turn + 1 <= 21) {
-            l0038 = game.turn + 1;
+            numWeeks = game.turn + 1;
         } else {
-            l0038 = 21;
+            numWeeks = 21;
         }
-        Graph1.NumPoints = l0038;
-        for (l003A = 1; l003A <= game.numRivals; l003A++) {
-            Graph1.LegendText = Trim(rivals.companyNames[l003A]);
+        Graph1.NumPoints = numWeeks;
+        for (i = 1; i <= game.numRivals; i++) {
+            Graph1.LegendText = Trim(rivals.companyNames[i]);
         }
         Graph1.BottomTitle = "This graph shows the change in each company's net worth over time.";
-        for (l003A = 1; l003A <= game.numRivals; l003A++) {
-            for (l003C = 0; l003C <= (l0038 - 1); l003C++) {
-                if (l003C == (l0038 - 1)) {
-                    Graph1.GraphData = rivals.netWorth[l003A];
+        for (i = 1; i <= game.numRivals; i++) {
+            for (week = 0; week <= (numWeeks - 1); week++) {
+                if (week == (numWeeks - 1)) {
+                    Graph1.GraphData = rivals.netWorth[i];
                 } else {
-                    Graph1.GraphData = rivals.netWorthHistory[l003A][l003C];
+                    Graph1.GraphData = rivals.netWorthHistory[i][week];
                 }
             }
         }
@@ -169,14 +169,14 @@ function (me) {
     }
 
     function b_Human_Click() {
-        let l00AC = 0;
-        let l00AE = 0;
-        let l00B0 = 0;
+        let i = 0;
+        let week = 0;
+        let numWeeks = 0;
         me.MousePointer = HOURGLASS;
         Graph1.DataReset = 9;
         if (game.turn > 20) {
-            for (l00AC = 20; l00AC >= 0; l00AC--) {
-                Graph1.LabelText = Format(game.turn - l00AC, "#,#0");
+            for (i = 20; i >= 0; i--) {
+                Graph1.LabelText = Format(game.turn - i, "#,#0");
             }
         }
         Graph1.NumSets = game.numPlayers;
@@ -293,26 +293,26 @@ function (me) {
             }
         }
         if (game.turn + 1 <= 21) {
-            l00B0 = game.turn + 1;
+            numWeeks = game.turn + 1;
         } else {
-            l00B0 = 21;
+            numWeeks = 21;
         }
-        Graph1.NumPoints = l00B0;
-        for (l00AC = 1; l00AC <= game.numPlayers; l00AC++) {
-            Graph1.LegendText = Trim(game.companyNames[l00AC]);
+        Graph1.NumPoints = numWeeks;
+        for (i = 1; i <= game.numPlayers; i++) {
+            Graph1.LegendText = Trim(game.companyNames[i]);
         }
         Graph1.BottomTitle = "This graph shows the change in each company's net worth over time.";
-        for (l00AC = 1; l00AC <= game.numPlayers; l00AC++) {
-            for (l00AE = 0; l00AE <= (l00B0 - 1); l00AE++) {
-                if (l00AE == (l00B0 - 1)) {
-                    if (game.graphShowCompany[l00AC] == 0) {
-                        Graph1.GraphData = game.netWorth[l00AC];
+        for (i = 1; i <= game.numPlayers; i++) {
+            for (week = 0; week <= (numWeeks - 1); week++) {
+                if (week == (numWeeks - 1)) {
+                    if (game.graphShowCompany[i] == 0) {
+                        Graph1.GraphData = game.netWorth[i];
                     } else {
                         Graph1.GraphData = 0;
                     }
                 } else {
-                    if (game.graphShowCompany[l00AC] == 0) {
-                        Graph1.GraphData = game.netWorthHistory[l00AC][l00AE];
+                    if (game.graphShowCompany[i] == 0) {
+                        Graph1.GraphData = game.netWorthHistory[i][week];
                     } else {
                         Graph1.GraphData = 0;
                     }
@@ -331,16 +331,16 @@ function (me) {
         b_Human.BackColor = 0xC0C0C0;
     }
 
-    function sub1D40() {
-        let l00C8 = 0;
-        let l00CA = 0;
-        let l00CC = 0;
+    function drawAllHistory() {
+        let i = 0;
+        let week = 0;
+        let numWeeks = 0;
         me.MousePointer = HOURGLASS;
         updateRivalNetWorth();
         Graph1.DataReset = 9;
         if (game.turn > 20) {
-            for (l00C8 = 20; l00C8 >= 0; l00C8--) {
-                Graph1.LabelText = Format(game.turn - l00C8, "#,#0");
+            for (i = 20; i >= 0; i--) {
+                Graph1.LabelText = Format(game.turn - i, "#,#0");
             }
         }
         Graph1.NumSets = game.numPlayers + game.numRivals;
@@ -493,41 +493,41 @@ function (me) {
             Graph1.ColorData = 9;
         }
         if (game.turn + 1 <= 21) {
-            l00CC = game.turn + 1;
+            numWeeks = game.turn + 1;
         } else {
-            l00CC = 21;
+            numWeeks = 21;
         }
-        Graph1.NumPoints = l00CC;
-        for (l00C8 = 1; l00C8 <= game.numPlayers; l00C8++) {
-            Graph1.LegendText = Trim(game.companyNames[l00C8]);
+        Graph1.NumPoints = numWeeks;
+        for (i = 1; i <= game.numPlayers; i++) {
+            Graph1.LegendText = Trim(game.companyNames[i]);
         }
-        for (l00C8 = 1; l00C8 <= game.numRivals; l00C8++) {
-            Graph1.LegendText = Trim(rivals.companyNames[l00C8]);
+        for (i = 1; i <= game.numRivals; i++) {
+            Graph1.LegendText = Trim(rivals.companyNames[i]);
         }
         Graph1.BottomTitle = "This graph shows the change in each company's net worth over time.";
-        for (l00C8 = 1; l00C8 <= game.numPlayers; l00C8++) {
-            for (l00CA = 0; l00CA <= (l00CC - 1); l00CA++) {
-                if (l00CA == (l00CC - 1)) {
-                    if (game.graphShowCompany[l00C8] == 0) {
-                        Graph1.GraphData = game.netWorth[l00C8];
+        for (i = 1; i <= game.numPlayers; i++) {
+            for (week = 0; week <= (numWeeks - 1); week++) {
+                if (week == (numWeeks - 1)) {
+                    if (game.graphShowCompany[i] == 0) {
+                        Graph1.GraphData = game.netWorth[i];
                     } else {
                         Graph1.GraphData = 0;
                     }
                 } else {
-                    if (game.graphShowCompany[l00C8] == 0) {
-                        Graph1.GraphData = game.netWorthHistory[l00C8][l00CA];
+                    if (game.graphShowCompany[i] == 0) {
+                        Graph1.GraphData = game.netWorthHistory[i][week];
                     } else {
                         Graph1.GraphData = 0;
                     }
                 }
             }
         }
-        for (l00C8 = 1; l00C8 <= game.numRivals; l00C8++) {
-            for (l00CA = 0; l00CA <= (l00CC - 1); l00CA++) {
-                if (l00CA == (l00CC - 1)) {
-                    Graph1.GraphData = rivals.netWorth[l00C8];
+        for (i = 1; i <= game.numRivals; i++) {
+            for (week = 0; week <= (numWeeks - 1); week++) {
+                if (week == (numWeeks - 1)) {
+                    Graph1.GraphData = rivals.netWorth[i];
                 } else {
-                    Graph1.GraphData = rivals.netWorthHistory[l00C8][l00CA];
+                    Graph1.GraphData = rivals.netWorthHistory[i][week];
                 }
             }
         }
@@ -535,14 +535,14 @@ function (me) {
         me.MousePointer = ARROW_CURSOR;
     }
 
-    function sub1E3B() {
-        let l00CE = 0;
-        let l00D0 = 0;
-        let l00D2 = 0;
+    function drawCurrentPlayerHistory() {
+        let i = 0;
+        let week = 0;
+        let numWeeks = 0;
         Graph1.DataReset = 9;
         if (game.turn > 20) {
-            for (l00CE = 20; l00CE >= 0; l00CE--) {
-                Graph1.LabelText = Format(game.turn - l00CE, "#,#0");
+            for (i = 20; i >= 0; i--) {
+                Graph1.LabelText = Format(game.turn - i, "#,#0");
             }
         }
         Graph1.NumSets = 1;
@@ -560,25 +560,25 @@ function (me) {
             Graph1.ColorData = 10;
         }
         if (game.turn + 1 <= 21) {
-            l00D2 = game.turn + 1;
+            numWeeks = game.turn + 1;
         } else {
-            l00D2 = 21;
+            numWeeks = 21;
         }
-        Graph1.NumPoints = l00D2;
+        Graph1.NumPoints = numWeeks;
         Graph1.LegendText = Trim(game.companyNames[game.currentPlayer]);
         Graph1.BottomTitle = "This graph shows the change in each company's net worth over time.";
-        for (l00D0 = 0; l00D0 <= (l00D2 - 1); l00D0++) {
-            if (l00D0 == (l00D2 - 1)) {
+        for (week = 0; week <= (numWeeks - 1); week++) {
+            if (week == (numWeeks - 1)) {
                 Graph1.GraphData = game.netWorth[game.currentPlayer];
             } else {
-                Graph1.GraphData = game.netWorthHistory[game.currentPlayer][l00D0];
+                Graph1.GraphData = game.netWorthHistory[game.currentPlayer][week];
             }
         }
     }
 
     function Form_Activate() {
         if (me.Tag == "BANKRUPT") {
-            sub1E3B();
+            drawCurrentPlayerHistory();
         }
         if (me.Tag == "NEWTURN" && game.tutorialMode == -1 && game.turn >= 10 || game.complexity >= 8) {
             Graph1.GraphTitle = "Company History on Turn " + Format(game.turn, "#,#0");
@@ -613,9 +613,9 @@ function (me) {
     function Form_Load() {
         me.MousePointer = HOURGLASS;
         if (me.Tag == "BANKRUPT") {
-            sub1E3B();
+            drawCurrentPlayerHistory();
         } else {
-            sub1D40();
+            drawAllHistory();
         }
     }
 
@@ -638,8 +638,8 @@ function (me) {
         b_All_Click, b_All_MouseDown, b_All_MouseUp, b_Computer_Click,
         b_Computer_MouseDown, b_Computer_MouseUp, b_ExitHistory_Click, b_ExitHistory_MouseDown,
         b_ExitHistory_MouseUp, b_Help_Click, b_Help_MouseDown, b_Help_MouseUp,
-        b_Human_Click, b_Human_MouseDown, b_Human_MouseUp, sub1D40,
-        sub1E3B, Form_Activate, Form_KeyPress, Form_Load,
+        b_Human_Click, b_Human_MouseDown, b_Human_MouseUp, drawAllHistory,
+        drawCurrentPlayerHistory, Form_Activate, Form_KeyPress, Form_Load,
         Graph1_Click,
     };
 });

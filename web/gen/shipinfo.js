@@ -152,19 +152,19 @@ function (me) {
     }
 
     async function b_PassengerButton_Click() {
-        let l00D4 = 0;
-        let l00D6 = 0;
+        let onBoard = 0;
+        let waiting = 0;
         me.MousePointer = HOURGLASS;
         await Load(frm_ShipInfoBox);
         frm_ShipInfoBox.Caption = "Passenger Capacity";
         if (player.passengersBoarded == -1) {
-            l00D4 = player.passengersAboard;
-            l00D6 = player.passengersWaiting - player.passengersAboard;
+            onBoard = player.passengersAboard;
+            waiting = player.passengersWaiting - player.passengersAboard;
         } else {
-            l00D4 = 0;
-            l00D6 = player.passengersWaiting;
+            onBoard = 0;
+            waiting = player.passengersWaiting;
         }
-        frm_ShipInfoBox.b_Message.Caption = "The number of passengers a ship can carry depends on its size and type. The ship you own now can accommodate up to " + Format(player.passengerCapacity, "#,#0") + " passengers. The more you spend on passenger advertising, the more people will want to travel on your ship. On the other hand, the more you charge for tickets, the fewer passengers you'll get. At this time you have " + Format(l00D4, "#,#0") + " passenger(s) on your ship and " + Format(l00D6, "#,#0") + " passenger(s) waiting to buy tickets.";
+        frm_ShipInfoBox.b_Message.Caption = "The number of passengers a ship can carry depends on its size and type. The ship you own now can accommodate up to " + Format(player.passengerCapacity, "#,#0") + " passengers. The more you spend on passenger advertising, the more people will want to travel on your ship. On the other hand, the more you charge for tickets, the fewer passengers you'll get. At this time you have " + Format(onBoard, "#,#0") + " passenger(s) on your ship and " + Format(waiting, "#,#0") + " passenger(s) waiting to buy tickets.";
         await frm_ShipInfoBox.Show(1);
         me.MousePointer = ARROW_CURSOR;
     }
@@ -227,36 +227,36 @@ function (me) {
         b_ShipSpeedButton.BackColor = 0x400000;
     }
 
-    function sub2339() {
-        let l0130 = "";
+    function showShipInfo() {
+        let shipName = "";
         b_Passengers.Caption = " Passenger Capacity:  " + Format(player.passengerCapacity, "#,#0");
         b_Speed.Caption = " Engine Speed:  " + Format(game.engineSpeed[game.currentPlayer], "#,#0") + " kuarps";
         if (game.shipType[game.currentPlayer] == 1) {
-            l0130 = "Stinger XII";
+            shipName = "Stinger XII";
         } else if (game.shipType[game.currentPlayer] == 2) {
-            l0130 = "Fly Catcher";
+            shipName = "Fly Catcher";
         } else if (game.shipType[game.currentPlayer] == 3) {
-            l0130 = "Le Rock";
+            shipName = "Le Rock";
         } else if (game.shipType[game.currentPlayer] == 4) {
-            l0130 = "Whaler 2000";
+            shipName = "Whaler 2000";
         } else if (game.shipType[game.currentPlayer] == 5) {
-            l0130 = "Retina";
+            shipName = "Retina";
         } else if (game.shipType[game.currentPlayer] == 6) {
-            l0130 = "Cerebralis";
+            shipName = "Cerebralis";
         } else if (game.shipType[game.currentPlayer] == 7) {
-            l0130 = "The Globulizer";
+            shipName = "The Globulizer";
         } else if (game.shipType[game.currentPlayer] == 8) {
-            l0130 = "Locomotis";
+            shipName = "Locomotis";
         } else if (game.shipType[game.currentPlayer] == 9) {
-            l0130 = "Mantagon";
+            shipName = "Mantagon";
         } else if (game.shipType[game.currentPlayer] == 10) {
-            l0130 = "Kegger";
+            shipName = "Kegger";
         } else if (game.shipType[game.currentPlayer] == 11) {
-            l0130 = "Worm Shuttle";
+            shipName = "Worm Shuttle";
         } else if (game.shipType[game.currentPlayer] == 12) {
-            l0130 = "Squidocity";
+            shipName = "Squidocity";
         }
-        b_ShipName.Caption = "Ship Name:  " + l0130;
+        b_ShipName.Caption = "Ship Name:  " + shipName;
         b_CargoCapacity.Caption = " Cargo Capacity:  " + Format(player.cargoCapacity, "#,#0");
         b_ShipTons.Caption = " Ship Size: " + Format(game.shipSize[game.currentPlayer], "#,#0") + " tons";
         b_EmployeeSalary.Caption = "Salary Per Person..... " + Format(player.crewSalary, "#,#0") + " kubars";
@@ -299,7 +299,7 @@ function (me) {
             frm_Box1.b_Message.Caption = "Because you are playing the TUTORIAL game, you will notice that many of the ship's features are not yet included. As you play, these features will gradually be added to the game." + "\n" + "\n" + "For example, you cannot buy a larger engine until the PLANET SPECIAL feature is introduced to the game, and this happens near the end of the TUTORIAL.";
             await frm_Box1.Show(1);
         }
-        sub2339();
+        showShipInfo();
     }
 
     return {
@@ -310,7 +310,7 @@ function (me) {
         b_Help_MouseDown, b_Help_MouseUp, b_PassengerButton_Click, b_PassengerButton_MouseDown,
         b_PassengerButton_MouseUp, b_PurchaseButton_Click, b_PurchaseButton_MouseDown, b_PurchaseButton_MouseUp,
         b_ShipSizeButton_Click, b_ShipSizeButton_MouseDown, b_ShipSizeButton_MouseUp, b_ShipSpeedButton_Click,
-        b_ShipSpeedButton_MouseDown, b_ShipSpeedButton_MouseUp, sub2339, Form_Activate,
+        b_ShipSpeedButton_MouseDown, b_ShipSpeedButton_MouseUp, showShipInfo, Form_Activate,
         Form_KeyPress, Form_Load,
     };
 });

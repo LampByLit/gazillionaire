@@ -1,8 +1,10 @@
 """Apply tools/names.json to the JavaScript in web/ - gives the decompiler's cryptic names real ones.
 
-usage: python rename.py            apply names.json (refuses on any collision), then syntax-check with node
-       python rename.py --dry      show what would change without writing
-       python rename.py --report   list remaining cryptic names, per file
+usage: python rename.py                  apply names.json (refuses on any collision), then syntax-check with node
+       python rename.py --dry            show what would change without writing
+       python rename.py --report         list remaining cryptic names, per file
+       python rename.py --scopes f.js    list remaining cryptic names in f.js, per function
+       python rename.py --extra=part.json   check names.json plus a proposal file, without writing
 
 names.json - always keyed by ORIGINAL cryptic names, so it doubles as the permanent legend:
   "global": {"gv0BF2": "player", "M4CF9": "cash", "sub00A2": "..."}   everywhere (incl. web/vb.js)
@@ -141,10 +143,45 @@ def validate(scope, mapping, taken, types=None):
     return errs
 
 
+def merge(names, extra):
+    for key in ("global", "files", "locals"):
+        for k, v in extra.get(key, {}).items():
+            if key == "global":
+                names[key][k] = v
+            elif key == "files":
+                names[key].setdefault(k, {}).update(v)
+            else:
+                for fn, m in v.items():
+                    names[key].setdefault(k, {}).setdefault(fn, {}).update(m)
+
+
+def scopes(fname, text):
+    """Print remaining cryptic names in a file: form level, then per function."""
+    spans = []
+    for m in re.finditer(r"^ {0,4}(?:async\s+)?function\s+(\w+)\s*\(", text, re.M):
+        spans.append((m.group(1), function_span(text, m.group(1))))
+    inner = set()
+    for name, (a, b) in spans:
+        left = sorted({t for _, t in tokens(text[a:b]) if CRYPTIC.fullmatch(t)} - {name})
+        local = [t for t in left if re.match(r"(l|p|pv)[0-9A-F]{4}$", t) or
+                 re.search(rf"^ {{8,}}const {t} =", text[a:b], re.M)]
+        inner |= set(local)
+        if local:
+            print(f"  function {name}: {' '.join(local)}")
+    top = sorted({t for _, t in tokens(text) if CRYPTIC.fullmatch(t)} - inner)
+    print(f"{fname} form level: {' '.join(top)}")
+
+
 def main():
-    args = set(sys.argv[1:])
+    args = {a for a in sys.argv[1:] if not a.startswith("--extra=")}
+    extra = [a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--extra=")]
     files = {p.name: p.read_text(encoding="utf-8") for p in sorted(GEN.glob("*.js"))}
     vbjs = (WEB / "vb.js").read_text(encoding="utf-8")
+
+    if "--scopes" in args:
+        for fname in sorted(args - {"--scopes"}):
+            scopes(fname, files[fname])
+        return
 
     if "--report" in args:
         total = 0
@@ -157,6 +194,9 @@ def main():
         return
 
     names = load_names()
+    for path in extra:
+        merge(names, json.loads(Path(path).read_text(encoding="utf-8")))
+        args.add("--dry")
     present = {t for text in [vbjs, *files.values()] for _, t in tokens(text)}
     pending_global = {o: n for o, n in names["global"].items() if o in present}
     errs = []

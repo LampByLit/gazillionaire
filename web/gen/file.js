@@ -31,7 +31,7 @@ function (me) {
     const HOURGLASS = 11;
     const LIGHT_GRAY = 12632256;
     const ARROW_CURSOR = 1;
-    let m00AC = 0;
+    let buttonUpColor = 0;
 
     async function b_AboutGame_Click() {
         me.MousePointer = HOURGLASS;
@@ -176,7 +176,7 @@ function (me) {
     }
 
     function b_Exit_MouseUp(Button, Shift, X, Y) {
-        b_Exit.BackColor = m00AC;
+        b_Exit.BackColor = buttonUpColor;
     }
 
     async function b_Help_Click() {
@@ -197,7 +197,7 @@ function (me) {
     }
 
     function b_Help_MouseUp(Button, Shift, X, Y) {
-        b_Help.BackColor = m00AC;
+        b_Help.BackColor = buttonUpColor;
     }
 
     async function b_Load_Click() {

@@ -29,8 +29,8 @@ function (me) {
     const { VSElastic1, b_Planet, b_Message } = me.controls;
     const HOURGLASS = 11;
     const ARROW_CURSOR = 1;
-    let m001A = 0;
-    let m001E = 0;
+    let selectedPlanet = 0;
+    let rowCount = 0;
 
     async function b_Exit_Click() {
         me.MousePointer = HOURGLASS;
@@ -85,17 +85,17 @@ function (me) {
 
     function b_Planet_Click(Index) {
         me.MousePointer = HOURGLASS;
-        m001A = CLng(Index);
-        sub30FA();
-        sub3113();
+        selectedPlanet = CLng(Index);
+        fillFacilityGrid();
+        sizeGrid();
         me.MousePointer = ARROW_CURSOR;
     }
 
-    function sub30FA() {
-        let l0094 = 0;
-        let l0096 = 0;
-        let l0098 = 0;
-        let l009A = 0;
+    function fillFacilityGrid() {
+        let col = 0;
+        let human = 0;
+        let rival = 0;
+        let row = 0;
         if (settings.soundOn == -1 && b_Sound.Tag == "First Sound = True") {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "ping1.wav";
@@ -103,91 +103,91 @@ function (me) {
             b_Sound.Command = "Play";
         }
         b_Sound.Tag = "First Sound = True";
-        if (m001A == 7) {
+        if (selectedPlanet == 7) {
             b_Message.Caption = "Click on the PLANET ICONS to see the FACILITIES located on each planet.";
         } else {
-            b_Message.Caption = "Facilities on " + UCase(Trim(game.planetNames[m001A]));
+            b_Message.Caption = "Facilities on " + UCase(Trim(game.planetNames[selectedPlanet]));
         }
-        l009A = 0;
-        for (l0094 = 1; l0094 <= game.numPlayers; l0094++) {
-            if (game.graphShowCompany[l0094] == 0) {
-                l009A = l009A + 1;
+        row = 0;
+        for (col = 1; col <= game.numPlayers; col++) {
+            if (game.graphShowCompany[col] == 0) {
+                row = row + 1;
             }
         }
-        m001E = l009A + game.numRivals;
+        rowCount = row + game.numRivals;
         b_Grid.Cols = 4;
-        b_Grid.Rows = m001E + 1;
-        for (l0094 = 0; l0094 <= 3; l0094++) {
-            b_Grid.FixedAlignment[l0094] = 2;
+        b_Grid.Rows = rowCount + 1;
+        for (col = 0; col <= 3; col++) {
+            b_Grid.FixedAlignment[col] = 2;
         }
         b_Grid.Row = 0;
-        for (l0094 = 1; l0094 <= 3; l0094++) {
-            b_Grid.ColAlignment[l0094] = 2;
-            b_Grid.Col = l0094;
-            if (l0094 == 1) {
-                if (m001A == 7) {
+        for (col = 1; col <= 3; col++) {
+            b_Grid.ColAlignment[col] = 2;
+            b_Grid.Col = col;
+            if (col == 1) {
+                if (selectedPlanet == 7) {
                     b_Grid.Text = "Facilities";
                 } else {
-                    b_Grid.Text = "Facilities on " + Trim(game.planetNames[m001A]);
+                    b_Grid.Text = "Facilities on " + Trim(game.planetNames[selectedPlanet]);
                 }
-            } else if (l0094 == 2) {
+            } else if (col == 2) {
                 b_Grid.Text = "Fees (kubars)";
-            } else if (l0094 == 3) {
+            } else if (col == 3) {
                 b_Grid.Text = "Revenue (kubars)";
             }
         }
-        for (l0094 = 0; l0094 <= 3; l0094++) {
-            b_Grid.Col = l0094;
-            l009A = 0;
-            for (l0096 = 1; l0096 <= game.numPlayers; l0096++) {
-                if (game.graphShowCompany[l0096] == 0) {
-                    l009A = l009A + 1;
-                    b_Grid.Row = l009A;
-                    if (l0094 == 0) {
-                        b_Grid.Text = Trim(game.companyNames[l0096]);
-                    } else if (l0094 == 1) {
-                        if (m001A == 7) {
+        for (col = 0; col <= 3; col++) {
+            b_Grid.Col = col;
+            row = 0;
+            for (human = 1; human <= game.numPlayers; human++) {
+                if (game.graphShowCompany[human] == 0) {
+                    row = row + 1;
+                    b_Grid.Row = row;
+                    if (col == 0) {
+                        b_Grid.Text = Trim(game.companyNames[human]);
+                    } else if (col == 1) {
+                        if (selectedPlanet == 7) {
                             b_Grid.Text = "-----";
                         } else {
-                            b_Grid.Text = Format(game.facilitiesOwned[l0096][m001A], "#,#0");
+                            b_Grid.Text = Format(game.facilitiesOwned[human][selectedPlanet], "#,#0");
                         }
-                    } else if (l0094 == 2) {
-                        if (m001A == 7) {
+                    } else if (col == 2) {
+                        if (selectedPlanet == 7) {
                             b_Grid.Text = "-----";
                         } else {
-                            b_Grid.Text = Format(game.facilityFees[l0096][m001A], "#,#0");
+                            b_Grid.Text = Format(game.facilityFees[human][selectedPlanet], "#,#0");
                         }
-                    } else if (l0094 == 3) {
-                        if (m001A == 7) {
+                    } else if (col == 3) {
+                        if (selectedPlanet == 7) {
                             b_Grid.Text = "-----";
                         } else {
-                            b_Grid.Text = Format(game.facilityRevenue[l0096][m001A], "#,#0");
+                            b_Grid.Text = Format(game.facilityRevenue[human][selectedPlanet], "#,#0");
                         }
                     }
                 }
             }
-            for (l0098 = 1; l0098 <= game.numRivals; l0098++) {
-                l009A = l009A + 1;
-                b_Grid.Row = l009A;
-                if (l0094 == 0) {
-                    b_Grid.Text = Trim(rivals.companyNames[l0098]);
-                } else if (l0094 == 1) {
-                    if (m001A == 7) {
+            for (rival = 1; rival <= game.numRivals; rival++) {
+                row = row + 1;
+                b_Grid.Row = row;
+                if (col == 0) {
+                    b_Grid.Text = Trim(rivals.companyNames[rival]);
+                } else if (col == 1) {
+                    if (selectedPlanet == 7) {
                         b_Grid.Text = "-----";
                     } else {
-                        b_Grid.Text = Format(rivals.facilitiesOwned[l0098][m001A], "#,#0");
+                        b_Grid.Text = Format(rivals.facilitiesOwned[rival][selectedPlanet], "#,#0");
                     }
-                } else if (l0094 == 2) {
-                    if (m001A == 7) {
+                } else if (col == 2) {
+                    if (selectedPlanet == 7) {
                         b_Grid.Text = "-----";
                     } else {
-                        b_Grid.Text = Format(rivals.facilityFees[l0098][m001A], "#,#0");
+                        b_Grid.Text = Format(rivals.facilityFees[rival][selectedPlanet], "#,#0");
                     }
-                } else if (l0094 == 3) {
-                    if (m001A == 7) {
+                } else if (col == 3) {
+                    if (selectedPlanet == 7) {
                         b_Grid.Text = "-----";
                     } else {
-                        b_Grid.Text = Format(rivals.facilityRevenue[l0098][m001A], "#,#0");
+                        b_Grid.Text = Format(rivals.facilityRevenue[rival][selectedPlanet], "#,#0");
                     }
                 }
             }
@@ -196,19 +196,19 @@ function (me) {
         b_Grid.Col = 1;
     }
 
-    function sub3113() {
-        let l00B0 = 0;
-        let l00B4 = 0;
-        let l00B8 = 0;
+    function sizeGrid() {
+        let gridHeight = 0;
+        let gridWidth = 0;
+        let i = 0;
         b_Grid.ScrollBars = 0;
-        l00B0 = Screen.Height * 0.6;
-        l00B4 = Screen.Width * 0.99;
-        b_Grid.ColWidth[0] = l00B4 / 3.3;
-        for (l00B8 = 0; l00B8 <= m001E; l00B8++) {
-            b_Grid.RowHeight[l00B8] = l00B0 / (game.numPlayers + game.numRivals + 1);
+        gridHeight = Screen.Height * 0.6;
+        gridWidth = Screen.Width * 0.99;
+        b_Grid.ColWidth[0] = gridWidth / 3.3;
+        for (i = 0; i <= rowCount; i++) {
+            b_Grid.RowHeight[i] = gridHeight / (game.numPlayers + game.numRivals + 1);
         }
-        for (l00B8 = 1; l00B8 <= 3; l00B8++) {
-            b_Grid.ColWidth[l00B8] = (l00B4 - (l00B4 / 3.3)) / 3;
+        for (i = 1; i <= 3; i++) {
+            b_Grid.ColWidth[i] = (gridWidth - (gridWidth / 3.3)) / 3;
         }
     }
 
@@ -223,22 +223,22 @@ function (me) {
     }
 
     function Form_Load() {
-        let l00C0 = 0;
+        let planet = 0;
         me.MousePointer = HOURGLASS;
         b_Sound.Tag = "First Sound = False";
-        m001A = 7;
-        for (l00C0 = 0; l00C0 <= 6; l00C0++) {
-            b_Planet[l00C0].Picture = LoadPicture(Trim(paths.imageDir) + game.planetNames[l00C0] + "1.bmp");
-            b_Planet[l00C0].Caption = game.planetNames[l00C0];
+        selectedPlanet = 7;
+        for (planet = 0; planet <= 6; planet++) {
+            b_Planet[planet].Picture = LoadPicture(Trim(paths.imageDir) + game.planetNames[planet] + "1.bmp");
+            b_Planet[planet].Caption = game.planetNames[planet];
         }
-        sub30FA();
-        sub3113();
+        fillFacilityGrid();
+        sizeGrid();
     }
 
     return {
         b_Exit_Click, b_Exit_MouseDown, b_Exit_MouseUp, b_Help_Click,
         b_Help_MouseDown, b_Help_MouseUp, b_MainMenu_Click, b_MainMenu_MouseDown,
-        b_MainMenu_MouseUp, b_Planet_Click, sub30FA, sub3113,
+        b_MainMenu_MouseUp, b_Planet_Click, fillFacilityGrid, sizeGrid,
         Form_Activate, Form_KeyPress, Form_Load,
     };
 });

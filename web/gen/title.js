@@ -15,7 +15,7 @@ function (me) {
     const HOURGLASS = 11;
     const ARROW_CURSOR = 1;
 
-    async function sub050F() {
+    async function goToIntro() {
         me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await frm_Intro.Show();
@@ -23,7 +23,7 @@ function (me) {
     }
 
     async function FillElastic_Click() {
-        await sub050F();
+        await goToIntro();
     }
 
     function Form_Activate() {
@@ -31,7 +31,7 @@ function (me) {
     }
 
     async function Form_KeyPress(KeyAscii) {
-        await sub050F();
+        await goToIntro();
     }
 
     function Form_Load() {
@@ -47,23 +47,23 @@ function (me) {
     }
 
     async function Label1_Click() {
-        await sub050F();
+        await goToIntro();
     }
 
     async function Label2_Click() {
-        await sub050F();
+        await goToIntro();
     }
 
     async function Label3_Click() {
-        await sub050F();
+        await goToIntro();
     }
 
     async function Label4_Click() {
-        await sub050F();
+        await goToIntro();
     }
 
     return {
-        sub050F, FillElastic_Click, Form_Activate, Form_KeyPress,
+        goToIntro, FillElastic_Click, Form_Activate, Form_KeyPress,
         Form_Load, Label1_Click, Label2_Click, Label3_Click,
         Label4_Click,
     };

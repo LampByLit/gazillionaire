@@ -176,7 +176,7 @@ function (me) {
         b_On.BackColor = 0xC0C0C0;
     }
 
-    function sub41F1() {
+    function hideLockedShortcuts() {
         if (game.tutorialMode == -1 && game.complexity < game.unlockAdvertising) {
             b_Advertising.Visible = 0;
         }
@@ -276,6 +276,6 @@ function (me) {
         b_Exit_Click, b_Exit_MouseDown, b_Exit_MouseUp, b_Help_Click,
         b_Help_MouseDown, b_Help_MouseUp, b_Off_Click, b_Off_MouseDown,
         b_Off_MouseUp, b_On_Click, b_On_MouseDown, b_On_MouseUp,
-        sub41F1, Form_Activate, Form_KeyPress, Form_Load,
+        hideLockedShortcuts, Form_Activate, Form_KeyPress, Form_Load,
     };
 });

@@ -9,7 +9,7 @@ function (me) {
     const { VSElastic1, b_Test } = me.controls;
     const ARROW_CURSOR = 1;
 
-    async function sub4244() {
+    async function loadConfig() {
         FileOpen(8, Trim(paths.configDir) + "CONFIG.DAT");
         settings = FileGet(8, 1, settings);
         FileClose(8);
@@ -22,25 +22,25 @@ function (me) {
             settings.cdDrive = FixStr("D:", 2);
             settings.emailDir = FixStr(CurDir() + "\\email\\", 128);
             settings.soundOn = -1;
-            sub4254();
+            saveConfig();
         }
     }
 
-    function sub4254() {
+    function saveConfig() {
         FileOpen(7, Trim(paths.configDir) + "CONFIG.DAT");
         FilePut(7, 1, settings);
         FileClose(7);
     }
 
     async function Form_Activate() {
-        let l002C = 0;
+        let errorCount = 0;
         try {
             me.MousePointer = ARROW_CURSOR;
-            l002C = 0;
+            errorCount = 0;
             Randomize();
             paths.saveDir = FixStr(CurDir() + "\\savegame\\", 128);
             paths.configDir = FixStr(CurDir() + "\\units\\", 128);
-            await sub4244();
+            await loadConfig();
             paths.imageDir = FixStr(settings.cdDrive + "\\lavamind\\gaz2\\graphics\\", 128);
             paths.soundDir = FixStr(settings.cdDrive + "\\lavamind\\gaz2\\sound\\", 128);
             b_Test.Picture = LoadPicture(Trim(paths.imageDir) + "test.bmp");
@@ -49,11 +49,11 @@ function (me) {
             return;
         } catch (e) {
             Err.Catch(e);
-            l002C = l002C + 1;
+            errorCount = errorCount + 1;
             if (settings.soundOn == -1) {
                 Beep();
             }
-            if (l002C == 1) {
+            if (errorCount == 1) {
                 await MsgBox("Before you start the game, you must first configure the game to your system." + "\n" + "\n" + "We will now go to the System Configuration Menu." + "\n" + "\n" + "Make sure that your CD-ROM Drive is set to the correct drive letter, otherwise Gazillionaire will not function properly.", 64, "System Configuration");
                 if (settings.soundOn == -1) {
                     Beep();
@@ -61,15 +61,15 @@ function (me) {
                 await frm_Config.Show(1);
                 await MsgBox("Your CD-ROM Drive has been set to " + Trim(settings.cdDrive));
                 return;
-            } else if (l002C == 2) {
+            } else if (errorCount == 2) {
                 await MsgBox("There has been an error reading your CD-ROM drive." + "\n" + "\n" + "In order to play Gazillionaire, the Gazillionaire CD-ROM must be in the CD-ROM drive at all times." + "\n" + "\n" + "Please check to make sure the correct CD-ROM is in the CD-ROM drive, then click on the OK button.", 64, "Error Reading CD-ROM Drive");
                 return;
-            } else if (l002C == 3) {
+            } else if (errorCount == 3) {
                 await MsgBox("There has been another error reading your CD-ROM drive." + "\n" + "\n" + "We will now go to the System Configuration Menu. Please make sure that you selected the correct CD-ROM drive letter on the System Configuration Menu.", 32, "Error Reading CD-ROM Drive");
                 await frm_Config.Show(1);
                 await MsgBox("Your CD-ROM Drive has been set to " + Trim(settings.cdDrive));
                 return;
-            } else if (l002C == 4) {
+            } else if (errorCount == 4) {
                 await MsgBox("There has been another error reading your CD-ROM drive." + "\n" + "\n" + "We will now exit the program so you may check to make sure your CD-ROM drive is functioning properly.", 16, "Error Reading CD-ROM Drive");
                 End();
             }
@@ -77,6 +77,6 @@ function (me) {
     }
 
     return {
-        sub4244, sub4254, Form_Activate,
+        loadConfig, saveConfig, Form_Activate,
     };
 });

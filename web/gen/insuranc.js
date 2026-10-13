@@ -34,15 +34,15 @@ function (me) {
     const HOURGLASS = 11;
     const RED = 255;
     const ARROW_CURSOR = 1;
-    let m001A = 0;
-    let m001C = 0;
+    let animFrame = 0;
+    let animTicks = 0;
 
     async function b_BuyInsurance_Click() {
-        await sub1794();
+        await buyInsurance();
     }
 
     async function b_BuyInsurance_Image_Click() {
-        await sub1794();
+        await buyInsurance();
     }
 
     function b_BuyInsurance_Image_MouseDown(Button, Shift, X, Y) {
@@ -54,7 +54,7 @@ function (me) {
     }
 
     async function b_BuyInsurance_Image2_Click() {
-        await sub1794();
+        await buyInsurance();
     }
 
     function b_BuyInsurance_Image2_MouseDown(Button, Shift, X, Y) {
@@ -112,28 +112,28 @@ function (me) {
     }
 
     function b_Timer_Timer() {
-        if (m001A == 1) {
+        if (animFrame == 1) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "insure3.bmp");
-        } else if (m001A == 2) {
+        } else if (animFrame == 2) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "insure.bmp");
-        } else if (m001A == 3) {
+        } else if (animFrame == 3) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "insure3.bmp");
-        } else if (m001A == 4) {
+        } else if (animFrame == 4) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "insure2.bmp");
-        } else if (m001A == 5) {
+        } else if (animFrame == 5) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "insure.bmp");
         }
-        m001A = m001A + 1;
-        if (m001A == 6) {
-            m001A = 1;
+        animFrame = animFrame + 1;
+        if (animFrame == 6) {
+            animFrame = 1;
         }
-        m001C = m001C + 1;
-        if (m001C == 6) {
+        animTicks = animTicks + 1;
+        if (animTicks == 6) {
             b_Timer.Enabled = 0;
         }
     }
 
-    async function sub1794() {
+    async function buyInsurance() {
         me.MousePointer = HOURGLASS;
         if (player.insured == -1) {
             if (settings.soundOn == -1) {
@@ -172,11 +172,11 @@ function (me) {
             b_Message.ForeColor = RED;
             player.cash = player.cash - player.insuranceCost;
         }
-        sub18F0();
+        updateDisplay();
         me.MousePointer = ARROW_CURSOR;
     }
 
-    function sub190A() {
+    function rerollInsuranceCost() {
         {
             const sel = (Mod(game.weeklyRoll, 2)) + 1;
             if (sel == 1) {
@@ -191,10 +191,10 @@ function (me) {
         if (player.insuranceCost > (1000 * player.insuranceRate)) {
             player.insuranceCost = 1000 * player.insuranceRate;
         }
-        sub18F0();
+        updateDisplay();
     }
 
-    function sub18F0() {
+    function updateDisplay() {
         if (player.insured == 0) {
             b_Insurance.Caption = "   Insurance Paid for Next Week:   No";
         } else {
@@ -210,16 +210,16 @@ function (me) {
 
     async function Form_KeyPress(KeyAscii) {
         if (KeyAscii == 22) {
-            sub190A();
+            rerollInsuranceCost();
         } else if (KeyAscii == 13 || KeyAscii == 27 || KeyAscii == 32) {
             await b_ExitInsurance_Click();
         }
     }
 
     function Form_Load() {
-        m001C = 1;
-        m001A = 1;
-        sub18F0();
+        animTicks = 1;
+        animFrame = 1;
+        updateDisplay();
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "insure.bmp");
         b_BuyInsurance.Caption = "Purchase Voyager's" + "\n" + "Insurance";
         b_Message.Caption = "Your insurance ranges in price from " + Format(player.insuranceRate, "#,#0") + " to " + Format(player.insuranceRate * 1000, "#,#0") + " kubars";
@@ -230,7 +230,7 @@ function (me) {
         b_BuyInsurance_Image2_Click, b_BuyInsurance_Image2_MouseDown, b_BuyInsurance_Image2_MouseUp, b_BuyInsurance_MouseDown,
         b_BuyInsurance_MouseUp, b_ExitInsurance_Click, b_ExitInsurance_MouseDown, b_ExitInsurance_MouseUp,
         b_Help_Click, b_Help_MouseDown, b_Help_MouseUp, b_Timer_Timer,
-        sub1794, sub190A, sub18F0, Form_Activate,
+        buyInsurance, rerollInsuranceCost, updateDisplay, Form_Activate,
         Form_KeyPress, Form_Load,
     };
 });

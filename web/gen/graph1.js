@@ -62,8 +62,8 @@ function (me) {
         b_Help.BackColor = 0x80FFFF;
     }
 
-    function sub1CF9() {
-        let l006E = 0;
+    function drawNetWorthGraph() {
+        let company = 0;
         const ARROW_CURSOR = 1;
         me.MousePointer = HOURGLASS;
         updateRivalNetWorth();
@@ -220,27 +220,27 @@ function (me) {
         Graph1.NumPoints = game.numPlayers + game.numRivals;
         Graph1.GraphType = 4;
         Graph1.GraphStyle = 0;
-        for (l006E = 1; l006E <= game.numPlayers; l006E++) {
+        for (company = 1; company <= game.numPlayers; company++) {
             Graph1.LabelText = " ";
         }
-        for (l006E = 1; l006E <= game.numRivals; l006E++) {
+        for (company = 1; company <= game.numRivals; company++) {
             Graph1.LabelText = " ";
         }
-        for (l006E = 1; l006E <= game.numPlayers; l006E++) {
-            Graph1.LegendText = Trim(game.companyNames[l006E]);
+        for (company = 1; company <= game.numPlayers; company++) {
+            Graph1.LegendText = Trim(game.companyNames[company]);
         }
-        for (l006E = 1; l006E <= game.numRivals; l006E++) {
-            Graph1.LegendText = Trim(rivals.companyNames[l006E]);
+        for (company = 1; company <= game.numRivals; company++) {
+            Graph1.LegendText = Trim(rivals.companyNames[company]);
         }
-        for (l006E = 1; l006E <= game.numPlayers; l006E++) {
-            if (game.graphShowCompany[l006E] == 0) {
-                Graph1.GraphData = game.netWorth[l006E];
+        for (company = 1; company <= game.numPlayers; company++) {
+            if (game.graphShowCompany[company] == 0) {
+                Graph1.GraphData = game.netWorth[company];
             } else {
                 Graph1.GraphData = 0;
             }
         }
-        for (l006E = 1; l006E <= game.numRivals; l006E++) {
-            Graph1.GraphData = rivals.netWorth[l006E];
+        for (company = 1; company <= game.numRivals; company++) {
+            Graph1.GraphData = rivals.netWorth[company];
         }
         Graph1.DrawMode = 2;
         me.MousePointer = ARROW_CURSOR;
@@ -272,12 +272,12 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = HOURGLASS;
-        sub1CF9();
+        drawNetWorthGraph();
     }
 
     return {
         b_Exit_Click, b_Exit_MouseDown, b_Exit_MouseUp, b_Help_Click,
-        b_Help_MouseDown, b_Help_MouseUp, sub1CF9, Form_Activate,
+        b_Help_MouseDown, b_Help_MouseUp, drawNetWorthGraph, Form_Activate,
         Form_KeyPress, Form_Load,
     };
 });

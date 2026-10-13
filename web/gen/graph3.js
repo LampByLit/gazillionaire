@@ -62,8 +62,8 @@ function (me) {
         b_Help.BackColor = 0x80FFFF;
     }
 
-    function sub204D() {
-        let l006C = 0;
+    function drawMarketStrength() {
+        let company = 0;
         const ARROW_CURSOR = 1;
         me.MousePointer = HOURGLASS;
         Graph1.DrawMode = 1;
@@ -218,21 +218,21 @@ function (me) {
         Graph1.NumPoints = game.numPlayers + game.numRivals;
         Graph1.GraphType = 2;
         Graph1.GraphStyle = 0;
-        for (l006C = 1; l006C <= game.numPlayers; l006C++) {
-            Graph1.LegendText = Trim(game.companyNames[l006C]);
+        for (company = 1; company <= game.numPlayers; company++) {
+            Graph1.LegendText = Trim(game.companyNames[company]);
         }
-        for (l006C = 1; l006C <= game.numRivals; l006C++) {
-            Graph1.LegendText = Trim(rivals.companyNames[l006C]);
+        for (company = 1; company <= game.numRivals; company++) {
+            Graph1.LegendText = Trim(rivals.companyNames[company]);
         }
-        for (l006C = 1; l006C <= game.numPlayers; l006C++) {
-            if (game.graphShowCompany[l006C] == 0) {
-                Graph1.GraphData = game.shipSize[l006C];
+        for (company = 1; company <= game.numPlayers; company++) {
+            if (game.graphShowCompany[company] == 0) {
+                Graph1.GraphData = game.shipSize[company];
             } else {
                 Graph1.GraphData = 0;
             }
         }
-        for (l006C = 1; l006C <= game.numRivals; l006C++) {
-            Graph1.GraphData = rivals.shipSize[l006C];
+        for (company = 1; company <= game.numRivals; company++) {
+            Graph1.GraphData = rivals.shipSize[company];
         }
         Graph1.DrawMode = 2;
         me.MousePointer = ARROW_CURSOR;
@@ -268,12 +268,12 @@ function (me) {
     function Form_Load() {
         updateRivalNetWorth();
         me.MousePointer = HOURGLASS;
-        sub204D();
+        drawMarketStrength();
     }
 
     return {
         b_ExitMarketStrength_Click, b_ExitMarketStrength_MouseDown, b_ExitMarketStrength_MouseUp, b_Help_Click,
-        b_Help_MouseDown, b_Help_MouseUp, sub204D, Form_Activate,
+        b_Help_MouseDown, b_Help_MouseUp, drawMarketStrength, Form_Activate,
         Form_KeyPress, Form_Load,
     };
 });

@@ -25,20 +25,20 @@ VB.form("frm_Warehouse",
 function (me) {
     const { FillElastic, b_Quick, b_Sound, VSElastic3, b_TonsInWarehouse, b_CargoOnShip, b_Message, GridContainer } = me.controls;
     const { b_Grid, VSElastic2, b_Marketplace, b_Tons, b_Help, b_Exit, b_TitleBar } = me.controls;
-    const mc004E = 1;
-    const mc0050 = 2;
-    const mc0052 = 3;
+    const VIEW_ALL_GOODS = 1;
+    const VIEW_CARGO = 2;
+    const VIEW_WAREHOUSE_GOODS = 3;
     const HOURGLASS = 11;
     const WHITE = 16777215;
     const MAGENTA = 16711935;
     const GREEN = 65280;
     const CYAN = 16776960;
     const ARROW_CURSOR = 1;
-    let m001A = 0;
-    let m001C = 0;
-    let m0020 = DimArray([18], 0);
-    let m0036 = DimArray([18], 0);
-    let m004C = 0;
+    let viewMode = 0;
+    let rowCount = 0;
+    let rowCategory = DimArray([18], 0);
+    let rowItem = DimArray([18], 0);
+    let gridEmpty = 0;
 
     async function b_Exit_Click() {
         me.MousePointer = HOURGLASS;
@@ -61,8 +61,8 @@ function (me) {
     }
 
     async function b_Grid_MouseUp(Button, Shift, X, Y) {
-        if (Button != 2 && Button != 4 && b_Grid.Row != m001C + 1 && b_Grid.Row > 0 && m004C == 0) {
-            await sub1AA8();
+        if (Button != 2 && Button != 4 && b_Grid.Row != rowCount + 1 && b_Grid.Row > 0 && gridEmpty == 0) {
+            await transferCommodity();
         }
         me.KeyPreview = -1;
     }
@@ -124,11 +124,11 @@ function (me) {
     }
 
     async function b_Tons_Click() {
-        let l00F4 = 0;
+        let planet = 0;
         frm_BoxCol1.FillElastic.Caption = "Warehouse on" + "\n" + "Each Planet";
         frm_BoxCol1.b_Col1.Caption = "";
-        for (l00F4 = 0; l00F4 <= 6; l00F4++) {
-            frm_BoxCol1.b_Col1.Caption = frm_BoxCol1.b_Col1.Caption + game.planetNames[l00F4] + "\n";
+        for (planet = 0; planet <= 6; planet++) {
+            frm_BoxCol1.b_Col1.Caption = frm_BoxCol1.b_Col1.Caption + game.planetNames[planet] + "\n";
         }
         frm_BoxCol1.b_Col2.Caption = Format(player.warehouseUsed[0], "#,#0") + "  tons" + "\n" + Format(player.warehouseUsed[1], "#,#0") + "  tons" + "\n" + Format(player.warehouseUsed[2], "#,#0") + "  tons" + "\n" + Format(player.warehouseUsed[3], "#,#0") + "  tons" + "\n" + Format(player.warehouseUsed[4], "#,#0") + "  tons" + "\n" + Format(player.warehouseUsed[5], "#,#0") + "  tons" + "\n" + Format(player.warehouseUsed[6], "#,#0") + "  tons";
         await frm_BoxCol1.Show(1);
@@ -142,160 +142,160 @@ function (me) {
         b_Tons.BackColor = 0x800080;
     }
 
-    function sub1B77() {
-        let l0114 = 0;
-        let l0116 = 0;
-        let l0118 = 0;
-        let l011A = 0;
-        let l011E = 0;
-        let l0120 = 0;
-        let l0122 = 0;
+    function fillGrid() {
+        let col = 0;
+        let category = 0;
+        let item = 0;
+        let row = 0;
+        let lowStep = 0;
+        let highPrice = 0;
+        let lowPrice = 0;
         b_CargoOnShip.Caption = "ship's cargo bay = " + Format(100 * player.cargoTotal / player.cargoCapacity, "#,#0") + "% filled (" + Format(player.cargoTotal, "#,#0") + "/" + Format(player.cargoCapacity, "#,#0") + ")";
         b_CargoOnShip.FloodPercent = (player.cargoTotal / player.cargoCapacity) * 100;
         b_TonsInWarehouse.Caption = "warehouse space = " + Format(((player.warehouseUsed[game.planet[game.currentPlayer]]) / player.warehouseCapacity) * 100, "#,#0") + "% filled (" + Format(player.warehouseUsed[game.planet[game.currentPlayer]], "#,#0") + "/" + Format(player.warehouseCapacity, "#,#0") + ")";
         b_TonsInWarehouse.FloodPercent = ((player.warehouseUsed[game.planet[game.currentPlayer]]) / player.warehouseCapacity) * 100;
-        m001C = 0;
-        if (m001A == mc004E) {
-            for (l0114 = 0; l0114 <= 2; l0114++) {
-                for (l0116 = 0; l0116 <= 5; l0116++) {
-                    if (player.cargo[l0114][l0116] != 0 || player.warehouseStock[game.planet[game.currentPlayer]][l0114][l0116] != 0) {
-                        m001C = m001C + 1;
+        rowCount = 0;
+        if (viewMode == VIEW_ALL_GOODS) {
+            for (col = 0; col <= 2; col++) {
+                for (category = 0; category <= 5; category++) {
+                    if (player.cargo[col][category] != 0 || player.warehouseStock[game.planet[game.currentPlayer]][col][category] != 0) {
+                        rowCount = rowCount + 1;
                     }
                 }
             }
-        } else if (m001A == mc0050) {
-            for (l0114 = 0; l0114 <= 2; l0114++) {
-                for (l0116 = 0; l0116 <= 5; l0116++) {
-                    if (player.cargo[l0114][l0116] != 0) {
-                        m001C = m001C + 1;
+        } else if (viewMode == VIEW_CARGO) {
+            for (col = 0; col <= 2; col++) {
+                for (category = 0; category <= 5; category++) {
+                    if (player.cargo[col][category] != 0) {
+                        rowCount = rowCount + 1;
                     }
                 }
             }
-        } else if (m001A == mc0052) {
-            for (l0114 = 0; l0114 <= 2; l0114++) {
-                for (l0116 = 0; l0116 <= 5; l0116++) {
-                    if (player.warehouseStock[game.planet[game.currentPlayer]][l0114][l0116] != 0) {
-                        m001C = m001C + 1;
+        } else if (viewMode == VIEW_WAREHOUSE_GOODS) {
+            for (col = 0; col <= 2; col++) {
+                for (category = 0; category <= 5; category++) {
+                    if (player.warehouseStock[game.planet[game.currentPlayer]][col][category] != 0) {
+                        rowCount = rowCount + 1;
                     }
                 }
             }
         }
         b_Grid.Cols = 4;
-        if (m001C == 0) {
-            m004C = -1;
-            m001C = 1;
+        if (rowCount == 0) {
+            gridEmpty = -1;
+            rowCount = 1;
         } else {
-            m004C = 0;
+            gridEmpty = 0;
         }
-        b_Grid.Rows = m001C + 1;
-        for (l0114 = 0; l0114 <= 3; l0114++) {
-            b_Grid.FixedAlignment[l0114] = 2;
+        b_Grid.Rows = rowCount + 1;
+        for (col = 0; col <= 3; col++) {
+            b_Grid.FixedAlignment[col] = 2;
         }
         b_Grid.Row = 0;
-        for (l0114 = 1; l0114 <= 3; l0114++) {
-            b_Grid.ColAlignment[l0114] = 2;
-            b_Grid.Col = l0114;
-            if (l0114 == 1) {
+        for (col = 1; col <= 3; col++) {
+            b_Grid.ColAlignment[col] = 2;
+            b_Grid.Col = col;
+            if (col == 1) {
                 b_Grid.Text = "Tons on Ship";
-            } else if (l0114 == 2) {
+            } else if (col == 2) {
                 b_Grid.Text = "Tons in Warehouse";
-            } else if (l0114 == 3) {
+            } else if (col == 3) {
                 b_Grid.Text = "Market Price";
             }
         }
-        for (l0114 = 0; l0114 <= 3; l0114++) {
-            b_Grid.Col = l0114;
-            l011A = 0;
-            l011E = 0;
-            l0120 = 0;
-            for (l0116 = 0; l0116 <= 2; l0116++) {
-                for (l0118 = 0; l0118 <= 5; l0118++) {
-                    l011E = l011E + 5;
-                    l0122 = (game.marketDifficulty + 1) * l011E;
-                    l0120 = l0120 + 40;
-                    if (player.cargo[l0116][l0118] != 0 || player.warehouseStock[game.planet[game.currentPlayer]][l0116][l0118] != 0 && m001A == mc004E) {
-                        l011A = l011A + 1;
-                        m0020[l011A] = CLng(l0116);
-                        m0036[l011A] = CLng(l0118);
-                        b_Grid.Row = l011A;
-                        if (l0114 == 0) {
-                            b_Grid.Text = Trim(game.commodityNames[l0116][l0118]);
-                        } else if (l0114 == 1) {
-                            b_Grid.Text = Format(player.cargo[l0116][l0118], "#,#0");
-                        } else if (l0114 == 2) {
-                            b_Grid.Text = Format(player.warehouseStock[game.planet[game.currentPlayer]][l0116][l0118], "#,#0");
-                        } else if (l0114 == 3) {
-                            b_Grid.Text = Format(game.prices[game.planet[game.currentPlayer]][l0116][l0118], "#,#0");
+        for (col = 0; col <= 3; col++) {
+            b_Grid.Col = col;
+            row = 0;
+            lowStep = 0;
+            highPrice = 0;
+            for (category = 0; category <= 2; category++) {
+                for (item = 0; item <= 5; item++) {
+                    lowStep = lowStep + 5;
+                    lowPrice = (game.marketDifficulty + 1) * lowStep;
+                    highPrice = highPrice + 40;
+                    if (player.cargo[category][item] != 0 || player.warehouseStock[game.planet[game.currentPlayer]][category][item] != 0 && viewMode == VIEW_ALL_GOODS) {
+                        row = row + 1;
+                        rowCategory[row] = CLng(category);
+                        rowItem[row] = CLng(item);
+                        b_Grid.Row = row;
+                        if (col == 0) {
+                            b_Grid.Text = Trim(game.commodityNames[category][item]);
+                        } else if (col == 1) {
+                            b_Grid.Text = Format(player.cargo[category][item], "#,#0");
+                        } else if (col == 2) {
+                            b_Grid.Text = Format(player.warehouseStock[game.planet[game.currentPlayer]][category][item], "#,#0");
+                        } else if (col == 3) {
+                            b_Grid.Text = Format(game.prices[game.planet[game.currentPlayer]][category][item], "#,#0");
                         }
-                    } else if (player.cargo[l0116][l0118] != 0 && m001A == mc0050) {
-                        l011A = l011A + 1;
-                        m0020[l011A] = CLng(l0116);
-                        m0036[l011A] = CLng(l0118);
-                        b_Grid.Row = l011A;
-                        if (l0114 == 0) {
-                            b_Grid.Text = Trim(game.commodityNames[l0116][l0118]);
-                        } else if (l0114 == 1) {
-                            b_Grid.Text = Format(player.cargo[l0116][l0118], "#,#0");
-                        } else if (l0114 == 2) {
-                            b_Grid.Text = Format(player.warehouseStock[game.planet[game.currentPlayer]][l0116][l0118], "#,#0");
-                        } else if (l0114 == 3) {
-                            b_Grid.Text = Format(game.prices[game.planet[game.currentPlayer]][l0116][l0118], "#,#0");
+                    } else if (player.cargo[category][item] != 0 && viewMode == VIEW_CARGO) {
+                        row = row + 1;
+                        rowCategory[row] = CLng(category);
+                        rowItem[row] = CLng(item);
+                        b_Grid.Row = row;
+                        if (col == 0) {
+                            b_Grid.Text = Trim(game.commodityNames[category][item]);
+                        } else if (col == 1) {
+                            b_Grid.Text = Format(player.cargo[category][item], "#,#0");
+                        } else if (col == 2) {
+                            b_Grid.Text = Format(player.warehouseStock[game.planet[game.currentPlayer]][category][item], "#,#0");
+                        } else if (col == 3) {
+                            b_Grid.Text = Format(game.prices[game.planet[game.currentPlayer]][category][item], "#,#0");
                         }
-                    } else if (player.warehouseStock[game.planet[game.currentPlayer]][l0116][l0118] != 0 && m001A == mc0052) {
-                        l011A = l011A + 1;
-                        m0020[l011A] = CLng(l0116);
-                        m0036[l011A] = CLng(l0118);
-                        b_Grid.Row = l011A;
-                        if (l0114 == 0) {
-                            b_Grid.Text = Trim(game.commodityNames[l0116][l0118]);
-                        } else if (l0114 == 1) {
-                            b_Grid.Text = Format(player.cargo[l0116][l0118], "#,#0");
-                        } else if (l0114 == 2) {
-                            b_Grid.Text = Format(player.warehouseStock[game.planet[game.currentPlayer]][l0116][l0118], "#,#0");
-                        } else if (l0114 == 3) {
-                            b_Grid.Text = Format(game.prices[game.planet[game.currentPlayer]][l0116][l0118], "#,#0");
+                    } else if (player.warehouseStock[game.planet[game.currentPlayer]][category][item] != 0 && viewMode == VIEW_WAREHOUSE_GOODS) {
+                        row = row + 1;
+                        rowCategory[row] = CLng(category);
+                        rowItem[row] = CLng(item);
+                        b_Grid.Row = row;
+                        if (col == 0) {
+                            b_Grid.Text = Trim(game.commodityNames[category][item]);
+                        } else if (col == 1) {
+                            b_Grid.Text = Format(player.cargo[category][item], "#,#0");
+                        } else if (col == 2) {
+                            b_Grid.Text = Format(player.warehouseStock[game.planet[game.currentPlayer]][category][item], "#,#0");
+                        } else if (col == 3) {
+                            b_Grid.Text = Format(game.prices[game.planet[game.currentPlayer]][category][item], "#,#0");
                         }
                     }
                 }
             }
         }
-        if (m004C == 0) {
+        if (gridEmpty == 0) {
             b_Grid.AddItem(" ");
-            b_Grid.Row = m001C + 1;
+            b_Grid.Row = rowCount + 1;
         }
         b_Grid.Col = 1;
     }
 
-    function sub1B91() {
-        let l0130 = 0;
-        let l0134 = 0;
-        let l0138 = 0;
-        if (m001C >= 13) {
+    function sizeGrid() {
+        let gridHeight = 0;
+        let gridWidth = 0;
+        let i = 0;
+        if (rowCount >= 13) {
             b_Grid.ScrollBars = 3;
         } else {
             b_Grid.ScrollBars = 0;
         }
         if (b_Grid.ScrollBars == 3) {
-            l0130 = Screen.Height * 0.85;
-            l0134 = Screen.Width * 0.95;
+            gridHeight = Screen.Height * 0.85;
+            gridWidth = Screen.Width * 0.95;
         } else {
-            l0130 = Screen.Height * 0.85;
-            l0134 = Screen.Width * 0.99;
+            gridHeight = Screen.Height * 0.85;
+            gridWidth = Screen.Width * 0.99;
         }
-        for (l0138 = 0; l0138 <= m001C; l0138++) {
-            b_Grid.RowHeight[l0138] = l0130 / 19;
+        for (i = 0; i <= rowCount; i++) {
+            b_Grid.RowHeight[i] = gridHeight / 19;
         }
-        b_Grid.ColWidth[0] = l0134 / 6;
-        for (l0138 = 1; l0138 <= 3; l0138++) {
-            b_Grid.ColWidth[l0138] = (l0134 - (l0134 / 6)) / 3;
+        b_Grid.ColWidth[0] = gridWidth / 6;
+        for (i = 1; i <= 3; i++) {
+            b_Grid.ColWidth[i] = (gridWidth - (gridWidth / 6)) / 3;
         }
     }
 
-    async function sub1AA8() {
-        let l013E = "";
-        let l0140 = 0;
-        let l0142 = 0;
-        let l0144 = 0;
+    async function transferCommodity() {
+        let action = "";
+        let tons = 0;
+        let gridRow = 0;
+        let maxTons = 0;
         const MAGENTA = 16711935;
         const GREEN = 65280;
         const CYAN = 16776960;
@@ -304,7 +304,7 @@ function (me) {
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             {
-                const sel = Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]);
+                const sel = Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]);
                 if (sel == "Cantaloupe") {
                     b_Sound.FileName = Trim(paths.soundDir) + "cantalou.wav";
                 } else if (sel == "Jelly Beans") {
@@ -347,35 +347,35 @@ function (me) {
             b_Sound.Command = "Play";
         }
         if (player.quickWarehouse == 0) {
-            if (player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 1) {
-                frm_Store.Caption = "There is " + Format(player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
+            if (player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] == 1) {
+                frm_Store.Caption = "There is " + Format(player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]], "#,#0") + " ton of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " in the warehouse.";
             } else {
-                frm_Store.Caption = "There are " + Format(player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
+                frm_Store.Caption = "There are " + Format(player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]], "#,#0") + " tons of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " in the warehouse.";
             }
             if (frm_Store.WindowState == 0) {
                 frm_Store.Move((Screen.Width - frm_Store.Width) / 2, (Screen.Height - frm_Store.Height) / 1.2);
             }
             await frm_Store.Show(1);
-            l013E = frm_Store.Tag;
+            action = frm_Store.Tag;
         } else {
-            if (player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] > 0 && player.cargoTotal != player.cargoCapacity) {
-                l013E = "TAKEMAX";
+            if (player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] > 0 && player.cargoTotal != player.cargoCapacity) {
+                action = "TAKEMAX";
             } else {
-                l013E = "STOREMAX";
+                action = "STOREMAX";
             }
         }
         b_Message.ForeColor = MAGENTA;
         b_Message.Caption = "";
-        if (l013E == "TAKE") {
-            l0140 = -6666;
-            if (player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
+        if (action == "TAKE") {
+            tons = -6666;
+            if (player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] == 0) {
                 if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Warehouse";
-                frm_Box0.b_Message.Caption = "\n" + "There are zero tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse. Check Tons in Warehouse";
+                frm_Box0.b_Message.Caption = "\n" + "There are zero tons of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " in the warehouse. Check Tons in Warehouse";
                 await frm_Box0.Show(1);
-                b_Message.Caption = "You cannot take " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " out of the warehouse.";
+                b_Message.Caption = "You cannot take " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " out of the warehouse.";
             } else if (player.cargoTotal == player.cargoCapacity) {
                 if (settings.soundOn == -1) {
                     Beep();
@@ -383,81 +383,81 @@ function (me) {
                 frm_Box0.FillElastic.Caption = "Warehouse";
                 frm_Box0.b_Message.Caption = "\n" + "There is not enough room on your ship. Check your ship's cargo capacity.";
                 await frm_Box0.Show(1);
-                b_Message.Caption = "You cannot take " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " out of the warehouse because your ship is full of cargo.";
+                b_Message.Caption = "You cannot take " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " out of the warehouse because your ship is full of cargo.";
             } else {
-                if ((player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] + player.cargoTotal) > player.cargoCapacity) {
-                    l0144 = player.cargoCapacity - player.cargoTotal;
+                if ((player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] + player.cargoTotal) > player.cargoCapacity) {
+                    maxTons = player.cargoCapacity - player.cargoTotal;
                 } else {
-                    l0144 = player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]];
+                    maxTons = player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]];
                 }
-                if (player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 1) {
-                    l0140 = await askNumber(0, Str(l0144), 0.25 * l0144, l0144, "There is " + Format(player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.", "Take Goods Out of Warehouse");
+                if (player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] == 1) {
+                    tons = await askNumber(0, Str(maxTons), 0.25 * maxTons, maxTons, "There is " + Format(player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]], "#,#0") + " ton of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " in the warehouse.", "Take Goods Out of Warehouse");
                 } else {
-                    l0140 = await askNumber(0, Str(l0144), 0.25 * l0144, l0144, "There are " + Format(player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.", "Take Goods Out of Warehouse");
+                    tons = await askNumber(0, Str(maxTons), 0.25 * maxTons, maxTons, "There are " + Format(player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]], "#,#0") + " tons of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " in the warehouse.", "Take Goods Out of Warehouse");
                 }
             }
-            if (l0140 == -6666) {
-            } else if (l0140 == -3333) {
+            if (tons == -6666) {
+            } else if (tons == -3333) {
                 if (settings.soundOn == -1) {
                     Beep();
                 }
                 b_Message.Caption = "Your transaction was cancelled. No goods were taken out of the warehouse.";
-            } else if (l0140 == 0) {
-                b_Message.Caption = "You didn't take any " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " out of the warehouse.";
-            } else if ((l0140 + player.cargoTotal) > player.cargoCapacity) {
+            } else if (tons == 0) {
+                b_Message.Caption = "You didn't take any " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " out of the warehouse.";
+            } else if ((tons + player.cargoTotal) > player.cargoCapacity) {
                 if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Warehouse";
                 frm_Box0.b_Message.Caption = "\n" + "There is not enough room on your ship. Check your cargo capacity.";
                 await frm_Box0.Show(1);
-                if (l0140 == 1) {
-                    b_Message.Caption = Format(l0140, "#,#0") + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " will not fit in your ship.";
+                if (tons == 1) {
+                    b_Message.Caption = Format(tons, "#,#0") + " ton of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " will not fit in your ship.";
                 } else {
-                    b_Message.Caption = Format(l0140, "#,#0") + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " will not fit in your ship.";
+                    b_Message.Caption = Format(tons, "#,#0") + " tons of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " will not fit in your ship.";
                 }
-            } else if (l0140 > player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]]) {
+            } else if (tons > player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) {
                 if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Warehouse";
-                frm_Box0.b_Message.Caption = "\n" + "You cannot take that much. Check the tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
+                frm_Box0.b_Message.Caption = "\n" + "You cannot take that much. Check the tons of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " in the warehouse.";
                 await frm_Box0.Show(1);
-                if (player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 1) {
-                    b_Message.Caption = "There is only " + Format(player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
+                if (player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] == 1) {
+                    b_Message.Caption = "There is only " + Format(player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]], "#,#0") + " ton of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " in the warehouse.";
                 } else {
-                    b_Message.Caption = "There are only " + Format(player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
+                    b_Message.Caption = "There are only " + Format(player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]], "#,#0") + " tons of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " in the warehouse.";
                 }
             } else {
-                player.cargoAvgCost[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = CLng((player.cargoAvgCost[m0020[b_Grid.Row]][m0036[b_Grid.Row]] * player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + player.warehouseAvgCost[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] * l0140) / (player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + l0140));
-                player.cargoTotal = player.cargoTotal + l0140;
-                player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + l0140;
-                player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] - l0140;
-                player.warehouseUsed[game.planet[game.currentPlayer]] = player.warehouseUsed[game.planet[game.currentPlayer]] - l0140;
-                if (player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
-                    player.warehouseAvgCost[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = 0;
+                player.cargoAvgCost[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] = CLng((player.cargoAvgCost[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] * player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] + player.warehouseAvgCost[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] * tons) / (player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] + tons));
+                player.cargoTotal = player.cargoTotal + tons;
+                player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] = player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] + tons;
+                player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] = player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] - tons;
+                player.warehouseUsed[game.planet[game.currentPlayer]] = player.warehouseUsed[game.planet[game.currentPlayer]] - tons;
+                if (player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] == 0) {
+                    player.warehouseAvgCost[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] = 0;
                 }
                 b_Message.ForeColor = GREEN;
-                if (l0140 == 1) {
-                    b_Message.Caption = "You transferred " + Format(l0140, "#,#0") + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " from the warehouse to your ship.";
+                if (tons == 1) {
+                    b_Message.Caption = "You transferred " + Format(tons, "#,#0") + " ton of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " from the warehouse to your ship.";
                 } else {
-                    b_Message.Caption = "You transferred " + Format(l0140, "#,#0") + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " from the warehouse to your ship.";
+                    b_Message.Caption = "You transferred " + Format(tons, "#,#0") + " tons of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " from the warehouse to your ship.";
                 }
             }
-        } else if (l013E == "TAKEMAX") {
-            if ((player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] + player.cargoTotal) > player.cargoCapacity) {
-                l0140 = player.cargoCapacity - player.cargoTotal;
+        } else if (action == "TAKEMAX") {
+            if ((player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] + player.cargoTotal) > player.cargoCapacity) {
+                tons = player.cargoCapacity - player.cargoTotal;
             } else {
-                l0140 = player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]];
+                tons = player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]];
             }
-            if (player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
+            if (player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] == 0) {
                 if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Warehouse";
-                frm_Box0.b_Message.Caption = "\n" + "There are zero tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse. Check Tons in Warehouse";
+                frm_Box0.b_Message.Caption = "\n" + "There are zero tons of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " in the warehouse. Check Tons in Warehouse";
                 await frm_Box0.Show(1);
-                b_Message.Caption = "You cannot take " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " out of the warehouse.";
+                b_Message.Caption = "You cannot take " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " out of the warehouse.";
             } else if (player.cargoTotal == player.cargoCapacity) {
                 if (settings.soundOn == -1) {
                     Beep();
@@ -465,25 +465,25 @@ function (me) {
                 frm_Box0.FillElastic.Caption = "Warehouse";
                 frm_Box0.b_Message.Caption = "\n" + "There is not enough room on your ship. Check your cargo capacity.";
                 await frm_Box0.Show(1);
-                b_Message.Caption = "You cannot take " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " out of the warehouse.";
+                b_Message.Caption = "You cannot take " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " out of the warehouse.";
             } else {
-                player.cargoAvgCost[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = CLng((player.cargoAvgCost[m0020[b_Grid.Row]][m0036[b_Grid.Row]] * player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + player.warehouseAvgCost[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] * l0140) / (player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + l0140));
-                player.cargoTotal = player.cargoTotal + l0140;
-                player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + l0140;
-                player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] - l0140;
-                player.warehouseUsed[game.planet[game.currentPlayer]] = player.warehouseUsed[game.planet[game.currentPlayer]] - l0140;
-                if (player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
-                    player.warehouseAvgCost[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = 0;
+                player.cargoAvgCost[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] = CLng((player.cargoAvgCost[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] * player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] + player.warehouseAvgCost[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] * tons) / (player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] + tons));
+                player.cargoTotal = player.cargoTotal + tons;
+                player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] = player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] + tons;
+                player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] = player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] - tons;
+                player.warehouseUsed[game.planet[game.currentPlayer]] = player.warehouseUsed[game.planet[game.currentPlayer]] - tons;
+                if (player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] == 0) {
+                    player.warehouseAvgCost[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] = 0;
                 }
                 b_Message.ForeColor = GREEN;
-                if (l0140 == 1) {
-                    b_Message.Caption = "You just transferred " + Format(l0140, "#,#0") + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " from the warehouse to your ship.";
+                if (tons == 1) {
+                    b_Message.Caption = "You just transferred " + Format(tons, "#,#0") + " ton of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " from the warehouse to your ship.";
                 } else {
-                    b_Message.Caption = "You just transferred " + Format(l0140, "#,#0") + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " from the warehouse to your ship.";
+                    b_Message.Caption = "You just transferred " + Format(tons, "#,#0") + " tons of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " from the warehouse to your ship.";
                 }
             }
-        } else if (l013E == "STORE") {
-            l0140 = -6666;
+        } else if (action == "STORE") {
+            tons = -6666;
             if (player.cargoTotal == 0) {
                 if (settings.soundOn == -1) {
                     Beep();
@@ -492,51 +492,51 @@ function (me) {
                 frm_Box0.b_Message.Caption = "\n" + "You don't have any commodities on your ship. Check Tons on Ship.";
                 await frm_Box0.Show(1);
                 b_Message.Caption = "Before you can store a commodity in the warehouse, you must first buy it.";
-            } else if (player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
+            } else if (player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] == 0) {
                 if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Warehouse";
-                frm_Box0.b_Message.Caption = "\n" + "You cannot store " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse. Check Tons on Ship.";
+                frm_Box0.b_Message.Caption = "\n" + "You cannot store " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " in the warehouse. Check Tons on Ship.";
                 await frm_Box0.Show(1);
-                b_Message.Caption = "There are zero tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " on your ship.";
+                b_Message.Caption = "There are zero tons of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " on your ship.";
             } else if (player.warehouseUsed[game.planet[game.currentPlayer]] == player.warehouseCapacity) {
                 if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Warehouse";
-                frm_Box0.b_Message.Caption = "\n" + "You cannot store " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in your warehouse because it is already full. Check Tons in Warehouse.";
+                frm_Box0.b_Message.Caption = "\n" + "You cannot store " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " in your warehouse because it is already full. Check Tons in Warehouse.";
                 await frm_Box0.Show(1);
                 b_Message.Caption = "Your warehouse is full.";
             } else {
-                if ((player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + player.warehouseUsed[game.planet[game.currentPlayer]]) > player.warehouseCapacity) {
-                    l0144 = player.warehouseCapacity - player.warehouseUsed[game.planet[game.currentPlayer]];
+                if ((player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] + player.warehouseUsed[game.planet[game.currentPlayer]]) > player.warehouseCapacity) {
+                    maxTons = player.warehouseCapacity - player.warehouseUsed[game.planet[game.currentPlayer]];
                 } else {
-                    l0144 = player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]];
+                    maxTons = player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]];
                 }
-                if (player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 1) {
-                    l0140 = await askNumber(0, Str(l0144), 0.25 * l0144, l0144, "You have " + Format(player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " on your ship.", "Store Goods in Warehouse");
+                if (player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] == 1) {
+                    tons = await askNumber(0, Str(maxTons), 0.25 * maxTons, maxTons, "You have " + Format(player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]], "#,#0") + " ton of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " on your ship.", "Store Goods in Warehouse");
                 } else {
-                    l0140 = await askNumber(0, Str(l0144), 0.25 * l0144, l0144, "You have " + Format(player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " on your ship.", "Store Goods in Warehouse");
+                    tons = await askNumber(0, Str(maxTons), 0.25 * maxTons, maxTons, "You have " + Format(player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]], "#,#0") + " tons of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " on your ship.", "Store Goods in Warehouse");
                 }
             }
-            if (l0140 == -6666) {
-            } else if (l0140 == -3333) {
+            if (tons == -6666) {
+            } else if (tons == -3333) {
                 if (settings.soundOn == -1) {
                     Beep();
                 }
                 b_Message.Caption = "Your transaction was cancelled. No goods were stored in the warehouse.";
-            } else if (l0140 > player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) {
+            } else if (tons > player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) {
                 if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Warehouse";
-                frm_Box0.b_Message.Caption = "\n" + "You don't have that many tons of " + Format(Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]), "#,#0") + " on your ship. Check Tons on Ship.";
+                frm_Box0.b_Message.Caption = "\n" + "You don't have that many tons of " + Format(Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]), "#,#0") + " on your ship. Check Tons on Ship.";
                 await frm_Box0.Show(1);
-                b_Message.Caption = "You only have " + Format(player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]], "#,#0") + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " on your ship.";
-            } else if (l0140 == 0) {
-                b_Message.Caption = "You didn't store any " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
-            } else if ((l0140 + player.warehouseUsed[game.planet[game.currentPlayer]]) > player.warehouseCapacity) {
+                b_Message.Caption = "You only have " + Format(player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]], "#,#0") + " tons of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " on your ship.";
+            } else if (tons == 0) {
+                b_Message.Caption = "You didn't store any " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " in the warehouse.";
+            } else if ((tons + player.warehouseUsed[game.planet[game.currentPlayer]]) > player.warehouseCapacity) {
                 if (settings.soundOn == -1) {
                     Beep();
                 }
@@ -549,29 +549,29 @@ function (me) {
                     frm_Box0.b_Message.Caption = "\n" + "You are only alloted " + Format(player.warehouseCapacity, "#,#0") + " tons of warehouse space on each planet, and you have already used " + Format(player.warehouseUsed[game.planet[game.currentPlayer]], "#,#0") + " tons of it.";
                     await frm_Box0.Show(1);
                 }
-                if (l0140 == 1) {
-                    b_Message.Caption = Format(l0140, "#,#0") + " ton of " + Format(Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]), "#,#0") + " will not fit in your warehouse. Check your Warehouse Space.";
+                if (tons == 1) {
+                    b_Message.Caption = Format(tons, "#,#0") + " ton of " + Format(Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]), "#,#0") + " will not fit in your warehouse. Check your Warehouse Space.";
                 } else {
-                    b_Message.Caption = Format(l0140, "#,#0") + " tons of " + Format(Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]), "#,#0") + " will not fit in your warehouse. Check your Warehouse Space.";
+                    b_Message.Caption = Format(tons, "#,#0") + " tons of " + Format(Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]), "#,#0") + " will not fit in your warehouse. Check your Warehouse Space.";
                 }
             } else {
-                player.warehouseAvgCost[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = CLng((player.warehouseAvgCost[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] * player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] + player.cargoAvgCost[m0020[b_Grid.Row]][m0036[b_Grid.Row]] * l0140) / (l0140 + player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]]));
+                player.warehouseAvgCost[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] = CLng((player.warehouseAvgCost[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] * player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] + player.cargoAvgCost[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] * tons) / (tons + player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]));
                 b_Message.ForeColor = CYAN;
-                if (l0140 == 1) {
-                    b_Message.Caption = "You just stored " + Format(l0140) + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
+                if (tons == 1) {
+                    b_Message.Caption = "You just stored " + Format(tons) + " ton of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " in the warehouse.";
                 } else {
-                    b_Message.Caption = "You just stored " + Format(l0140) + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
+                    b_Message.Caption = "You just stored " + Format(tons) + " tons of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " in the warehouse.";
                 }
-                player.cargoTotal = player.cargoTotal - l0140;
-                player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] - l0140;
-                player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] + l0140;
-                player.warehouseUsed[game.planet[game.currentPlayer]] = player.warehouseUsed[game.planet[game.currentPlayer]] + l0140;
-                if (player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
-                    player.cargoAvgCost[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = 0;
+                player.cargoTotal = player.cargoTotal - tons;
+                player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] = player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] - tons;
+                player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] = player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] + tons;
+                player.warehouseUsed[game.planet[game.currentPlayer]] = player.warehouseUsed[game.planet[game.currentPlayer]] + tons;
+                if (player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] == 0) {
+                    player.cargoAvgCost[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] = 0;
                 }
             }
-        } else if (l013E == "STOREMAX") {
-            l0140 = -6666;
+        } else if (action == "STOREMAX") {
+            tons = -6666;
             if (player.cargoTotal == 0) {
                 if (settings.soundOn == -1) {
                     Beep();
@@ -580,63 +580,63 @@ function (me) {
                 frm_Box0.b_Message.Caption = "\n" + "You don't have any commodities on your ship. Check Tons on Ship.";
                 await frm_Box0.Show(1);
                 b_Message.Caption = "Before you can store a commodity in the warehouse, you must first buy it.";
-            } else if (player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
+            } else if (player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] == 0) {
                 if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Warehouse";
-                frm_Box0.b_Message.Caption = "\n" + "You cannot store " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse. Check Tons on Ship.";
+                frm_Box0.b_Message.Caption = "\n" + "You cannot store " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " in the warehouse. Check Tons on Ship.";
                 await frm_Box0.Show(1);
-                b_Message.Caption = "There are zero tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " on your ship.";
+                b_Message.Caption = "There are zero tons of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " on your ship.";
             } else if (player.warehouseUsed[game.planet[game.currentPlayer]] == player.warehouseCapacity) {
                 if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Warehouse";
-                frm_Box0.b_Message.Caption = "\n" + "You cannot store " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in your warehouse because it is already full. Check Tons in Warehouse.";
+                frm_Box0.b_Message.Caption = "\n" + "You cannot store " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " in your warehouse because it is already full. Check Tons in Warehouse.";
                 await frm_Box0.Show(1);
                 b_Message.Caption = "Your warehouse is full.";
             } else {
-                if ((player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] + player.warehouseUsed[game.planet[game.currentPlayer]]) > player.warehouseCapacity) {
-                    l0140 = player.warehouseCapacity - player.warehouseUsed[game.planet[game.currentPlayer]];
+                if ((player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] + player.warehouseUsed[game.planet[game.currentPlayer]]) > player.warehouseCapacity) {
+                    tons = player.warehouseCapacity - player.warehouseUsed[game.planet[game.currentPlayer]];
                 } else {
-                    l0140 = player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]];
+                    tons = player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]];
                 }
             }
-            if (l0140 == -6666) {
-            } else if (l0140 == 0) {
-                b_Message.Caption = "You didn't store any " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
+            if (tons == -6666) {
+            } else if (tons == 0) {
+                b_Message.Caption = "You didn't store any " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " in the warehouse.";
             } else {
-                player.warehouseAvgCost[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = CLng((player.warehouseAvgCost[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] * player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] + player.cargoAvgCost[m0020[b_Grid.Row]][m0036[b_Grid.Row]] * l0140) / (l0140 + player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]]));
+                player.warehouseAvgCost[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] = CLng((player.warehouseAvgCost[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] * player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] + player.cargoAvgCost[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] * tons) / (tons + player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]));
                 b_Message.ForeColor = CYAN;
-                if (l0140 == 1) {
-                    b_Message.Caption = "You just stored " + Format(l0140) + " ton of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
+                if (tons == 1) {
+                    b_Message.Caption = "You just stored " + Format(tons) + " ton of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " in the warehouse.";
                 } else {
-                    b_Message.Caption = "You just stored " + Format(l0140) + " tons of " + Trim(game.commodityNames[m0020[b_Grid.Row]][m0036[b_Grid.Row]]) + " in the warehouse.";
+                    b_Message.Caption = "You just stored " + Format(tons) + " tons of " + Trim(game.commodityNames[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]]) + " in the warehouse.";
                 }
-                player.cargoTotal = player.cargoTotal - l0140;
-                player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] - l0140;
-                player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] = player.warehouseStock[game.planet[game.currentPlayer]][m0020[b_Grid.Row]][m0036[b_Grid.Row]] + l0140;
-                player.warehouseUsed[game.planet[game.currentPlayer]] = player.warehouseUsed[game.planet[game.currentPlayer]] + l0140;
-                if (player.cargo[m0020[b_Grid.Row]][m0036[b_Grid.Row]] == 0) {
-                    player.cargoAvgCost[m0020[b_Grid.Row]][m0036[b_Grid.Row]] = 0;
+                player.cargoTotal = player.cargoTotal - tons;
+                player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] = player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] - tons;
+                player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] = player.warehouseStock[game.planet[game.currentPlayer]][rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] + tons;
+                player.warehouseUsed[game.planet[game.currentPlayer]] = player.warehouseUsed[game.planet[game.currentPlayer]] + tons;
+                if (player.cargo[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] == 0) {
+                    player.cargoAvgCost[rowCategory[b_Grid.Row]][rowItem[b_Grid.Row]] = 0;
                 }
             }
-        } else if (l013E == "CANCEL") {
+        } else if (action == "CANCEL") {
             if (settings.soundOn == -1) {
                 Beep();
             }
             b_Message.Caption = "Your transaction was cancelled. No goods transferred to or from your warehouse.";
         }
         await Unload(frm_Store);
-        for (l0142 = m001C; l0142 >= 1; l0142--) {
-            if (l0142 == m001C) {
+        for (gridRow = rowCount; gridRow >= 1; gridRow--) {
+            if (gridRow == rowCount) {
                 b_Grid.AddItem(" ");
             }
-            b_Grid.RemoveItem(l0142);
+            b_Grid.RemoveItem(gridRow);
         }
-        sub1B77();
-        sub1B91();
+        fillGrid();
+        sizeGrid();
         me.MousePointer = ARROW_CURSOR;
     }
 
@@ -658,9 +658,9 @@ function (me) {
             b_Quick.Caption = "Shortcut = off";
         }
         b_TitleBar.Caption = "Warehouse on " + Trim(game.planetNames[game.planet[game.currentPlayer]]);
-        m001A = mc004E;
-        sub1B77();
-        sub1B91();
+        viewMode = VIEW_ALL_GOODS;
+        fillGrid();
+        sizeGrid();
     }
 
     return {
@@ -668,7 +668,7 @@ function (me) {
         b_Grid_MouseUp, b_Help_Click, b_Help_MouseDown, b_Help_MouseUp,
         b_Marketplace_Click, b_Marketplace_MouseDown, b_Marketplace_MouseUp, b_Quick_Click,
         b_Quick_MouseDown, b_Quick_MouseUp, b_Tons_Click, b_Tons_MouseDown,
-        b_Tons_MouseUp, sub1B77, sub1B91, sub1AA8,
+        b_Tons_MouseUp, fillGrid, sizeGrid, transferCommodity,
         Form_Activate, Form_KeyPress, Form_Load,
     };
 });

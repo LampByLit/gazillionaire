@@ -30,8 +30,8 @@ function (me) {
     const WHITE = 16777215;
     const ARROW_CURSOR = 1;
     const RED = 255;
-    let m001A = 0;
-    let m001C = 0;
+    let animFrame = 0;
+    let animTicks = 0;
 
     async function b_ExitTax_Click() {
         me.MousePointer = HOURGLASS;
@@ -112,7 +112,7 @@ function (me) {
             player.passengerTaxOwed = 0;
             player.tariffsOwed = 0;
         }
-        sub15B2();
+        updateDisplay();
         me.MousePointer = ARROW_CURSOR;
     }
 
@@ -125,24 +125,24 @@ function (me) {
     }
 
     function b_Timer_Timer() {
-        if (m001A == 1) {
+        if (animFrame == 1) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "TAX.BMP");
-        } else if (m001A == 2) {
+        } else if (animFrame == 2) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "tax2.bmp");
         }
-        m001A = m001A + 1;
-        if (m001A == 3) {
-            m001A = 1;
+        animFrame = animFrame + 1;
+        if (animFrame == 3) {
+            animFrame = 1;
         }
-        m001C = m001C + 1;
-        if (m001C == 6) {
+        animTicks = animTicks + 1;
+        if (animTicks == 6) {
             b_Timer.Enabled = 0;
-            m001C = 0;
+            animTicks = 0;
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "tax2.bmp");
         }
     }
 
-    function sub15B2() {
+    function updateDisplay() {
         b_Tax.Caption = "   Passenger Taxes:   " + Format(player.passengerTaxOwed, "#,#0");
         b_Tariff.Caption = "   Commodity Tariffs:   " + Format(player.tariffsOwed, "#,#0");
         b_Total.Caption = "   Total Taxes:   " + Format((player.passengerTaxOwed + player.tariffsOwed), "#,#0");
@@ -150,7 +150,7 @@ function (me) {
     }
 
     function Form_Activate() {
-        sub15B2();
+        updateDisplay();
         me.MousePointer = ARROW_CURSOR;
     }
 
@@ -162,8 +162,8 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = HOURGLASS;
-        m001C = 1;
-        m001A = 1;
+        animTicks = 1;
+        animFrame = 1;
         if (player.passengerTaxOwed + player.tariffsOwed > 0) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "tax2.bmp");
             b_Timer.Enabled = -1;
@@ -192,7 +192,7 @@ function (me) {
     return {
         b_ExitTax_Click, b_ExitTax_MouseDown, b_ExitTax_MouseUp, b_Help1_Click,
         b_Help1_MouseDown, b_Help1_MouseUp, b_PayAll_Click, b_PayAll_MouseDown,
-        b_PayAll_MouseUp, b_Timer_Timer, sub15B2, Form_Activate,
+        b_PayAll_MouseUp, b_Timer_Timer, updateDisplay, Form_Activate,
         Form_KeyPress, Form_Load,
     };
 });

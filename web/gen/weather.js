@@ -24,7 +24,7 @@ function (me) {
     const { b_Message, b_Help, VSElastic2, b_Exit } = me.controls;
     const HOURGLASS = 11;
     const ARROW_CURSOR = 1;
-    let m001A = 0;
+    let animFrame = 0;
 
     async function b_Button_Click() {
         me.MousePointer = HOURGLASS;
@@ -77,18 +77,18 @@ function (me) {
     }
 
     function b_Timer_Timer() {
-        if (m001A == 1) {
+        if (animFrame == 1) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "weather2.bmp");
-        } else if (m001A == 2) {
+        } else if (animFrame == 2) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "WEATHER.BMP");
         }
-        m001A = m001A + 1;
-        if (m001A == 3) {
-            m001A = 1;
+        animFrame = animFrame + 1;
+        if (animFrame == 3) {
+            animFrame = 1;
         }
     }
 
-    function sub2F02() {
+    function showWeatherReport() {
         if (game.weatherEvent == 1) {
             b_Message.Caption = "Our satellites indicate you should be careful when travelling near " + UCase(Trim(game.planetNames[game.weatherPlanet])) + ". A meteor storm is expected to move into the area this week.";
         } else if (game.weatherEvent == 2) {
@@ -236,9 +236,9 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = HOURGLASS;
-        m001A = 1;
+        animFrame = 1;
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "WEATHER.BMP");
-        sub2F02();
+        showWeatherReport();
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "weather.wav";
@@ -250,6 +250,6 @@ function (me) {
     return {
         b_Button_Click, b_Exit_Click, b_Exit_MouseDown, b_Exit_MouseUp,
         b_Help_Click, b_Help_MouseDown, b_Help_MouseUp, b_Timer_Timer,
-        sub2F02, Form_Activate, Form_KeyPress, Form_Load,
+        showWeatherReport, Form_Activate, Form_KeyPress, Form_Load,
     };
 });

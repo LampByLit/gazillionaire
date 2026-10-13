@@ -30,7 +30,7 @@ function (me) {
     const YELLOW = 65535;
     const ARROW_CURSOR = 1;
     const RED = 255;
-    let m00C6 = 0;  // Static in sub3B58
+    let messageColor = 0;  // Static in travelToPlanet
 
     async function b_DistanceChart_Click() {
         me.MousePointer = HOURGLASS;
@@ -108,32 +108,32 @@ function (me) {
             frm_Box0.b_Message.Caption = "\n" + "You are already on " + game.planetNames[Index] + ". Try another planet.";
             await frm_Box0.Show(1);
         } else {
-            await sub3B58((Index));
+            await travelToPlanet((Index));
         }
     }
 
-    async function sub3B58(pv00AC) {
-        let l00AE = 0;
-        let l00B0 = 0;
-        let l00B6 = 0;
-        let l00B8 = "";
-        pv00AC = CInt(pv00AC);
+    async function travelToPlanet(destination) {
+        let stockValue = 0;
+        let planet = 0;
+        let returnToMenu = 0;
+        let unusedText = "";
+        destination = CInt(destination);
         try {
             const YELLOW = 65535;
             me.MousePointer = HOURGLASS;
-            l00B6 = 0;
-            l00B8 = "";
+            returnToMenu = 0;
+            unusedText = "";
             FillElastic.Visible = 0;
-            l00AE = 0;
-            for (l00B0 = 0; l00B0 <= 6; l00B0++) {
+            stockValue = 0;
+            for (planet = 0; planet <= 6; planet++) {
                 if (game.turn <= 15) {
-                    l00AE = l00AE + player.shares[l00B0] * game.stockPrices[l00B0][game.turn];
+                    stockValue = stockValue + player.shares[planet] * game.stockPrices[planet][game.turn];
                 } else {
-                    l00AE = l00AE + player.shares[l00B0] * game.stockPrices[l00B0][15];
+                    stockValue = stockValue + player.shares[planet] * game.stockPrices[planet][15];
                 }
             }
             if (game.graphShowCompany[game.currentPlayer] == 0) {
-                game.netWorth[game.currentPlayer] = l00AE + player.cash + player.bankBalance - player.loan - player.zinnLoan;
+                game.netWorth[game.currentPlayer] = stockValue + player.cash + player.bankBalance - player.loan - player.zinnLoan;
             } else {
                 game.netWorth[game.currentPlayer] = 0;
             }
@@ -145,7 +145,7 @@ function (me) {
                 frm_Box1Port.b_No.Visible = -1;
                 frm_Box1Port.b_OK.Visible = 0;
                 frm_Box1Port.b_Container.BackColor = YELLOW;
-                frm_Box1Port.b_Message.ForeColor = m00C6;
+                frm_Box1Port.b_Message.ForeColor = messageColor;
                 if (player.zinnLoan > player.zinnCreditLimit) {
                     frm_Box1Port.b_Message.Caption = "If you leave the planet now you will go bankrupt and lose the game! You cannot owe more than " + Format(player.zinnCreditLimit, "#,#0") + " kubars to Mr. Zinn." + "\n" + "\n" + "Do you want to return to the Main Menu and try to straighten out your finances?" + "\n" + "\n" + "If you click on BANKRUPT ME, you will leave the planet and lose the game. If you click on GO TO MAIN MENU, you will return to the Main Menu.";
                     frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ZINN.BMP");
@@ -171,13 +171,13 @@ function (me) {
                 me.MousePointer = HOURGLASS;
                 if (frm_Box1Port.Tag == "YES") {
                     await Unload(frm_Box1Port);
-                    l00B6 = -1;
+                    returnToMenu = -1;
                 } else {
                     await Unload(frm_Box1Port);
-                    for (l00B0 = 0; l00B0 <= 6; l00B0++) {
-                        game.facilitiesOwned[game.currentPlayer][l00B0] = 0;
-                        game.facilityFees[game.currentPlayer][l00B0] = 0;
-                        game.facilityRevenue[game.currentPlayer][l00B0] = 0;
+                    for (planet = 0; planet <= 6; planet++) {
+                        game.facilitiesOwned[game.currentPlayer][planet] = 0;
+                        game.facilityFees[game.currentPlayer][planet] = 0;
+                        game.facilityRevenue[game.currentPlayer][planet] = 0;
                     }
                     if (settings.soundOn == -1) {
                         b_Sound.Command = "Close";
@@ -187,7 +187,7 @@ function (me) {
                     return;
                 }
             }
-            if (l00B6 == -1) {
+            if (returnToMenu == -1) {
                 await frm_MainMenu.Show();
                 await Unload(me);
             } else {
@@ -198,7 +198,7 @@ function (me) {
                 if (player.quickTravel == 0) {
                     me.MousePointer = HOURGLASS;
                     game.previousPlanet[game.currentPlayer] = game.planet[game.currentPlayer];
-                    game.planet[game.currentPlayer] = pv00AC;
+                    game.planet[game.currentPlayer] = destination;
                     if (game.auctionType == 1 || game.auctionType == 2) {
                         frm_Auction.Tag = "TRAVEL0";
                         await frm_Auction.Show();
@@ -209,7 +209,7 @@ function (me) {
                 } else {
                     me.MousePointer = HOURGLASS;
                     game.previousPlanet[game.currentPlayer] = game.planet[game.currentPlayer];
-                    game.planet[game.currentPlayer] = pv00AC;
+                    game.planet[game.currentPlayer] = destination;
                     await Load(frm_Travel1);
                     if (game.auctionType == 1 || game.auctionType == 2) {
                         frm_Auction.Tag = "TRAVEL1";
@@ -229,7 +229,7 @@ function (me) {
         }
     }
 
-    function sub4B13() {
+    function unusedStub() {
     }
 
     function Form_Activate() {
@@ -243,13 +243,13 @@ function (me) {
     }
 
     function Form_Load() {
-        let l00DE = 0;
+        let planet = 0;
         const RED = 255;
         me.MousePointer = HOURGLASS;
         FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "STARS2.BMP");
-        for (l00DE = 0; l00DE <= 6; l00DE++) {
-            b_Planet[l00DE].Picture = LoadPicture(Trim(paths.imageDir) + game.planetNames[l00DE] + "1.bmp");
-            b_Planet[l00DE].Caption = game.planetNames[l00DE];
+        for (planet = 0; planet <= 6; planet++) {
+            b_Planet[planet].Picture = LoadPicture(Trim(paths.imageDir) + game.planetNames[planet] + "1.bmp");
+            b_Planet[planet].Caption = game.planetNames[planet];
         }
         if (game.tutorialMode == -1 && game.complexity < game.unlockFacilities) {
             b_Facility.Visible = 0;
@@ -283,7 +283,7 @@ function (me) {
         b_DistanceChart_Click, b_DistanceChart_MouseDown, b_DistanceChart_MouseUp, b_Exit_Click,
         b_Exit_MouseDown, b_Exit_MouseUp, b_Facility_Click, b_Facility_MouseDown,
         b_Facility_MouseUp, b_Help_Click, b_Help_MouseDown, b_Help_MouseUp,
-        b_Planet_Click, sub3B58, sub4B13, Form_Activate,
+        b_Planet_Click, travelToPlanet, unusedStub, Form_Activate,
         Form_KeyPress, Form_Load, Label1_Click, Label2_Click,
         Label3_Click, Label4_Click,
     };

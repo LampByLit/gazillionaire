@@ -38,13 +38,13 @@ function (me) {
         }
         FillElastic.Visible = 0;
         game.canBuyStock = -1;
-        await sub2CFF();
-        await sub2D0F();
+        await handleStockCrashes();
+        await warnStockCrashes();
         if (game.lastAuctionType == 1 || game.lastAuctionType == -1) {
-            await sub2B75();
+            await announceShipAuction();
         }
         if (game.lastAuctionType == 2 || game.lastAuctionType == -2) {
-            await sub2B86();
+            await announceFacilityAuction();
         }
         if (game.winner != 0) {
             await frm_WinGame.Show();
@@ -97,53 +97,53 @@ function (me) {
     }
 
     async function b_Ranking_Click() {
-        let l0094 = "";
+        let levelName = "";
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         if (game.skillLevel == 1) {
-            l0094 = "Tutorial";
+            levelName = "Tutorial";
         } else if (game.skillLevel == 2) {
-            l0094 = "Novice";
+            levelName = "Novice";
         } else if (game.skillLevel == 3) {
-            l0094 = "Beginner";
+            levelName = "Beginner";
         } else if (game.skillLevel == 4) {
-            l0094 = "Intermediate";
+            levelName = "Intermediate";
         } else if (game.skillLevel == 5) {
-            l0094 = "Expert";
+            levelName = "Expert";
         } else if (game.skillLevel == 6) {
-            l0094 = "Master";
+            levelName = "Master";
         }
         if (game.winner == 0) {
             frm_Box2.FillElastic.Caption = "Company Ranking";
             frm_Box2.b_Message.FontSize = 10.5;
-            frm_Box2.b_Message.Caption = "COMPANY RANKING:" + "\n" + "\n" + "The companies are ranked according to their wealth. The first company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars wins the game!" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l0094;
+            frm_Box2.b_Message.Caption = "COMPANY RANKING:" + "\n" + "\n" + "The companies are ranked according to their wealth. The first company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars wins the game!" + "\n" + rankingText() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + levelName;
             await frm_Box2.Show(1);
         } else {
             if (game.goalNetWorth == 1000000000) {
                 if (game.winner <= 6) {
                     frm_Box2.FillElastic.Caption = "Company Ranking";
-                    frm_Box2.b_Message.Caption = Trim(game.companyNames[game.winner]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!! This means the game is now officially over." + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l0094;
+                    frm_Box2.b_Message.Caption = Trim(game.companyNames[game.winner]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!! This means the game is now officially over." + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + rankingText() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + levelName;
                     await frm_Box2.Show(1);
                 } else {
                     frm_Box2.FillElastic.Caption = "Company Ranking";
-                    frm_Box2.b_Message.Caption = Trim(rivals.companyNames[game.winner - 6]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!! This means the game is now officially over." + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l0094;
+                    frm_Box2.b_Message.Caption = Trim(rivals.companyNames[game.winner - 6]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!! This means the game is now officially over." + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + rankingText() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + levelName;
                     await frm_Box2.Show(1);
                 }
             } else if (game.winner <= 6) {
                 if (game.winner == game.currentPlayer) {
                     frm_Box2.FillElastic.Caption = "Company Ranking";
-                    frm_Box2.b_Message.Caption = "You won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l0094;
+                    frm_Box2.b_Message.Caption = "You won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + rankingText() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + levelName;
                     await frm_Box2.Show(1);
                 } else {
                     frm_Box2.FillElastic.Caption = "Company Ranking";
-                    frm_Box2.b_Message.Caption = Trim(game.companyNames[game.winner]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l0094;
+                    frm_Box2.b_Message.Caption = Trim(game.companyNames[game.winner]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + rankingText() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + levelName;
                     await frm_Box2.Show(1);
                 }
             } else {
                 frm_Box2.FillElastic.Caption = "Company Ranking";
-                frm_Box2.b_Message.Caption = Trim(rivals.companyNames[game.winner - 6]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l0094;
+                frm_Box2.b_Message.Caption = Trim(rivals.companyNames[game.winner - 6]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + rankingText() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + levelName;
                 await frm_Box2.Show(1);
             }
         }
@@ -176,27 +176,27 @@ function (me) {
         b_SaveGame.BackColor = LIGHT_GRAY;
     }
 
-    async function sub2B86() {
-        let l00CE = "";
-        let l00D0 = "";
+    async function announceFacilityAuction() {
+        let winnerName = "";
+        let runnerUpName = "";
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         if (game.lastAuctionType == 2) {
             if (game.lastAuctionTopBid > 0) {
                 if (game.lastAuctionWinner <= 6) {
-                    l00CE = Trim(game.companyNames[game.lastAuctionWinner]);
+                    winnerName = Trim(game.companyNames[game.lastAuctionWinner]);
                     if (game.lastAuctionRunnerUp <= 6) {
-                        l00D0 = Trim(game.companyNames[game.lastAuctionRunnerUp]);
+                        runnerUpName = Trim(game.companyNames[game.lastAuctionRunnerUp]);
                     } else {
-                        l00D0 = Trim(rivals.companyNames[game.lastAuctionRunnerUp - 6]);
+                        runnerUpName = Trim(rivals.companyNames[game.lastAuctionRunnerUp - 6]);
                     }
                 } else {
-                    l00CE = Trim(rivals.companyNames[game.lastAuctionWinner - 6]);
+                    winnerName = Trim(rivals.companyNames[game.lastAuctionWinner - 6]);
                     if (game.lastAuctionRunnerUp <= 6) {
-                        l00D0 = Trim(game.companyNames[game.lastAuctionRunnerUp]);
+                        runnerUpName = Trim(game.companyNames[game.lastAuctionRunnerUp]);
                     } else {
-                        l00D0 = Trim(rivals.companyNames[game.lastAuctionRunnerUp - 6]);
+                        runnerUpName = Trim(rivals.companyNames[game.lastAuctionRunnerUp - 6]);
                     }
                 }
                 frm_Box1Rect.b_Yes.Visible = 0;
@@ -208,8 +208,8 @@ function (me) {
                 } else {
                     frm_Box1Rect.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "op" + Trim(Str((game.lastAuctionWinner - 6))) + ".bmp");
                 }
-                frm_Box1Rect.b_ImageLable.Caption = l00CE + " won the auction!";
-                frm_Box1Rect.b_Message.Caption = l00CE + " bid highest, purchasing the " + fn2D8D(game.lastAuctionFacility) + " on " + game.planetNames[game.lastAuctionPlanet] + " for " + Format(game.lastAuctionTopBid, "#,#0") + " kubars. The next highest was " + l00D0 + " with a bid of " + Format(game.lastAuctionSecondBid, "#,#0") + " kubars.";
+                frm_Box1Rect.b_ImageLable.Caption = winnerName + " won the auction!";
+                frm_Box1Rect.b_Message.Caption = winnerName + " bid highest, purchasing the " + facilityName(game.lastAuctionFacility) + " on " + game.planetNames[game.lastAuctionPlanet] + " for " + Format(game.lastAuctionTopBid, "#,#0") + " kubars. The next highest was " + runnerUpName + " with a bid of " + Format(game.lastAuctionSecondBid, "#,#0") + " kubars.";
                 if (settings.soundOn == -1 && game.lastAuctionWinner <= 6) {
                     b_Sound.Command = "Close";
                     frm_Box1Rect.b_Sound.Command = "Close";
@@ -268,27 +268,27 @@ function (me) {
         }
     }
 
-    async function sub2B75() {
-        let l00DE = "";
-        let l00E0 = "";
+    async function announceShipAuction() {
+        let winnerName = "";
+        let runnerUpName = "";
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         if (game.lastAuctionType == 1) {
             if (game.lastAuctionTopBid > 0) {
                 if (game.lastAuctionWinner <= 6) {
-                    l00DE = Trim(game.companyNames[game.lastAuctionWinner]);
+                    winnerName = Trim(game.companyNames[game.lastAuctionWinner]);
                     if (game.lastAuctionRunnerUp <= 6) {
-                        l00E0 = Trim(game.companyNames[game.lastAuctionRunnerUp]);
+                        runnerUpName = Trim(game.companyNames[game.lastAuctionRunnerUp]);
                     } else {
-                        l00E0 = Trim(rivals.companyNames[game.lastAuctionRunnerUp - 6]);
+                        runnerUpName = Trim(rivals.companyNames[game.lastAuctionRunnerUp - 6]);
                     }
                 } else {
-                    l00DE = Trim(rivals.companyNames[game.lastAuctionWinner - 6]);
+                    winnerName = Trim(rivals.companyNames[game.lastAuctionWinner - 6]);
                     if (game.lastAuctionRunnerUp <= 6) {
-                        l00E0 = Trim(game.companyNames[game.lastAuctionRunnerUp]);
+                        runnerUpName = Trim(game.companyNames[game.lastAuctionRunnerUp]);
                     } else {
-                        l00E0 = Trim(rivals.companyNames[game.lastAuctionRunnerUp - 6]);
+                        runnerUpName = Trim(rivals.companyNames[game.lastAuctionRunnerUp - 6]);
                     }
                 }
                 frm_Box1Rect.b_Yes.Visible = 0;
@@ -300,8 +300,8 @@ function (me) {
                 } else {
                     frm_Box1Rect.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "op" + Trim(Str((game.lastAuctionWinner - 6))) + ".bmp");
                 }
-                frm_Box1Rect.b_ImageLable.Caption = l00DE + " won the auction!";
-                frm_Box1Rect.b_Message.Caption = l00DE + " bid highest, purchasing a new, larger ship for " + Format(game.lastAuctionTopBid, "#,#0") + " kubars. The next highest was " + l00E0 + " with a bid of " + Format(game.lastAuctionSecondBid, "#,#0") + " kubars.";
+                frm_Box1Rect.b_ImageLable.Caption = winnerName + " won the auction!";
+                frm_Box1Rect.b_Message.Caption = winnerName + " bid highest, purchasing a new, larger ship for " + Format(game.lastAuctionTopBid, "#,#0") + " kubars. The next highest was " + runnerUpName + " with a bid of " + Format(game.lastAuctionSecondBid, "#,#0") + " kubars.";
                 if (settings.soundOn == -1 && game.lastAuctionWinner <= 6) {
                     frm_Box1Rect.b_Sound.Command = "Close";
                     if (game.shipType[game.lastAuctionWinner] <= 6) {
@@ -359,296 +359,296 @@ function (me) {
         }
     }
 
-    function fn2D8D(pv00E4) {
+    function facilityName(facility) {
         let ret = "";
-        pv00E4 = CInt(pv00E4);
-        if (pv00E4 == 1) {
+        facility = CInt(facility);
+        if (facility == 1) {
             ret = "Conference Center";
-        } else if (pv00E4 == 2) {
+        } else if (facility == 2) {
             ret = "Reception Platform";
-        } else if (pv00E4 == 3) {
+        } else if (facility == 3) {
             ret = "PassengerTicket Office";
-        } else if (pv00E4 == 4) {
+        } else if (facility == 4) {
             ret = "Landing Dock";
-        } else if (pv00E4 == 5) {
+        } else if (facility == 5) {
             ret = "Loading Yard";
-        } else if (pv00E4 == 6) {
+        } else if (facility == 6) {
             ret = "Stock Yards";
-        } else if (pv00E4 == 7) {
+        } else if (facility == 7) {
             ret = "Fuel Storage Tanks";
-        } else if (pv00E4 == 8) {
+        } else if (facility == 8) {
             ret = "Grain Silos";
-        } else if (pv00E4 == 9) {
+        } else if (facility == 9) {
             ret = "Livestock Pens";
-        } else if (pv00E4 == 10) {
+        } else if (facility == 10) {
             ret = "Chemical Tanks";
-        } else if (pv00E4 == 11) {
+        } else if (facility == 11) {
             ret = "Armory";
-        } else if (pv00E4 == 12) {
+        } else if (facility == 12) {
             ret = "Fuel Pumps";
-        } else if (pv00E4 == 13) {
+        } else if (facility == 13) {
             ret = "Radar Tower";
-        } else if (pv00E4 == 14) {
+        } else if (facility == 14) {
             ret = "Control Tower";
-        } else if (pv00E4 == 15) {
+        } else if (facility == 15) {
             ret = "Microwave Transmitter";
-        } else if (pv00E4 == 16) {
+        } else if (facility == 16) {
             ret = "Transmission Lines";
-        } else if (pv00E4 == 17) {
+        } else if (facility == 17) {
             ret = "Broadcasting Center";
-        } else if (pv00E4 == 18) {
+        } else if (facility == 18) {
             ret = "Communications Center";
-        } else if (pv00E4 == 19) {
+        } else if (facility == 19) {
             ret = "Emergency Clinic";
-        } else if (pv00E4 == 20) {
+        } else if (facility == 20) {
             ret = "Sick Bay";
-        } else if (pv00E4 == 21) {
+        } else if (facility == 21) {
             ret = "Business Bureau";
-        } else if (pv00E4 == 22) {
+        } else if (facility == 22) {
             ret = "Customs Office";
-        } else if (pv00E4 == 23) {
+        } else if (facility == 23) {
             ret = "Toxic Waste Disposal Units";
-        } else if (pv00E4 == 24) {
+        } else if (facility == 24) {
             ret = "Nuclear Holding Tanks";
-        } else if (pv00E4 == 25) {
+        } else if (facility == 25) {
             ret = "Packaging Plant";
-        } else if (pv00E4 == 26) {
+        } else if (facility == 26) {
             ret = "Supply House";
-        } else if (pv00E4 == 27) {
+        } else if (facility == 27) {
             ret = "Assembly Plant";
-        } else if (pv00E4 == 28) {
+        } else if (facility == 28) {
             ret = "Warehouse Maintenance Service";
-        } else if (pv00E4 == 29) {
+        } else if (facility == 29) {
             ret = "Freight Terminal";
-        } else if (pv00E4 == 30) {
+        } else if (facility == 30) {
             ret = "Merchant's Club";
-        } else if (pv00E4 == 31) {
+        } else if (facility == 31) {
             ret = "Refrigeration Bay";
-        } else if (pv00E4 == 32) {
+        } else if (facility == 32) {
             ret = "Cooling Station";
-        } else if (pv00E4 == 33) {
+        } else if (facility == 33) {
             ret = "Conveyor System";
-        } else if (pv00E4 == 34) {
+        } else if (facility == 34) {
             ret = "Transit System";
-        } else if (pv00E4 == 35) {
+        } else if (facility == 35) {
             ret = "Defensive Shields";
-        } else if (pv00E4 == 36) {
+        } else if (facility == 36) {
             ret = "Sewage System";
-        } else if (pv00E4 == 37) {
+        } else if (facility == 37) {
             ret = "Food Center";
-        } else if (pv00E4 == 38) {
+        } else if (facility == 38) {
             ret = "Distribution Center";
-        } else if (pv00E4 == 39) {
+        } else if (facility == 39) {
             ret = "Processing Plant";
-        } else if (pv00E4 == 40) {
+        } else if (facility == 40) {
             ret = "Water Works";
-        } else if (pv00E4 == 41) {
+        } else if (facility == 41) {
             ret = "Oxygen Tanks";
-        } else if (pv00E4 == 42) {
+        } else if (facility == 42) {
             ret = "Life Support System";
-        } else if (pv00E4 == 43) {
+        } else if (facility == 43) {
             ret = "Cargo Depot";
-        } else if (pv00E4 == 44) {
+        } else if (facility == 44) {
             ret = "Accommodations Bureau";
-        } else if (pv00E4 == 45) {
+        } else if (facility == 45) {
             ret = "Gas Lines";
-        } else if (pv00E4 == 46) {
+        } else if (facility == 46) {
             ret = "Main Electrical Generator";
-        } else if (pv00E4 == 47) {
+        } else if (facility == 47) {
             ret = "Power Plant";
-        } else if (pv00E4 == 48) {
+        } else if (facility == 48) {
             ret = "Refueling Depot";
-        } else if (pv00E4 == 49) {
+        } else if (facility == 49) {
             ret = "Docking Station";
-        } else if (pv00E4 == 50) {
+        } else if (facility == 50) {
             ret = "Transportation Bureau";
-        } else if (pv00E4 == 51) {
+        } else if (facility == 51) {
             ret = "Granary";
-        } else if (pv00E4 == 52) {
+        } else if (facility == 52) {
             ret = "Arsenal";
-        } else if (pv00E4 == 53) {
+        } else if (facility == 53) {
             ret = "Licensing Department";
-        } else if (pv00E4 == 54) {
+        } else if (facility == 54) {
             ret = "Security Administration Center";
-        } else if (pv00E4 == 55) {
+        } else if (facility == 55) {
             ret = "Planetary Defense System";
-        } else if (pv00E4 == 56) {
+        } else if (facility == 56) {
             ret = "Product Inspection Office";
-        } else if (pv00E4 == 57) {
+        } else if (facility == 57) {
             ret = "Labor Relations Office";
-        } else if (pv00E4 == 58) {
+        } else if (facility == 58) {
             ret = "Information Center";
-        } else if (pv00E4 == 59) {
+        } else if (facility == 59) {
             ret = "Launch Pads";
-        } else if (pv00E4 == 60) {
+        } else if (facility == 60) {
             ret = "Weather Satellite";
-        } else if (pv00E4 == 61) {
+        } else if (facility == 61) {
             ret = "News Satellite";
-        } else if (pv00E4 == 62) {
+        } else if (facility == 62) {
             ret = "Transfer Ports";
-        } else if (pv00E4 == 63) {
+        } else if (facility == 63) {
             ret = "Landing Strip";
-        } else if (pv00E4 == 64) {
+        } else if (facility == 64) {
             ret = "Engine Maintenance Center";
-        } else if (pv00E4 == 65) {
+        } else if (facility == 65) {
             ret = "Orbital Control Module";
-        } else if (pv00E4 == 66) {
+        } else if (facility == 66) {
             ret = "Technical Support Service";
-        } else if (pv00E4 == 67) {
+        } else if (facility == 67) {
             ret = "Interplanetary Registration Center";
-        } else if (pv00E4 == 68) {
+        } else if (facility == 68) {
             ret = "Ship Hangars";
-        } else if (pv00E4 == 69) {
+        } else if (facility == 69) {
             ret = "Research Labs";
-        } else if (pv00E4 == 70) {
+        } else if (facility == 70) {
             ret = "Medical Center";
-        } else if (pv00E4 == 71) {
+        } else if (facility == 71) {
             ret = "Commodity Capsules";
-        } else if (pv00E4 == 72) {
+        } else if (facility == 72) {
             ret = "Trade Center";
-        } else if (pv00E4 == 73) {
+        } else if (facility == 73) {
             ret = "Currency Exchange Department";
-        } else if (pv00E4 == 74) {
+        } else if (facility == 74) {
             ret = "Carrier Hub";
-        } else if (pv00E4 == 75) {
+        } else if (facility == 75) {
             ret = "Patrol Fleet";
-        } else if (pv00E4 == 76) {
+        } else if (facility == 76) {
             ret = "Ammunition Dump";
-        } else if (pv00E4 == 77) {
+        } else if (facility == 77) {
             ret = "Garbage Dump";
-        } else if (pv00E4 == 78) {
+        } else if (facility == 78) {
             ret = "Freight Elevators";
-        } else if (pv00E4 == 79) {
+        } else if (facility == 79) {
             ret = "Stellar Guidance System";
-        } else if (pv00E4 == 80) {
+        } else if (facility == 80) {
             ret = "Landing Installations";
-        } else if (pv00E4 == 81) {
+        } else if (facility == 81) {
             ret = "Commodities Repository";
-        } else if (pv00E4 == 82) {
+        } else if (facility == 82) {
             ret = "Launch Gates";
-        } else if (pv00E4 == 83) {
+        } else if (facility == 83) {
             ret = "Passenger Waiting Area";
-        } else if (pv00E4 == 84) {
+        } else if (facility == 84) {
             ret = "Navigation Control Building";
-        } else if (pv00E4 == 85) {
+        } else if (facility == 85) {
             ret = "Unloading Cranes";
-        } else if (pv00E4 == 86) {
+        } else if (facility == 86) {
             ret = "Landing Base";
-        } else if (pv00E4 == 87) {
+        } else if (facility == 87) {
             ret = "Fire Department";
-        } else if (pv00E4 == 88) {
+        } else if (facility == 88) {
             ret = "Asteriod Destruction Unit";
-        } else if (pv00E4 == 89) {
+        } else if (facility == 89) {
             ret = "Asteriod Detection Site";
-        } else if (pv00E4 == 90) {
+        } else if (facility == 90) {
             ret = "Solar Dust Collection Center";
-        } else if (pv00E4 == 91) {
+        } else if (facility == 91) {
             ret = "Pirate Warning System";
-        } else if (pv00E4 == 92) {
+        } else if (facility == 92) {
             ret = "Water Purification Center";
-        } else if (pv00E4 == 93) {
+        } else if (facility == 93) {
             ret = "Atmospheric Filtering System";
-        } else if (pv00E4 == 94) {
+        } else if (facility == 94) {
             ret = "Temperature Equalizing System";
-        } else if (pv00E4 == 95) {
+        } else if (facility == 95) {
             ret = "Transportation Control Center";
-        } else if (pv00E4 == 96) {
+        } else if (facility == 96) {
             ret = "Shipping Dry Docks";
-        } else if (pv00E4 == 97) {
+        } else if (facility == 97) {
             ret = "Orbiting Repair Center";
-        } else if (pv00E4 == 98) {
+        } else if (facility == 98) {
             ret = "Satellite Refueling Station";
-        } else if (pv00E4 == 99) {
+        } else if (facility == 99) {
             ret = "Automated Unloading Unit";
-        } else if (pv00E4 == 100) {
+        } else if (facility == 100) {
             ret = "Automated Repair Droid";
         }
         return ret;
     }
 
-    function fn2D9F() {
-        let l00EA = 0;
-        let l00EC = 0;
-        let l00EE = 0;
-        let l00F0 = 0;
-        let l00F2 = "";
-        let l00F4 = [];
-        let l00FA = [];
+    function rankingText() {
+        let i = 0;
+        let rank = 0;
+        let bestRival = 0;
+        let bestPlayer = 0;
+        let text = "";
+        let playerListed = [];
+        let rivalListed = [];
         let ret = 0;
-        l00F4 = DimArray([6], 0);
-        l00FA = DimArray([6], 0);
+        playerListed = DimArray([6], 0);
+        rivalListed = DimArray([6], 0);
         updateRivalNetWorth();
-        l00F2 = "";
-        for (l00EA = 1; l00EA <= 6; l00EA++) {
-            if (game.graphShowCompany[l00EA] == -1 || l00EA > game.numPlayers) {
-                l00F4[l00EA] = -1;
+        text = "";
+        for (i = 1; i <= 6; i++) {
+            if (game.graphShowCompany[i] == -1 || i > game.numPlayers) {
+                playerListed[i] = -1;
             } else {
-                l00F4[l00EA] = 0;
+                playerListed[i] = 0;
             }
         }
-        for (l00EA = 1; l00EA <= game.numRivals; l00EA++) {
-            l00FA[l00EA] = 0;
+        for (i = 1; i <= game.numRivals; i++) {
+            rivalListed[i] = 0;
         }
-        l00EC = 1;
+        rank = 1;
         do {
-            l00EE = 0;
-            for (l00EA = 1; l00EA <= game.numRivals; l00EA++) {
-                if (l00FA[l00EA] == 0) {
-                    l00EE = CInt(l00EA);
-                    l00EA = game.numRivals;
+            bestRival = 0;
+            for (i = 1; i <= game.numRivals; i++) {
+                if (rivalListed[i] == 0) {
+                    bestRival = CInt(i);
+                    i = game.numRivals;
                 }
             }
-            if (l00EE != 0) {
-                for (l00EA = 1; l00EA <= game.numRivals; l00EA++) {
-                    if (rivals.netWorth[l00EA] > rivals.netWorth[l00EE] && l00FA[l00EA] == 0) {
-                        l00EE = CInt(l00EA);
+            if (bestRival != 0) {
+                for (i = 1; i <= game.numRivals; i++) {
+                    if (rivals.netWorth[i] > rivals.netWorth[bestRival] && rivalListed[i] == 0) {
+                        bestRival = CInt(i);
                     }
                 }
             }
-            l00F0 = 0;
-            for (l00EA = 1; l00EA <= game.numPlayers; l00EA++) {
-                if (l00F4[l00EA] == 0) {
-                    l00F0 = CInt(l00EA);
-                    l00EA = game.numPlayers;
+            bestPlayer = 0;
+            for (i = 1; i <= game.numPlayers; i++) {
+                if (playerListed[i] == 0) {
+                    bestPlayer = CInt(i);
+                    i = game.numPlayers;
                 }
             }
-            if (l00F0 != 0) {
-                for (l00EA = 1; l00EA <= game.numPlayers; l00EA++) {
-                    if (game.netWorth[l00EA] > game.netWorth[l00F0] && l00F4[l00EA] == 0) {
-                        l00F0 = CInt(l00EA);
+            if (bestPlayer != 0) {
+                for (i = 1; i <= game.numPlayers; i++) {
+                    if (game.netWorth[i] > game.netWorth[bestPlayer] && playerListed[i] == 0) {
+                        bestPlayer = CInt(i);
                     }
                 }
             }
-            if (l00EE != 0 && l00F0 != 0) {
-                if (game.netWorth[l00F0] >= rivals.netWorth[l00EE]) {
-                    l00F2 = l00F2 + "\n" + Format(l00EC, "#,#0") + ")  " + Trim(game.companyNames[l00F0]) + "   " + Format(game.netWorth[l00F0], "#,#0");
-                    l00F4[l00F0] = -1;
+            if (bestRival != 0 && bestPlayer != 0) {
+                if (game.netWorth[bestPlayer] >= rivals.netWorth[bestRival]) {
+                    text = text + "\n" + Format(rank, "#,#0") + ")  " + Trim(game.companyNames[bestPlayer]) + "   " + Format(game.netWorth[bestPlayer], "#,#0");
+                    playerListed[bestPlayer] = -1;
                 } else {
-                    l00F2 = l00F2 + "\n" + Format(l00EC, "#,#0") + ")  " + Trim(rivals.companyNames[l00EE]) + "   " + Format(rivals.netWorth[l00EE], "#,#0");
-                    l00FA[l00EE] = -1;
+                    text = text + "\n" + Format(rank, "#,#0") + ")  " + Trim(rivals.companyNames[bestRival]) + "   " + Format(rivals.netWorth[bestRival], "#,#0");
+                    rivalListed[bestRival] = -1;
                 }
-            } else if (l00EE != 0) {
-                l00F2 = l00F2 + "\n" + Format(l00EC, "#,#0") + ")  " + Trim(rivals.companyNames[l00EE]) + "   " + Format(rivals.netWorth[l00EE], "#,#0");
-                l00FA[l00EE] = -1;
-            } else if (l00F0 != 0) {
-                l00F2 = l00F2 + "\n" + Format(l00EC, "#,#0") + ")  " + Trim(game.companyNames[l00F0]) + "   " + Format(game.netWorth[l00F0], "#,#0");
-                l00F4[l00F0] = -1;
+            } else if (bestRival != 0) {
+                text = text + "\n" + Format(rank, "#,#0") + ")  " + Trim(rivals.companyNames[bestRival]) + "   " + Format(rivals.netWorth[bestRival], "#,#0");
+                rivalListed[bestRival] = -1;
+            } else if (bestPlayer != 0) {
+                text = text + "\n" + Format(rank, "#,#0") + ")  " + Trim(game.companyNames[bestPlayer]) + "   " + Format(game.netWorth[bestPlayer], "#,#0");
+                playerListed[bestPlayer] = -1;
             }
-            l00EC = l00EC + 1;
-        } while (l00EE != 0 || l00F0 != 0);
-        ret = l00F2;
+            rank = rank + 1;
+        } while (bestRival != 0 || bestPlayer != 0);
+        ret = text;
         return ret;
     }
 
-    async function sub2CFF() {
-        let l0100 = 0;
-        let l0102 = 0;
-        for (l0100 = 0; l0100 <= 6; l0100++) {
-            if (game.stockCrashed[l0100] == -1) {
-                player.shares[l0100] = 0;
-                player.shareAvgCost[l0100] = 0;
-                for (l0102 = 1; l0102 <= game.numRivals; l0102++) {
-                    rivals.shares[l0102][l0100] = 0;
+    async function handleStockCrashes() {
+        let planet = 0;
+        let rival = 0;
+        for (planet = 0; planet <= 6; planet++) {
+            if (game.stockCrashed[planet] == -1) {
+                player.shares[planet] = 0;
+                player.shareAvgCost[planet] = 0;
+                for (rival = 1; rival <= game.numRivals; rival++) {
+                    rivals.shares[rival][planet] = 0;
                 }
                 frm_Box1Port.b_Yes.Visible = 0;
                 frm_Box1Port.b_No.Visible = 0;
@@ -656,7 +656,7 @@ function (me) {
                 frm_Box1Port.b_Container.BackColor = 0xC0;
                 frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "NEWS.BMP");
                 frm_Box1Port.b_ImageLable.Caption = "Emergency Broadcast";
-                frm_Box1Port.b_Message.Caption = "This is an emergency update! The stock market on planet " + Trim(game.planetNames[l0100]) + " crashed today!!! Everyone who owned shares in the " + Trim(game.planetNames[l0100]) + " Exchange lost their entire investment. Supreme Commander Dred Nicolson has intervened and shut down the " + Trim(game.planetNames[l0100]) + " Exchange for one week. Investors are protesting, but there is no way to recover the lost money.";
+                frm_Box1Port.b_Message.Caption = "This is an emergency update! The stock market on planet " + Trim(game.planetNames[planet]) + " crashed today!!! Everyone who owned shares in the " + Trim(game.planetNames[planet]) + " Exchange lost their entire investment. Supreme Commander Dred Nicolson has intervened and shut down the " + Trim(game.planetNames[planet]) + " Exchange for one week. Investors are protesting, but there is no way to recover the lost money.";
                 if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
                     b_Sound.FileName = Trim(paths.soundDir) + "stokcrsh.wav";
@@ -671,22 +671,22 @@ function (me) {
         }
     }
 
-    async function sub2D0F() {
-        let l0108 = 0;
-        let l010A = 0;
-        for (l0108 = 0; l0108 <= 6; l0108++) {
-            if (game.stockCrashed[l0108] == 0) {
-                l010A = 0;
+    async function warnStockCrashes() {
+        let planet = 0;
+        let nearCrash = 0;
+        for (planet = 0; planet <= 6; planet++) {
+            if (game.stockCrashed[planet] == 0) {
+                nearCrash = 0;
                 if (game.turn > 1 && game.turn <= 15) {
-                    if (game.stockPrices[l0108][game.turn - 1] < 250) {
-                        l010A = -1;
+                    if (game.stockPrices[planet][game.turn - 1] < 250) {
+                        nearCrash = -1;
                     }
                 } else {
-                    if (game.stockPrices[l0108][15] < 250) {
-                        l010A = -1;
+                    if (game.stockPrices[planet][15] < 250) {
+                        nearCrash = -1;
                     }
                 }
-                if (l010A == -1) {
+                if (nearCrash == -1) {
                     frm_Box1Port.b_Yes.Visible = 0;
                     frm_Box1Port.b_No.Visible = 0;
                     frm_Box1Port.b_OK.Visible = -1;
@@ -694,29 +694,29 @@ function (me) {
                     frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "NEWS.BMP");
                     frm_Box1Port.b_ImageLable.Caption = "Financial Update!";
                     {
-                        const sel = (Mod((Add(game.turn, l0108)), 11)) + 1;
+                        const sel = (Mod((Add(game.turn, planet)), 11)) + 1;
                         if (sel == 1) {
-                            frm_Box1Port.b_Message.Caption = "Financial analysts across Kukubia are warning that the " + Trim(game.planetNames[l0108]) + " Exchange is headed for a crash.";
+                            frm_Box1Port.b_Message.Caption = "Financial analysts across Kukubia are warning that the " + Trim(game.planetNames[planet]) + " Exchange is headed for a crash.";
                         } else if (sel == 2) {
-                            frm_Box1Port.b_Message.Caption = "It is rumored that Mr. Zinn is selling off a substantial portion of his investments in the " + Trim(game.planetNames[l0108]) + " Exchange. Experts predict this rumor may push the " + Trim(game.planetNames[l0108]) + " Exchange down further.";
+                            frm_Box1Port.b_Message.Caption = "It is rumored that Mr. Zinn is selling off a substantial portion of his investments in the " + Trim(game.planetNames[planet]) + " Exchange. Experts predict this rumor may push the " + Trim(game.planetNames[planet]) + " Exchange down further.";
                         } else if (sel == 3) {
-                            frm_Box1Port.b_Message.Caption = "Corporate investors throughout the galaxy have been unloading their shares of the " + Trim(game.planetNames[l0108]) + " Exchange.";
+                            frm_Box1Port.b_Message.Caption = "Corporate investors throughout the galaxy have been unloading their shares of the " + Trim(game.planetNames[planet]) + " Exchange.";
                         } else if (sel == 4) {
-                            frm_Box1Port.b_Message.Caption = "Small investors are flooding the " + Trim(game.planetNames[l0108]) + " Exchange with sell orders.";
+                            frm_Box1Port.b_Message.Caption = "Small investors are flooding the " + Trim(game.planetNames[planet]) + " Exchange with sell orders.";
                         } else if (sel == 5) {
-                            frm_Box1Port.b_Message.Caption = "Everyone seems to feel a stock market meltdown on planet " + Trim(game.planetNames[l0108]) + " is imminent.";
+                            frm_Box1Port.b_Message.Caption = "Everyone seems to feel a stock market meltdown on planet " + Trim(game.planetNames[planet]) + " is imminent.";
                         } else if (sel == 6) {
-                            frm_Box1Port.b_Message.Caption = "We have reports that the majority of " + Trim(game.planetNames[l0108]) + " Exchange shareholders have lost all confidence in the market.";
+                            frm_Box1Port.b_Message.Caption = "We have reports that the majority of " + Trim(game.planetNames[planet]) + " Exchange shareholders have lost all confidence in the market.";
                         } else if (sel == 7) {
-                            frm_Box1Port.b_Message.Caption = "The " + Trim(game.planetNames[l0108]) + " Exchange Board of Trustees has called for calm and requested that investors hold onto their shares. However, this has not stemmed the tide of sell orders.";
+                            frm_Box1Port.b_Message.Caption = "The " + Trim(game.planetNames[planet]) + " Exchange Board of Trustees has called for calm and requested that investors hold onto their shares. However, this has not stemmed the tide of sell orders.";
                         } else if (sel == 8) {
-                            frm_Box1Port.b_Message.Caption = "The " + Trim(game.planetNames[l0108]) + " Exchange is in a state of utter confusion as investors pack the floor, scrambling to sell their shares. Some investors have been hiring spaceships at exorbitant prices just to make it to " + Trim(game.planetNames[l0108]) + " in time to sell off their investments.";
+                            frm_Box1Port.b_Message.Caption = "The " + Trim(game.planetNames[planet]) + " Exchange is in a state of utter confusion as investors pack the floor, scrambling to sell their shares. Some investors have been hiring spaceships at exorbitant prices just to make it to " + Trim(game.planetNames[planet]) + " in time to sell off their investments.";
                         } else if (sel == 9) {
-                            frm_Box1Port.b_Message.Caption = "A broad based loss of confidence in the " + Trim(game.planetNames[l0108]) + " Exchange has lead to a major crash. The " + Trim(game.planetNames[l0108]) + " Exchange Board of Trustees is begging investors to hold onto their shares, but no one seems to be willing to take that chance.";
+                            frm_Box1Port.b_Message.Caption = "A broad based loss of confidence in the " + Trim(game.planetNames[planet]) + " Exchange has lead to a major crash. The " + Trim(game.planetNames[planet]) + " Exchange Board of Trustees is begging investors to hold onto their shares, but no one seems to be willing to take that chance.";
                         } else if (sel == 10) {
-                            frm_Box1Port.b_Message.Caption = "A panic selling spree has brought the " + Trim(game.planetNames[l0108]) + " Exchange to its knees. It's only a matter of time before it completely crashes.";
+                            frm_Box1Port.b_Message.Caption = "A panic selling spree has brought the " + Trim(game.planetNames[planet]) + " Exchange to its knees. It's only a matter of time before it completely crashes.";
                         } else if (sel == 11) {
-                            frm_Box1Port.b_Message.Caption = "It appears that the " + Trim(game.planetNames[l0108]) + " Exchange is in a free fall. Analysts across Kukubia are advising their clients to sell their shares before it's too late.";
+                            frm_Box1Port.b_Message.Caption = "It appears that the " + Trim(game.planetNames[planet]) + " Exchange is in a free fall. Analysts across Kukubia are advising their clients to sell their shares before it's too late.";
                         }
                     }
                     if (settings.soundOn == -1) {
@@ -735,20 +735,20 @@ function (me) {
     }
 
     function Form_Activate() {
-        let l010E = "";
+        let levelName = "";
         const ARROW_CURSOR = 1;
         if (game.skillLevel == 1) {
-            l010E = "Tutorial";
+            levelName = "Tutorial";
         } else if (game.skillLevel == 2) {
-            l010E = "Novice";
+            levelName = "Novice";
         } else if (game.skillLevel == 3) {
-            l010E = "Beginner";
+            levelName = "Beginner";
         } else if (game.skillLevel == 4) {
-            l010E = "Intermediate";
+            levelName = "Intermediate";
         } else if (game.skillLevel == 5) {
-            l010E = "Expert";
+            levelName = "Expert";
         } else if (game.skillLevel == 6) {
-            l010E = "Master";
+            levelName = "Master";
         }
         if (game.isEmailGame == -1) {
             if (me.Tag == "GAME SAVED") {
@@ -780,22 +780,22 @@ function (me) {
             b_QuitGame.Visible = 0;
             b_NewGame.Visible = 0;
             if (game.winner == 0) {
-                b_Message.Caption = "COMPANY RANKING:" + "\n" + "\n" + "The companies are ranked according to their wealth. The first company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars wins the game!" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l010E;
+                b_Message.Caption = "COMPANY RANKING:" + "\n" + "\n" + "The companies are ranked according to their wealth. The first company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars wins the game!" + "\n" + rankingText() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + levelName;
             } else {
                 if (game.goalNetWorth == 1000000000) {
                     if (game.winner <= 6) {
-                        b_Message.Caption = Trim(game.companyNames[game.winner]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!! This means the game is now officially over." + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l010E;
+                        b_Message.Caption = Trim(game.companyNames[game.winner]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!! This means the game is now officially over." + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + rankingText() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + levelName;
                     } else {
-                        b_Message.Caption = Trim(rivals.companyNames[game.winner - 6]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!! This means the game is now officially over." + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l010E;
+                        b_Message.Caption = Trim(rivals.companyNames[game.winner - 6]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!! This means the game is now officially over." + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + rankingText() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + levelName;
                     }
                 } else if (game.winner <= 6) {
                     if (game.winner == game.currentPlayer) {
-                        b_Message.Caption = "You won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l010E;
+                        b_Message.Caption = "You won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + rankingText() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + levelName;
                     } else {
-                        b_Message.Caption = Trim(game.companyNames[game.winner]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l010E;
+                        b_Message.Caption = Trim(game.companyNames[game.winner]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + rankingText() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + levelName;
                     }
                 } else {
-                    b_Message.Caption = Trim(rivals.companyNames[game.winner - 6]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + fn2D9F() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + l010E;
+                    b_Message.Caption = Trim(rivals.companyNames[game.winner - 6]) + " won the game at the END of LAST WEEK, by being the FIRST company to reach " + Format(game.goalNetWorth, "#,#0") + " kubars!!!" + "\n" + "\n" + "CURRENT RANKING (this week):" + "\n" + rankingText() + "\n" + "\n" + "DIFFICULTY LEVEL:  " + levelName;
                 }
             }
         }
@@ -803,23 +803,23 @@ function (me) {
     }
 
     async function Form_Load() {
-        let l0118 = 0;
-        let l011A = 0;
-        let l011C = "";
-        let l011E = 0;
+        let i = 0;
+        let amount = 0;
+        let text = "";
+        let emailSaved = 0;
         const ICON_CURSOR = 4;
         me.MousePointer = HOURGLASS;
-        l011E = 0;
-        l011A = 0;
-        for (l0118 = 0; l0118 <= 6; l0118++) {
+        emailSaved = 0;
+        amount = 0;
+        for (i = 0; i <= 6; i++) {
             if (game.turn <= 15) {
-                l011A = l011A + player.shares[l0118] * game.stockPrices[l0118][game.turn];
+                amount = amount + player.shares[i] * game.stockPrices[i][game.turn];
             } else {
-                l011A = l011A + player.shares[l0118] * game.stockPrices[l0118][15];
+                amount = amount + player.shares[i] * game.stockPrices[i][15];
             }
         }
         if (game.graphShowCompany[game.currentPlayer] == 0) {
-            game.netWorth[game.currentPlayer] = l011A + player.cash + player.bankBalance - player.loan - player.zinnLoan;
+            game.netWorth[game.currentPlayer] = amount + player.cash + player.bankBalance - player.loan - player.zinnLoan;
         } else {
             game.netWorth[game.currentPlayer] = 0;
         }
@@ -835,125 +835,125 @@ function (me) {
         }
         b_Title.Caption = Trim(game.companyNames[game.currentPlayer]);
         b_Week.Caption = "Turn " + Format(game.turn, "#,#0");
-        l011C = "";
-        for (l0118 = 1; l0118 <= game.numPlayers; l0118++) {
-            if (game.graphShowCompany[l0118] == -1) {
-                l011C = l011C + game.companyNames[l0118] + "\n";
+        text = "";
+        for (i = 1; i <= game.numPlayers; i++) {
+            if (game.graphShowCompany[i] == -1) {
+                text = text + game.companyNames[i] + "\n";
             }
         }
-        if (l011C == "") {
+        if (text == "") {
             b_bankrupt.Caption = "Bankrupt Companies:  none";
         } else {
-            b_bankrupt.Caption = "Bankrupt Companies: " + "\n" + l011C;
+            b_bankrupt.Caption = "Bankrupt Companies: " + "\n" + text;
         }
-        l011A = CLng((game.netWorth[game.currentPlayer]) / 50000);
+        amount = CLng((game.netWorth[game.currentPlayer]) / 50000);
         if (game.netWorth[game.currentPlayer] < 0) {
-            if (l011A < 0) {
-                l011A = l011A * (-1);
+            if (amount < 0) {
+                amount = amount * (-1);
             }
-            if (l011A > 9) {
-                l011A = 9;
+            if (amount > 9) {
+                amount = 9;
             }
-            if (l011A == 0) {
-                l011C = "Unfortunate";
-            } else if (l011A == 1) {
-                l011C = "Inefficient";
-            } else if (l011A == 2) {
-                l011C = "Needy";
-            } else if (l011A == 3) {
-                l011C = "Indigent";
-            } else if (l011A == 4) {
-                l011C = "Unprosperous";
-            } else if (l011A == 5) {
-                l011C = "Unsuccessful";
-            } else if (l011A == 6) {
-                l011C = "Debtor";
-            } else if (l011A == 7) {
-                l011C = "Insolvent";
-            } else if (l011A == 8) {
-                l011C = "Disasterous";
-            } else if (l011A == 9) {
-                l011C = "Destitute";
+            if (amount == 0) {
+                text = "Unfortunate";
+            } else if (amount == 1) {
+                text = "Inefficient";
+            } else if (amount == 2) {
+                text = "Needy";
+            } else if (amount == 3) {
+                text = "Indigent";
+            } else if (amount == 4) {
+                text = "Unprosperous";
+            } else if (amount == 5) {
+                text = "Unsuccessful";
+            } else if (amount == 6) {
+                text = "Debtor";
+            } else if (amount == 7) {
+                text = "Insolvent";
+            } else if (amount == 8) {
+                text = "Disasterous";
+            } else if (amount == 9) {
+                text = "Destitute";
             }
-            b_Status.Caption = "Status: " + l011C;
+            b_Status.Caption = "Status: " + text;
             {
                 const sel = ((Mod(player.arrivalRoll, 4)) + 1);
                 if (sel == 1) {
-                    l011C = "Trader";
+                    text = "Trader";
                 } else if (sel == 2) {
-                    l011C = "Merchant";
+                    text = "Merchant";
                 } else if (sel == 3) {
-                    l011C = "Business Person";
+                    text = "Business Person";
                 } else if (sel == 4) {
-                    l011C = "Entrepreneur";
+                    text = "Entrepreneur";
                 }
             }
-            b_Status.Caption = b_Status.Caption + " " + l011C;
+            b_Status.Caption = b_Status.Caption + " " + text;
         } else if (game.netWorth[game.currentPlayer] >= 0) {
-            if (l011A > 20) {
-                l011A = 20;
+            if (amount > 20) {
+                amount = 20;
             }
-            if (l011A == 0) {
-                l011C = "Struggling";
-            } else if (l011A == 1) {
-                l011C = "Average";
-            } else if (l011A == 2) {
-                l011C = "Striving";
-            } else if (l011A == 3) {
-                l011C = "Industrious";
-            } else if (l011A == 4) {
-                l011C = "Intelligent";
-            } else if (l011A == 5) {
-                l011C = "Diligent";
-            } else if (l011A == 6) {
-                l011C = "Advantageous";
-            } else if (l011A == 7) {
-                l011C = "Assiduous";
-            } else if (l011A == 8) {
-                l011C = "Capitalist";
-            } else if (l011A == 9) {
-                l011C = "Ardent";
-            } else if (l011A == 10) {
-                l011C = "First Rate";
-            } else if (l011A == 11) {
-                l011C = "Successful";
-            } else if (l011A == 12) {
-                l011C = "Enterprising";
-            } else if (l011A == 13) {
-                l011C = "Prosperous";
-            } else if (l011A == 15) {
-                l011C = "Thriving";
-            } else if (l011A == 15) {
-                l011C = "Exceptional";
-            } else if (l011A == 16) {
-                l011C = "Wealthy";
-            } else if (l011A == 17) {
-                l011C = "Elite";
-            } else if (l011A == 18) {
-                l011C = "Outstanding";
-            } else if (l011A == 19) {
-                l011C = "Paramount";
-            } else if (l011A == 20) {
-                l011C = "Supreme";
+            if (amount == 0) {
+                text = "Struggling";
+            } else if (amount == 1) {
+                text = "Average";
+            } else if (amount == 2) {
+                text = "Striving";
+            } else if (amount == 3) {
+                text = "Industrious";
+            } else if (amount == 4) {
+                text = "Intelligent";
+            } else if (amount == 5) {
+                text = "Diligent";
+            } else if (amount == 6) {
+                text = "Advantageous";
+            } else if (amount == 7) {
+                text = "Assiduous";
+            } else if (amount == 8) {
+                text = "Capitalist";
+            } else if (amount == 9) {
+                text = "Ardent";
+            } else if (amount == 10) {
+                text = "First Rate";
+            } else if (amount == 11) {
+                text = "Successful";
+            } else if (amount == 12) {
+                text = "Enterprising";
+            } else if (amount == 13) {
+                text = "Prosperous";
+            } else if (amount == 15) {
+                text = "Thriving";
+            } else if (amount == 15) {
+                text = "Exceptional";
+            } else if (amount == 16) {
+                text = "Wealthy";
+            } else if (amount == 17) {
+                text = "Elite";
+            } else if (amount == 18) {
+                text = "Outstanding";
+            } else if (amount == 19) {
+                text = "Paramount";
+            } else if (amount == 20) {
+                text = "Supreme";
             }
-            b_Status.Caption = "Status: " + l011C;
+            b_Status.Caption = "Status: " + text;
             {
                 const sel = ((Mod(player.arrivalRoll, 4)) + 1);
                 if (sel == 1) {
-                    l011C = "Trader";
+                    text = "Trader";
                 } else if (sel == 2) {
-                    l011C = "Merchant";
+                    text = "Merchant";
                 } else if (sel == 3) {
-                    l011C = "Business Person";
+                    text = "Business Person";
                 } else if (sel == 4) {
-                    l011C = "Entrepreneur";
+                    text = "Entrepreneur";
                 }
             }
-            b_Status.Caption = b_Status.Caption + " " + l011C;
+            b_Status.Caption = b_Status.Caption + " " + text;
         }
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ship" + Trim(Str(game.shipType[game.currentPlayer])) + ".bmp");
-        if (game.isEmailGame == -1 && l011E == 0) {
-            l011E = -1;
+        if (game.isEmailGame == -1 && emailSaved == 0) {
+            emailSaved = -1;
             if (Trim(game.emailFileName) == "") {
             } else {
                 me.MousePointer = ICON_CURSOR;
@@ -967,8 +967,8 @@ function (me) {
         b_BeginTurn_Click, b_BeginTurn_MouseDown, b_BeginTurn_MouseUp, b_NewGame_Click,
         b_NewGame_MouseDown, b_NewGame_MouseUp, b_QuitGame_Click, b_QuitGame_MouseDown,
         b_QuitGame_MouseUp, b_Ranking_Click, b_Ranking_MouseDown, b_Ranking_MouseUp,
-        b_SaveGame_Click, b_SaveGame_MouseDown, b_SaveGame_MouseUp, sub2B86,
-        sub2B75, fn2D8D, fn2D9F, sub2CFF,
-        sub2D0F, Form_Activate, Form_Load,
+        b_SaveGame_Click, b_SaveGame_MouseDown, b_SaveGame_MouseUp, announceFacilityAuction,
+        announceShipAuction, facilityName, rankingText, handleStockCrashes,
+        warnStockCrashes, Form_Activate, Form_Load,
     };
 });

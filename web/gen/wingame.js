@@ -21,15 +21,15 @@ function (me) {
     const ARROW_CURSOR = 1;
 
     async function b_Continue_Click() {
-        let l0022 = "";
-        let l0024 = "";
+        let winnerName = "";
+        let emperorPromise = "";
         const DARK_RED = 192;
         const RED = 255;
         me.MousePointer = HOURGLASS;
         if (game.winner <= 6) {
-            l0022 = UCase(Trim(game.companyNames[game.winner]));
+            winnerName = UCase(Trim(game.companyNames[game.winner]));
         } else {
-            l0022 = UCase(Trim(rivals.companyNames[game.winner - 6]));
+            winnerName = UCase(Trim(rivals.companyNames[game.winner - 6]));
         }
         VSElastic1.Visible = 0;
         if (settings.soundOn == -1) {
@@ -47,7 +47,7 @@ function (me) {
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
-        frm_Box1Port.b_Message.Caption = "Big news on the financial front. " + l0022 + " is the first company in the entire system to attain a net worth above " + Format(game.goalNetWorth, "#,#0") + " kubars!" + "\n" + "\n" + "Today, the governors of all seven planets publicly thanked " + l0022 + " for helping to grow Kukubia's fledgling economy." + "\n" + "\n" + "This achievement will go down in history as a milestone in Kukubia's steady march towards becoming one of the wealthiest colonies in the Galaxy of Gogg.";
+        frm_Box1Port.b_Message.Caption = "Big news on the financial front. " + winnerName + " is the first company in the entire system to attain a net worth above " + Format(game.goalNetWorth, "#,#0") + " kubars!" + "\n" + "\n" + "Today, the governors of all seven planets publicly thanked " + winnerName + " for helping to grow Kukubia's fledgling economy." + "\n" + "\n" + "This achievement will go down in history as a milestone in Kukubia's steady march towards becoming one of the wealthiest colonies in the Galaxy of Gogg.";
         await frm_Box1Port.Show(1);
         frm_Box1Port.b_Yes.Visible = 0;
         frm_Box1Port.b_No.Visible = 0;
@@ -56,27 +56,27 @@ function (me) {
         frm_Box1Port.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "DRED.BMP");
         frm_Box1Port.b_ImageLable.Caption = "Emperor Dred Nicolson";
         if (game.goalNetWorth == 100000000) {
-            l0024 = "The Emperor has even promised to inscribe " + l0022 + "'s company logo into the Royal Tub the next time he takes a bath.";
+            emperorPromise = "The Emperor has even promised to inscribe " + winnerName + "'s company logo into the Royal Tub the next time he takes a bath.";
         } else if (game.goalNetWorth == 200000000) {
-            l0024 = "The Emperor has even promised to print " + l0022 + "'s company logo on all the napkins in the Royal Palace.";
+            emperorPromise = "The Emperor has even promised to print " + winnerName + "'s company logo on all the napkins in the Royal Palace.";
         } else if (game.goalNetWorth == 300000000) {
-            l0024 = "The Emperor has even promised to send the president of " + l0022 + " a signed postcard with a picture of the Royal Palace on the front.";
+            emperorPromise = "The Emperor has even promised to send the president of " + winnerName + " a signed postcard with a picture of the Royal Palace on the front.";
         } else if (game.goalNetWorth == 400000000) {
-            l0024 = "The Emperor has even promised to dedicate his next opera to the president of " + l0022 + ".";
+            emperorPromise = "The Emperor has even promised to dedicate his next opera to the president of " + winnerName + ".";
         } else if (game.goalNetWorth == 500000000) {
-            l0024 = "The Emperor has even promised to inscribe " + l0022 + "'s company name on his new pair of sneakers using indelible ink.";
+            emperorPromise = "The Emperor has even promised to inscribe " + winnerName + "'s company name on his new pair of sneakers using indelible ink.";
         } else if (game.goalNetWorth == 600000000) {
-            l0024 = "The Emperor has even promised to mention " + l0022 + " in front of the Royal Senate the next time he makes a speech on the economy.";
+            emperorPromise = "The Emperor has even promised to mention " + winnerName + " in front of the Royal Senate the next time he makes a speech on the economy.";
         } else if (game.goalNetWorth == 700000000) {
-            l0024 = "The Emperor has even promised to make his chief of security,  Mr. Ignip Burr, change his name to Mr. " + l0022 + ".";
+            emperorPromise = "The Emperor has even promised to make his chief of security,  Mr. Ignip Burr, change his name to Mr. " + winnerName + ".";
         } else if (game.goalNetWorth == 800000000) {
-            l0024 = "The Emperor has even promised to have his Royal Hairdresser name a new hairdo after " + l0022 + ".";
+            emperorPromise = "The Emperor has even promised to have his Royal Hairdresser name a new hairdo after " + winnerName + ".";
         } else if (game.goalNetWorth == 900000000) {
-            l0024 = "The Emperor has even promised to have the name " + l0022 + " sown into all 794 pair of his royal underwear, so that he never forgets what " + l0022 + " has done for the Empire.";
+            emperorPromise = "The Emperor has even promised to have the name " + winnerName + " sown into all 794 pair of his royal underwear, so that he never forgets what " + winnerName + " has done for the Empire.";
         } else if (game.goalNetWorth == 1000000000) {
-            l0024 = "The Emperor has even promised to name his first born after the president of " + l0022 + ".";
+            emperorPromise = "The Emperor has even promised to name his first born after the president of " + winnerName + ".";
         }
-        frm_Box1Port.b_Message.Caption = "The latest word from the capital is that Supreme Commander Dred Nicolson has openly praised the president of " + l0022 + " for contributing more than any other company to Kukubia's growth and prosperity." + "\n" + "\n" + l0024 + "  This is an honor few ever receive.";
+        frm_Box1Port.b_Message.Caption = "The latest word from the capital is that Supreme Commander Dred Nicolson has openly praised the president of " + winnerName + " for contributing more than any other company to Kukubia's growth and prosperity." + "\n" + "\n" + emperorPromise + "  This is an honor few ever receive.";
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "good3.wav";
@@ -107,7 +107,7 @@ function (me) {
                 b_Sound.Command = "Play";
             }
             frm_WinGame2.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ship" + Trim(Str(game.shipType[game.winner])) + ".bmp");
-            frm_WinGame2.b_ImageLable.Caption = l0022 + " wins the game!";
+            frm_WinGame2.b_ImageLable.Caption = winnerName + " wins the game!";
             frm_WinGame2.b_Message.Caption = "Winner's Choice";
             await frm_WinGame2.Show(1);
         } else if (game.goalNetWorth < 1000000000) {
@@ -118,7 +118,7 @@ function (me) {
             frm_WinGame2.b_QuitGame.ForeColor = RED;
             if (game.winner <= 6) {
                 frm_WinGame2.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ship" + Trim(Str(game.shipType[game.winner])) + ".bmp");
-                frm_WinGame2.b_ImageLable.Caption = l0022 + " wins the game!";
+                frm_WinGame2.b_ImageLable.Caption = winnerName + " wins the game!";
                 if (settings.soundOn == -1) {
                     b_Sound.Command = "Close";
                     if (game.shipType[game.winner] <= 6) {
@@ -137,7 +137,7 @@ function (me) {
                     b_Sound.Command = "Play";
                 }
                 frm_WinGame2.Image1.Picture = LoadPicture(Trim(paths.imageDir) + "op" + Trim(Str((game.winner - 6))) + ".bmp");
-                frm_WinGame2.b_ImageLable.Caption = l0022 + " wins the game!";
+                frm_WinGame2.b_ImageLable.Caption = winnerName + " wins the game!";
             }
             frm_WinGame2.b_Message.Caption = "Loser's Choice";
             await frm_WinGame2.Show(1);

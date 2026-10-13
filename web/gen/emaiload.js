@@ -29,21 +29,21 @@ function (me) {
     const WHITE = 16777215;
     const LIGHT_GRAY = 12632256;
     const ARROW_CURSOR = 1;
-    let m001C = Space(23);
-    let m0036 = Space(9);
-    let m0042 = Space(12);
-    let m0050 = Space(128);
+    let fileHeader = Space(23);
+    let resumePoint = Space(9);
+    let oldEmailFileName = Space(12);
+    let oldEmailDir = Space(128);
 
     async function b_Cancel_Click() {
-        let l00D0 = 0;
+        let trapErrors = 0;
         try {
             const HOURGLASS = 11;
-            l00D0 = -1;
+            trapErrors = -1;
             me.MousePointer = HOURGLASS;
             FileClose();
-            game.emailFileName = FixStr(m0042, 12);
-            settings.emailDir = FixStr(m0050, 128);
-            sub4254();
+            game.emailFileName = FixStr(oldEmailFileName, 12);
+            settings.emailDir = FixStr(oldEmailDir, 128);
+            saveConfig();
             if (me.Tag == "BeginGame") {
                 me.Tag = "";
                 await frm_BeginGame.Show();
@@ -55,9 +55,9 @@ function (me) {
             return;
         } catch (e) {
             Err.Catch(e);
-            if (l00D0 == -1) {
+            if (trapErrors == -1) {
                 await reportFileError(Err.Number);
-                l00D0 = 0;
+                trapErrors = 0;
                 return;
             } else {
                 FileClose();
@@ -99,10 +99,10 @@ function (me) {
     }
 
     async function b_LoadEmailGame_Click() {
-        let l0134 = 0;
+        let trapErrors = 0;
         try {
             const ARROW_CURSOR = 1;
-            l0134 = -1;
+            trapErrors = -1;
             me.MousePointer = HOURGLASS;
             if (Trim(textbox1.Text) == "") {
                 if (settings.soundOn == -1) {
@@ -113,23 +113,23 @@ function (me) {
             } else {
                 game.emailFileName = FixStr(Trim(textbox1.Text), 12);
                 settings.emailDir = FixStr(Trim(dir1.Path), 128);
-                sub4254();
-                await sub44B2();
+                saveConfig();
+                await readEmailGame();
                 game.emailFileName = FixStr(Trim(textbox1.Text), 12);
-                if (m001C != "GAZ DELUXE EMAIL GAME  ") {
+                if (fileHeader != "GAZ DELUXE EMAIL GAME  ") {
                     me.MousePointer = ARROW_CURSOR;
-                    game.emailFileName = FixStr(m0042, 12);
-                    settings.emailDir = FixStr(m0050, 128);
-                    sub4254();
+                    game.emailFileName = FixStr(oldEmailFileName, 12);
+                    settings.emailDir = FixStr(oldEmailDir, 128);
+                    saveConfig();
                     return;
                 } else {
                     if (me.Tag == "BeginGame") {
                         me.Tag = "";
-                        if (m0036 == "MAIN MENU") {
+                        if (resumePoint == "MAIN MENU") {
                             await Unload(frm_MainMenu);
                             await frm_MainMenu.Show();
                             await Unload(me);
-                        } else if (m0036 == "STARTTURN") {
+                        } else if (resumePoint == "STARTTURN") {
                             await Load(frm_PlayerTurn);
                             frm_PlayerTurn.Tag = "BEGIN TURN";
                             await Load(frm_PlayerTurn);
@@ -137,11 +137,11 @@ function (me) {
                             await Unload(me);
                         }
                     } else {
-                        if (m0036 == "MAIN MENU") {
+                        if (resumePoint == "MAIN MENU") {
                             await Unload(frm_MainMenu);
                             await frm_MainMenu.Show();
                             await Unload(me);
-                        } else if (m0036 == "STARTTURN") {
+                        } else if (resumePoint == "STARTTURN") {
                             await Load(frm_PlayerTurn);
                             frm_PlayerTurn.Tag = "BEGIN TURN";
                             await Load(frm_PlayerTurn);
@@ -154,9 +154,9 @@ function (me) {
             return;
         } catch (e) {
             Err.Catch(e);
-            if (l0134 == -1) {
+            if (trapErrors == -1) {
                 await reportFileError(Err.Number);
-                l0134 = 0;
+                trapErrors = 0;
                 return;
             } else {
                 FileClose();
@@ -174,17 +174,17 @@ function (me) {
     }
 
     async function dir1_Change() {
-        let l0162 = 0;
+        let trapErrors = 0;
         try {
-            l0162 = -1;
+            trapErrors = -1;
             file1.Path = dir1.Path;
             drive1.Drive = dir1.Path;
             return;
         } catch (e) {
             Err.Catch(e);
-            if (l0162 == -1) {
+            if (trapErrors == -1) {
                 await reportFileError(Err.Number);
-                l0162 = 0;
+                trapErrors = 0;
                 return;
             } else {
                 FileClose();
@@ -194,17 +194,17 @@ function (me) {
     }
 
     async function drive1_Change() {
-        let l0170 = 0;
+        let trapErrors = 0;
         try {
-            l0170 = -1;
+            trapErrors = -1;
             dir1.Path = drive1.Drive;
             file1.Path = dir1.Path;
             return;
         } catch (e) {
             Err.Catch(e);
-            if (l0170 == -1) {
+            if (trapErrors == -1) {
                 await reportFileError(Err.Number);
-                l0170 = 0;
+                trapErrors = 0;
                 return;
             } else {
                 FileClose();
@@ -213,35 +213,35 @@ function (me) {
         }
     }
 
-    async function sub44B2() {
-        let l0172 = 0;
-        let l0174 = 0;
+    async function readEmailGame() {
+        let trapErrors = 0;
+        let playerIndex = 0;
         try {
-            l0172 = -1;
-            m0036 = FixStr("", 9);
+            trapErrors = -1;
+            resumePoint = FixStr("", 9);
             if (Right(Trim(settings.emailDir), 1) != "\\") {
                 settings.emailDir = FixStr(Trim(settings.emailDir) + "\\", 128);
             }
             FileOpen(4, Trim(settings.emailDir) + Trim(game.emailFileName));
-            m001C = FileGet(4, 1, m001C);
-            if (m001C != "GAZ DELUXE EMAIL GAME  ") {
+            fileHeader = FileGet(4, 1, fileHeader);
+            if (fileHeader != "GAZ DELUXE EMAIL GAME  ") {
                 throw new VBError(0);
             }
-            m0036 = FileGet(4, null, m0036);
+            resumePoint = FileGet(4, null, resumePoint);
             game = FileGet(4, null, game);
             rivals = FileGet(4, null, rivals);
-            for (l0174 = 1; l0174 <= game.numPlayers; l0174++) {
+            for (playerIndex = 1; playerIndex <= game.numPlayers; playerIndex++) {
                 player = FileGet(4, null, player);
-                storePlayer(l0174);
+                storePlayer(playerIndex);
             }
             FileClose(4);
             loadPlayer(game.currentPlayer);
             return;
         } catch (e) {
             Err.Catch(e);
-            if (l0172 == -1) {
+            if (trapErrors == -1) {
                 await reportFileError(Err.Number);
-                l0172 = 0;
+                trapErrors = 0;
                 return;
             } else {
                 FileClose();
@@ -250,23 +250,23 @@ function (me) {
         }
     }
 
-    function sub4254() {
+    function saveConfig() {
         FileOpen(7, Trim(paths.configDir) + "CONFIG.DAT");
         FilePut(7, 1, settings);
         FileClose(7);
     }
 
     async function file1_Click() {
-        let l0180 = 0;
+        let trapErrors = 0;
         try {
-            l0180 = -1;
+            trapErrors = -1;
             textbox1.Text = Trim(file1.FileName);
             return;
         } catch (e) {
             Err.Catch(e);
-            if (l0180 == -1) {
+            if (trapErrors == -1) {
                 await reportFileError(Err.Number);
-                l0180 = 0;
+                trapErrors = 0;
                 return;
             } else {
                 FileClose();
@@ -276,17 +276,17 @@ function (me) {
     }
 
     async function file1_DblClick() {
-        let l0182 = 0;
+        let trapErrors = 0;
         try {
-            l0182 = -1;
+            trapErrors = -1;
             textbox1.Text = Trim(file1.FileName);
             await b_LoadEmailGame_Click();
             return;
         } catch (e) {
             Err.Catch(e);
-            if (l0182 == -1) {
+            if (trapErrors == -1) {
                 await reportFileError(Err.Number);
-                l0182 = 0;
+                trapErrors = 0;
                 return;
             } else {
                 FileClose();
@@ -320,19 +320,19 @@ function (me) {
     }
 
     function Form_Load() {
-        let l0186 = 0;
-        let l0188 = 0;
+        let trapErrors = 0;
+        let dotPos = 0;
         try {
-            l0186 = -1;
+            trapErrors = -1;
             me.MousePointer = HOURGLASS;
-            m001C = FixStr("", 23);
-            m0042 = FixStr(game.emailFileName, 12);
-            m0050 = FixStr(settings.emailDir, 128);
-            l0188 = InStr(1, Trim(game.emailFileName), ".");
-            if (l0188 > 0 && l0188 >= 8) {
-                game.emailFileName = FixStr(Mid(Trim(game.emailFileName), 1, 8) + Mid(Trim(game.emailFileName), l0188, 4), 12);
-            } else if (l0188 > 0 && l0188 < 8) {
-                game.emailFileName = FixStr(Mid(Trim(game.emailFileName), 1, l0188 - 1) + Mid(Trim(game.emailFileName), l0188, 4), 12);
+            fileHeader = FixStr("", 23);
+            oldEmailFileName = FixStr(game.emailFileName, 12);
+            oldEmailDir = FixStr(settings.emailDir, 128);
+            dotPos = InStr(1, Trim(game.emailFileName), ".");
+            if (dotPos > 0 && dotPos >= 8) {
+                game.emailFileName = FixStr(Mid(Trim(game.emailFileName), 1, 8) + Mid(Trim(game.emailFileName), dotPos, 4), 12);
+            } else if (dotPos > 0 && dotPos < 8) {
+                game.emailFileName = FixStr(Mid(Trim(game.emailFileName), 1, dotPos - 1) + Mid(Trim(game.emailFileName), dotPos, 4), 12);
             } else {
                 game.emailFileName = FixStr(Mid(Trim(game.emailFileName), 1, 8), 12);
             }
@@ -345,8 +345,8 @@ function (me) {
             return;
         } catch (e) {
             Err.Catch(e);
-            if (l0186 == -1) {
-                l0186 = 0;
+            if (trapErrors == -1) {
+                trapErrors = 0;
                 return;
             } else {
                 FileClose();
@@ -362,8 +362,8 @@ function (me) {
     return {
         b_Cancel_Click, b_Cancel_MouseDown, b_Cancel_MouseUp, b_Help_Click,
         b_Help_MouseDown, b_Help_MouseUp, b_LoadEmailGame_Click, b_LoadEmailGame_MouseDown,
-        b_LoadEmailGame_MouseUp, dir1_Change, drive1_Change, sub44B2,
-        sub4254, file1_Click, file1_DblClick, Form_Activate,
+        b_LoadEmailGame_MouseUp, dir1_Change, drive1_Change, readEmailGame,
+        saveConfig, file1_Click, file1_DblClick, Form_Activate,
         Form_KeyPress, Form_Load, Form_QueryUnload,
     };
 });

@@ -24,7 +24,7 @@ function (me) {
     const { VSElastic4, VSElastic3, Image1, b_Button } = me.controls;
     const HOURGLASS = 11;
     const ARROW_CURSOR = 1;
-    let m001A = 0;
+    let animFrame = 0;
 
     async function b_Button_Click() {
         me.MousePointer = HOURGLASS;
@@ -77,22 +77,22 @@ function (me) {
     }
 
     function b_Timer_Timer() {
-        if (m001A == 1) {
+        if (animFrame == 1) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "news2.bmp");
-        } else if (m001A == 2) {
+        } else if (animFrame == 2) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "NEWS.BMP");
         }
-        m001A = m001A + 1;
-        if (m001A == 3) {
-            m001A = 1;
+        animFrame = animFrame + 1;
+        if (animFrame == 3) {
+            animFrame = 1;
         }
     }
 
-    function sub2ECD() {
-        let l007C = 0;
-        let l007E = 0;
-        let l0082 = 0;
-        let l0084 = 0;
+    function showNewsStory() {
+        let category = 0;
+        let item = 0;
+        let topCategory = 0;
+        let topItem = 0;
         if (game.newsEvent == 1) {
             b_Message.Caption = "We have reports that the Chichi Bobo Rebels have moved into the area around " + UCase(Trim(game.planetNames[game.newsPlanet])) + ". Our sources indicate Supreme Commander Dred Nicolson is planning a counter attack this week and fighting will intensify.";
         } else if (game.newsEvent == 2) {
@@ -164,29 +164,29 @@ function (me) {
         } else if (game.newsEvent == 35) {
             b_Message.Caption = "The Supreme Commander Dred Nicolson promises to expand democracy to the colonies just as soon as the situation stabilizes.";
         } else if (game.newsEvent == 36) {
-            l0082 = 2;
-            l0084 = 5;
-            for (l007C = 2; l007C >= 0; l007C--) {
-                for (l007E = 5; l007E >= 0; l007E--) {
-                    if (game.supplyPercent[game.newsPlanet][l007C][l007E] > game.supplyPercent[game.newsPlanet][l0082][l0084]) {
-                        l0082 = CLng(l007C);
-                        l0084 = CLng(l007E);
+            topCategory = 2;
+            topItem = 5;
+            for (category = 2; category >= 0; category--) {
+                for (item = 5; item >= 0; item--) {
+                    if (game.supplyPercent[game.newsPlanet][category][item] > game.supplyPercent[game.newsPlanet][topCategory][topItem]) {
+                        topCategory = CLng(category);
+                        topItem = CLng(item);
                     }
                 }
             }
-            b_Message.Caption = "Now for our economic update. It looks like there is an oversupply of " + Trim(game.commodityNames[l0082][l0084]) + " on " + UCase(Trim(game.planetNames[game.newsPlanet])) + " these days. That means low prices for consumers and a good bargain for exporters.";
+            b_Message.Caption = "Now for our economic update. It looks like there is an oversupply of " + Trim(game.commodityNames[topCategory][topItem]) + " on " + UCase(Trim(game.planetNames[game.newsPlanet])) + " these days. That means low prices for consumers and a good bargain for exporters.";
         } else if (game.newsEvent == 37) {
-            l0082 = 2;
-            l0084 = 5;
-            for (l007C = 2; l007C >= 0; l007C--) {
-                for (l007E = 5; l007E >= 0; l007E--) {
-                    if (game.supplyPercent[game.newsPlanet][l007C][l007E] < game.supplyPercent[game.newsPlanet][l0082][l0084]) {
-                        l0082 = CLng(l007C);
-                        l0084 = CLng(l007E);
+            topCategory = 2;
+            topItem = 5;
+            for (category = 2; category >= 0; category--) {
+                for (item = 5; item >= 0; item--) {
+                    if (game.supplyPercent[game.newsPlanet][category][item] < game.supplyPercent[game.newsPlanet][topCategory][topItem]) {
+                        topCategory = CLng(category);
+                        topItem = CLng(item);
                     }
                 }
             }
-            b_Message.Caption = "Now for our economic update. It looks like the supply of " + Trim(game.commodityNames[l0082][l0084]) + " is running short on " + UCase(Trim(game.planetNames[game.newsPlanet])) + " these days. That means high prices for consumers and a healthy profit margin for importers.";
+            b_Message.Caption = "Now for our economic update. It looks like the supply of " + Trim(game.commodityNames[topCategory][topItem]) + " is running short on " + UCase(Trim(game.planetNames[game.newsPlanet])) + " these days. That means high prices for consumers and a healthy profit margin for importers.";
         } else if (game.newsEvent == 38) {
             if (game.stockStrength[game.newsPlanet] > 60) {
                 b_Message.Caption = "The leading financial analysts at the " + game.planetNames[game.newsPlanet] + " Exchange report that earnings are higher than expected, and the market looks bullish. They predict the market will grow at a steady pace. However, keep in mind, market analysts are not correct 100% of the time.";
@@ -266,29 +266,29 @@ function (me) {
         } else if (game.newsEvent == 73) {
             b_Message.Caption = "The Supreme Commander Dred Nicolson said he fully supports the concept of democracy in theory. However, in practice, he simply cannot trust the people to make the right choices.";
         } else if (game.newsEvent == 74) {
-            l0082 = 2;
-            l0084 = 5;
-            for (l007C = 2; l007C >= 0; l007C--) {
-                for (l007E = 5; l007E >= 0; l007E--) {
-                    if (game.supplyPercent[game.newsPlanet][l007C][l007E] > game.supplyPercent[game.newsPlanet][l0082][l0084]) {
-                        l0082 = CLng(l007C);
-                        l0084 = CLng(l007E);
+            topCategory = 2;
+            topItem = 5;
+            for (category = 2; category >= 0; category--) {
+                for (item = 5; item >= 0; item--) {
+                    if (game.supplyPercent[game.newsPlanet][category][item] > game.supplyPercent[game.newsPlanet][topCategory][topItem]) {
+                        topCategory = CLng(category);
+                        topItem = CLng(item);
                     }
                 }
             }
-            b_Message.Caption = "A recently released government report indicates that there is now an abundance of " + Trim(game.commodityNames[l0082][l0084]) + " on " + UCase(Trim(game.planetNames[game.newsPlanet])) + ". This glut of product should have some impact upon prices in the region.";
+            b_Message.Caption = "A recently released government report indicates that there is now an abundance of " + Trim(game.commodityNames[topCategory][topItem]) + " on " + UCase(Trim(game.planetNames[game.newsPlanet])) + ". This glut of product should have some impact upon prices in the region.";
         } else if (game.newsEvent == 75) {
-            l0082 = 2;
-            l0084 = 5;
-            for (l007C = 2; l007C >= 0; l007C--) {
-                for (l007E = 5; l007E >= 0; l007E--) {
-                    if (game.supplyPercent[game.newsPlanet][l007C][l007E] < game.supplyPercent[game.newsPlanet][l0082][l0084]) {
-                        l0082 = CLng(l007C);
-                        l0084 = CLng(l007E);
+            topCategory = 2;
+            topItem = 5;
+            for (category = 2; category >= 0; category--) {
+                for (item = 5; item >= 0; item--) {
+                    if (game.supplyPercent[game.newsPlanet][category][item] < game.supplyPercent[game.newsPlanet][topCategory][topItem]) {
+                        topCategory = CLng(category);
+                        topItem = CLng(item);
                     }
                 }
             }
-            b_Message.Caption = "A recently released government report indicates that their is now a scarcity of " + Trim(game.commodityNames[l0082][l0084]) + " on " + UCase(Trim(game.planetNames[game.newsPlanet])) + ". This shortage should help to drive up prices in the region.";
+            b_Message.Caption = "A recently released government report indicates that their is now a scarcity of " + Trim(game.commodityNames[topCategory][topItem]) + " on " + UCase(Trim(game.planetNames[game.newsPlanet])) + ". This shortage should help to drive up prices in the region.";
         } else if (game.newsEvent == 76) {
             if (game.stockStrength[game.newsPlanet] > 60) {
                 b_Message.Caption = "Traders on the " + game.planetNames[game.newsPlanet] + " Exchange feel a bull market is bound to drive up stock prices in the near future. However, their optimistic outlook is based more on the current market trends than any underlying economic factors.";
@@ -395,18 +395,18 @@ function (me) {
             b_Message.Caption = "Space Pirates, descendants of the infamous Bro Nap Goodshark, have been spotted operating around " + UCase(Trim(game.planetNames[game.newsPlanet])) + ". We have numerous reports of their abducting spacecraft and terrorizing any ships unfortunate enough to cross their path.";
         } else if (game.newsEvent == 1000) {
             if (game.turn <= 15) {
-                l0082 = game.stockPrices[game.newsPlanet][game.turn] - game.stockPrices[game.newsPlanet][game.turn - 1];
+                topCategory = game.stockPrices[game.newsPlanet][game.turn] - game.stockPrices[game.newsPlanet][game.turn - 1];
             } else {
-                l0082 = game.stockPrices[game.newsPlanet][15] - game.stockPrices[game.newsPlanet][14];
+                topCategory = game.stockPrices[game.newsPlanet][15] - game.stockPrices[game.newsPlanet][14];
             }
-            b_Message.Caption = "The " + Trim(game.planetNames[game.newsPlanet]) + " Exchange shot up this week!!! The average share price gained an amazing " + Format(l0082, "#,#0") + " points on heavy trading. We have reports from the " + Trim(game.planetNames[game.newsPlanet]) + " Exchange that a number of big investors, including Mr. Zinn, made a tidy profit on this unexpected market shift.";
+            b_Message.Caption = "The " + Trim(game.planetNames[game.newsPlanet]) + " Exchange shot up this week!!! The average share price gained an amazing " + Format(topCategory, "#,#0") + " points on heavy trading. We have reports from the " + Trim(game.planetNames[game.newsPlanet]) + " Exchange that a number of big investors, including Mr. Zinn, made a tidy profit on this unexpected market shift.";
         } else if (game.newsEvent == 1001) {
             if (game.turn <= 15) {
-                l0082 = game.stockPrices[game.newsPlanet][game.turn - 1] - game.stockPrices[game.newsPlanet][game.turn];
+                topCategory = game.stockPrices[game.newsPlanet][game.turn - 1] - game.stockPrices[game.newsPlanet][game.turn];
             } else {
-                l0082 = game.stockPrices[game.newsPlanet][14] - game.stockPrices[game.newsPlanet][15];
+                topCategory = game.stockPrices[game.newsPlanet][14] - game.stockPrices[game.newsPlanet][15];
             }
-            b_Message.Caption = "The " + Trim(game.planetNames[game.newsPlanet]) + " Exchange plummeted this week, as the average share price fell " + Format(l0082, "#,#0") + " points. We have reports from the " + Trim(game.planetNames[game.newsPlanet]) + " Exchange that a number of big investors lost a fortune in this unexpected down-turn.";
+            b_Message.Caption = "The " + Trim(game.planetNames[game.newsPlanet]) + " Exchange plummeted this week, as the average share price fell " + Format(topCategory, "#,#0") + " points. We have reports from the " + Trim(game.planetNames[game.newsPlanet]) + " Exchange that a number of big investors lost a fortune in this unexpected down-turn.";
         } else if (game.newsEvent == 1002 || game.newsEvent == 1003) {
             if (game.stockStrength[game.newsPlanet] <= 50) {
                 b_Message.Caption = "Traders at the " + Trim(game.planetNames[game.newsPlanet]) + " Exchange are expecting the worst. Market analysts predict a downward trend in the stock market on planet " + Trim(game.planetNames[game.newsPlanet]) + ". This bear market is likely to affect the share prices of the " + Trim(game.planetNames[game.newsPlanet]) + " Exchange.";
@@ -428,9 +428,9 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = HOURGLASS;
-        m001A = 1;
+        animFrame = 1;
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "NEWS.BMP");
-        sub2ECD();
+        showNewsStory();
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "news.wav";
@@ -442,6 +442,6 @@ function (me) {
     return {
         b_Button_Click, b_Exit_Click, b_Exit_MouseDown, b_Exit_MouseUp,
         b_Help_Click, b_Help_MouseDown, b_Help_MouseUp, b_Timer_Timer,
-        sub2ECD, Form_Activate, Form_KeyPress, Form_Load,
+        showNewsStory, Form_Activate, Form_KeyPress, Form_Load,
     };
 });

@@ -195,38 +195,61 @@
   },
   "files": {
     "aaa.js": {
-      "mc0024": "ARROW_CURSOR"
+      "mc0024": "ARROW_CURSOR",
+      "sub4244": "loadConfig",
+      "sub4254": "saveConfig"
     },
     "advert.js": {
       "mc001C": "HOURGLASS",
-      "mc00EA": "ARROW_CURSOR"
+      "mc00EA": "ARROW_CURSOR",
+      "sub34FE": "selectCommodityAds",
+      "sub3533": "setAdChoice",
+      "sub3601": "selectPassengerAds",
+      "sub3632": "placeAd",
+      "sub371C": "updateDisplay"
     },
     "auction.js": {
       "mc001C": "HOURGLASS",
       "mc0054": "LIGHT_GRAY",
       "mc0066": "DARK_GRAY",
-      "mc006E": "ARROW_CURSOR"
+      "mc006E": "ARROW_CURSOR",
+      "fn2D8D": "facilityName"
     },
     "bank.js": {
       "mc0020": "HOURGLASS",
-      "mc0048": "ARROW_CURSOR"
+      "mc0048": "ARROW_CURSOR",
+      "m001A": "animFrame",
+      "m001C": "animTicks",
+      "m001E": "isDeposit",
+      "m0076": "exitBackColor",
+      "sub0AFB": "showHelp",
+      "sub0CA5": "updateDisplay"
     },
     "bankrpt1.js": {
       "mc0020": "HOURGLASS",
-      "mc0072": "ARROW_CURSOR"
+      "mc0072": "ARROW_CURSOR",
+      "m0028": "blankColor"
     },
     "bankrpt2.js": {
       "mc001A": "HOURGLASS",
-      "mc004E": "ARROW_CURSOR"
+      "mc004E": "ARROW_CURSOR",
+      "m0022": "blankColor"
     },
     "bankrpt3.js": {
       "mc001C": "HOURGLASS",
-      "mc0068": "ARROW_CURSOR"
+      "mc0068": "ARROW_CURSOR",
+      "m0024": "BLACK"
     },
     "begin.js": {
       "mc001A": "HOURGLASS",
       "mc004E": "LIGHT_GRAY",
-      "mc00FE": "ARROW_CURSOR"
+      "mc00FE": "ARROW_CURSOR",
+      "m0060": "MEDIUM_BLUE",
+      "m007A": "BLUE",
+      "m0098": "NAVY",
+      "m00E6": "DARK_NAVY",
+      "m00CC": "blackBackColor",
+      "sub472D": "initNewGame"
     },
     "box0.js": {
       "mc001A": "HOURGLASS",
@@ -300,23 +323,35 @@
     },
     "choose.js": {
       "mc0020": "HOURGLASS",
-      "mc0056": "ARROW_CURSOR"
+      "mc0056": "ARROW_CURSOR",
+      "m001A": "playerNum",
+      "m002A": "blackBackColor",
+      "sub314A": "offerShip"
     },
     "choose2.js": {
       "mc001E": "HOURGLASS",
-      "mc0070": "ARROW_CURSOR"
+      "mc0070": "ARROW_CURSOR",
+      "m001A": "zinnFrame",
+      "m001C": "frameCount"
     },
     "complex.js": {
       "mc001A": "HOURGLASS",
-      "mc005C": "ARROW_CURSOR"
+      "mc005C": "ARROW_CURSOR",
+      "m0026": "blackBackColor"
     },
     "config.js": {
       "mc0052": "HOURGLASS",
-      "mc0078": "ARROW_CURSOR"
+      "mc0078": "ARROW_CURSOR",
+      "m001A": "cdErrorCount",
+      "sub4254": "saveConfig"
     },
     "distance.js": {
       "mc0022": "HOURGLASS",
-      "mc0076": "ARROW_CURSOR"
+      "mc0076": "ARROW_CURSOR",
+      "m001A": "selectedPlanet",
+      "m001E": "rowCount",
+      "sub348F": "fillDistanceGrid",
+      "sub34AD": "sizeGrid"
     },
     "emailnfo.js": {
       "mc001A": "HOURGLASS",
@@ -326,19 +361,32 @@
       "mc00D2": "HOURGLASS",
       "mc00F6": "WHITE",
       "mc0108": "LIGHT_GRAY",
-      "mc013C": "ARROW_CURSOR"
+      "mc013C": "ARROW_CURSOR",
+      "m001C": "fileHeader",
+      "m0036": "resumePoint",
+      "m0042": "oldEmailFileName",
+      "m0050": "oldEmailDir",
+      "sub4254": "saveConfig",
+      "sub44B2": "readEmailGame"
     },
     "emailsav.js": {
       "mc001A": "HOURGLASS",
       "mc0032": "WHITE",
       "mc0044": "LIGHT_GRAY",
-      "mc007C": "ARROW_CURSOR"
+      "mc007C": "ARROW_CURSOR",
+      "sub4254": "saveConfig"
     },
     "employee.js": {
       "mc001E": "HOURGLASS",
       "mc00DC": "WHITE",
       "mc00EA": "ARROW_CURSOR",
-      "mc00F2": "RED"
+      "mc00F2": "RED",
+      "m001A": "animFrame",
+      "m001C": "animTicks",
+      "sub0AFB": "showHelp",
+      "sub16C3": "payCrew",
+      "sub1731": "updateDisplay",
+      "sub174A": "toggleCrewPicture"
     },
     "explore.js": {
       "mc001A": "HOURGLASS",
@@ -346,16 +394,25 @@
     },
     "facility.js": {
       "mc0022": "HOURGLASS",
-      "mc0076": "ARROW_CURSOR"
+      "mc0076": "ARROW_CURSOR",
+      "m001A": "selectedPlanet",
+      "m001E": "rowCount",
+      "sub30FA": "fillFacilityGrid",
+      "sub3113": "sizeGrid"
     },
     "file.js": {
       "mc001C": "HOURGLASS",
       "mc003E": "LIGHT_GRAY",
-      "mc0054": "ARROW_CURSOR"
+      "mc0054": "ARROW_CURSOR",
+      "m00AC": "buttonUpColor"
     },
     "fuel.js": {
       "mc001A": "HOURGLASS",
-      "mc00B4": "ARROW_CURSOR"
+      "mc00B4": "ARROW_CURSOR",
+      "m00DA": "normalFuelColor",
+      "sub0E72": "buyFuel",
+      "sub0F2D": "rerollFuelPrice",
+      "sub0F3A": "updateDisplay"
     },
     "getting.js": {
       "mc001A": "HOURGLASS",
@@ -364,17 +421,21 @@
     "graph1.js": {
       "mc001A": "HOURGLASS",
       "mc007A": "ARROW_CURSOR",
-      "mc007C": "RED"
+      "mc007C": "RED",
+      "sub1CF9": "drawNetWorthGraph"
     },
     "graph2.js": {
       "mc0030": "HOURGLASS",
       "mc004C": "ARROW_CURSOR",
-      "mc00D4": "RED"
+      "mc00D4": "RED",
+      "sub1D40": "drawAllHistory",
+      "sub1E3B": "drawCurrentPlayerHistory"
     },
     "graph3.js": {
       "mc001A": "HOURGLASS",
       "mc007A": "ARROW_CURSOR",
-      "mc007C": "RED"
+      "mc007C": "RED",
+      "sub204D": "drawMarketStrength"
     },
     "help.js": {
       "mc001A": "HOURGLASS",
@@ -384,21 +445,50 @@
     "history.js": {
       "mc0022": "HOURGLASS",
       "mc0076": "ARROW_CURSOR",
-      "mc00AA": "WHITE"
+      "mc00AA": "WHITE",
+      "m001A": "currentPage",
+      "m001E": "pageCount",
+      "sub0451": "showBassHistory",
+      "sub045B": "showFracHistory",
+      "sub0465": "showHorkHistory",
+      "sub046F": "showLoroHistory",
+      "sub0479": "showMiraHistory",
+      "sub0483": "showNoshHistory",
+      "sub048D": "showOoomHistory",
+      "sub0497": "showPykeHistory",
+      "sub04A1": "showQuegHistory",
+      "sub04AB": "showVexxHistory",
+      "sub04B5": "showStyeHistory",
+      "sub04BF": "showZileHistory",
+      "sub04C9": "showTiloHistory",
+      "sub04D3": "showXeenHistory",
+      "sub3022": "showHistoryPage"
     },
     "howmany.js": {
       "mc001A": "HOURGLASS",
       "mc004A": "LIGHT_GRAY",
-      "mc0060": "ARROW_CURSOR"
+      "mc0060": "ARROW_CURSOR",
+      "m005C": "DARK_NAVY",
+      "m0082": "NAVY",
+      "m00A2": "BLUE",
+      "m00EC": "MEDIUM_BLUE",
+      "m00BC": "blackBackColor",
+      "sub050F": "goToNextScreen"
     },
     "insuranc.js": {
       "mc0054": "HOURGLASS",
       "mc00C2": "RED",
-      "mc00C6": "ARROW_CURSOR"
+      "mc00C6": "ARROW_CURSOR",
+      "m001A": "animFrame",
+      "m001C": "animTicks",
+      "sub1794": "buyInsurance",
+      "sub18F0": "updateDisplay",
+      "sub190A": "rerollInsuranceCost"
     },
     "intro.js": {
       "mc001A": "HOURGLASS",
-      "mc003E": "ARROW_CURSOR"
+      "mc003E": "ARROW_CURSOR",
+      "sub050F": "goToBeginGame"
     },
     "lavamind.js": {
       "mc001A": "HOURGLASS",
@@ -410,27 +500,77 @@
       "mc001A": "HOURGLASS",
       "mc00C2": "YELLOW",
       "mc00DA": "ARROW_CURSOR",
-      "mc00E6": "RED"
+      "mc00E6": "RED",
+      "m00C6": "messageColor",
+      "sub3B58": "travelToPlanet",
+      "sub4B13": "unusedStub"
     },
     "level.js": {
       "mc001A": "HOURGLASS",
       "mc002E": "LIGHT_GRAY",
-      "mc00E4": "ARROW_CURSOR"
+      "mc00E4": "ARROW_CURSOR",
+      "m0040": "NAVY",
+      "m005A": "DARK_NAVY",
+      "m00A4": "MEDIUM_BLUE",
+      "m00BE": "BLUE",
+      "m008A": "blackBackColor",
+      "sub050F": "applySkillLevel"
     },
     "loadgame.js": {
       "mc004E": "HOURGLASS",
       "mc0074": "LIGHT_GRAY",
-      "mc0136": "ARROW_CURSOR"
+      "mc0136": "ARROW_CURSOR",
+      "m001C": "fileHeader",
+      "m0036": "slotNames",
+      "m004C": "previousSlot",
+      "m0086": "buttonUpColor",
+      "m00A0": "BLUE",
+      "m00BA": "MEDIUM_BLUE",
+      "m00D4": "DARK_BLUE",
+      "m0104": "DARKER_BLUE",
+      "sub2652": "loadSlot",
+      "sub276D": "readSaveFile",
+      "sub277B": "showSlotNames",
+      "sub2792": "readSlotNames"
     },
     "loan.js": {
       "mc001E": "HOURGLASS",
-      "mc0046": "ARROW_CURSOR"
+      "mc0046": "ARROW_CURSOR",
+      "m001A": "animFrame",
+      "m001C": "animTicks",
+      "sub0A24": "updateDisplay",
+      "sub0AFB": "showHelp"
     },
     "mainmenu.js": {
       "mc0338": "HOURGLASS",
       "mc0360": "ARROW_CURSOR",
       "mc03A2": "RED",
-      "mc03A6": "WHITE"
+      "mc03A6": "WHITE",
+      "m0180": "BLACK",
+      "sub0AFB": "showMainMenuHelp",
+      "sub0F2D": "cheatRerollFuelPrice",
+      "sub10D5": "cheatRerollPassengers",
+      "sub190A": "cheatRerollInsuranceCost",
+      "sub3799": "openAdvertising",
+      "sub3810": "openBank",
+      "sub387A": "openCrew",
+      "sub38EE": "openExplore",
+      "sub3959": "openFuel",
+      "sub3A11": "openGettingStarted",
+      "sub3B01": "openInsurance",
+      "sub3B58": "openLeavePlanet",
+      "sub3C1F": "openLoan",
+      "sub3C4F": "openMarket",
+      "sub3CBA": "openMoney",
+      "sub3D76": "openPassengers",
+      "sub3DC9": "openStockMarket",
+      "sub3E47": "openSupply",
+      "sub3ED1": "openTaxes",
+      "sub3F13": "openFileOptions",
+      "sub3FBD": "openViewCity",
+      "sub404D": "openWarehouse",
+      "sub40C7": "openZinnLoan",
+      "sub4157": "refreshMenu"
     },
     "market.js": {
       "mc0054": "HOURGLASS",
@@ -438,57 +578,117 @@
       "mc00F6": "WHITE",
       "mc0152": "GREEN",
       "mc0158": "CYAN",
-      "mc015C": "MAGENTA"
+      "mc015C": "MAGENTA",
+      "m001A": "viewMode",
+      "m001C": "rowCount",
+      "m0020": "rowCategory",
+      "m0036": "rowItem",
+      "m004C": "gridEmpty",
+      "mc004E": "VIEW_ALL_GOODS",
+      "mc0050": "VIEW_CARGO",
+      "mc0052": "VIEW_PLANET_GOODS",
+      "sub1E85": "fillGrid",
+      "sub1E9C": "sizeGrid",
+      "sub1EB2": "tradeCommodity",
+      "sub1F47": "cheatStockCommodity"
     },
     "money.js": {
       "mc0124": "HOURGLASS",
-      "mc0162": "ARROW_CURSOR"
+      "mc0162": "ARROW_CURSOR",
+      "sub050F": "returnToMainMenu",
+      "sub0AFB": "showMoneyHelp",
+      "sub1135": "showOpponents",
+      "sub1281": "showMarketStrength",
+      "sub1343": "showNetWorthGraph",
+      "sub13FE": "showCompanyHistory",
+      "sub14AE": "showShipInfo",
+      "sub1531": "updateMoneyStatus"
     },
     "nameco.js": {
       "mc0028": "ARROW_CURSOR",
       "mc0036": "HOURGLASS",
-      "mc0082": "IBEAM_CURSOR"
+      "mc0082": "IBEAM_CURSOR",
+      "m001A": "playerNum",
+      "m001E": "needsDefaultName",
+      "m0054": "blackBackColor",
+      "sub050F": "saveCompanyName",
+      "sub0929": "initNetWorth"
     },
     "news.js": {
       "mc001C": "HOURGLASS",
-      "mc0094": "ARROW_CURSOR"
+      "mc0094": "ARROW_CURSOR",
+      "m001A": "animFrame",
+      "sub2ECD": "showNewsStory"
     },
     "opponent.js": {
       "mc001E": "HOURGLASS",
-      "mc0106": "ARROW_CURSOR"
+      "mc0106": "ARROW_CURSOR",
+      "m001A": "animStep",
+      "sub3191": "setRivalIntelligence"
     },
     "passengr.js": {
       "mc001A": "HOURGLASS",
-      "mc00EC": "ARROW_CURSOR"
+      "mc00EC": "ARROW_CURSOR",
+      "sub0AFB": "showHelp",
+      "sub1019": "pickUpPassengers",
+      "sub1087": "setTicketPrice",
+      "sub10D5": "rerollPassengers",
+      "sub10E2": "updateDisplay"
     },
     "planets.js": {
       "mc001A": "HOURGLASS",
-      "mc0072": "ARROW_CURSOR"
+      "mc0072": "ARROW_CURSOR",
+      "m004A": "buttonBackColor"
     },
     "planets2.js": {
       "mc0046": "HOURGLASS",
-      "mc005E": "ARROW_CURSOR"
+      "mc005E": "ARROW_CURSOR",
+      "fn1FA1": "planetNameFromIndex",
+      "fn1FAD": "planetIndexFromName",
+      "fn1FBE": "planetDescription",
+      "m0020": "planetSlot",
+      "m0036": "editSlot",
+      "sub1F87": "closeForm"
     },
     "playturn.js": {
       "mc001E": "HOURGLASS",
       "mc004E": "WHITE",
       "mc0060": "LIGHT_GRAY",
-      "mc0116": "ARROW_CURSOR"
+      "mc0116": "ARROW_CURSOR",
+      "fn2D8D": "facilityName",
+      "fn2D9F": "rankingText",
+      "sub2B75": "announceShipAuction",
+      "sub2B86": "announceFacilityAuction",
+      "sub2CFF": "handleStockCrashes",
+      "sub2D0F": "warnStockCrashes"
     },
     "quick.js": {
       "mc001A": "HOURGLASS",
-      "mc00E4": "ARROW_CURSOR"
+      "mc00E4": "ARROW_CURSOR",
+      "sub41F1": "hideLockedShortcuts"
     },
     "savebox.js": {
       "mc0032": "HOURGLASS",
       "mc004E": "LIGHT_GRAY",
       "mc0068": "IBEAM_CURSOR",
-      "mc00A2": "ARROW_CURSOR"
+      "mc00A2": "ARROW_CURSOR",
+      "m001C": "slotNames",
+      "sub2792": "readSlotNames",
+      "sub27C6": "writeSlotNames"
     },
     "savegame.js": {
       "mc0032": "HOURGLASS",
       "mc0050": "LIGHT_GRAY",
-      "mc006E": "ARROW_CURSOR"
+      "mc006E": "ARROW_CURSOR",
+      "m001C": "slotNames",
+      "m0062": "buttonUpColor",
+      "m0086": "BLUE",
+      "m00A0": "MEDIUM_BLUE",
+      "m00BA": "DARK_BLUE",
+      "m00EA": "DARKER_BLUE",
+      "sub277B": "showSlotNames",
+      "sub2792": "readSlotNames",
+      "sub27C6": "writeSlotNames"
     },
     "shipbox.js": {
       "mc001A": "HOURGLASS",
@@ -498,12 +698,31 @@
     },
     "shipinfo.js": {
       "mc001A": "HOURGLASS",
-      "mc002A": "ARROW_CURSOR"
+      "mc002A": "ARROW_CURSOR",
+      "sub2339": "showShipInfo"
     },
     "special.js": {
       "mc001E": "HOURGLASS",
       "mc0030": "ARROW_CURSOR",
-      "mc00D6": "RED"
+      "mc00D6": "RED",
+      "m001A": "animFrame",
+      "m001C": "frameCount",
+      "m00E4": "BLUE",
+      "sub03A7": "doPlanetSpecial",
+      "sub0451": "visitStockBroker",
+      "sub045B": "askLowerPremiums",
+      "sub0465": "doMediaEvent",
+      "sub046F": "grantShipLeave",
+      "sub0479": "visitGrandSages",
+      "sub0483": "buyDiscountFuel",
+      "sub048D": "readFortune",
+      "sub0497": "buyFasterEngine",
+      "sub04A1": "buyFromCornucopia",
+      "sub04AB": "petitionMagistrate",
+      "sub04B5": "askTradersUnion",
+      "sub04BF": "askZinnFavor",
+      "sub04C9": "gamble",
+      "sub04D3": "upgradeShip"
     },
     "stock.js": {
       "mc002A": "WHITE",
@@ -514,7 +733,12 @@
       "mc0136": "CYAN",
       "mc013A": "RED",
       "mc013E": "MAGENTA",
-      "mc0142": "YELLOW"
+      "mc0142": "YELLOW",
+      "m001A": "noteText",
+      "m001E": "newsShown",
+      "m0020": "shownExchange",
+      "sub3022": "showExchangeInfo",
+      "sub49B2": "drawChart"
     },
     "store.js": {
       "mc001E": "HOURGLASS",
@@ -527,41 +751,101 @@
       "mc009C": "RED",
       "mc00DA": "GREEN",
       "mc00DE": "MAGENTA",
-      "mc011C": "CYAN"
+      "mc011C": "CYAN",
+      "m001A": "viewMode",
+      "m001C": "rowCount",
+      "mc0020": "VIEW_ALL_COMMODITIES",
+      "mc0022": "VIEW_CARGO",
+      "mc0024": "VIEW_PLANET_GOODS",
+      "mc0026": "VIEW_ALL_GOODS",
+      "sub1C28": "fillGrid",
+      "sub1C3F": "sizeGrid",
+      "sub1CC5": "selectPlanetColumn"
     },
     "tax.js": {
       "mc001E": "HOURGLASS",
       "mc007C": "WHITE",
       "mc0094": "ARROW_CURSOR",
-      "mc00C6": "RED"
+      "mc00C6": "RED",
+      "m001A": "animFrame",
+      "m001C": "animTicks",
+      "sub15B2": "updateDisplay"
     },
     "time.js": {
       "mc0024": "HOURGLASS",
       "mc007A": "ARROW_CURSOR",
-      "mc00AE": "WHITE"
+      "mc00AE": "WHITE",
+      "m001A": "animFrame",
+      "m001C": "currentPage",
+      "m0020": "pageCount",
+      "sub2F85": "showTimePage"
     },
     "title.js": {
       "mc001A": "HOURGLASS",
-      "mc0030": "ARROW_CURSOR"
+      "mc0030": "ARROW_CURSOR",
+      "sub050F": "goToIntro"
     },
     "travel0.js": {
       "mc0022": "HOURGLASS",
-      "mc004E": "ARROW_CURSOR"
+      "mc004E": "ARROW_CURSOR",
+      "m001A": "blackColor",
+      "sub050F": "goToTravel1"
     },
     "travel1.js": {
       "mc0022": "HOURGLASS"
     },
     "travel2.js": {
       "mc0094": "ICON_CURSOR",
-      "mc00A0": "HOURGLASS"
+      "mc00A0": "HOURGLASS",
+      "mc002E": "ODDS_BAD_EVENT",
+      "mc0030": "ODDS_INSURANCE_HIKE",
+      "mc005E": "ODDS_GOOD_EVENT",
+      "mc0060": "ODDS_WINDFALL_EVENT",
+      "mc007E": "ODDS_ENCOUNTER_EVENT",
+      "sub3324": "rollBadTravelEvents",
+      "sub3333": "crewGoesOnStrike",
+      "sub3344": "runOutOfFuel",
+      "sub3355": "rollGoodTravelEvents",
+      "sub3365": "rollTravelEncounters",
+      "sub3376": "processTravelTurn",
+      "sub3383": "rollTravelEvents",
+      "sub3395": "auditTaxes"
     },
     "travel3.js": {
       "mc0086": "HOURGLASS",
-      "mc008E": "ICON_CURSOR"
+      "mc008E": "ICON_CURSOR",
+      "m001A": "rivalPreviousPlanet",
+      "sub2B68": "runAuctions",
+      "sub2B75": "runShipAuction",
+      "sub2B86": "runFacilityAuction",
+      "sub2B9B": "driftSupplyLevels",
+      "sub2BAF": "applyWeeklyMarketEvent",
+      "sub13FE": "recordNetWorthHistory",
+      "sub2BBF": "processEndOfWeek",
+      "sub2C2D": "rollStockNews",
+      "sub2BCC": "tradeRivalCargo",
+      "sub2C8E": "upgradeRivalEngines",
+      "sub2BF4": "maybeBuyRivalShip",
+      "sub2C7A": "showRivalNews",
+      "sub2C62": "payFacilityFees",
+      "sub2C09": "chargeRivalExpenses",
+      "sub2BE1": "tradeRivalStocks",
+      "sub2C3C": "moveRival",
+      "sub2C50": "computeTurnOrder",
+      "sub2CB4": "rollRandomNews",
+      "sub2C1C": "updateStockMarket",
+      "sub2CA6": "checkForWinner"
     },
     "travel4.js": {
       "mc001A": "HOURGLASS",
-      "mc00AC": "ARROW_CURSOR"
+      "mc00AC": "ARROW_CURSOR",
+      "m008C": "BLACK",
+      "sub050F": "continueToMainMenu",
+      "sub2BAF": "announceWeeklyEvent",
+      "sub33C3": "announcePlayersArrivedFirst",
+      "sub33DD": "announceRivalsArrivedFirst",
+      "sub2BCC": "rivalSellAndRestock",
+      "sub33FA": "settleFacilityFees"
     },
     "tutorial.js": {
       "mc001A": "HOURGLASS",
@@ -573,11 +857,24 @@
       "mc014A": "MAGENTA",
       "mc015A": "GREEN",
       "mc015E": "CYAN",
-      "mc0162": "ARROW_CURSOR"
+      "mc0162": "ARROW_CURSOR",
+      "m001A": "viewMode",
+      "m001C": "rowCount",
+      "m0020": "rowCategory",
+      "m0036": "rowItem",
+      "m004C": "gridEmpty",
+      "mc004E": "VIEW_ALL_GOODS",
+      "mc0050": "VIEW_CARGO",
+      "mc0052": "VIEW_WAREHOUSE_GOODS",
+      "sub1AA8": "transferCommodity",
+      "sub1B77": "fillGrid",
+      "sub1B91": "sizeGrid"
     },
     "weather.js": {
       "mc001C": "HOURGLASS",
-      "mc0086": "ARROW_CURSOR"
+      "mc0086": "ARROW_CURSOR",
+      "m001A": "animFrame",
+      "sub2F02": "showWeatherReport"
     },
     "wingame.js": {
       "mc001A": "HOURGLASS",
@@ -595,23 +892,38 @@
     },
     "zinnloan.js": {
       "mc001E": "HOURGLASS",
-      "mc0096": "ARROW_CURSOR"
+      "mc0096": "ARROW_CURSOR",
+      "m001A": "animFrame",
+      "m001C": "animTicks",
+      "m002C": "exitBackColor",
+      "sub0AFB": "showHelp",
+      "sub0C5C": "updateDisplay"
     }
   },
   "locals": {
     "bank.js": {
       "b_Deposit_Click": {
-        "mc0048": "ARROW_CURSOR"
+        "mc0048": "ARROW_CURSOR",
+        "l0028": "depositAmount"
+      },
+      "b_Withdraw_Click": {
+        "l00CA": "withdrawAmount"
       }
     },
     "bankrpt1.js": {
       "b_Continue_Click": {
-        "mc0020": "HOURGLASS"
+        "mc0020": "HOURGLASS",
+        "l001A": "company",
+        "l001E": "bankruptCount"
       }
     },
     "bankrpt3.js": {
       "b_ContinueGame_Click": {
-        "mc001C": "HOURGLASS"
+        "mc001C": "HOURGLASS",
+        "l001A": "nextCompany"
+      },
+      "b_NewGame_Click": {
+        "m0024": "BLACK"
       }
     },
     "box3.js": {
@@ -624,40 +936,101 @@
         "mc0020": "HOURGLASS"
       },
       "sub314A": {
-        "mc0056": "ARROW_CURSOR"
+        "mc0056": "ARROW_CURSOR",
+        "p0028": "ship"
+      },
+      "Form_Load": {
+        "l006C": "ship"
       }
     },
     "emaiload.js": {
       "b_Cancel_Click": {
-        "mc00D2": "HOURGLASS"
+        "mc00D2": "HOURGLASS",
+        "l00D0": "trapErrors"
       },
       "b_LoadEmailGame_Click": {
-        "mc013C": "ARROW_CURSOR"
+        "mc013C": "ARROW_CURSOR",
+        "l0134": "trapErrors"
+      },
+      "dir1_Change": {
+        "l0162": "trapErrors"
+      },
+      "drive1_Change": {
+        "l0170": "trapErrors"
+      },
+      "sub44B2": {
+        "l0172": "trapErrors",
+        "l0174": "playerIndex"
+      },
+      "file1_Click": {
+        "l0180": "trapErrors"
+      },
+      "file1_DblClick": {
+        "l0182": "trapErrors"
+      },
+      "Form_Load": {
+        "l0186": "trapErrors",
+        "l0188": "dotPos"
       }
     },
     "emailsav.js": {
       "b_SaveEmailGame_Click": {
-        "mc007C": "ARROW_CURSOR"
+        "mc007C": "ARROW_CURSOR",
+        "l0074": "trapErrors"
+      },
+      "dir1_Change": {
+        "l00A6": "trapErrors"
+      },
+      "drive1_Change": {
+        "l00B4": "trapErrors"
+      },
+      "file1_Click": {
+        "l00B6": "trapErrors"
+      },
+      "Form_Load": {
+        "l00BA": "trapErrors",
+        "l00BC": "dotPos"
       }
     },
     "fuel.js": {
       "sub0E72": {
-        "mc00B4": "ARROW_CURSOR"
+        "mc00B4": "ARROW_CURSOR",
+        "l00AC": "tons"
       }
     },
     "graph1.js": {
       "sub1CF9": {
-        "mc007A": "ARROW_CURSOR"
+        "mc007A": "ARROW_CURSOR",
+        "l006E": "company"
       }
     },
     "graph2.js": {
       "b_Computer_Click": {
-        "mc004C": "ARROW_CURSOR"
+        "mc004C": "ARROW_CURSOR",
+        "l0038": "numWeeks",
+        "l003A": "i",
+        "l003C": "week"
+      },
+      "b_Human_Click": {
+        "l00AC": "i",
+        "l00AE": "week",
+        "l00B0": "numWeeks"
+      },
+      "sub1D40": {
+        "l00C8": "i",
+        "l00CA": "week",
+        "l00CC": "numWeeks"
+      },
+      "sub1E3B": {
+        "l00CE": "i",
+        "l00D0": "week",
+        "l00D2": "numWeeks"
       }
     },
     "graph3.js": {
       "sub204D": {
-        "mc007A": "ARROW_CURSOR"
+        "mc007A": "ARROW_CURSOR",
+        "l006C": "company"
       }
     },
     "help.js": {
@@ -667,92 +1040,415 @@
     },
     "leave.js": {
       "sub3B58": {
-        "mc00C2": "YELLOW"
+        "mc00C2": "YELLOW",
+        "pv00AC": "destination",
+        "l00AE": "stockValue",
+        "l00B0": "planet",
+        "l00B6": "returnToMenu",
+        "l00B8": "unusedText"
       },
       "Form_Load": {
-        "mc00E6": "RED"
+        "mc00E6": "RED",
+        "l00DE": "planet"
       }
     },
     "loan.js": {
       "b_Borrow_Click": {
-        "mc0046": "ARROW_CURSOR"
+        "mc0046": "ARROW_CURSOR",
+        "l0026": "borrowAmount"
+      },
+      "b_BorrowMax_Click": {
+        "l005E": "borrowAmount"
+      },
+      "b_PayBack_Click": {
+        "l00C0": "maxPayment",
+        "l00C2": "payment"
       }
     },
     "mainmenu.js": {
       "sub3799": {
         "mc0338": "HOURGLASS",
-        "mc0360": "ARROW_CURSOR"
+        "mc0360": "ARROW_CURSOR",
+        "pv0336": "mouseButton"
       },
       "sub4157": {
         "mc03A2": "RED",
-        "mc03A6": "WHITE"
+        "mc03A6": "WHITE",
+        "l03A0": "iconChoice"
+      },
+      "b_LeavePlanet1_MouseUp": {
+        "m0180": "BLACK"
+      },
+      "sub3810": {
+        "pv0362": "mouseButton"
+      },
+      "sub387A": {
+        "pv036C": "mouseButton"
+      },
+      "sub3959": {
+        "pv0376": "mouseButton",
+        "l037C": "fuelNeeded"
+      },
+      "sub3B01": {
+        "pv038A": "mouseButton"
+      },
+      "sub3C1F": {
+        "pv0398": "mouseButton",
+        "l039A": "borrowAmount"
+      },
+      "sub3D76": {
+        "pv0408": "mouseButton"
+      },
+      "sub3ED1": {
+        "pv0416": "mouseButton"
       }
     },
     "market.js": {
       "b_GoodsOnShip_Click": {
-        "mc009A": "ARROW_CURSOR"
+        "mc009A": "ARROW_CURSOR",
+        "l0082": "row"
       },
       "sub1EB2": {
         "mc0152": "GREEN",
         "mc0158": "CYAN",
-        "mc015C": "MAGENTA"
+        "mc015C": "MAGENTA",
+        "p013E": "row",
+        "l0140": "action",
+        "l0142": "tons",
+        "l0144": "topPrice",
+        "l0146": "gridRow",
+        "l0148": "maxTons"
+      },
+      "b_Supply_Click": {
+        "l0102": "row"
+      },
+      "sub1F47": {
+        "l0130": "category",
+        "l0132": "item"
+      },
+      "sub1E85": {
+        "l0160": "col",
+        "l0162": "category",
+        "l0164": "item",
+        "l0166": "row",
+        "l016A": "lowStep",
+        "l016C": "highPrice",
+        "l016E": "lowPrice"
+      },
+      "sub1E9C": {
+        "l0182": "gridHeight",
+        "l0186": "gridWidth",
+        "l018A": "i"
       }
     },
     "planets.js": {
       "b_Randomize_Click": {
-        "mc0072": "ARROW_CURSOR"
+        "mc0072": "ARROW_CURSOR",
+        "l0062": "slot",
+        "l0064": "i",
+        "l0066": "pass",
+        "l0068": "candidate"
+      },
+      "Form_Activate": {
+        "l008A": "planet"
       }
     },
     "playturn.js": {
       "Form_Activate": {
-        "mc0116": "ARROW_CURSOR"
+        "mc0116": "ARROW_CURSOR",
+        "l010E": "levelName"
       },
       "Form_Load": {
-        "mc013E": "ICON_CURSOR"
+        "mc013E": "ICON_CURSOR",
+        "l0118": "i",
+        "l011A": "amount",
+        "l011C": "text",
+        "l011E": "emailSaved"
+      },
+      "b_Ranking_Click": {
+        "l0094": "levelName"
+      },
+      "sub2B86": {
+        "l00CE": "winnerName",
+        "l00D0": "runnerUpName"
+      },
+      "sub2B75": {
+        "l00DE": "winnerName",
+        "l00E0": "runnerUpName"
+      },
+      "fn2D8D": {
+        "pv00E4": "facility"
+      },
+      "fn2D9F": {
+        "l00EA": "i",
+        "l00EC": "rank",
+        "l00EE": "bestRival",
+        "l00F0": "bestPlayer",
+        "l00F2": "text",
+        "l00F4": "playerListed",
+        "l00FA": "rivalListed"
+      },
+      "sub2CFF": {
+        "l0100": "planet",
+        "l0102": "rival"
+      },
+      "sub2D0F": {
+        "l0108": "planet",
+        "l010A": "nearCrash"
       }
     },
     "special.js": {
       "sub04C9": {
-        "mc00D6": "RED"
+        "mc00D6": "RED",
+        "l00D0": "wager",
+        "l00D2": "initialWager",
+        "m00E4": "BLUE"
+      },
+      "sub0451": {
+        "l009C": "planet",
+        "l009E": "advice"
+      },
+      "sub045B": {
+        "l00AC": "adjustment"
+      },
+      "sub0465": {
+        "l00AE": "payment",
+        "l00B0": "soundFile"
+      },
+      "sub046F": {
+        "l00B2": "damages"
+      },
+      "sub0483": {
+        "l00B4": "discountPrice"
+      },
+      "sub048D": {
+        "l00B6": "fortuneFee"
+      },
+      "sub0497": {
+        "l00B8": "slogan"
+      },
+      "sub04A1": {
+        "l00BA": "category",
+        "l00BC": "item",
+        "l00BE": "tons",
+        "l00C0": "pricePerTon",
+        "l00C2": "c",
+        "l00C4": "i",
+        "l00C6": "step",
+        "l00C8": "minPrice",
+        "l00CA": "maxPrice"
+      },
+      "sub04D3": {
+        "l00EA": "upgrade",
+        "l00EC": "cost"
+      },
+      "Form_Load": {
+        "l00F0": "category",
+        "l00F2": "item",
+        "l00F4": "amount",
+        "l00F6": "pricePerTon",
+        "l00F8": "description",
+        "l0100": "c",
+        "l0102": "i",
+        "l0104": "step",
+        "l0106": "minPrice",
+        "l0108": "maxPrice"
       }
     },
     "stock.js": {
       "b_Buy_Click": {
-        "mc0046": "HOURGLASS"
+        "mc0046": "HOURGLASS",
+        "l0040": "shares",
+        "l0042": "sharePrice",
+        "l0044": "maxShares"
       },
       "sub49B2": {
-        "mc0126": "ARROW_CURSOR"
+        "mc0126": "ARROW_CURSOR",
+        "pv011A": "exchange",
+        "l011C": "i",
+        "l011E": "week"
       },
       "sub3022": {
         "mc012C": "GREEN",
         "mc0136": "CYAN",
         "mc013A": "RED",
         "mc013E": "MAGENTA",
-        "mc0142": "YELLOW"
+        "mc0142": "YELLOW",
+        "pv0128": "exchange",
+        "l012A": "note"
+      },
+      "b_Help_Click": {
+        "l00AC": "helpText"
+      },
+      "b_Sell_Click": {
+        "l00DE": "shares",
+        "l00E0": "sharePrice",
+        "l00E2": "profit"
+      },
+      "b_Shares_Click": {
+        "l00FE": "planet"
+      },
+      "Form_Activate": {
+        "l0146": "planet",
+        "l0148": "pointChange"
+      },
+      "Form_Load": {
+        "l014C": "planet",
+        "l0150": "anyCrashed"
       }
     },
     "supply.js": {
       "b_GoodsOnShip_Click": {
-        "mc0068": "ARROW_CURSOR"
+        "mc0068": "ARROW_CURSOR",
+        "l0050": "row"
       },
       "b_Grid_MouseUp": {
         "mc0092": "YELLOW",
-        "mc009C": "RED"
+        "mc009C": "RED",
+        "l0082": "clickedCol",
+        "l0084": "distance",
+        "l0086": "col"
       },
       "sub1CC5": {
         "mc00DA": "GREEN",
-        "mc00DE": "MAGENTA"
+        "mc00DE": "MAGENTA",
+        "l00D4": "clickedCol",
+        "l00D6": "distance",
+        "l00D8": "col"
+      },
+      "b_Market_Click": {
+        "l00C2": "row"
+      },
+      "sub1C28": {
+        "l00E2": "col",
+        "l00E4": "category",
+        "l00E6": "item",
+        "l00E8": "row",
+        "l00EA": "planetCol",
+        "l00EC": "lowestSupply",
+        "l00EE": "gridEmpty"
+      },
+      "sub1C3F": {
+        "l010E": "gridHeight",
+        "l0112": "gridWidth",
+        "l0116": "i"
       }
     },
     "travel1.js": {
       "Form_Load": {
-        "mc0022": "HOURGLASS"
+        "mc0022": "HOURGLASS",
+        "l001E": "planet",
+        "l0020": "stockValue"
       }
     },
     "travel3.js": {
       "sub2BBF": {
         "mc0086": "HOURGLASS",
-        "mc008E": "ICON_CURSOR"
+        "mc008E": "ICON_CURSOR",
+        "l0080": "i",
+        "l0082": "planet",
+        "l0084": "total"
+      },
+      "sub2B68": {
+        "l0030": "roll"
+      },
+      "sub2B86": {
+        "l0038": "topBidder",
+        "l003A": "secondBidder",
+        "l003C": "rival",
+        "l0040": "bid",
+        "l0042": "topBid",
+        "l0044": "secondBid"
+      },
+      "sub2B75": {
+        "l004C": "topBidder",
+        "l004E": "secondBidder",
+        "l0050": "rival",
+        "l0052": "i",
+        "l0058": "bid",
+        "l005A": "topBid",
+        "l005C": "secondBid",
+        "l005E": "biggestShipPlayer"
+      },
+      "sub2B9B": {
+        "l0064": "planet",
+        "l0066": "category",
+        "l0068": "item",
+        "l006A": "change"
+      },
+      "sub2BAF": {
+        "l006C": "i",
+        "l006E": "item",
+        "l0070": "activePlayers",
+        "l0072": "basePrice",
+        "l0074": "lowPrice",
+        "l0076": "highPrice",
+        "l0078": "eventPlanet",
+        "l007A": "avgShipSize"
+      },
+      "sub13FE": {
+        "l007C": "i",
+        "l007E": "company"
+      },
+      "sub2BCC": {
+        "pv009E": "rival",
+        "l00A0": "category",
+        "l00A2": "item",
+        "l00A4": "targetPrice",
+        "l00A6": "bestMargin"
+      },
+      "sub2C8E": {
+        "l00A8": "rival",
+        "l00AA": "cost"
+      },
+      "sub2BF4": {
+        "pv00B6": "rival",
+        "l00B8": "cost",
+        "l00BA": "odds",
+        "l00BC": "i",
+        "l00BE": "avgShipSize"
+      },
+      "sub2C7A": {
+        "l00C0": "rival",
+        "l00C2": "outcome"
+      },
+      "sub2C62": {
+        "l00C4": "owner",
+        "l00C6": "rival",
+        "l00C8": "feesDue"
+      },
+      "sub2C09": {
+        "pv00CA": "rival",
+        "l00CC": "costFactor"
+      },
+      "sub2BE1": {
+        "pv00CE": "rival",
+        "l00D0": "sharesBought",
+        "l00D2": "i",
+        "l00D4": "investFraction",
+        "l00D6": "leader"
+      },
+      "sub2C3C": {
+        "pv00D8": "rival",
+        "l00DA": "planet",
+        "l00DC": "destination",
+        "l00DE": "distance"
+      },
+      "sub2C50": {
+        "l00E0": "i",
+        "l00E2": "j",
+        "l00E4": "temp",
+        "l00E6": "distance"
+      },
+      "sub2C1C": {
+        "l00E8": "planet",
+        "l00EA": "week",
+        "l00EC": "priceChange"
+      },
+      "sub2CA6": {
+        "l00EE": "i",
+        "l00F0": "topPlayer",
+        "l00F2": "topRival"
       }
     },
     "warehous.js": {
@@ -760,18 +1456,43 @@
         "mc014A": "MAGENTA",
         "mc015A": "GREEN",
         "mc015E": "CYAN",
-        "mc0162": "ARROW_CURSOR"
+        "mc0162": "ARROW_CURSOR",
+        "l013E": "action",
+        "l0140": "tons",
+        "l0142": "gridRow",
+        "l0144": "maxTons"
+      },
+      "b_Tons_Click": {
+        "l00F4": "planet"
+      },
+      "sub1B77": {
+        "l0114": "col",
+        "l0116": "category",
+        "l0118": "item",
+        "l011A": "row",
+        "l011E": "lowStep",
+        "l0120": "highPrice",
+        "l0122": "lowPrice"
+      },
+      "sub1B91": {
+        "l0130": "gridHeight",
+        "l0134": "gridWidth",
+        "l0138": "i"
       }
     },
     "wingame.js": {
       "b_Continue_Click": {
         "mc0052": "DARK_RED",
-        "mc0056": "RED"
+        "mc0056": "RED",
+        "l0022": "winnerName",
+        "l0024": "emperorPromise"
       }
     },
     "zinnloan.js": {
       "b_PayBack_Click": {
-        "mc0096": "ARROW_CURSOR"
+        "mc0096": "ARROW_CURSOR",
+        "l007A": "payment",
+        "l007C": "maxPayment"
       }
     },
     "module2.js": {
@@ -838,6 +1559,255 @@
       "fn01B7": {
         "p0038": "low",
         "p003A": "high"
+      }
+    },
+    "aaa.js": {
+      "Form_Activate": {
+        "l002C": "errorCount"
+      }
+    },
+    "advert.js": {
+      "sub371C": {
+        "l00EC": "passengerAdName",
+        "l00EE": "commodityAdName"
+      }
+    },
+    "boxinput.js": {
+      "b_Spin_SpinDown": {
+        "l00B4": "number"
+      },
+      "b_Spin_SpinUp": {
+        "l00B6": "number"
+      }
+    },
+    "config.js": {
+      "b_GraphicsHelp_Click": {
+        "l0032": "helpText",
+        "l0034": "screenWidth",
+        "l0036": "screenHeight"
+      }
+    },
+    "loadgame.js": {
+      "sub2792": {
+        "l013C": "slot"
+      },
+      "sub276D": {
+        "l013E": "playerIndex"
+      }
+    },
+    "passengr.js": {
+      "sub1087": {
+        "l00F2": "newPrice"
+      }
+    },
+    "savebox.js": {
+      "sub2792": {
+        "l0092": "slot"
+      },
+      "sub27C6": {
+        "l0098": "slot"
+      }
+    },
+    "savegame.js": {
+      "sub2792": {
+        "l0116": "slot"
+      },
+      "sub27C6": {
+        "l0118": "slot"
+      }
+    },
+    "shipinfo.js": {
+      "b_PassengerButton_Click": {
+        "l00D4": "onBoard",
+        "l00D6": "waiting"
+      },
+      "sub2339": {
+        "l0130": "shipName"
+      }
+    },
+    "distance.js": {
+      "sub348F": {
+        "l0094": "col",
+        "l0096": "human",
+        "l0098": "rival",
+        "l009A": "row",
+        "l009C": "distance"
+      },
+      "sub34AD": {
+        "l00B2": "gridHeight",
+        "l00B6": "gridWidth",
+        "l00BA": "i"
+      },
+      "Form_Load": {
+        "l00C2": "planet"
+      }
+    },
+    "facility.js": {
+      "sub30FA": {
+        "l0094": "col",
+        "l0096": "human",
+        "l0098": "rival",
+        "l009A": "row"
+      },
+      "sub3113": {
+        "l00B0": "gridHeight",
+        "l00B4": "gridWidth",
+        "l00B8": "i"
+      },
+      "Form_Load": {
+        "l00C0": "planet"
+      }
+    },
+    "news.js": {
+      "sub2ECD": {
+        "l007C": "category",
+        "l007E": "item",
+        "l0082": "topCategory",
+        "l0084": "topItem"
+      }
+    },
+    "planets2.js": {
+      "fn1FA1": {
+        "pv0054": "index"
+      },
+      "fn1FAD": {
+        "p0058": "planetName"
+      },
+      "fn1FBE": {
+        "pv005C": "index"
+      },
+      "Form_Load": {
+        "l0062": "i",
+        "l0064": "j"
+      }
+    },
+    "auction.js": {
+      "b_OK_Click": {
+        "l0024": "bid"
+      },
+      "fn2D8D": {
+        "pv006C": "facility"
+      }
+    },
+    "begin.js": {
+      "sub472D": {
+        "l00EA": "i",
+        "l00EC": "j",
+        "l00EE": "k",
+        "l00F0": "maxInsuranceCost",
+        "l00F2": "planetName"
+      }
+    },
+    "complex.js": {
+      "Form_Load": {
+        "l0060": "nextFeature"
+      }
+    },
+    "level.js": {
+      "sub050F": {
+        "l00C2": "rival"
+      }
+    },
+    "money.js": {
+      "sub1531": {
+        "l0170": "value",
+        "l0172": "planet",
+        "l0178": "label"
+      }
+    },
+    "nameco.js": {
+      "sub0929": {
+        "l0062": "company"
+      }
+    },
+    "opponent.js": {
+      "sub3191": {
+        "pv00D6": "rival",
+        "l00D8": "newIntelligence",
+        "l00DA": "rivalName"
+      }
+    },
+    "travel2.js": {
+      "sub3324": {
+        "l001A": "i",
+        "l001C": "j",
+        "l001E": "k",
+        "l0020": "amount",
+        "l0022": "outcome",
+        "l0024": "tonsLost",
+        "l0028": "encounterKind",
+        "l002A": "weatherKind",
+        "l002C": "delayCount",
+        "l0032": "eventHappened"
+      },
+      "sub3344": {
+        "l004E": "refuelCost"
+      },
+      "sub3355": {
+        "l0050": "i",
+        "l0052": "j",
+        "l0056": "amount",
+        "l0058": "price",
+        "l005A": "savedPlayer",
+        "l0062": "eventHappened"
+      },
+      "sub3365": {
+        "pv006E": "eventHappened",
+        "l0070": "i",
+        "l0072": "j",
+        "l0074": "phrase",
+        "l0076": "amount",
+        "l0078": "value",
+        "l007A": "category",
+        "l007C": "item"
+      },
+      "sub3376": {
+        "l0082": "i",
+        "l0084": "j",
+        "l0088": "temp",
+        "l008A": "sizeFuelBurn"
+      },
+      "sub3383": {
+        "l0092": "spiritPlanet"
+      }
+    },
+    "travel4.js": {
+      "sub050F": {
+        "l0022": "i",
+        "l0024": "graphKind",
+        "l0026": "leadingRival",
+        "l0028": "leadingPlayer",
+        "l002A": "soundFile",
+        "l002C": "firstToFinish"
+      },
+      "sub2BAF": {
+        "l007A": "eventPlanet"
+      },
+      "sub33C3": {
+        "l0088": "otherPlayer",
+        "l008A": "taunt",
+        "m008C": "BLACK"
+      },
+      "sub33DD": {
+        "l0092": "rival",
+        "l0094": "taunt",
+        "l0096": "amountPhrase",
+        "l0098": "extraPhrase"
+      },
+      "sub2BCC": {
+        "pv009A": "rival",
+        "l009C": "category",
+        "l009E": "item",
+        "l00A0": "priceCeiling",
+        "l00A2": "bestMargin"
+      },
+      "sub33FA": {
+        "l00A4": "totalFees",
+        "l00A6": "company"
+      },
+      "Form_Load": {
+        "l00B0": "category",
+        "l00B2": "item"
       }
     }
   }

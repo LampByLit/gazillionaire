@@ -21,14 +21,14 @@ function (me) {
     const { OnePlayer, Label2, Label1 } = me.controls;
     const HOURGLASS = 11;
     const LIGHT_GRAY = 12632256;
-    const m005C = 4194304;
+    const DARK_NAVY = 4194304;
     const ARROW_CURSOR = 1;
-    const m0082 = 8388608;
-    const m00A2 = 16711680;
-    const m00EC = 12582912;
-    let m00BC = 0;
+    const NAVY = 8388608;
+    const BLUE = 16711680;
+    const MEDIUM_BLUE = 12582912;
+    let blackBackColor = 0;
 
-    async function sub050F() {
+    async function goToNextScreen() {
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -50,7 +50,7 @@ function (me) {
     async function FivePlayers_Click() {
         me.MousePointer = HOURGLASS;
         game.numPlayers = 5;
-        await sub050F();
+        await goToNextScreen();
     }
 
     function FivePlayers_MouseDown(Button, Shift, X, Y) {
@@ -58,7 +58,7 @@ function (me) {
     }
 
     function FivePlayers_MouseUp(Button, Shift, X, Y) {
-        FivePlayers.BackColor = m005C;
+        FivePlayers.BackColor = DARK_NAVY;
     }
 
     function Form_Activate() {
@@ -82,7 +82,7 @@ function (me) {
     async function FourPlayers_Click() {
         me.MousePointer = HOURGLASS;
         game.numPlayers = 4;
-        await sub050F();
+        await goToNextScreen();
     }
 
     function FourPlayers_MouseDown(Button, Shift, X, Y) {
@@ -90,7 +90,7 @@ function (me) {
     }
 
     function FourPlayers_MouseUp(Button, Shift, X, Y) {
-        FourPlayers.BackColor = m0082;
+        FourPlayers.BackColor = NAVY;
     }
 
     function Label1_Click() {
@@ -104,7 +104,7 @@ function (me) {
     async function OnePlayer_Click() {
         me.MousePointer = HOURGLASS;
         game.numPlayers = 1;
-        await sub050F();
+        await goToNextScreen();
     }
 
     function OnePlayer_MouseDown(Button, Shift, X, Y) {
@@ -112,13 +112,13 @@ function (me) {
     }
 
     function OnePlayer_MouseUp(Button, Shift, X, Y) {
-        OnePlayer.BackColor = m00A2;
+        OnePlayer.BackColor = BLUE;
     }
 
     async function SixPlayers_Click() {
         me.MousePointer = HOURGLASS;
         game.numPlayers = 6;
-        await sub050F();
+        await goToNextScreen();
     }
 
     function SixPlayers_MouseDown(Button, Shift, X, Y) {
@@ -126,13 +126,13 @@ function (me) {
     }
 
     function SixPlayers_MouseUp(Button, Shift, X, Y) {
-        SixPlayers.BackColor = m00BC;
+        SixPlayers.BackColor = blackBackColor;
     }
 
     async function ThreePlayers_Click() {
         me.MousePointer = HOURGLASS;
         game.numPlayers = 3;
-        await sub050F();
+        await goToNextScreen();
     }
 
     function ThreePlayers_MouseDown(Button, Shift, X, Y) {
@@ -140,13 +140,13 @@ function (me) {
     }
 
     function ThreePlayers_MouseUp(Button, Shift, X, Y) {
-        ThreePlayers.BackColor = m0082;
+        ThreePlayers.BackColor = NAVY;
     }
 
     async function TwoPlayers_Click() {
         me.MousePointer = HOURGLASS;
         game.numPlayers = 2;
-        await sub050F();
+        await goToNextScreen();
     }
 
     function TwoPlayers_MouseDown(Button, Shift, X, Y) {
@@ -154,11 +154,11 @@ function (me) {
     }
 
     function TwoPlayers_MouseUp(Button, Shift, X, Y) {
-        TwoPlayers.BackColor = m00EC;
+        TwoPlayers.BackColor = MEDIUM_BLUE;
     }
 
     return {
-        sub050F, FivePlayers_Click, FivePlayers_MouseDown, FivePlayers_MouseUp,
+        goToNextScreen, FivePlayers_Click, FivePlayers_MouseDown, FivePlayers_MouseUp,
         Form_Activate, Form_Load, FourPlayers_Click, FourPlayers_MouseDown,
         FourPlayers_MouseUp, Label1_Click, Label2_Click, OnePlayer_Click,
         OnePlayer_MouseDown, OnePlayer_MouseUp, SixPlayers_Click, SixPlayers_MouseDown,

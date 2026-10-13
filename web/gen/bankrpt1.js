@@ -17,15 +17,15 @@ function (me) {
     const { VSElastic1, b_Sound, b_Continue, VSElastic3, VSElastic2, Image1, b_Company } = me.controls;
     const HOURGLASS = 11;
     const ARROW_CURSOR = 1;
-    let m0028 = 0;  // Static in b_Continue_Click
+    let blankColor = 0;  // Static in b_Continue_Click
 
     async function b_Continue_Click() {
-        let l001A = 0;
-        let l001E = 0;
+        let company = 0;
+        let bankruptCount = 0;
         const HOURGLASS = 11;
         me.MousePointer = HOURGLASS;
-        VSElastic1.BackColor = m0028;
-        me.BackColor = m0028;
+        VSElastic1.BackColor = blankColor;
+        me.BackColor = blankColor;
         VSElastic1.Visible = 0;
         frm_Box1Port.b_Yes.Visible = 0;
         frm_Box1Port.b_No.Visible = 0;
@@ -55,7 +55,7 @@ function (me) {
             b_Sound.Command = "Play";
         }
         await frm_LineGraph.Show(1);
-        VSElastic1.BackColor = m0028;
+        VSElastic1.BackColor = blankColor;
         VSElastic1.Visible = 0;
         frm_Box1Port.b_Yes.Visible = 0;
         frm_Box1Port.b_No.Visible = 0;
@@ -74,13 +74,13 @@ function (me) {
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
-        l001E = 0;
-        for (l001A = 1; l001A <= game.numPlayers; l001A++) {
-            if (game.graphShowCompany[l001A] == -1) {
-                l001E = l001E + 1;
+        bankruptCount = 0;
+        for (company = 1; company <= game.numPlayers; company++) {
+            if (game.graphShowCompany[company] == -1) {
+                bankruptCount = bankruptCount + 1;
             }
         }
-        if (l001E == game.numPlayers) {
+        if (bankruptCount == game.numPlayers) {
             await frm_Bankrupt2.Show();
             await Unload(me);
         } else {

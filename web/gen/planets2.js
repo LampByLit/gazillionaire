@@ -29,123 +29,123 @@ function (me) {
     const { FillElastic, VSElastic2, b_Text, VSElastic1, b_Planet } = me.controls;
     const HOURGLASS = 11;
     const ARROW_CURSOR = 1;
-    let m0020 = DimArray([13], 0);
-    let m0036 = 0;
+    let planetSlot = DimArray([13], 0);
+    let editSlot = 0;
 
     async function b_Planet_Click(Index) {
-        game.planetNames[m0036] = FixStr(b_Planet[Index].Caption, 4);
-        await sub1F87();
+        game.planetNames[editSlot] = FixStr(b_Planet[Index].Caption, 4);
+        await closeForm();
     }
 
     async function b_Text_Click(Index) {
-        game.planetNames[m0036] = FixStr(b_Planet[Index].Caption, 4);
-        await sub1F87();
+        game.planetNames[editSlot] = FixStr(b_Planet[Index].Caption, 4);
+        await closeForm();
     }
 
-    async function sub1F87() {
+    async function closeForm() {
         me.MousePointer = HOURGLASS;
         await Unload(me);
     }
 
-    function fn1FA1(pv0054) {
+    function planetNameFromIndex(index) {
         let ret = "";
-        pv0054 = CInt(pv0054);
-        if (pv0054 == 0) {
+        index = CInt(index);
+        if (index == 0) {
             ret = "Vexx";
-        } else if (pv0054 == 1) {
+        } else if (index == 1) {
             ret = "Pyke";
-        } else if (pv0054 == 2) {
+        } else if (index == 2) {
             ret = "Mira";
-        } else if (pv0054 == 3) {
+        } else if (index == 3) {
             ret = "Stye";
-        } else if (pv0054 == 4) {
+        } else if (index == 4) {
             ret = "Loro";
-        } else if (pv0054 == 5) {
+        } else if (index == 5) {
             ret = "Zile";
-        } else if (pv0054 == 6) {
+        } else if (index == 6) {
             ret = "Frac";
-        } else if (pv0054 == 7) {
+        } else if (index == 7) {
             ret = "Tilo";
-        } else if (pv0054 == 8) {
+        } else if (index == 8) {
             ret = "Queg";
-        } else if (pv0054 == 9) {
+        } else if (index == 9) {
             ret = "Xeen";
-        } else if (pv0054 == 10) {
+        } else if (index == 10) {
             ret = "Ooom";
-        } else if (pv0054 == 11) {
+        } else if (index == 11) {
             ret = "Hork";
-        } else if (pv0054 == 12) {
+        } else if (index == 12) {
             ret = "Bass";
-        } else if (pv0054 == 13) {
+        } else if (index == 13) {
             ret = "Nosh";
         }
         return ret;
     }
 
-    function fn1FAD(p0058) {
+    function planetIndexFromName(planetName) {
         let ret = 0;
-        if (p0058 == "Vexx") {
+        if (planetName == "Vexx") {
             ret = 0;
-        } else if (p0058 == "Pyke") {
+        } else if (planetName == "Pyke") {
             ret = 1;
-        } else if (p0058 == "Mira") {
+        } else if (planetName == "Mira") {
             ret = 2;
-        } else if (p0058 == "Stye") {
+        } else if (planetName == "Stye") {
             ret = 3;
-        } else if (p0058 == "Loro") {
+        } else if (planetName == "Loro") {
             ret = 4;
-        } else if (p0058 == "Zile") {
+        } else if (planetName == "Zile") {
             ret = 5;
-        } else if (p0058 == "Frac") {
+        } else if (planetName == "Frac") {
             ret = 6;
-        } else if (p0058 == "Tilo") {
+        } else if (planetName == "Tilo") {
             ret = 7;
-        } else if (p0058 == "Queg") {
+        } else if (planetName == "Queg") {
             ret = 8;
-        } else if (p0058 == "Xeen") {
+        } else if (planetName == "Xeen") {
             ret = 9;
-        } else if (p0058 == "Ooom") {
+        } else if (planetName == "Ooom") {
             ret = 10;
-        } else if (p0058 == "Hork") {
+        } else if (planetName == "Hork") {
             ret = 11;
-        } else if (p0058 == "Bass") {
+        } else if (planetName == "Bass") {
             ret = 12;
-        } else if (p0058 == "Nosh") {
+        } else if (planetName == "Nosh") {
             ret = 13;
         }
         return ret;
     }
 
-    function fn1FBE(pv005C) {
+    function planetDescription(index) {
         let ret = "";
-        pv005C = CInt(pv005C);
-        if (pv005C == 0) {
+        index = CInt(index);
+        if (index == 0) {
             ret = "Vexx is the capital of Kukubia and the seat of the Imperial Magistrate.";
-        } else if (pv005C == 1) {
+        } else if (index == 1) {
             ret = "Pyke is a major industrial center and the only place to purchase new L-Tech engines.";
-        } else if (pv005C == 2) {
+        } else if (index == 2) {
             ret = "Mira is the heart of Kukubia's religion and sacred resting spot of the Quaso Mutta.";
-        } else if (pv005C == 3) {
+        } else if (index == 3) {
             ret = "Stye is the financial hub of the system and home of the Trader's Union.";
-        } else if (pv005C == 4) {
+        } else if (index == 4) {
             ret = "Loro is renowned throughout Kukubia as a great vacation spot.";
-        } else if (pv005C == 5) {
+        } else if (index == 5) {
             ret = "Zile is a wealthy merchant's planet and home to Mr. Zinn.";
-        } else if (pv005C == 6) {
+        } else if (index == 6) {
             ret = "Frac is the headquarters of the Voyager's Insurance Company.";
-        } else if (pv005C == 7) {
+        } else if (index == 7) {
             ret = "Tilo is the gambler's planet packed with wall to wall casinos.";
-        } else if (pv005C == 8) {
+        } else if (index == 8) {
             ret = "Queg is the infamous smuggler's haven.";
-        } else if (pv005C == 9) {
+        } else if (index == 9) {
             ret = "Xeen is one giant junkyard filled with spare ship parts and brilliant mechanics.";
-        } else if (pv005C == 10) {
+        } else if (index == 10) {
             ret = "Ooom is the mystical fortune teller's planet.";
-        } else if (pv005C == 11) {
+        } else if (index == 11) {
             ret = "Hork is the media capital of Kukubia.";
-        } else if (pv005C == 12) {
+        } else if (index == 12) {
             ret = "Bass is a playground for stock market analysts.";
-        } else if (pv005C == 13) {
+        } else if (index == 13) {
             ret = "Nosh is known as the fuel depot for the entire system.";
         }
         return ret;
@@ -157,45 +157,45 @@ function (me) {
 
     async function Form_KeyPress(KeyAscii) {
         if (KeyAscii == 13 || KeyAscii == 27 || KeyAscii == 32) {
-            await sub1F87();
+            await closeForm();
         }
     }
 
     function Form_Load() {
-        let l0062 = 0;
-        let l0064 = 0;
+        let i = 0;
+        let j = 0;
         me.MousePointer = HOURGLASS;
         if (me.WindowState == 0) {
             me.Move((Screen.Width - me.Width) / 2, ((Screen.Height - me.Height) / 2));
         }
-        m0036 = CInt(Val(frm_Planets.Tag));
-        for (l0062 = 0; l0062 <= 13; l0062++) {
-            m0020[l0062] = -1;
-            for (l0064 = 0; l0064 <= 6; l0064++) {
-                if (fn1FA1(l0062) == game.planetNames[l0064]) {
-                    m0020[l0062] = CInt(l0064);
+        editSlot = CInt(Val(frm_Planets.Tag));
+        for (i = 0; i <= 13; i++) {
+            planetSlot[i] = -1;
+            for (j = 0; j <= 6; j++) {
+                if (planetNameFromIndex(i) == game.planetNames[j]) {
+                    planetSlot[i] = CInt(j);
                 }
             }
         }
-        b_Planet[7].Caption = game.planetNames[m0036];
-        b_Planet[7].Picture = LoadPicture(Trim(paths.imageDir) + game.planetNames[m0036] + "1.bmp");
-        b_Text[7].Caption = fn1FBE(fn1FAD(game.planetNames[m0036]));
-        for (l0062 = 0; l0062 <= 6; l0062++) {
-            for (l0064 = 0; l0064 <= 13; l0064++) {
-                if (m0020[l0064] == -1) {
-                    m0020[l0064] = -2;
-                    b_Planet[l0062].Picture = LoadPicture(Trim(paths.imageDir) + fn1FA1(l0064) + "1.bmp");
-                    b_Planet[l0062].Caption = fn1FA1(l0064);
-                    b_Text[l0062].Caption = fn1FBE(l0064);
-                    l0064 = 13;
+        b_Planet[7].Caption = game.planetNames[editSlot];
+        b_Planet[7].Picture = LoadPicture(Trim(paths.imageDir) + game.planetNames[editSlot] + "1.bmp");
+        b_Text[7].Caption = planetDescription(planetIndexFromName(game.planetNames[editSlot]));
+        for (i = 0; i <= 6; i++) {
+            for (j = 0; j <= 13; j++) {
+                if (planetSlot[j] == -1) {
+                    planetSlot[j] = -2;
+                    b_Planet[i].Picture = LoadPicture(Trim(paths.imageDir) + planetNameFromIndex(j) + "1.bmp");
+                    b_Planet[i].Caption = planetNameFromIndex(j);
+                    b_Text[i].Caption = planetDescription(j);
+                    j = 13;
                 }
             }
         }
     }
 
     return {
-        b_Planet_Click, b_Text_Click, sub1F87, fn1FA1,
-        fn1FAD, fn1FBE, Form_Activate, Form_KeyPress,
+        b_Planet_Click, b_Text_Click, closeForm, planetNameFromIndex,
+        planetIndexFromName, planetDescription, Form_Activate, Form_KeyPress,
         Form_Load,
     };
 });

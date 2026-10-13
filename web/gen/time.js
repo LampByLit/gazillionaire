@@ -28,9 +28,9 @@ function (me) {
     const HOURGLASS = 11;
     const ARROW_CURSOR = 1;
     const WHITE = 16777215;
-    let m001A = 0;
-    let m001C = 0;
-    let m0020 = 0;
+    let animFrame = 0;
+    let currentPage = 0;
+    let pageCount = 0;
 
     async function b_Exit_Click() {
         me.MousePointer = HOURGLASS;
@@ -76,14 +76,14 @@ function (me) {
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
-        m001C = m001C + 1;
-        if (m001C > m0020) {
-            m001C = 1;
+        currentPage = currentPage + 1;
+        if (currentPage > pageCount) {
+            currentPage = 1;
         }
-        if (m001C < 1) {
-            m001C = m0020;
+        if (currentPage < 1) {
+            currentPage = pageCount;
         }
-        sub2F85();
+        showTimePage();
         me.MousePointer = ARROW_CURSOR;
     }
 
@@ -100,14 +100,14 @@ function (me) {
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
-        m001C = m001C - 1;
-        if (m001C > m0020) {
-            m001C = 1;
+        currentPage = currentPage - 1;
+        if (currentPage > pageCount) {
+            currentPage = 1;
         }
-        if (m001C < 1) {
-            m001C = m0020;
+        if (currentPage < 1) {
+            currentPage = pageCount;
         }
-        sub2F85();
+        showTimePage();
         me.MousePointer = ARROW_CURSOR;
     }
 
@@ -120,48 +120,48 @@ function (me) {
     }
 
     function b_Timer_Timer() {
-        if (m001A == 1) {
+        if (animFrame == 1) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "clock2.bmp");
-        } else if (m001A == 2) {
+        } else if (animFrame == 2) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "clock.bmp");
         }
-        m001A = m001A + 1;
-        if (m001A == 3) {
-            m001A = 1;
+        animFrame = animFrame + 1;
+        if (animFrame == 3) {
+            animFrame = 1;
         }
     }
 
-    function sub2F85() {
+    function showTimePage() {
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
             b_Sound.FileName = Trim(paths.soundDir) + "clock.wav";
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
-        if (m001C == 1) {
+        if (currentPage == 1) {
             b_Previous.ForeColor = 0x808080;
             b_Previous.Enabled = 0;
         } else {
             b_Previous.ForeColor = WHITE;
             b_Previous.Enabled = -1;
         }
-        if (m001C == m0020) {
+        if (currentPage == pageCount) {
             b_Next.ForeColor = 0x808080;
             b_Next.Enabled = 0;
         } else {
             b_Next.ForeColor = WHITE;
             b_Next.Enabled = -1;
         }
-        b_Page.Caption = "Page " + Format(m001C, "#,#0") + " of " + Format(m0020, "#,#0");
-        if (m001C == 1) {
+        b_Page.Caption = "Page " + Format(currentPage, "#,#0") + " of " + Format(pageCount, "#,#0");
+        if (currentPage == 1) {
             b_Message.Caption = "Welcome to the Ministry of Time. As you may have guessed, Kukubians go by the kuku clock, which was invented by Mono Cheezo, the first King of Kukubia. Because he had nothing better to do, Mono Cheezo declared that one kuku day should equal the time it takes a cup of Bool Juice to evaporate from a freshly opened Bool Nut shell (which equals the time it takes light to travel 18.6 billion miles).";
-        } else if (m001C == 2) {
+        } else if (currentPage == 2) {
             b_Message.Caption = "This is in contrast to a typical earth day, which is equal to the time it takes light to travel 16.07 billion miles. Another unique feature of Kukubian time is that it follows the Nicolsonian Time Tables, a testament to Emperor Dred Nicolson's supreme ego. If you haven't already noticed, the kuku calendar begins with the year 0 A.B.. This is because Emperor Dred decided that the most important day in history is the day he was born. The A.B. stands for AFTER the BIRTH of Supreme Commander Dred Nicolson.";
-        } else if (m001C == 3) {
+        } else if (currentPage == 3) {
             b_Message.Caption = "On the same token, any event that occurred before Emperor Dred was born is referred to as B.B. (BEFORE the BIRTH). A quick historical overview goes as follows: Bass Nicolson (Emperor Dred's grandfather) ruled Gogg from 600 B.B. until 103 B.B., then Hork Nicolson (Bass' son) took power and ruled from 103 B.B. until 3 A.B., when he was assassinated. From 3 A.B. until 24 A.B., there was chaos in the Imperial Government. Then in 24 A.B. the military intervened and reinstated Dred Nicolson to the throne.";
-        } else if (m001C == 4) {
+        } else if (currentPage == 4) {
             b_Message.Caption = "According to our records you are " + Format(player.age + (game.turn / 50), "#,#0") + " kuku years old (don't worry, most Kukubians live to be well over 500). The date is " + Format(game.year, "#,#0") + " A.B., and your trading company has been in business " + Format(game.turn + 1, "#,#0") + " kuku weeks. Every time you want to trade commodities between two planets, it takes approximately one kuku week of your valuable time. On average you spend between 16 and 48 kuku hours travelling from one planet to another and 5 kuku days conducting business on the planet.";
-        } else if (m001C == 5) {
+        } else if (currentPage == 5) {
             b_Message.Caption = "One final piece of trivia... Other systems in the Galaxy of Gogg begin their calendars with the Supreme Commander's wedding day, or the first time the Supreme Commander hunted wild space snakes, or any other day the Supreme Commander deems important. The only problem with this method is that it becomes very confusing when you are travelling from system to system. Fortunately, for this game, you will not have to leave the Kukubian solar system.";
         }
     }
@@ -178,16 +178,16 @@ function (me) {
 
     function Form_Load() {
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "clock.bmp");
-        m001C = 1;
-        m0020 = 5;
-        sub2F85();
+        currentPage = 1;
+        pageCount = 5;
+        showTimePage();
     }
 
     return {
         b_Exit_Click, b_Exit_MouseDown, b_Exit_MouseUp, b_Help_Click,
         b_Help_MouseDown, b_Help_MouseUp, b_Next_Click, b_Next_MouseDown,
         b_Next_MouseUp, b_Previous_Click, b_Previous_MouseDown, b_Previous_MouseUp,
-        b_Timer_Timer, sub2F85, Form_Activate, Form_KeyPress,
+        b_Timer_Timer, showTimePage, Form_Activate, Form_KeyPress,
         Form_Load,
     };
 });

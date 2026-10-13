@@ -99,19 +99,19 @@ function (me) {
     }
 
     function b_Spin_SpinDown() {
-        let l00B4 = 0;
+        let number = 0;
         me.MousePointer = ARROW_CURSOR;
-        l00B4 = CLng(Val(b_Text.Text));
-        l00B4 = l00B4 - 1;
-        b_Text.Text = Str(l00B4);
+        number = CLng(Val(b_Text.Text));
+        number = number - 1;
+        b_Text.Text = Str(number);
     }
 
     function b_Spin_SpinUp() {
-        let l00B6 = 0;
+        let number = 0;
         me.MousePointer = ARROW_CURSOR;
-        l00B6 = CLng(Val(b_Text.Text));
-        l00B6 = l00B6 + 1;
-        b_Text.Text = Str(l00B6);
+        number = CLng(Val(b_Text.Text));
+        number = number + 1;
+        b_Text.Text = Str(number);
     }
 
     function b_Text_MouseMove(Button, Shift, X, Y) {

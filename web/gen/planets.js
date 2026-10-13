@@ -23,7 +23,7 @@ function (me) {
     const { FillElastic, b_Planet, b_Sound, VSElastic1, b_Randomize, b_Continue, Label2, Label1 } = me.controls;
     const HOURGLASS = 11;
     const ARROW_CURSOR = 1;
-    let m004A = 0;
+    let buttonBackColor = 0;
 
     async function b_Continue_Click() {
         me.MousePointer = HOURGLASS;
@@ -40,7 +40,7 @@ function (me) {
     }
 
     function b_Continue_MouseUp(Button, Shift, X, Y) {
-        b_Continue.BackColor = m004A;
+        b_Continue.BackColor = buttonBackColor;
     }
 
     async function b_Planet_Click(Index) {
@@ -56,60 +56,60 @@ function (me) {
     }
 
     function b_Randomize_Click() {
-        let l0062 = 0;
-        let l0064 = 0;
-        let l0066 = 0;
-        let l0068 = "";
+        let slot = 0;
+        let i = 0;
+        let pass = 0;
+        let candidate = "";
         const ARROW_CURSOR = 1;
         me.MousePointer = HOURGLASS;
-        for (l0066 = 1; l0066 <= 6; l0066++) {
-            for (l0062 = 0; l0062 <= 6; l0062++) {
+        for (pass = 1; pass <= 6; pass++) {
+            for (slot = 0; slot <= 6; slot++) {
                 {
                     const sel = randomBetween(0, 13);
                     if (sel == 0) {
-                        l0068 = "Vexx";
+                        candidate = "Vexx";
                     } else if (sel == 1) {
-                        l0068 = "Pyke";
+                        candidate = "Pyke";
                     } else if (sel == 2) {
-                        l0068 = "Mira";
+                        candidate = "Mira";
                     } else if (sel == 3) {
-                        l0068 = "Stye";
+                        candidate = "Stye";
                     } else if (sel == 4) {
-                        l0068 = "Loro";
+                        candidate = "Loro";
                     } else if (sel == 5) {
-                        l0068 = "Zile";
+                        candidate = "Zile";
                     } else if (sel == 6) {
-                        l0068 = "Frac";
+                        candidate = "Frac";
                     } else if (sel == 7) {
-                        l0068 = "Tilo";
+                        candidate = "Tilo";
                     } else if (sel == 8) {
-                        l0068 = "Queg";
+                        candidate = "Queg";
                     } else if (sel == 9) {
-                        l0068 = "Xeen";
+                        candidate = "Xeen";
                     } else if (sel == 10) {
-                        l0068 = "Ooom";
+                        candidate = "Ooom";
                     } else if (sel == 11) {
-                        l0068 = "Hork";
+                        candidate = "Hork";
                     } else if (sel == 12) {
-                        l0068 = "Bass";
+                        candidate = "Bass";
                     } else if (sel == 13) {
-                        l0068 = "Nosh";
+                        candidate = "Nosh";
                     }
                 }
-                for (l0064 = 0; l0064 <= 6; l0064++) {
-                    if (l0068 == game.planetNames[l0064]) {
-                        l0068 = "do not replace";
+                for (i = 0; i <= 6; i++) {
+                    if (candidate == game.planetNames[i]) {
+                        candidate = "do not replace";
                     }
                 }
-                if (l0068 == "do not replace") {
+                if (candidate == "do not replace") {
                 } else {
-                    game.planetNames[l0062] = FixStr(l0068, 4);
+                    game.planetNames[slot] = FixStr(candidate, 4);
                 }
             }
         }
-        for (l0062 = 0; l0062 <= 6; l0062++) {
-            b_Planet[l0062].Picture = LoadPicture(Trim(paths.imageDir) + game.planetNames[l0062] + "1.bmp");
-            b_Planet[l0062].Caption = game.planetNames[l0062];
+        for (slot = 0; slot <= 6; slot++) {
+            b_Planet[slot].Picture = LoadPicture(Trim(paths.imageDir) + game.planetNames[slot] + "1.bmp");
+            b_Planet[slot].Caption = game.planetNames[slot];
         }
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -125,14 +125,14 @@ function (me) {
     }
 
     function b_Randomize_MouseUp(Button, Shift, X, Y) {
-        b_Randomize.BackColor = m004A;
+        b_Randomize.BackColor = buttonBackColor;
     }
 
     function Form_Activate() {
-        let l008A = 0;
-        for (l008A = 0; l008A <= 6; l008A++) {
-            b_Planet[l008A].Picture = LoadPicture(Trim(paths.imageDir) + game.planetNames[l008A] + "1.bmp");
-            b_Planet[l008A].Caption = game.planetNames[l008A];
+        let planet = 0;
+        for (planet = 0; planet <= 6; planet++) {
+            b_Planet[planet].Picture = LoadPicture(Trim(paths.imageDir) + game.planetNames[planet] + "1.bmp");
+            b_Planet[planet].Caption = game.planetNames[planet];
         }
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";

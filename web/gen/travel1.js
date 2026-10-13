@@ -13,20 +13,20 @@ function (me) {
     }
 
     async function Form_Load() {
-        let l001E = 0;
-        let l0020 = 0;
+        let planet = 0;
+        let stockValue = 0;
         const HOURGLASS = 11;
         me.MousePointer = HOURGLASS;
-        l0020 = 0;
-        for (l001E = 0; l001E <= 6; l001E++) {
+        stockValue = 0;
+        for (planet = 0; planet <= 6; planet++) {
             if (game.turn <= 15) {
-                l0020 = l0020 + player.shares[l001E] * game.stockPrices[l001E][game.turn];
+                stockValue = stockValue + player.shares[planet] * game.stockPrices[planet][game.turn];
             } else {
-                l0020 = l0020 + player.shares[l001E] * game.stockPrices[l001E][15];
+                stockValue = stockValue + player.shares[planet] * game.stockPrices[planet][15];
             }
         }
         if (game.graphShowCompany[game.currentPlayer] == 0) {
-            game.netWorth[game.currentPlayer] = l0020 + player.cash + player.bankBalance - player.loan - player.zinnLoan;
+            game.netWorth[game.currentPlayer] = stockValue + player.cash + player.bankBalance - player.loan - player.zinnLoan;
         } else {
             game.netWorth[game.currentPlayer] = 0;
         }

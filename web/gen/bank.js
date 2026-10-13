@@ -34,13 +34,13 @@ function (me) {
     const { b_InterestRate, b_Cash, b_Bank, VSElastic3 } = me.controls;
     const HOURGLASS = 11;
     const ARROW_CURSOR = 1;
-    let m001A = 0;
-    let m001C = 0;
-    let m001E = 0;
-    let m0076 = 0;  // Static in b_ExitBank_Click
+    let animFrame = 0;
+    let animTicks = 0;
+    let isDeposit = 0;
+    let exitBackColor = 0;  // Static in b_ExitBank_Click
 
     async function b_Deposit_Click() {
-        let l0028 = 0;
+        let depositAmount = 0;
         const ARROW_CURSOR = 1;
         me.MousePointer = HOURGLASS;
         if (player.cash == 0) {
@@ -50,13 +50,13 @@ function (me) {
             frm_Box0.FillElastic.Caption = "The Bank";
             frm_Box0.b_Message.Caption = "\n" + "You don't have any money. Check your cash.";
             await frm_Box0.Show(1);
-            l0028 = 0;
+            depositAmount = 0;
         } else {
-            l0028 = await askNumber(0, "", 0.25 * player.cash, player.cash, "Enter the amount you wish to deposit:", "Deposit Money");
+            depositAmount = await askNumber(0, "", 0.25 * player.cash, player.cash, "Enter the amount you wish to deposit:", "Deposit Money");
         }
-        if (l0028 == 0) {
-        } else if (l0028 == -3333) {
-        } else if (l0028 > player.cash) {
+        if (depositAmount == 0) {
+        } else if (depositAmount == -3333) {
+        } else if (depositAmount > player.cash) {
             if (settings.soundOn == -1) {
                 Beep();
             }
@@ -64,9 +64,9 @@ function (me) {
             frm_Box0.b_Message.Caption = "\n" + "You don't have enough money. Check your cash.";
             await frm_Box0.Show(1);
         } else {
-            player.bankBalance = player.bankBalance + l0028;
-            player.cash = player.cash - l0028;
-            m001E = -1;
+            player.bankBalance = player.bankBalance + depositAmount;
+            player.cash = player.cash - depositAmount;
+            isDeposit = -1;
             b_Timer.Enabled = -1;
             if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
@@ -75,7 +75,7 @@ function (me) {
                 b_Sound.Command = "Play";
             }
         }
-        sub0CA5();
+        updateDisplay();
         me.MousePointer = ARROW_CURSOR;
     }
 
@@ -97,7 +97,7 @@ function (me) {
             frm_Box0.b_Message.Caption = "\n" + "You don't have any money. Check your cash.";
             await frm_Box0.Show(1);
         } else {
-            m001E = -1;
+            isDeposit = -1;
             b_Timer.Enabled = -1;
             player.bankBalance = player.bankBalance + player.cash;
             player.cash = 0;
@@ -108,7 +108,7 @@ function (me) {
                 b_Sound.Command = "Play";
             }
         }
-        sub0CA5();
+        updateDisplay();
         me.MousePointer = ARROW_CURSOR;
     }
 
@@ -123,7 +123,7 @@ function (me) {
     async function b_ExitBank_Click() {
         me.MousePointer = HOURGLASS;
         b_Timer.Enabled = 0;
-        me.BackColor = m0076;
+        me.BackColor = exitBackColor;
         FillElastic.Visible = 0;
         await frm_MainMenu.Show();
         await Unload(me);
@@ -138,7 +138,7 @@ function (me) {
     }
 
     async function b_Help1_Click() {
-        await sub0AFB();
+        await showHelp();
     }
 
     function b_Help1_MouseDown(Button, Shift, X, Y) {
@@ -150,7 +150,7 @@ function (me) {
     }
 
     async function b_Help2_Click() {
-        await sub0AFB();
+        await showHelp();
     }
 
     function b_Help2_MouseDown(Button, Shift, X, Y) {
@@ -162,37 +162,37 @@ function (me) {
     }
 
     function b_Timer_Timer() {
-        if (m001E == -1) {
-            if (m001A == 1) {
+        if (isDeposit == -1) {
+            if (animFrame == 1) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "BANK2.BMP");
-            } else if (m001A == 2) {
+            } else if (animFrame == 2) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "BANK2.BMP");
-            } else if (m001A == 3) {
+            } else if (animFrame == 3) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "BANK.BMP");
             }
         } else {
-            if (m001A == 1) {
+            if (animFrame == 1) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "BANK1.BMP");
-            } else if (m001A == 2) {
+            } else if (animFrame == 2) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "BANK1.BMP");
-            } else if (m001A == 3) {
+            } else if (animFrame == 3) {
                 Image1.Picture = LoadPicture(Trim(paths.imageDir) + "BANK.BMP");
             }
         }
-        m001A = m001A + 1;
-        if (m001A == 4) {
-            m001A = 1;
+        animFrame = animFrame + 1;
+        if (animFrame == 4) {
+            animFrame = 1;
         }
-        m001C = m001C + 1;
-        if (m001C == 3) {
+        animTicks = animTicks + 1;
+        if (animTicks == 3) {
             b_Timer.Enabled = 0;
-            m001C = 0;
-            m001A = 1;
+            animTicks = 0;
+            animFrame = 1;
         }
     }
 
     async function b_Withdraw_Click() {
-        let l00CA = 0;
+        let withdrawAmount = 0;
         me.MousePointer = HOURGLASS;
         if (player.bankBalance == 0) {
             if (settings.soundOn == -1) {
@@ -201,13 +201,13 @@ function (me) {
             frm_Box0.FillElastic.Caption = "The Bank";
             frm_Box0.b_Message.Caption = "\n" + "You don't have any money in your account. Check your account balance.";
             await frm_Box0.Show(1);
-            l00CA = 0;
+            withdrawAmount = 0;
         } else {
-            l00CA = await askNumber(0, "", 0.25 * player.bankBalance, player.bankBalance, "Enter the amount you wish to withdraw:", "Withdraw Money");
+            withdrawAmount = await askNumber(0, "", 0.25 * player.bankBalance, player.bankBalance, "Enter the amount you wish to withdraw:", "Withdraw Money");
         }
-        if (l00CA == 0) {
-        } else if (l00CA == -3333) {
-        } else if (l00CA > player.bankBalance) {
+        if (withdrawAmount == 0) {
+        } else if (withdrawAmount == -3333) {
+        } else if (withdrawAmount > player.bankBalance) {
             if (settings.soundOn == -1) {
                 Beep();
             }
@@ -215,9 +215,9 @@ function (me) {
             frm_Box0.b_Message.Caption = "\n" + "You don't have enough money in your account. Check your account balance.";
             await frm_Box0.Show(1);
         } else {
-            player.bankBalance = player.bankBalance - l00CA;
-            player.cash = player.cash + l00CA;
-            m001E = 0;
+            player.bankBalance = player.bankBalance - withdrawAmount;
+            player.cash = player.cash + withdrawAmount;
+            isDeposit = 0;
             b_Timer.Enabled = -1;
             if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
@@ -226,7 +226,7 @@ function (me) {
                 b_Sound.Command = "Play";
             }
         }
-        sub0CA5();
+        updateDisplay();
         me.MousePointer = ARROW_CURSOR;
     }
 
@@ -250,7 +250,7 @@ function (me) {
         } else {
             player.cash = player.cash + player.bankBalance;
             player.bankBalance = 0;
-            m001E = 0;
+            isDeposit = 0;
             b_Timer.Enabled = -1;
             if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
@@ -259,7 +259,7 @@ function (me) {
                 b_Sound.Command = "Play";
             }
         }
-        sub0CA5();
+        updateDisplay();
         me.MousePointer = ARROW_CURSOR;
     }
 
@@ -271,14 +271,14 @@ function (me) {
         b_WithdrawAll.BackColor = 0xC0C0C0;
     }
 
-    function sub0CA5() {
+    function updateDisplay() {
         b_Bank.Caption = "  Account Balance:   " + Format(player.bankBalance, "#,#0");
         b_Cash.Caption = "  Cash:   " + Format(player.cash, "#,#0");
         b_InterestRate.Caption = "  Interest Rate:   " + Format(player.bankRate * 100, "#,#0") + "% per week";
         b_Interest.Caption = "  Interest Earned (last week):   " + Format(player.bankInterest, "#,#0");
     }
 
-    async function sub0AFB() {
+    async function showHelp() {
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -304,9 +304,9 @@ function (me) {
     function Form_Load() {
         me.MousePointer = HOURGLASS;
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "BANK.BMP");
-        m001C = 0;
-        m001A = 1;
-        sub0CA5();
+        animTicks = 0;
+        animFrame = 1;
+        updateDisplay();
     }
 
     return {
@@ -315,7 +315,7 @@ function (me) {
         b_ExitBank_MouseUp, b_Help1_Click, b_Help1_MouseDown, b_Help1_MouseUp,
         b_Help2_Click, b_Help2_MouseDown, b_Help2_MouseUp, b_Timer_Timer,
         b_Withdraw_Click, b_Withdraw_MouseDown, b_Withdraw_MouseUp, b_WithdrawAll_Click,
-        b_WithdrawAll_MouseDown, b_WithdrawAll_MouseUp, sub0CA5, sub0AFB,
+        b_WithdrawAll_MouseDown, b_WithdrawAll_MouseUp, updateDisplay, showHelp,
         Form_Activate, Form_KeyPress, Form_Load,
     };
 });

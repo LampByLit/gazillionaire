@@ -24,12 +24,12 @@ function (me) {
     const HOURGLASS = 11;
     const LIGHT_GRAY = 12632256;
     const ARROW_CURSOR = 1;
-    const m0086 = 16711680;
-    const m00A0 = 12582912;
-    const m00BA = 8388608;
-    const m00EA = 4194304;
-    let m001C = DimArray([5], () => Space(20));
-    let m0062 = 0;
+    const BLUE = 16711680;
+    const MEDIUM_BLUE = 12582912;
+    const DARK_BLUE = 8388608;
+    const DARKER_BLUE = 4194304;
+    let slotNames = DimArray([5], () => Space(20));
+    let buttonUpColor = 0;
 
     async function b_Exit_Click() {
         me.MousePointer = HOURGLASS;
@@ -43,7 +43,7 @@ function (me) {
     }
 
     function b_Exit_MouseUp(Button, Shift, X, Y) {
-        b_Exit.BackColor = m0062;
+        b_Exit.BackColor = buttonUpColor;
     }
 
     async function b_Game1_Click() {
@@ -51,7 +51,7 @@ function (me) {
         me.Tag = Str(game.saveSlot);
         game.saveSlot = 1;
         await frm_SaveBox.Show();
-        sub277B();
+        showSlotNames();
         me.MousePointer = ARROW_CURSOR;
     }
 
@@ -60,7 +60,7 @@ function (me) {
     }
 
     function b_Game1_MouseUp(Button, Shift, X, Y) {
-        b_Game1.BackColor = m0086;
+        b_Game1.BackColor = BLUE;
     }
 
     async function b_Game2_Click() {
@@ -68,7 +68,7 @@ function (me) {
         me.Tag = Str(game.saveSlot);
         game.saveSlot = 2;
         await frm_SaveBox.Show();
-        sub277B();
+        showSlotNames();
         me.MousePointer = ARROW_CURSOR;
     }
 
@@ -77,7 +77,7 @@ function (me) {
     }
 
     function b_Game2_MouseUp(Button, Shift, X, Y) {
-        b_Game2.BackColor = m00A0;
+        b_Game2.BackColor = MEDIUM_BLUE;
     }
 
     async function b_Game3_Click() {
@@ -85,7 +85,7 @@ function (me) {
         me.Tag = Str(game.saveSlot);
         game.saveSlot = 3;
         await frm_SaveBox.Show();
-        sub277B();
+        showSlotNames();
         me.MousePointer = ARROW_CURSOR;
     }
 
@@ -94,7 +94,7 @@ function (me) {
     }
 
     function b_Game3_MouseUp(Button, Shift, X, Y) {
-        b_Game3.BackColor = m00BA;
+        b_Game3.BackColor = DARK_BLUE;
     }
 
     async function b_Game4_Click() {
@@ -102,7 +102,7 @@ function (me) {
         me.Tag = Str(game.saveSlot);
         game.saveSlot = 4;
         await frm_SaveBox.Show();
-        sub277B();
+        showSlotNames();
         me.MousePointer = ARROW_CURSOR;
     }
 
@@ -111,7 +111,7 @@ function (me) {
     }
 
     function b_Game4_MouseUp(Button, Shift, X, Y) {
-        b_Game4.BackColor = m00BA;
+        b_Game4.BackColor = DARK_BLUE;
     }
 
     async function b_Game5_Click() {
@@ -119,7 +119,7 @@ function (me) {
         me.Tag = Str(game.saveSlot);
         game.saveSlot = 5;
         await frm_SaveBox.Show();
-        sub277B();
+        showSlotNames();
         me.MousePointer = ARROW_CURSOR;
     }
 
@@ -128,7 +128,7 @@ function (me) {
     }
 
     function b_Game5_MouseUp(Button, Shift, X, Y) {
-        b_Game5.BackColor = m00EA;
+        b_Game5.BackColor = DARKER_BLUE;
     }
 
     async function b_Help_Click() {
@@ -149,32 +149,32 @@ function (me) {
     }
 
     function b_Help_MouseUp(Button, Shift, X, Y) {
-        b_Help.BackColor = m0062;
+        b_Help.BackColor = buttonUpColor;
     }
 
-    function sub277B() {
+    function showSlotNames() {
         b_Exit.Caption = "Exit Without Saving";
-        b_Game1.Caption = Trim(m001C[1]);
-        b_Game2.Caption = Trim(m001C[2]);
-        b_Game3.Caption = Trim(m001C[3]);
-        b_Game4.Caption = Trim(m001C[4]);
-        b_Game5.Caption = Trim(m001C[5]);
+        b_Game1.Caption = Trim(slotNames[1]);
+        b_Game2.Caption = Trim(slotNames[2]);
+        b_Game3.Caption = Trim(slotNames[3]);
+        b_Game4.Caption = Trim(slotNames[4]);
+        b_Game5.Caption = Trim(slotNames[5]);
     }
 
-    function sub2792() {
-        let l0116 = 0;
-        for (l0116 = 1; l0116 <= 5; l0116++) {
-            FileOpen(6, Trim(paths.saveDir) + "GAME" + Trim(Format(l0116, "#,#0")));
-            m001C[l0116] = FileGet(6, 1, m001C[l0116]);
+    function readSlotNames() {
+        let slot = 0;
+        for (slot = 1; slot <= 5; slot++) {
+            FileOpen(6, Trim(paths.saveDir) + "GAME" + Trim(Format(slot, "#,#0")));
+            slotNames[slot] = FileGet(6, 1, slotNames[slot]);
             FileClose(6);
         }
     }
 
-    function sub27C6() {
-        let l0118 = 0;
-        for (l0118 = 1; l0118 <= 5; l0118++) {
-            FileOpen(5, Trim(paths.saveDir) + "GAME" + Trim(Format(l0118, "#,#0")));
-            FilePut(5, 1, m001C[l0118]);
+    function writeSlotNames() {
+        let slot = 0;
+        for (slot = 1; slot <= 5; slot++) {
+            FileOpen(5, Trim(paths.saveDir) + "GAME" + Trim(Format(slot, "#,#0")));
+            FilePut(5, 1, slotNames[slot]);
             FileClose(5);
         }
     }
@@ -186,8 +186,8 @@ function (me) {
     function Form_Load() {
         me.MousePointer = HOURGLASS;
         FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "STARS4.BMP");
-        sub2792();
-        sub277B();
+        readSlotNames();
+        showSlotNames();
     }
 
     function Label2_Click() {
@@ -204,7 +204,7 @@ function (me) {
         b_Game2_MouseUp, b_Game3_Click, b_Game3_MouseDown, b_Game3_MouseUp,
         b_Game4_Click, b_Game4_MouseDown, b_Game4_MouseUp, b_Game5_Click,
         b_Game5_MouseDown, b_Game5_MouseUp, b_Help_Click, b_Help_MouseDown,
-        b_Help_MouseUp, sub277B, sub2792, sub27C6,
+        b_Help_MouseUp, showSlotNames, readSlotNames, writeSlotNames,
         Form_Activate, Form_Load, Label2_Click, Label3_Click,
     };
 });

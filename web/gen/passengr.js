@@ -58,7 +58,7 @@ function (me) {
     }
 
     async function b_Help1_Click() {
-        await sub0AFB();
+        await showHelp();
     }
 
     function b_Help1_MouseDown(Button, Shift, X, Y) {
@@ -72,7 +72,7 @@ function (me) {
     }
 
     async function b_Help2_Click() {
-        await sub0AFB();
+        await showHelp();
     }
 
     function b_Help2_MouseDown(Button, Shift, X, Y) {
@@ -86,7 +86,7 @@ function (me) {
     }
 
     async function b_Help3_Click() {
-        await sub0AFB();
+        await showHelp();
     }
 
     function b_Help3_MouseDown(Button, Shift, X, Y) {
@@ -101,7 +101,7 @@ function (me) {
 
     async function b_PickUpPassengers_Click() {
         if (player.passengersWaiting > 0) {
-            await sub1019();
+            await pickUpPassengers();
         } else {
             if (settings.soundOn == -1) {
                 Beep();
@@ -123,7 +123,7 @@ function (me) {
     }
 
     async function b_SetTicketPrice_Click() {
-        await sub1087();
+        await setTicketPrice();
     }
 
     function b_SetTicketPrice_MouseDown(Button, Shift, X, Y) {
@@ -136,7 +136,7 @@ function (me) {
         me.KeyPreview = -1;
     }
 
-    function sub10D5() {
+    function rerollPassengers() {
         if (player.passengersBoarded == 0) {
             {
                 const sel = (Mod(player.arrivalRoll, 2)) + 1;
@@ -156,11 +156,11 @@ function (me) {
             if (player.passengersAboard > player.passengerCapacity) {
                 player.passengersAboard = player.passengerCapacity;
             }
-            sub10E2();
+            updateDisplay();
         }
     }
 
-    async function sub0AFB() {
+    async function showHelp() {
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -173,7 +173,7 @@ function (me) {
         await frm_Box1.Show(1);
     }
 
-    function sub10E2() {
+    function updateDisplay() {
         me.MousePointer = HOURGLASS;
         if (player.passengersBoarded == -1) {
             b_PassengerGauge.FloodPercent = 100 * (player.passengersAboard / player.passengerCapacity);
@@ -205,7 +205,7 @@ function (me) {
         me.MousePointer = ARROW_CURSOR;
     }
 
-    async function sub1019() {
+    async function pickUpPassengers() {
         me.MousePointer = HOURGLASS;
         if (player.passengersBoarded == 0) {
             if (player.passengersAboard > 0) {
@@ -229,17 +229,17 @@ function (me) {
             frm_Box0.b_Message.Caption = "\n" + "You have already picked up your passengers.";
             await frm_Box0.Show(1);
         }
-        sub10E2();
+        updateDisplay();
         await me.Show();
         me.MousePointer = ARROW_CURSOR;
     }
 
-    async function sub1087() {
-        let l00F2 = 0;
+    async function setTicketPrice() {
+        let newPrice = 0;
         me.MousePointer = HOURGLASS;
-        l00F2 = await askNumber(0, Str(player.nextTicketPrice), 1000, 5000, "Enter new ticket price:", "Ticket Price");
-        if (l00F2 == -3333) {
-        } else if (l00F2 < 100) {
+        newPrice = await askNumber(0, Str(player.nextTicketPrice), 1000, 5000, "Enter new ticket price:", "Ticket Price");
+        if (newPrice == -3333) {
+        } else if (newPrice < 100) {
             if (settings.soundOn == -1) {
                 Beep();
             }
@@ -247,7 +247,7 @@ function (me) {
             frm_Box0.b_Message.Caption = "\n" + "You cannot charge less than 100 kubars per ticket.";
             await frm_Box0.Show(1);
         } else {
-            player.nextTicketPrice = CLng(l00F2);
+            player.nextTicketPrice = CLng(newPrice);
             if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
                 b_Sound.FileName = Trim(paths.soundDir) + "ticket.wav";
@@ -255,7 +255,7 @@ function (me) {
                 b_Sound.Command = "Play";
             }
         }
-        sub10E2();
+        updateDisplay();
         me.MousePointer = ARROW_CURSOR;
     }
 
@@ -265,7 +265,7 @@ function (me) {
 
     async function Form_KeyPress(KeyAscii) {
         if (KeyAscii == 16) {
-            sub10D5();
+            rerollPassengers();
         } else if (KeyAscii == 13 || KeyAscii == 27 || KeyAscii == 32) {
             await b_ExitPassengers_Click();
         }
@@ -274,7 +274,7 @@ function (me) {
     function Form_Load() {
         me.MousePointer = HOURGLASS;
         shipImage.Picture = LoadPicture(Trim(paths.imageDir) + "ship" + Trim(Str(game.shipType[game.currentPlayer])) + ".bmp");
-        sub10E2();
+        updateDisplay();
     }
 
     return {
@@ -282,8 +282,8 @@ function (me) {
         b_Help1_MouseDown, b_Help1_MouseUp, b_Help2_Click, b_Help2_MouseDown,
         b_Help2_MouseUp, b_Help3_Click, b_Help3_MouseDown, b_Help3_MouseUp,
         b_PickUpPassengers_Click, b_PickUpPassengers_MouseDown, b_PickUpPassengers_MouseUp, b_SetTicketPrice_Click,
-        b_SetTicketPrice_MouseDown, b_SetTicketPrice_MouseUp, sub10D5, sub0AFB,
-        sub10E2, sub1019, sub1087, Form_Activate,
+        b_SetTicketPrice_MouseDown, b_SetTicketPrice_MouseUp, rerollPassengers, showHelp,
+        updateDisplay, pickUpPassengers, setTicketPrice, Form_Activate,
         Form_KeyPress, Form_Load,
     };
 });

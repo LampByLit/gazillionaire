@@ -44,7 +44,7 @@ function (me) {
     const { b_Test, Image1 } = me.controls;
     const HOURGLASS = 11;
     const ARROW_CURSOR = 1;
-    let m001A = 0;
+    let cdErrorCount = 0;
 
     async function b_ColorHelp_Click() {
         await MsgBox("To switch graphics drivers in Windows 3.1, go to the MAIN program group, then double click on WINDOWS SETUP, then select the appropriate 640x480 256 color graphics driver for your system." + "\n" + "\n" + "In Win 95, go to MY COMPUTER, then CONTROL PANEL, then DISPLAY, then set the COLOR PALETTE to 256 colors." + "\n" + "\n" + "Today, most computers come pre-configured to support 256 colors. However, if you have an older system you may want to upgrade to 256 colors for Windows. Although 256 colors is not required to play Gazillionaire, the game will look much better than with only 16 colors." + "\n" + "\n" + "If you have any difficulties, you should contact your computer manufacturer and ask how to change your graphics drivers to 640 by 480 pixels 256 colors.", 64, "256 Color Mode");
@@ -59,17 +59,17 @@ function (me) {
     }
 
     async function b_GraphicsHelp_Click() {
-        let l0032 = "";
-        let l0034 = 0;
-        let l0036 = 0;
-        l0034 = CInt(Screen.Width / Screen.TwipsPerPixelX);
-        l0036 = CInt(Screen.Height / Screen.TwipsPerPixelY);
-        if (l0034 == 640 && l0036 == 480) {
-            l0032 = "Gazillionaire was designed to be played at 640x480 pixels, and we feel the game looks and functions best at this resolution. However, it may be played at higher resolutions if you choose." + "\n" + "\n" + "Your screen resolution is currently set at " + Format(l0034, "#,#0") + "x" + Format(l0036, "#,#0") + ", so you shouldn't have any problems.";
+        let helpText = "";
+        let screenWidth = 0;
+        let screenHeight = 0;
+        screenWidth = CInt(Screen.Width / Screen.TwipsPerPixelX);
+        screenHeight = CInt(Screen.Height / Screen.TwipsPerPixelY);
+        if (screenWidth == 640 && screenHeight == 480) {
+            helpText = "Gazillionaire was designed to be played at 640x480 pixels, and we feel the game looks and functions best at this resolution. However, it may be played at higher resolutions if you choose." + "\n" + "\n" + "Your screen resolution is currently set at " + Format(screenWidth, "#,#0") + "x" + Format(screenHeight, "#,#0") + ", so you shouldn't have any problems.";
         } else {
-            l0032 = "Gazillionaire was designed to be played at 640x480 pixels, and we feel the game looks and functions best at this resolution. However, it may be played at higher resolutions if you choose." + "\n" + "\n" + "Your screen resolution is currently set at " + Format(l0034, "#,#0") + "x" + Format(l0036, "#,#0") + ". If you experience any problems, you should change your resolution to 640x480." + "\n" + "\n" + "If you want to change your screen resolution in Windows 3.1, first exit Gazillionaire. Then double click on the MAIN program group, double click on WINDOWS SETUP, then select the appropriate 640x480 256 color graphics driver for your system." + "\n" + "\n" + "If you want to change your screen resolution in Win 95, first exit Gazillionaire. Then go to MY COMPUTER, open CONTROL PANEL, then DISPLAY, then set the DESKTOP AREA to 640 by 480 pixels.";
+            helpText = "Gazillionaire was designed to be played at 640x480 pixels, and we feel the game looks and functions best at this resolution. However, it may be played at higher resolutions if you choose." + "\n" + "\n" + "Your screen resolution is currently set at " + Format(screenWidth, "#,#0") + "x" + Format(screenHeight, "#,#0") + ". If you experience any problems, you should change your resolution to 640x480." + "\n" + "\n" + "If you want to change your screen resolution in Windows 3.1, first exit Gazillionaire. Then double click on the MAIN program group, double click on WINDOWS SETUP, then select the appropriate 640x480 256 color graphics driver for your system." + "\n" + "\n" + "If you want to change your screen resolution in Win 95, first exit Gazillionaire. Then go to MY COMPUTER, open CONTROL PANEL, then DISPLAY, then set the DESKTOP AREA to 640 by 480 pixels.";
         }
-        await MsgBox(l0032 + "\n" + "\n" + "If you have any trouble, you should contact your computer manufacturer and ask if your graphics card can support Super VGA graphics.", 64, "640 x 480 Resolution");
+        await MsgBox(helpText + "\n" + "\n" + "If you have any trouble, you should contact your computer manufacturer and ask if your graphics card can support Super VGA graphics.", 64, "640 x 480 Resolution");
     }
 
     function b_GraphicsHelp_MouseDown(Button, Shift, X, Y) {
@@ -88,20 +88,20 @@ function (me) {
             paths.soundDir = FixStr(settings.cdDrive + "\\lavamind\\gaz2\\sound\\", 128);
             b_Test.Picture = LoadPicture(Trim(paths.imageDir) + "test.bmp");
             settings.soundOn = CInt(b_Sound.Value);
-            sub4254();
+            saveConfig();
             await Unload(me);
             return;
         } catch (e) {
             Err.Catch(e);
-            m001A = m001A + 1;
+            cdErrorCount = cdErrorCount + 1;
             if (settings.soundOn == -1) {
                 Beep();
             }
-            if (m001A == 1) {
+            if (cdErrorCount == 1) {
                 await MsgBox("There has been an error reading your CD-ROM drive." + "\n" + "\n" + "Either the Gazillionaire CD-ROM is not in the CD-ROM drive or you selected the wrong CD-ROM drive letter." + "\n" + "\n" + "In order to play Gazillionaire, the Gazillionaire CD-ROM must be in the CD-ROM drive at all times." + "\n" + "\n" + "Also, please make sure that you selected the correct CD-ROM drive letter on the System Configuration Menu.", 64, "Error Reading CD-ROM Drive");
                 me.MousePointer = ARROW_CURSOR;
                 return;
-            } else if (m001A == 2) {
+            } else if (cdErrorCount == 2) {
                 await MsgBox("There has been another error reading your CD-ROM drive." + "\n" + "\n" + "Either the Gazillionaire CD-ROM is not in the CD-ROM drive or you selected the wrong CD-ROM drive letter." + "\n" + "\n" + "In order to play Gazillionaire, the Gazillionaire CD-ROM must be in the CD-ROM drive at all times." + "\n" + "\n" + "Also, please make sure that you selected the correct CD-ROM drive letter on the System Configuration Menu.", 32, "Error Reading CD-ROM Drive");
                 me.MousePointer = ARROW_CURSOR;
                 return;
@@ -153,7 +153,7 @@ function (me) {
         b_supportHelp.CaptionStyle = 1;
     }
 
-    function sub4254() {
+    function saveConfig() {
         FileOpen(7, Trim(paths.configDir) + "CONFIG.DAT");
         FilePut(7, 1, settings);
         FileClose(7);
@@ -165,7 +165,7 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = HOURGLASS;
-        m001A = 0;
+        cdErrorCount = 0;
         Combo1.Text = settings.cdDrive;
         Combo1.AddItem("A:");
         Combo1.AddItem("B:");
@@ -212,6 +212,6 @@ function (me) {
         b_GraphicsHelp_MouseDown, b_GraphicsHelp_MouseUp, b_OK_Click, b_OK_MouseDown,
         b_OK_MouseUp, b_Sound_Click, b_SoundHelp_Click, b_SoundHelp_MouseDown,
         b_SoundHelp_MouseUp, b_supportHelp_Click, b_supportHelp_MouseDown, b_supportHelp_MouseUp,
-        sub4254, Form_Activate, Form_Load,
+        saveConfig, Form_Activate, Form_Load,
     };
 });

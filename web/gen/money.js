@@ -41,7 +41,7 @@ function (me) {
     const ARROW_CURSOR = 1;
 
     async function b_ComputerPlayer1_Click() {
-        await sub1135();
+        await showOpponents();
     }
 
     function b_ComputerPlayer1_MouseDown(Button, Shift, X, Y) {
@@ -53,7 +53,7 @@ function (me) {
     }
 
     async function b_ComputerPlayer2_Click() {
-        await sub1135();
+        await showOpponents();
     }
 
     function b_ComputerPlayer2_MouseDown(Button, Shift, X, Y) {
@@ -65,7 +65,7 @@ function (me) {
     }
 
     async function b_ExitMoney1_Click() {
-        await sub050F();
+        await returnToMainMenu();
     }
 
     function b_ExitMoney1_MouseDown(Button, Shift, X, Y) {
@@ -77,7 +77,7 @@ function (me) {
     }
 
     async function b_ExitMoney2_Click() {
-        await sub050F();
+        await returnToMainMenu();
     }
 
     function b_ExitMoney2_MouseDown(Button, Shift, X, Y) {
@@ -89,7 +89,7 @@ function (me) {
     }
 
     async function b_Help1_Click() {
-        await sub0AFB();
+        await showMoneyHelp();
     }
 
     function b_Help1_MouseDown(Button, Shift, X, Y) {
@@ -101,7 +101,7 @@ function (me) {
     }
 
     async function b_Help2_Click() {
-        await sub0AFB();
+        await showMoneyHelp();
     }
 
     function b_Help2_MouseDown(Button, Shift, X, Y) {
@@ -113,7 +113,7 @@ function (me) {
     }
 
     async function b_MarketStrength1_Click() {
-        await sub1281();
+        await showMarketStrength();
     }
 
     function b_MarketStrength1_MouseDown(Button, Shift, X, Y) {
@@ -125,7 +125,7 @@ function (me) {
     }
 
     async function b_MarketStrength2_Click() {
-        await sub1281();
+        await showMarketStrength();
     }
 
     function b_MarketStrength2_MouseDown(Button, Shift, X, Y) {
@@ -137,7 +137,7 @@ function (me) {
     }
 
     async function b_NetworthGraphs1_Click() {
-        await sub1343();
+        await showNetWorthGraph();
     }
 
     function b_NetworthGraphs1_MouseDown(Button, Shift, X, Y) {
@@ -149,7 +149,7 @@ function (me) {
     }
 
     async function b_NetworthGraphs2_Click() {
-        await sub1343();
+        await showNetWorthGraph();
     }
 
     function b_NetworthGraphs2_MouseDown(Button, Shift, X, Y) {
@@ -161,7 +161,7 @@ function (me) {
     }
 
     async function b_PlayerHistory1_Click() {
-        await sub13FE();
+        await showCompanyHistory();
     }
 
     function b_PlayerHistory1_MouseDown(Button, Shift, X, Y) {
@@ -173,7 +173,7 @@ function (me) {
     }
 
     async function b_PlayerHistory2_Click() {
-        await sub13FE();
+        await showCompanyHistory();
     }
 
     function b_PlayerHistory2_MouseDown(Button, Shift, X, Y) {
@@ -185,7 +185,7 @@ function (me) {
     }
 
     async function b_ShipInfo1_Click() {
-        await sub14AE();
+        await showShipInfo();
     }
 
     function b_ShipInfo1_MouseDown(Button, Shift, X, Y) {
@@ -197,7 +197,7 @@ function (me) {
     }
 
     async function b_ShipInfo2_Click() {
-        await sub14AE();
+        await showShipInfo();
     }
 
     function b_ShipInfo2_MouseDown(Button, Shift, X, Y) {
@@ -208,14 +208,14 @@ function (me) {
         b_ShipInfo1.BackColor = 0xFFFF00;
     }
 
-    async function sub050F() {
+    async function returnToMainMenu() {
         me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await frm_MainMenu.Show();
         await Unload(me);
     }
 
-    async function sub0AFB() {
+    async function showMoneyHelp() {
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -228,21 +228,21 @@ function (me) {
         await frm_Box1.Show(1);
     }
 
-    async function sub13FE() {
+    async function showCompanyHistory() {
         me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await frm_LineGraph.Show(1);
         FillElastic.Visible = -1;
     }
 
-    async function sub1281() {
+    async function showMarketStrength() {
         me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await frm_PieChart.Show(1);
         FillElastic.Visible = -1;
     }
 
-    async function sub1343() {
+    async function showNetWorthGraph() {
         me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         frm_BarGraph.Tag = "MONEY";
@@ -250,7 +250,7 @@ function (me) {
         FillElastic.Visible = -1;
     }
 
-    async function sub1135() {
+    async function showOpponents() {
         me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         if (settings.soundOn == -1) {
@@ -261,7 +261,7 @@ function (me) {
         FillElastic.Visible = -1;
     }
 
-    async function sub14AE() {
+    async function showShipInfo() {
         me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await Load(frm_ShipInfo);
@@ -271,7 +271,7 @@ function (me) {
 
     async function Form_Activate() {
         me.MousePointer = HOURGLASS;
-        await sub1531();
+        await updateMoneyStatus();
         me.MousePointer = ARROW_CURSOR;
     }
 
@@ -296,117 +296,117 @@ function (me) {
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "coins.wmf");
     }
 
-    async function sub1531() {
-        let l0170 = 0;
-        let l0172 = 0;
-        let l0178 = "";
+    async function updateMoneyStatus() {
+        let value = 0;
+        let planet = 0;
+        let label = "";
         try {
-            l0170 = 0;
-            for (l0172 = 0; l0172 <= 6; l0172++) {
+            value = 0;
+            for (planet = 0; planet <= 6; planet++) {
                 if (game.turn <= 15) {
-                    l0170 = l0170 + player.shares[l0172] * game.stockPrices[l0172][game.turn];
+                    value = value + player.shares[planet] * game.stockPrices[planet][game.turn];
                 } else {
-                    l0170 = l0170 + player.shares[l0172] * game.stockPrices[l0172][15];
+                    value = value + player.shares[planet] * game.stockPrices[planet][15];
                 }
             }
             if (game.graphShowCompany[game.currentPlayer] == 0) {
-                game.netWorth[game.currentPlayer] = l0170 + player.cash + player.bankBalance - player.loan - player.zinnLoan;
+                game.netWorth[game.currentPlayer] = value + player.cash + player.bankBalance - player.loan - player.zinnLoan;
             } else {
                 game.netWorth[game.currentPlayer] = 0;
             }
             b_CurrentNetworth.Caption = "   Net Worth:   " + Format(game.netWorth[game.currentPlayer], "#,#0");
             if (game.skillLevel == 1) {
-                l0178 = "Tutorial";
+                label = "Tutorial";
             } else if (game.skillLevel == 2) {
-                l0178 = "Novice";
+                label = "Novice";
             } else if (game.skillLevel == 3) {
-                l0178 = "Beginner";
+                label = "Beginner";
             } else if (game.skillLevel == 4) {
-                l0178 = "Intermediate";
+                label = "Intermediate";
             } else if (game.skillLevel == 5) {
-                l0178 = "Expert";
+                label = "Expert";
             } else if (game.skillLevel == 6) {
-                l0178 = "Master";
+                label = "Master";
             }
-            b_GameLevel.Caption = "   Game Level:   " + l0178;
-            l0170 = CLng((game.netWorth[game.currentPlayer]) / 50000);
+            b_GameLevel.Caption = "   Game Level:   " + label;
+            value = CLng((game.netWorth[game.currentPlayer]) / 50000);
             if (game.netWorth[game.currentPlayer] < 0) {
-                if (l0170 < 0) {
-                    l0170 = l0170 * (-1);
+                if (value < 0) {
+                    value = value * (-1);
                 }
-                if (l0170 > 9) {
-                    l0170 = 9;
+                if (value > 9) {
+                    value = 9;
                 }
-                if (l0170 == 0) {
-                    l0178 = "Unfortunate";
-                } else if (l0170 == 1) {
-                    l0178 = "Inefficient";
-                } else if (l0170 == 2) {
-                    l0178 = "Needy";
-                } else if (l0170 == 3) {
-                    l0178 = "Indigent";
-                } else if (l0170 == 4) {
-                    l0178 = "Unprosperous";
-                } else if (l0170 == 5) {
-                    l0178 = "Unsuccessful";
-                } else if (l0170 == 6) {
-                    l0178 = "Debtor";
-                } else if (l0170 == 7) {
-                    l0178 = "Insolvent";
-                } else if (l0170 == 8) {
-                    l0178 = "Disasterous";
-                } else if (l0170 == 9) {
-                    l0178 = "Destitute";
+                if (value == 0) {
+                    label = "Unfortunate";
+                } else if (value == 1) {
+                    label = "Inefficient";
+                } else if (value == 2) {
+                    label = "Needy";
+                } else if (value == 3) {
+                    label = "Indigent";
+                } else if (value == 4) {
+                    label = "Unprosperous";
+                } else if (value == 5) {
+                    label = "Unsuccessful";
+                } else if (value == 6) {
+                    label = "Debtor";
+                } else if (value == 7) {
+                    label = "Insolvent";
+                } else if (value == 8) {
+                    label = "Disasterous";
+                } else if (value == 9) {
+                    label = "Destitute";
                 }
-                b_Status.Caption = "   Company Status:   " + l0178;
+                b_Status.Caption = "   Company Status:   " + label;
             } else if (game.netWorth[game.currentPlayer] >= 0) {
-                if (l0170 > 20) {
-                    l0170 = 20;
+                if (value > 20) {
+                    value = 20;
                 }
-                if (l0170 == 0) {
-                    l0178 = "Struggling";
-                } else if (l0170 == 1) {
-                    l0178 = "Average";
-                } else if (l0170 == 2) {
-                    l0178 = "Striving";
-                } else if (l0170 == 3) {
-                    l0178 = "Industrious";
-                } else if (l0170 == 4) {
-                    l0178 = "Intelligent";
-                } else if (l0170 == 5) {
-                    l0178 = "Diligent";
-                } else if (l0170 == 6) {
-                    l0178 = "Advantageous";
-                } else if (l0170 == 7) {
-                    l0178 = "Assiduous";
-                } else if (l0170 == 8) {
-                    l0178 = "Capitalist";
-                } else if (l0170 == 9) {
-                    l0178 = "Ardent";
-                } else if (l0170 == 10) {
-                    l0178 = "First Rate";
-                } else if (l0170 == 11) {
-                    l0178 = "Successful";
-                } else if (l0170 == 12) {
-                    l0178 = "Enterprising";
-                } else if (l0170 == 13) {
-                    l0178 = "Prosperous";
-                } else if (l0170 == 15) {
-                    l0178 = "Thriving";
-                } else if (l0170 == 15) {
-                    l0178 = "Exceptional";
-                } else if (l0170 == 16) {
-                    l0178 = "Wealthy";
-                } else if (l0170 == 17) {
-                    l0178 = "Elite";
-                } else if (l0170 == 18) {
-                    l0178 = "Outstanding";
-                } else if (l0170 == 19) {
-                    l0178 = "Paramount";
-                } else if (l0170 == 20) {
-                    l0178 = "Supreme";
+                if (value == 0) {
+                    label = "Struggling";
+                } else if (value == 1) {
+                    label = "Average";
+                } else if (value == 2) {
+                    label = "Striving";
+                } else if (value == 3) {
+                    label = "Industrious";
+                } else if (value == 4) {
+                    label = "Intelligent";
+                } else if (value == 5) {
+                    label = "Diligent";
+                } else if (value == 6) {
+                    label = "Advantageous";
+                } else if (value == 7) {
+                    label = "Assiduous";
+                } else if (value == 8) {
+                    label = "Capitalist";
+                } else if (value == 9) {
+                    label = "Ardent";
+                } else if (value == 10) {
+                    label = "First Rate";
+                } else if (value == 11) {
+                    label = "Successful";
+                } else if (value == 12) {
+                    label = "Enterprising";
+                } else if (value == 13) {
+                    label = "Prosperous";
+                } else if (value == 15) {
+                    label = "Thriving";
+                } else if (value == 15) {
+                    label = "Exceptional";
+                } else if (value == 16) {
+                    label = "Wealthy";
+                } else if (value == 17) {
+                    label = "Elite";
+                } else if (value == 18) {
+                    label = "Outstanding";
+                } else if (value == 19) {
+                    label = "Paramount";
+                } else if (value == 20) {
+                    label = "Supreme";
                 }
-                b_Status.Caption = "   Company Status:   " + l0178;
+                b_Status.Caption = "   Company Status:   " + label;
             }
             return;
         } catch (e) {
@@ -427,9 +427,9 @@ function (me) {
         b_NetworthGraphs2_MouseDown, b_NetworthGraphs2_MouseUp, b_PlayerHistory1_Click, b_PlayerHistory1_MouseDown,
         b_PlayerHistory1_MouseUp, b_PlayerHistory2_Click, b_PlayerHistory2_MouseDown, b_PlayerHistory2_MouseUp,
         b_ShipInfo1_Click, b_ShipInfo1_MouseDown, b_ShipInfo1_MouseUp, b_ShipInfo2_Click,
-        b_ShipInfo2_MouseDown, b_ShipInfo2_MouseUp, sub050F, sub0AFB,
-        sub13FE, sub1281, sub1343, sub1135,
-        sub14AE, Form_Activate, Form_KeyPress, Form_Load,
-        sub1531,
+        b_ShipInfo2_MouseDown, b_ShipInfo2_MouseUp, returnToMainMenu, showMoneyHelp,
+        showCompanyHistory, showMarketStrength, showNetWorthGraph, showOpponents,
+        showShipInfo, Form_Activate, Form_KeyPress, Form_Load,
+        updateMoneyStatus,
     };
 });

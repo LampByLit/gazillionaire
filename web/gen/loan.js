@@ -35,11 +35,11 @@ function (me) {
     const { b_Cash, VSElastic1, Image1, Label1, VSElastic3 } = me.controls;
     const HOURGLASS = 11;
     const ARROW_CURSOR = 1;
-    let m001A = 0;
-    let m001C = 0;
+    let animFrame = 0;
+    let animTicks = 0;
 
     async function b_Borrow_Click() {
-        let l0026 = 0;
+        let borrowAmount = 0;
         const ARROW_CURSOR = 1;
         me.MousePointer = HOURGLASS;
         if (player.loan >= player.creditLimit) {
@@ -49,13 +49,13 @@ function (me) {
             frm_Box0.FillElastic.Caption = "Trader's Union";
             frm_Box0.b_Message.Caption = "\n" + "The Trader's Union refuses to loan you any more money. Check your credit limit.";
             await frm_Box0.Show(1);
-            l0026 = 0;
+            borrowAmount = 0;
         } else {
-            l0026 = await askNumber(0, "", 0.25 * (player.creditLimit - player.loan), (player.creditLimit - player.loan), "Enter the amount you wish to borrow:", "Borrow Money");
+            borrowAmount = await askNumber(0, "", 0.25 * (player.creditLimit - player.loan), (player.creditLimit - player.loan), "Enter the amount you wish to borrow:", "Borrow Money");
         }
-        if (l0026 == 0) {
-        } else if (l0026 == -3333) {
-        } else if ((l0026 + player.loan) > player.creditLimit) {
+        if (borrowAmount == 0) {
+        } else if (borrowAmount == -3333) {
+        } else if ((borrowAmount + player.loan) > player.creditLimit) {
             if (settings.soundOn == -1) {
                 Beep();
             }
@@ -63,8 +63,8 @@ function (me) {
             frm_Box0.b_Message.Caption = "\n" + "You can't borrow that much. Check your credit limit.";
             await frm_Box0.Show(1);
         } else {
-            player.loan = player.loan + l0026;
-            player.cash = player.cash + l0026;
+            player.loan = player.loan + borrowAmount;
+            player.cash = player.cash + borrowAmount;
             b_Timer.Enabled = -1;
             if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
@@ -73,7 +73,7 @@ function (me) {
                 b_Sound.Command = "Play";
             }
         }
-        sub0A24();
+        updateDisplay();
         me.MousePointer = ARROW_CURSOR;
     }
 
@@ -86,7 +86,7 @@ function (me) {
     }
 
     async function b_BorrowMax_Click() {
-        let l005E = 0;
+        let borrowAmount = 0;
         me.MousePointer = HOURGLASS;
         if (player.loan >= player.creditLimit) {
             if (settings.soundOn == -1) {
@@ -95,14 +95,14 @@ function (me) {
             frm_Box0.FillElastic.Caption = "Trader's Union";
             frm_Box0.b_Message.Caption = "\n" + "The Trader's Union refuses to loan you any more money. Check your credit limit.";
             await frm_Box0.Show(1);
-            l005E = 0;
+            borrowAmount = 0;
         } else {
-            l005E = player.creditLimit - player.loan;
+            borrowAmount = player.creditLimit - player.loan;
         }
-        if (l005E == 0) {
+        if (borrowAmount == 0) {
         } else {
-            player.loan = player.loan + l005E;
-            player.cash = player.cash + l005E;
+            player.loan = player.loan + borrowAmount;
+            player.cash = player.cash + borrowAmount;
             b_Timer.Enabled = -1;
             if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
@@ -111,7 +111,7 @@ function (me) {
                 b_Sound.Command = "Play";
             }
         }
-        sub0A24();
+        updateDisplay();
         me.MousePointer = ARROW_CURSOR;
     }
 
@@ -141,7 +141,7 @@ function (me) {
     }
 
     async function b_Help1_Click() {
-        await sub0AFB();
+        await showHelp();
     }
 
     function b_Help1_MouseDown(Button, Shift, X, Y) {
@@ -153,7 +153,7 @@ function (me) {
     }
 
     async function b_Help2_Click() {
-        await sub0AFB();
+        await showHelp();
     }
 
     function b_Help2_MouseDown(Button, Shift, X, Y) {
@@ -165,8 +165,8 @@ function (me) {
     }
 
     async function b_PayBack_Click() {
-        let l00C0 = 0;
-        let l00C2 = 0;
+        let maxPayment = 0;
+        let payment = 0;
         me.MousePointer = HOURGLASS;
         if (player.cash == 0) {
             if (settings.soundOn == -1) {
@@ -175,7 +175,7 @@ function (me) {
             frm_Box0.FillElastic.Caption = "Trader's Union";
             frm_Box0.b_Message.Caption = "\n" + "You don't have any money. Check your cash.";
             await frm_Box0.Show(1);
-            l00C2 = 0;
+            payment = 0;
         } else if (player.loan == 0) {
             if (settings.soundOn == -1) {
                 Beep();
@@ -183,25 +183,25 @@ function (me) {
             frm_Box0.FillElastic.Caption = "Trader's Union";
             frm_Box0.b_Message.Caption = "\n" + "You don't owe the Trader's Union any money.";
             await frm_Box0.Show(1);
-            l00C2 = 0;
+            payment = 0;
         } else {
             if (player.cash <= player.loan) {
-                l00C0 = player.cash;
+                maxPayment = player.cash;
             } else {
-                l00C0 = player.loan;
+                maxPayment = player.loan;
             }
-            l00C2 = await askNumber(0, "", 0.25 * l00C0, l00C0, "Enter the amount you wish to pay back:", "Pay Back Loan");
+            payment = await askNumber(0, "", 0.25 * maxPayment, maxPayment, "Enter the amount you wish to pay back:", "Pay Back Loan");
         }
-        if (l00C2 == 0) {
-        } else if (l00C2 == -3333) {
-        } else if (l00C2 > player.cash) {
+        if (payment == 0) {
+        } else if (payment == -3333) {
+        } else if (payment > player.cash) {
             if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Trader's Union";
             frm_Box0.b_Message.Caption = "\n" + "You don't have enough money. Check your cash.";
             await frm_Box0.Show(1);
-        } else if (l00C2 >= player.loan) {
+        } else if (payment >= player.loan) {
             player.cash = player.cash - player.loan;
             player.loan = 0;
             if (settings.soundOn == -1) {
@@ -212,8 +212,8 @@ function (me) {
             }
             b_Timer.Enabled = -1;
         } else {
-            player.loan = player.loan - l00C2;
-            player.cash = player.cash - l00C2;
+            player.loan = player.loan - payment;
+            player.cash = player.cash - payment;
             if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
                 b_Sound.FileName = Trim(paths.soundDir) + "loan.wav";
@@ -222,7 +222,7 @@ function (me) {
             }
             b_Timer.Enabled = -1;
         }
-        sub0A24();
+        updateDisplay();
         me.MousePointer = ARROW_CURSOR;
     }
 
@@ -271,7 +271,7 @@ function (me) {
             }
             b_Timer.Enabled = -1;
         }
-        sub0A24();
+        updateDisplay();
         me.MousePointer = ARROW_CURSOR;
     }
 
@@ -284,28 +284,28 @@ function (me) {
     }
 
     function b_Timer_Timer() {
-        if (m001A == 1) {
+        if (animFrame == 1) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "loan2.bmp");
-        } else if (m001A == 2) {
+        } else if (animFrame == 2) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "loan2.bmp");
-        } else if (m001A == 3) {
+        } else if (animFrame == 3) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "loan1.bmp");
         }
-        m001A = m001A + 1;
-        if (m001A == 4) {
-            m001A = 1;
+        animFrame = animFrame + 1;
+        if (animFrame == 4) {
+            animFrame = 1;
         }
-        m001C = m001C + 1;
-        if (m001C == 4) {
+        animTicks = animTicks + 1;
+        if (animTicks == 4) {
             b_Timer.Enabled = 0;
-            m001C = 1;
-            m001A = 1;
+            animTicks = 1;
+            animFrame = 1;
         }
     }
 
-    async function sub0AFB() {
+    async function showHelp() {
         me.MousePointer = HOURGLASS;
-        m001A = 0;
+        animFrame = 0;
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "loan1.bmp");
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -318,7 +318,7 @@ function (me) {
         await frm_Box2.Show(1);
     }
 
-    function sub0A24() {
+    function updateDisplay() {
         b_Loan.Caption = "  Loan Amount:   " + Format(player.loan, "#,#0");
         b_Credit.Caption = "  Credit Limit:   " + Format(player.creditLimit, "#,#0");
         b_InterestRate.Caption = "  Interest Rate:   " + Format(player.loanRate * 100, "#,#0") + "% per week";
@@ -339,9 +339,9 @@ function (me) {
     function Form_Load() {
         me.MousePointer = HOURGLASS;
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "loan1.bmp");
-        m001C = 1;
-        m001A = 1;
-        sub0A24();
+        animTicks = 1;
+        animFrame = 1;
+        updateDisplay();
     }
 
     return {
@@ -350,7 +350,7 @@ function (me) {
         b_ExitLoan_MouseUp, b_Help1_Click, b_Help1_MouseDown, b_Help1_MouseUp,
         b_Help2_Click, b_Help2_MouseDown, b_Help2_MouseUp, b_PayBack_Click,
         b_PayBack_MouseDown, b_PayBack_MouseUp, b_PayBackMax_Click, b_PayBackMax_MouseDown,
-        b_PayBackMax_MouseUp, b_Timer_Timer, sub0AFB, sub0A24,
+        b_PayBackMax_MouseUp, b_Timer_Timer, showHelp, updateDisplay,
         Form_Activate, Form_KeyPress, Form_Load,
     };
 });

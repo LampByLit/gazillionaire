@@ -28,7 +28,7 @@ function (me) {
     const { b_Fuel, b_Cash, b_Cost, b_Help, b_FillUp1, b_FillUp3, b_FillUp2, b_ExitFuel1 } = me.controls;
     const HOURGLASS = 11;
     const ARROW_CURSOR = 1;
-    let m00DA = 0;  // Static in sub0F3A
+    let normalFuelColor = 0;  // Static in updateDisplay
 
     async function b_ExitFuel1_Click() {
         me.MousePointer = HOURGLASS;
@@ -45,7 +45,7 @@ function (me) {
     }
 
     async function b_FillUp1_Click() {
-        await sub0E72();
+        await buyFuel();
     }
 
     function b_FillUp1_MouseDown(Button, Shift, X, Y) {
@@ -59,7 +59,7 @@ function (me) {
     }
 
     async function b_FillUp2_Click() {
-        await sub0E72();
+        await buyFuel();
     }
 
     function b_FillUp2_MouseDown(Button, Shift, X, Y) {
@@ -73,7 +73,7 @@ function (me) {
     }
 
     async function b_FillUp3_Click() {
-        await sub0E72();
+        await buyFuel();
     }
 
     function b_FillUp3_MouseDown(Button, Shift, X, Y) {
@@ -107,7 +107,7 @@ function (me) {
         b_Help.BackColor = 0x0;
     }
 
-    function sub0F2D() {
+    function rerollFuelPrice() {
         {
             const sel = (Mod(game.weeklyRoll, 2)) + 1;
             if (sel == 1) {
@@ -122,23 +122,23 @@ function (me) {
         if (game.fuelPrice[game.planet[game.currentPlayer]] > (10 * game.fuelBasePrice)) {
             game.fuelPrice[game.planet[game.currentPlayer]] = (10 * game.fuelBasePrice);
         }
-        sub0F3A();
+        updateDisplay();
     }
 
-    async function sub0E72() {
-        let l00AC = 0;
+    async function buyFuel() {
+        let tons = 0;
         const ARROW_CURSOR = 1;
         me.MousePointer = HOURGLASS;
-        l00AC = await askNumber(0, Format((player.fuelCapacity - player.fuel), "##0"), 0.25 * (player.fuelCapacity - player.fuel), (player.fuelCapacity - player.fuel), "Enter the amount of fuel you would like to purchase." + "\n" + "\n" + "Cash:  " + Format(player.cash, "#,#0") + "\n" + "Fuel Tank Capacity:  " + Format(player.fuelCapacity, "#,#0") + " tons" + "\n" + "Fuel in Tank:  " + Format(player.fuel, "#,#0") + " tons", " ");
-        if (l00AC == -3333) {
-        } else if ((l00AC * game.fuelPrice[game.planet[game.currentPlayer]]) > player.cash) {
+        tons = await askNumber(0, Format((player.fuelCapacity - player.fuel), "##0"), 0.25 * (player.fuelCapacity - player.fuel), (player.fuelCapacity - player.fuel), "Enter the amount of fuel you would like to purchase." + "\n" + "\n" + "Cash:  " + Format(player.cash, "#,#0") + "\n" + "Fuel Tank Capacity:  " + Format(player.fuelCapacity, "#,#0") + " tons" + "\n" + "Fuel in Tank:  " + Format(player.fuel, "#,#0") + " tons", " ");
+        if (tons == -3333) {
+        } else if ((tons * game.fuelPrice[game.planet[game.currentPlayer]]) > player.cash) {
             if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Fuel";
             frm_Box0.b_Message.Caption = "\n" + "You don't have enough money. Check your cash.";
             await frm_Box0.Show(1);
-        } else if (l00AC > (player.fuelCapacity - player.fuel)) {
+        } else if (tons > (player.fuelCapacity - player.fuel)) {
             if (settings.soundOn == -1) {
                 Beep();
             }
@@ -149,7 +149,7 @@ function (me) {
                 frm_Box0.b_Message.Caption = "\n" + "You cannot purchase that much fuel. You only have room in your tank to buy " + Format((player.fuelCapacity - player.fuel), "#,#0") + " tons of fuel.";
             }
             await frm_Box0.Show(1);
-        } else if (l00AC == 0) {
+        } else if (tons == 0) {
         } else {
             if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
@@ -157,14 +157,14 @@ function (me) {
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
-            player.fuel = player.fuel + l00AC;
-            player.cash = player.cash - (l00AC * game.fuelPrice[game.planet[game.currentPlayer]]);
+            player.fuel = player.fuel + tons;
+            player.cash = player.cash - (tons * game.fuelPrice[game.planet[game.currentPlayer]]);
         }
-        sub0F3A();
+        updateDisplay();
         me.MousePointer = ARROW_CURSOR;
     }
 
-    function sub0F3A() {
+    function updateDisplay() {
         b_Cost.Caption = "   Fuel Cost ( per ton ):   " + Format(game.fuelPrice[game.planet[game.currentPlayer]], "#,#0") + " kubars";
         b_FuelPriceRange.Caption = "   Fuel Price Range:   " + Format(game.fuelBasePrice, "#,#0") + " to " + Format(game.fuelBasePrice * 10, "#,#0") + " kubars/ton";
         b_Fuel.Caption = "   Fuel Usage:   2 to " + Format((game.shipSize[game.currentPlayer] / 100) + 11, "#,#0") + " tons per trip";
@@ -180,7 +180,7 @@ function (me) {
             b_Fuel.ForeColor = 0x80;
         } else {
             b_FuelTank.Caption = "Fuel in Tank:  " + Format(player.fuel, "#,#0") + " tons";
-            b_Fuel.ForeColor = m00DA;
+            b_Fuel.ForeColor = normalFuelColor;
         }
     }
 
@@ -190,22 +190,22 @@ function (me) {
 
     async function Form_KeyPress(KeyAscii) {
         if (KeyAscii == 6) {
-            sub0F2D();
+            rerollFuelPrice();
         } else if (KeyAscii == 13 || KeyAscii == 27 || KeyAscii == 32) {
             await b_ExitFuel1_Click();
         }
     }
 
     function Form_Load() {
-        sub0F3A();
+        updateDisplay();
     }
 
     return {
         b_ExitFuel1_Click, b_ExitFuel1_MouseDown, b_ExitFuel1_MouseUp, b_FillUp1_Click,
         b_FillUp1_MouseDown, b_FillUp1_MouseUp, b_FillUp2_Click, b_FillUp2_MouseDown,
         b_FillUp2_MouseUp, b_FillUp3_Click, b_FillUp3_MouseDown, b_FillUp3_MouseUp,
-        b_Help_Click, b_Help_MouseDown, b_Help_MouseUp, sub0F2D,
-        sub0E72, sub0F3A, Form_Activate, Form_KeyPress,
+        b_Help_Click, b_Help_MouseDown, b_Help_MouseUp, rerollFuelPrice,
+        buyFuel, updateDisplay, Form_Activate, Form_KeyPress,
         Form_Load,
     };
 });

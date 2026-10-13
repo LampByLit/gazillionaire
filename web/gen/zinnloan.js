@@ -33,14 +33,14 @@ function (me) {
     const { b_Credit, b_Loan, VSElastic3 } = me.controls;
     const HOURGLASS = 11;
     const ARROW_CURSOR = 1;
-    let m001A = 0;
-    let m001C = 0;
-    let m002C = 0;
+    let animFrame = 0;
+    let animTicks = 0;
+    let exitBackColor = 0;
 
     async function b_ExitZinnLoan_Click() {
         me.MousePointer = HOURGLASS;
         b_Timer.Enabled = 0;
-        me.BackColor = m002C;
+        me.BackColor = exitBackColor;
         FillElastic.Visible = 0;
         await frm_MainMenu.Show();
         await Unload(me);
@@ -55,7 +55,7 @@ function (me) {
     }
 
     async function b_Help1_Click() {
-        await sub0AFB();
+        await showHelp();
     }
 
     function b_Help1_MouseDown(Button, Shift, X, Y) {
@@ -67,7 +67,7 @@ function (me) {
     }
 
     async function b_Help2_Click() {
-        await sub0AFB();
+        await showHelp();
     }
 
     function b_Help2_MouseDown(Button, Shift, X, Y) {
@@ -79,8 +79,8 @@ function (me) {
     }
 
     async function b_PayBack_Click() {
-        let l007A = 0;
-        let l007C = 0;
+        let payment = 0;
+        let maxPayment = 0;
         const ARROW_CURSOR = 1;
         me.MousePointer = HOURGLASS;
         if (player.cash == 0) {
@@ -90,7 +90,7 @@ function (me) {
             frm_Box0.FillElastic.Caption = "Mr. Zinn";
             frm_Box0.b_Message.Caption = "\n" + "You don't have any money. Check your cash.";
             await frm_Box0.Show(1);
-            l007A = 0;
+            payment = 0;
         } else if (player.zinnLoan == 0) {
             if (settings.soundOn == -1) {
                 Beep();
@@ -98,25 +98,25 @@ function (me) {
             frm_Box0.FillElastic.Caption = "Mr. Zinn";
             frm_Box0.b_Message.Caption = "\n" + "You don't owe Mr. Zinn any money.";
             await frm_Box0.Show(1);
-            l007A = 0;
+            payment = 0;
         } else {
             if (player.cash <= player.zinnLoan) {
-                l007C = player.cash;
+                maxPayment = player.cash;
             } else {
-                l007C = player.zinnLoan;
+                maxPayment = player.zinnLoan;
             }
-            l007A = await askNumber(0, "", 0.25 * l007C, l007C, "Enter the amount you wish to pay back:", "Pay Back Zinn Loan");
+            payment = await askNumber(0, "", 0.25 * maxPayment, maxPayment, "Enter the amount you wish to pay back:", "Pay Back Zinn Loan");
         }
-        if (l007A == 0) {
-        } else if (l007A == -3333) {
-        } else if (l007A > player.cash) {
+        if (payment == 0) {
+        } else if (payment == -3333) {
+        } else if (payment > player.cash) {
             if (settings.soundOn == -1) {
                 Beep();
             }
             frm_Box0.FillElastic.Caption = "Mr. Zinn";
             frm_Box0.b_Message.Caption = "\n" + "You don't have enough money. Check your cash.";
             await frm_Box0.Show(1);
-        } else if (l007A >= player.zinnLoan) {
+        } else if (payment >= player.zinnLoan) {
             if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
                 b_Sound.FileName = Trim(paths.soundDir) + "zinn.wav";
@@ -134,10 +134,10 @@ function (me) {
                 b_Sound.Command = "Play";
             }
             b_Timer.Enabled = -1;
-            player.zinnLoan = player.zinnLoan - l007A;
-            player.cash = player.cash - l007A;
+            player.zinnLoan = player.zinnLoan - payment;
+            player.cash = player.cash - payment;
         }
-        sub0C5C();
+        updateDisplay();
         me.MousePointer = ARROW_CURSOR;
     }
 
@@ -186,7 +186,7 @@ function (me) {
             player.zinnLoan = player.zinnLoan - player.cash;
             player.cash = 0;
         }
-        sub0C5C();
+        updateDisplay();
         me.MousePointer = ARROW_CURSOR;
     }
 
@@ -199,35 +199,35 @@ function (me) {
     }
 
     function b_Timer_Timer() {
-        if (m001A == 1) {
+        if (animFrame == 1) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zinn2.bmp");
-        } else if (m001A == 2) {
+        } else if (animFrame == 2) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zinn3.bmp");
-        } else if (m001A == 3) {
+        } else if (animFrame == 3) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zinn3.bmp");
-        } else if (m001A == 4) {
+        } else if (animFrame == 4) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "zinn2.bmp");
-        } else if (m001A == 5) {
+        } else if (animFrame == 5) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ZINN.BMP");
         }
-        m001A = m001A + 1;
-        if (m001A == 6) {
-            m001A = 1;
+        animFrame = animFrame + 1;
+        if (animFrame == 6) {
+            animFrame = 1;
         }
-        m001C = m001C + 1;
-        if (m001A == 3) {
+        animTicks = animTicks + 1;
+        if (animFrame == 3) {
             b_Timer.Interval = 200;
         } else {
             b_Timer.Interval = 1;
         }
-        if (m001C == 6) {
+        if (animTicks == 6) {
             b_Timer.Enabled = 0;
-            m001C = 1;
-            m001A = 1;
+            animTicks = 1;
+            animFrame = 1;
         }
     }
 
-    async function sub0AFB() {
+    async function showHelp() {
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -240,7 +240,7 @@ function (me) {
         await frm_Box2.Show(1);
     }
 
-    function sub0C5C() {
+    function updateDisplay() {
         b_Loan.Caption = "  Loan Amount:   " + Format(player.zinnLoan, "#,#0");
         b_Credit.Caption = "  Credit Limit:   " + Format(player.zinnCreditLimit, "#,#0");
         b_InterestRate.Caption = "  Interest Rate:   " + Format(100 * player.zinnRate, "#,#0") + "% per week";
@@ -260,10 +260,10 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = HOURGLASS;
-        m001A = 1;
-        m001C = 1;
+        animFrame = 1;
+        animTicks = 1;
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "ZINN.BMP");
-        sub0C5C();
+        updateDisplay();
     }
 
     return {
@@ -271,7 +271,7 @@ function (me) {
         b_Help1_MouseDown, b_Help1_MouseUp, b_Help2_Click, b_Help2_MouseDown,
         b_Help2_MouseUp, b_PayBack_Click, b_PayBack_MouseDown, b_PayBack_MouseUp,
         b_PayBackMax_Click, b_PayBackMax_MouseDown, b_PayBackMax_MouseUp, b_Timer_Timer,
-        sub0AFB, sub0C5C, Form_Activate, Form_KeyPress,
+        showHelp, updateDisplay, Form_Activate, Form_KeyPress,
         Form_Load,
     };
 });

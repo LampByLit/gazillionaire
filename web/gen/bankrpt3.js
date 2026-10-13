@@ -19,27 +19,27 @@ function (me) {
     const { VSElastic1, b_Sound, b_ImageContainer, b_ImageLable, Image1, b_ContinueGame, b_NewGame, b_Message } = me.controls;
     const { b_QuitGame, Label1 } = me.controls;
     const HOURGLASS = 11;
-    const m0024 = 0;
+    const BLACK = 0;
     const ARROW_CURSOR = 1;
 
     async function b_ContinueGame_Click() {
-        let l001A = 0;
+        let nextCompany = 0;
         const HOURGLASS = 11;
         me.MousePointer = HOURGLASS;
-        me.VSElastic1.BackColor = m0024;
-        me.BackColor = m0024;
+        me.VSElastic1.BackColor = BLACK;
+        me.BackColor = BLACK;
         me.VSElastic1.Visible = 0;
         game.turnDone[game.currentPlayer] = -1;
         storePlayer(game.currentPlayer);
-        l001A = game.turnOrder[game.turnOrderPos];
+        nextCompany = game.turnOrder[game.turnOrderPos];
         do {
             if (game.turnOrderPos < game.numPlayers) {
-                l001A = game.turnOrder[game.turnOrderPos + 1];
-                if (game.graphShowCompany[l001A] == -1) {
+                nextCompany = game.turnOrder[game.turnOrderPos + 1];
+                if (game.graphShowCompany[nextCompany] == -1) {
                     game.turnOrderPos = game.turnOrderPos + 1;
                 }
             }
-        } while (game.graphShowCompany[l001A] == -1 && game.turnOrderPos < game.numPlayers);
+        } while (game.graphShowCompany[nextCompany] == -1 && game.turnOrderPos < game.numPlayers);
         await Load(frm_Travel3);
         await frm_Travel3.Show();
         await Unload(me);
@@ -54,10 +54,10 @@ function (me) {
     }
 
     async function b_NewGame_Click() {
-        const m0024 = 0;
+        const BLACK = 0;
         me.MousePointer = HOURGLASS;
-        me.VSElastic1.BackColor = m0024;
-        me.BackColor = m0024;
+        me.VSElastic1.BackColor = BLACK;
+        me.BackColor = BLACK;
         me.VSElastic1.Visible = 0;
         await frm_BeginGame.Show();
         await Unload(me);
@@ -73,8 +73,8 @@ function (me) {
 
     async function b_QuitGame_Click() {
         me.MousePointer = HOURGLASS;
-        me.VSElastic1.BackColor = m0024;
-        me.BackColor = m0024;
+        me.VSElastic1.BackColor = BLACK;
+        me.BackColor = BLACK;
         me.VSElastic1.Visible = 0;
         await Unload(me);
     }

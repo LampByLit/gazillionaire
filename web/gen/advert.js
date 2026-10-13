@@ -38,11 +38,11 @@ function (me) {
     const ARROW_CURSOR = 1;
 
     function b_Commodity_Click() {
-        sub34FE();
+        selectCommodityAds();
     }
 
     function b_Everything_Click(Value) {
-        sub3533();
+        setAdChoice();
     }
 
     async function b_ExitAdvertising1_Click() {
@@ -62,7 +62,7 @@ function (me) {
     }
 
     function b_Fliers_Click(Value) {
-        sub3533();
+        setAdChoice();
     }
 
     async function b_Help1_Click() {
@@ -92,23 +92,23 @@ function (me) {
     }
 
     function b_Magazine_Click(Value) {
-        sub3533();
+        setAdChoice();
     }
 
     function b_Newspaper_Click(Value) {
-        sub3533();
+        setAdChoice();
     }
 
     function b_None_Click(Value) {
-        sub3533();
+        setAdChoice();
     }
 
     function b_Passenger_Click() {
-        sub3601();
+        selectPassengerAds();
     }
 
     async function b_PlaceAd1_Click() {
-        await sub3632();
+        await placeAd();
     }
 
     function b_PlaceAd1_MouseDown(Button, Shift, X, Y) {
@@ -122,7 +122,7 @@ function (me) {
     }
 
     async function b_PlaceAd4_Click() {
-        await sub3632();
+        await placeAd();
     }
 
     function b_PlaceAd4_MouseDown(Button, Shift, X, Y) {
@@ -136,7 +136,7 @@ function (me) {
     }
 
     async function b_PlaceAd5_Click() {
-        await sub3632();
+        await placeAd();
     }
 
     function b_PlaceAd5_MouseDown(Button, Shift, X, Y) {
@@ -150,14 +150,14 @@ function (me) {
     }
 
     function b_Radio_Click(Value) {
-        sub3533();
+        setAdChoice();
     }
 
     function b_TV_Click(Value) {
-        sub3533();
+        setAdChoice();
     }
 
-    function sub34FE() {
+    function selectCommodityAds() {
         me.MousePointer = HOURGLASS;
         b_Commodity.BackColor = 0xFFFF80;
         b_Passenger.BackColor = 0xC0C0C0;
@@ -180,9 +180,9 @@ function (me) {
         me.MousePointer = ARROW_CURSOR;
     }
 
-    function sub371C() {
-        let l00EC = "";
-        let l00EE = "";
+    function updateDisplay() {
+        let passengerAdName = "";
+        let commodityAdName = "";
         me.MousePointer = HOURGLASS;
         b_Message.FloodPercent = 100 * (player.adSpendTotal / (2 * 10000 * (game.shipSize[game.currentPlayer] / 400)));
         if (player.adSpendTotal == 1) {
@@ -211,41 +211,41 @@ function (me) {
             b_PlaceAd5.Picture = LoadPicture(Trim(paths.imageDir) + "LIGHT1.ICO");
         }
         if (player.passengerAdSpend == 0) {
-            l00EC = "None";
+            passengerAdName = "None";
         } else if (player.passengerAdSpend == 1000 * (game.shipSize[game.currentPlayer] / 400)) {
-            l00EC = "Fliers";
+            passengerAdName = "Fliers";
         } else if (player.passengerAdSpend == 2000 * (game.shipSize[game.currentPlayer] / 400)) {
-            l00EC = "Newspaper";
+            passengerAdName = "Newspaper";
         } else if (player.passengerAdSpend == 3000 * (game.shipSize[game.currentPlayer] / 400)) {
-            l00EC = "Magazine";
+            passengerAdName = "Magazine";
         } else if (player.passengerAdSpend == 4000 * (game.shipSize[game.currentPlayer] / 400)) {
-            l00EC = "Radio";
+            passengerAdName = "Radio";
         } else if (player.passengerAdSpend == 5000 * (game.shipSize[game.currentPlayer] / 400)) {
-            l00EC = "TV";
+            passengerAdName = "TV";
         } else if (player.passengerAdSpend == 10000 * (game.shipSize[game.currentPlayer] / 400)) {
-            l00EC = "Everything";
+            passengerAdName = "Everything";
         }
         if (player.commodityAdSpend == 0) {
-            l00EE = "None";
+            commodityAdName = "None";
         } else if (player.commodityAdSpend == 1000 * (game.shipSize[game.currentPlayer] / 400)) {
-            l00EE = "Fliers";
+            commodityAdName = "Fliers";
         } else if (player.commodityAdSpend == 2000 * (game.shipSize[game.currentPlayer] / 400)) {
-            l00EE = "Newspaper";
+            commodityAdName = "Newspaper";
         } else if (player.commodityAdSpend == 3000 * (game.shipSize[game.currentPlayer] / 400)) {
-            l00EE = "Magazine";
+            commodityAdName = "Magazine";
         } else if (player.commodityAdSpend == 4000 * (game.shipSize[game.currentPlayer] / 400)) {
-            l00EE = "Radio";
+            commodityAdName = "Radio";
         } else if (player.commodityAdSpend == 5000 * (game.shipSize[game.currentPlayer] / 400)) {
-            l00EE = "TV";
+            commodityAdName = "TV";
         } else if (player.commodityAdSpend == 10000 * (game.shipSize[game.currentPlayer] / 400)) {
-            l00EE = "Everything";
+            commodityAdName = "Everything";
         }
-        b_PassengerLabel.Caption = "   Passenger Advertising:  " + l00EC;
-        b_CommodityLabel.Caption = "   Commodity Advertising:  " + l00EE;
+        b_PassengerLabel.Caption = "   Passenger Advertising:  " + passengerAdName;
+        b_CommodityLabel.Caption = "   Commodity Advertising:  " + commodityAdName;
         me.MousePointer = ARROW_CURSOR;
     }
 
-    function sub3601() {
+    function selectPassengerAds() {
         me.MousePointer = HOURGLASS;
         b_Passenger.BackColor = 0xFFFF80;
         b_Commodity.BackColor = 0xC0C0C0;
@@ -268,7 +268,7 @@ function (me) {
         me.MousePointer = ARROW_CURSOR;
     }
 
-    async function sub3632() {
+    async function placeAd() {
         me.MousePointer = HOURGLASS;
         if ((player.cash + player.adSpendTotal) == 0) {
             if (settings.soundOn == -1) {
@@ -298,11 +298,11 @@ function (me) {
             player.adSpendTotal = player.commodityAdSpend + player.passengerAdSpend;
             player.cash = player.cash - player.adSpendTotal;
         }
-        sub371C();
+        updateDisplay();
         me.MousePointer = ARROW_CURSOR;
     }
 
-    function sub3533() {
+    function setAdChoice() {
         if (b_Passenger.Tag == "Passenger Selected = True") {
             if (b_None.Value == -1) {
                 player.passengerAdChoice = 0;
@@ -350,9 +350,9 @@ function (me) {
 
     function Form_Load() {
         me.MousePointer = HOURGLASS;
-        sub34FE();
-        sub3601();
-        sub371C();
+        selectCommodityAds();
+        selectPassengerAds();
+        updateDisplay();
         b_None.Caption = "Do Not Advertise (0 kubars)";
         b_Fliers.Caption = "Fliers (" + Format(1000 * (game.shipSize[game.currentPlayer] / 400), "#,#0") + " kubars)";
         b_Newspaper.Caption = "Newspaper (" + Format(2000 * (game.shipSize[game.currentPlayer] / 400), "#,#0") + " kubars)";
@@ -370,7 +370,7 @@ function (me) {
         b_Passenger_Click, b_PlaceAd1_Click, b_PlaceAd1_MouseDown, b_PlaceAd1_MouseUp,
         b_PlaceAd4_Click, b_PlaceAd4_MouseDown, b_PlaceAd4_MouseUp, b_PlaceAd5_Click,
         b_PlaceAd5_MouseDown, b_PlaceAd5_MouseUp, b_Radio_Click, b_TV_Click,
-        sub34FE, sub371C, sub3601, sub3632,
-        sub3533, Form_Activate, Form_KeyPress, Form_Load,
+        selectCommodityAds, updateDisplay, selectPassengerAds, placeAd,
+        setAdChoice, Form_Activate, Form_KeyPress, Form_Load,
     };
 });

@@ -84,7 +84,7 @@ function (me) {
     const { b_Supply, b_Supply_Image, VSElastic5, b_Stock, b_Stock_Image, b_Bank, b_Bank_Image, b_ZinnLoan } = me.controls;
     const { b_ZinnLoan_Image, b_Loan, b_Loan_Image, b_Money, b_Money_Image, VSElastic7, b_LeavePlanet1, b_LeavePlanet2 } = me.controls;
     const { b_CompanyName } = me.controls;
-    const m0180 = 0;
+    const BLACK = 0;
     const HOURGLASS = 11;
     const ARROW_CURSOR = 1;
     const RED = 255;
@@ -95,7 +95,7 @@ function (me) {
     }
 
     async function b_Advertising_Image_MouseUp(Button, Shift, X, Y) {
-        await sub3799(Button);
+        await openAdvertising(Button);
     }
 
     function b_Advertising_MouseDown(Button, Shift, X, Y) {
@@ -103,7 +103,7 @@ function (me) {
     }
 
     async function b_Advertising_MouseUp(Button, Shift, X, Y) {
-        await sub3799(Button);
+        await openAdvertising(Button);
     }
 
     function b_Bank_Image_MouseDown(Button, Shift, X, Y) {
@@ -111,7 +111,7 @@ function (me) {
     }
 
     async function b_Bank_Image_MouseUp(Button, Shift, X, Y) {
-        await sub3810(Button);
+        await openBank(Button);
     }
 
     function b_Bank_MouseDown(Button, Shift, X, Y) {
@@ -119,7 +119,7 @@ function (me) {
     }
 
     async function b_Bank_MouseUp(Button, Shift, X, Y) {
-        await sub3810(Button);
+        await openBank(Button);
     }
 
     function b_Employee_Image_MouseDown(Button, Shift, X, Y) {
@@ -127,7 +127,7 @@ function (me) {
     }
 
     async function b_Employee_Image_MouseUp(Button, Shift, X, Y) {
-        await sub387A(Button);
+        await openCrew(Button);
     }
 
     function b_Employee_MouseDown(Button, Shift, X, Y) {
@@ -135,7 +135,7 @@ function (me) {
     }
 
     async function b_Employee_MouseUp(Button, Shift, X, Y) {
-        await sub387A(Button);
+        await openCrew(Button);
     }
 
     function b_Explore_Image_MouseDown(Button, Shift, X, Y) {
@@ -144,7 +144,7 @@ function (me) {
 
     async function b_Explore_Image_MouseUp(Button, Shift, X, Y) {
         b_Explore.BackColor = 0x8000;
-        await sub38EE();
+        await openExplore();
     }
 
     function b_Explore_MouseDown(Button, Shift, X, Y) {
@@ -153,7 +153,7 @@ function (me) {
 
     async function b_Explore_MouseUp(Button, Shift, X, Y) {
         b_Explore.BackColor = 0x8000;
-        await sub38EE();
+        await openExplore();
     }
 
     function b_Fuel_Image_MouseDown(Button, Shift, X, Y) {
@@ -162,7 +162,7 @@ function (me) {
     }
 
     async function b_Fuel_Image_MouseUp(Button, Shift, X, Y) {
-        await sub3959(Button);
+        await openFuel(Button);
     }
 
     function b_FuelContainer_MouseDown(Button, Shift, X, Y) {
@@ -171,7 +171,7 @@ function (me) {
     }
 
     async function b_FuelContainer_MouseUp(Button, Shift, X, Y) {
-        await sub3959(Button);
+        await openFuel(Button);
     }
 
     function b_FuelCost_MouseDown(Button, Shift, X, Y) {
@@ -180,7 +180,7 @@ function (me) {
     }
 
     async function b_FuelCost_MouseUp(Button, Shift, X, Y) {
-        await sub3959(Button);
+        await openFuel(Button);
     }
 
     function b_FuelTank_MouseDown(Button, Shift, X, Y) {
@@ -189,15 +189,15 @@ function (me) {
     }
 
     async function b_FuelTank_MouseUp(Button, Shift, X, Y) {
-        await sub3959(Button);
+        await openFuel(Button);
     }
 
     async function b_GettingStarted_Click() {
-        await sub3A11();
+        await openGettingStarted();
     }
 
     async function b_GettingStarted_Image_Click() {
-        await sub3A11();
+        await openGettingStarted();
     }
 
     function b_GettingStarted_Image_MouseDown(Button, Shift, X, Y) {
@@ -217,7 +217,7 @@ function (me) {
     }
 
     async function b_Help1_Click() {
-        await sub0AFB();
+        await showMainMenuHelp();
     }
 
     function b_Help1_MouseDown(Button, Shift, X, Y) {
@@ -229,7 +229,7 @@ function (me) {
     }
 
     async function b_Help2_Click() {
-        await sub0AFB();
+        await showMainMenuHelp();
     }
 
     function b_Help2_MouseDown(Button, Shift, X, Y) {
@@ -245,7 +245,7 @@ function (me) {
     }
 
     async function b_Insurance_Image_MouseUp(Button, Shift, X, Y) {
-        await sub3B01(Button);
+        await openInsurance(Button);
     }
 
     function b_Insurance_MouseDown(Button, Shift, X, Y) {
@@ -253,11 +253,11 @@ function (me) {
     }
 
     async function b_Insurance_MouseUp(Button, Shift, X, Y) {
-        await sub3B01(Button);
+        await openInsurance(Button);
     }
 
     async function b_LeavePlanet1_Click() {
-        await sub3B58();
+        await openLeavePlanet();
     }
 
     function b_LeavePlanet1_MouseDown(Button, Shift, X, Y) {
@@ -265,12 +265,12 @@ function (me) {
     }
 
     function b_LeavePlanet1_MouseUp(Button, Shift, X, Y) {
-        const m0180 = 0;
-        b_LeavePlanet1.BackColor = m0180;
+        const BLACK = 0;
+        b_LeavePlanet1.BackColor = BLACK;
     }
 
     async function b_LeavePlanet2_Click() {
-        await sub3B58();
+        await openLeavePlanet();
     }
 
     function b_LeavePlanet2_MouseDown(Button, Shift, X, Y) {
@@ -278,7 +278,7 @@ function (me) {
     }
 
     function b_LeavePlanet2_MouseUp(Button, Shift, X, Y) {
-        b_LeavePlanet1.BackColor = m0180;
+        b_LeavePlanet1.BackColor = BLACK;
     }
 
     function b_Loan_Image_MouseDown(Button, Shift, X, Y) {
@@ -286,7 +286,7 @@ function (me) {
     }
 
     async function b_Loan_Image_MouseUp(Button, Shift, X, Y) {
-        await sub3C1F(Button);
+        await openLoan(Button);
     }
 
     function b_Loan_MouseDown(Button, Shift, X, Y) {
@@ -294,15 +294,15 @@ function (me) {
     }
 
     async function b_Loan_MouseUp(Button, Shift, X, Y) {
-        await sub3C1F(Button);
+        await openLoan(Button);
     }
 
     async function b_Market_Click() {
-        await sub3C4F();
+        await openMarket();
     }
 
     async function b_Market_Image_Click() {
-        await sub3C4F();
+        await openMarket();
     }
 
     function b_Market_Image_MouseDown(Button, Shift, X, Y) {
@@ -322,11 +322,11 @@ function (me) {
     }
 
     async function b_Money_Click() {
-        await sub3CBA();
+        await openMoney();
     }
 
     async function b_Money_Image_Click() {
-        await sub3CBA();
+        await openMoney();
     }
 
     function b_Money_Image_MouseDown(Button, Shift, X, Y) {
@@ -350,7 +350,7 @@ function (me) {
     }
 
     async function b_Passengers_Image_MouseUp(Button, Shift, X, Y) {
-        await sub3D76(Button);
+        await openPassengers(Button);
     }
 
     function b_Passengers_MouseDown(Button, Shift, X, Y) {
@@ -358,15 +358,15 @@ function (me) {
     }
 
     async function b_Passengers_MouseUp(Button, Shift, X, Y) {
-        await sub3D76(Button);
+        await openPassengers(Button);
     }
 
     async function b_Stock_Click() {
-        await sub3DC9();
+        await openStockMarket();
     }
 
     async function b_Stock_Image_Click() {
-        await sub3DC9();
+        await openStockMarket();
     }
 
     function b_Stock_Image_MouseDown(Button, Shift, X, Y) {
@@ -386,11 +386,11 @@ function (me) {
     }
 
     async function b_Supply_Click() {
-        await sub3E47();
+        await openSupply();
     }
 
     async function b_Supply_Image_Click() {
-        await sub3E47();
+        await openSupply();
     }
 
     function b_Supply_Image_MouseDown(Button, Shift, X, Y) {
@@ -414,7 +414,7 @@ function (me) {
     }
 
     async function b_Tax_Image_MouseUp(Button, Shift, X, Y) {
-        await sub3ED1(Button);
+        await openTaxes(Button);
     }
 
     function b_Tax_MouseDown(Button, Shift, X, Y) {
@@ -422,15 +422,15 @@ function (me) {
     }
 
     async function b_Tax_MouseUp(Button, Shift, X, Y) {
-        await sub3ED1(Button);
+        await openTaxes(Button);
     }
 
     async function b_Utilities_Click() {
-        await sub3F13();
+        await openFileOptions();
     }
 
     async function b_Utilities_Image_Click() {
-        await sub3F13();
+        await openFileOptions();
     }
 
     function b_Utilities_Image_MouseDown(Button, Shift, X, Y) {
@@ -450,11 +450,11 @@ function (me) {
     }
 
     async function b_ViewCity_Click() {
-        await sub3FBD();
+        await openViewCity();
     }
 
     async function b_ViewCity_Image_Click() {
-        await sub3FBD();
+        await openViewCity();
     }
 
     function b_ViewCity_Image_MouseDown(Button, Shift, X, Y) {
@@ -474,11 +474,11 @@ function (me) {
     }
 
     async function b_Warehouse_Click() {
-        await sub404D();
+        await openWarehouse();
     }
 
     async function b_Warehouse_Image_Click() {
-        await sub404D();
+        await openWarehouse();
     }
 
     function b_Warehouse_Image_MouseDown(Button, Shift, X, Y) {
@@ -498,11 +498,11 @@ function (me) {
     }
 
     async function b_ZinnLoan_Click() {
-        await sub40C7();
+        await openZinnLoan();
     }
 
     async function b_ZinnLoan_Image_Click() {
-        await sub40C7();
+        await openZinnLoan();
     }
 
     function b_ZinnLoan_Image_MouseDown(Button, Shift, X, Y) {
@@ -521,8 +521,8 @@ function (me) {
         b_ZinnLoan.BackColor = 0x800000;
     }
 
-    async function sub3799(pv0336) {
-        pv0336 = CInt(pv0336);
+    async function openAdvertising(mouseButton) {
+        mouseButton = CInt(mouseButton);
         const HOURGLASS = 11;
         const ARROW_CURSOR = 1;
         me.MousePointer = HOURGLASS;
@@ -530,7 +530,7 @@ function (me) {
             b_Sound.Command = "Close";
         }
         b_Advertising.BackColor = 0x8000;
-        if (player.quickAdvertise == 0 || pv0336 == 2) {
+        if (player.quickAdvertise == 0 || mouseButton == 2) {
             FillElastic.Visible = 0;
             await frm_Advertising.Show();
         } else {
@@ -569,19 +569,19 @@ function (me) {
                 player.adSpendTotal = player.commodityAdSpend + player.passengerAdSpend;
                 player.cash = player.cash - player.adSpendTotal;
             }
-            sub4157();
+            refreshMenu();
             me.MousePointer = ARROW_CURSOR;
         }
     }
 
-    async function sub3810(pv0362) {
-        pv0362 = CInt(pv0362);
+    async function openBank(mouseButton) {
+        mouseButton = CInt(mouseButton);
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         b_Bank.BackColor = 0x800000;
-        if (player.quickBank == 0 || pv0362 == 2) {
+        if (player.quickBank == 0 || mouseButton == 2) {
             FillElastic.Visible = 0;
             await frm_Bank.Show();
         } else {
@@ -616,12 +616,12 @@ function (me) {
                     player.bankBalance = 0;
                 }
             }
-            sub4157();
+            refreshMenu();
             me.MousePointer = ARROW_CURSOR;
         }
     }
 
-    function sub0F2D() {
+    function cheatRerollFuelPrice() {
         {
             const sel = (Mod(game.weeklyRoll, 2)) + 1;
             if (sel == 1) {
@@ -636,10 +636,10 @@ function (me) {
         if (game.fuelPrice[game.planet[game.currentPlayer]] > (10 * game.fuelBasePrice)) {
             game.fuelPrice[game.planet[game.currentPlayer]] = (10 * game.fuelBasePrice);
         }
-        sub4157();
+        refreshMenu();
     }
 
-    function sub10D5() {
+    function cheatRerollPassengers() {
         if (player.passengersBoarded == 0) {
             {
                 const sel = (Mod(player.arrivalRoll, 2)) + 1;
@@ -659,11 +659,11 @@ function (me) {
             if (player.passengersAboard > player.passengerCapacity) {
                 player.passengersAboard = player.passengerCapacity;
             }
-            sub4157();
+            refreshMenu();
         }
     }
 
-    function sub190A() {
+    function cheatRerollInsuranceCost() {
         {
             const sel = (Mod(game.weeklyRoll, 2)) + 1;
             if (sel == 1) {
@@ -678,17 +678,17 @@ function (me) {
         if (player.insuranceCost > (1000 * player.insuranceRate)) {
             player.insuranceCost = 1000 * player.insuranceRate;
         }
-        sub4157();
+        refreshMenu();
     }
 
-    async function sub387A(pv036C) {
-        pv036C = CInt(pv036C);
+    async function openCrew(mouseButton) {
+        mouseButton = CInt(mouseButton);
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         b_Employee.BackColor = 0x8000;
-        if (player.quickCrew == 0 || pv036C == 2) {
+        if (player.quickCrew == 0 || mouseButton == 2) {
             FillElastic.Visible = 0;
             await frm_Employee.Show();
         } else {
@@ -716,12 +716,12 @@ function (me) {
                     b_Sound.Command = "Play";
                 }
             }
-            sub4157();
+            refreshMenu();
             me.MousePointer = ARROW_CURSOR;
         }
     }
 
-    async function sub38EE() {
+    async function openExplore() {
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -730,28 +730,28 @@ function (me) {
         await frm_Explore.Show();
     }
 
-    async function sub3959(pv0376) {
-        let l037C = 0;
-        pv0376 = CInt(pv0376);
+    async function openFuel(mouseButton) {
+        let fuelNeeded = 0;
+        mouseButton = CInt(mouseButton);
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         b_FuelTank.FloodColor = 0xFF;
         b_FuelTank.BackColor = 0xC0C0C0;
-        if (player.quickFuel == 0 || pv0376 == 2) {
+        if (player.quickFuel == 0 || mouseButton == 2) {
             FillElastic.Visible = 0;
             await frm_Fuel.Show();
         } else {
-            l037C = player.fuelCapacity - player.fuel;
-            if ((l037C * game.fuelPrice[game.planet[game.currentPlayer]]) > player.cash) {
+            fuelNeeded = player.fuelCapacity - player.fuel;
+            if ((fuelNeeded * game.fuelPrice[game.planet[game.currentPlayer]]) > player.cash) {
                 if (settings.soundOn == -1) {
                     Beep();
                 }
                 frm_Box0.FillElastic.Caption = "Fuel";
                 frm_Box0.b_Message.Caption = "\n" + "You don't have enough money to buy fuel. Check your cash.";
                 await frm_Box0.Show(1);
-            } else if (l037C == 0) {
+            } else if (fuelNeeded == 0) {
                 if (settings.soundOn == -1) {
                     Beep();
                 }
@@ -765,15 +765,15 @@ function (me) {
                     b_Sound.Command = "Open";
                     b_Sound.Command = "Play";
                 }
-                player.fuel = player.fuel + l037C;
-                player.cash = player.cash - (l037C * game.fuelPrice[game.planet[game.currentPlayer]]);
+                player.fuel = player.fuel + fuelNeeded;
+                player.cash = player.cash - (fuelNeeded * game.fuelPrice[game.planet[game.currentPlayer]]);
             }
-            sub4157();
+            refreshMenu();
             me.MousePointer = ARROW_CURSOR;
         }
     }
 
-    async function sub3A11() {
+    async function openGettingStarted() {
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -782,7 +782,7 @@ function (me) {
         await frm_GettingStarted.Show();
     }
 
-    async function sub0AFB() {
+    async function showMainMenuHelp() {
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -801,14 +801,14 @@ function (me) {
         }
     }
 
-    async function sub3B01(pv038A) {
-        pv038A = CInt(pv038A);
+    async function openInsurance(mouseButton) {
+        mouseButton = CInt(mouseButton);
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         b_Insurance.BackColor = 0x8000;
-        if (player.quickInsurance == 0 || pv038A == 2) {
+        if (player.quickInsurance == 0 || mouseButton == 2) {
             FillElastic.Visible = 0;
             await frm_Insurance.Show();
         } else {
@@ -843,12 +843,12 @@ function (me) {
                 }
                 player.cash = player.cash - player.insuranceCost;
             }
-            sub4157();
+            refreshMenu();
             me.MousePointer = ARROW_CURSOR;
         }
     }
 
-    async function sub3B58() {
+    async function openLeavePlanet() {
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -858,15 +858,15 @@ function (me) {
         await Unload(me);
     }
 
-    async function sub3C1F(pv0398) {
-        let l039A = 0;
-        pv0398 = CInt(pv0398);
+    async function openLoan(mouseButton) {
+        let borrowAmount = 0;
+        mouseButton = CInt(mouseButton);
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         b_Loan.BackColor = 0x800000;
-        if (player.quickLoan == 0 || pv0398 == 2) {
+        if (player.quickLoan == 0 || mouseButton == 2) {
             FillElastic.Visible = 0;
             await frm_Loan.Show();
         } else {
@@ -904,9 +904,9 @@ function (me) {
                         Beep();
                     }
                 } else {
-                    l039A = player.creditLimit - player.loan;
+                    borrowAmount = player.creditLimit - player.loan;
                 }
-                if (l039A == 0) {
+                if (borrowAmount == 0) {
                     if (settings.soundOn == -1) {
                         Beep();
                     }
@@ -917,17 +917,17 @@ function (me) {
                         b_Sound.Command = "Open";
                         b_Sound.Command = "Play";
                     }
-                    player.loan = player.loan + l039A;
-                    player.cash = player.cash + l039A;
+                    player.loan = player.loan + borrowAmount;
+                    player.cash = player.cash + borrowAmount;
                 }
             }
-            sub4157();
+            refreshMenu();
             me.MousePointer = ARROW_CURSOR;
         }
     }
 
-    function sub4157() {
-        let l03A0 = 0;
+    function refreshMenu() {
+        let iconChoice = 0;
         const RED = 255;
         const WHITE = 16777215;
         if (player.loan > player.creditLimit) {
@@ -1004,15 +1004,15 @@ function (me) {
             } else {
                 b_Passengers.Caption = "                  Pickup Passengers:  " + Format(player.passengersWaiting, "#,#0");
             }
-            l03A0 = randomBetween(1, 2);
+            iconChoice = randomBetween(1, 2);
             if (player.passengersBoarded == -1 || player.passengersWaiting == 0) {
-                if (l03A0 == 1) {
+                if (iconChoice == 1) {
                     b_Passengers_Image.Picture = LoadPicture(Trim(paths.imageDir) + "MAN.ICO");
                 } else {
                     b_Passengers_Image.Picture = LoadPicture(Trim(paths.imageDir) + "WOMAN.ICO");
                 }
             } else {
-                if (l03A0 == 1) {
+                if (iconChoice == 1) {
                     b_Passengers_Image.Picture = LoadPicture(Trim(paths.imageDir) + "HANDUP1.ICO");
                 } else {
                     b_Passengers_Image.Picture = LoadPicture(Trim(paths.imageDir) + "HANDUP2.ICO");
@@ -1089,7 +1089,7 @@ function (me) {
         }
     }
 
-    async function sub3C4F() {
+    async function openMarket() {
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -1098,7 +1098,7 @@ function (me) {
         await frm_Market.Show();
     }
 
-    async function sub3CBA() {
+    async function openMoney() {
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -1107,14 +1107,14 @@ function (me) {
         await frm_Money.Show();
     }
 
-    async function sub3D76(pv0408) {
-        pv0408 = CInt(pv0408);
+    async function openPassengers(mouseButton) {
+        mouseButton = CInt(mouseButton);
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         b_Passengers.BackColor = 0x8000;
-        if (player.quickPassengers == 0 || pv0408 == 2) {
+        if (player.quickPassengers == 0 || mouseButton == 2) {
             FillElastic.Visible = 0;
             await frm_Passengers.Show();
         } else {
@@ -1141,7 +1141,7 @@ function (me) {
                     frm_Box0.b_Message.Caption = "\n" + "You have already picked up your passengers.";
                     await frm_Box0.Show(1);
                 }
-                sub4157();
+                refreshMenu();
             } else {
                 if (settings.soundOn == -1) {
                     Beep();
@@ -1154,7 +1154,7 @@ function (me) {
         }
     }
 
-    async function sub3DC9() {
+    async function openStockMarket() {
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -1163,7 +1163,7 @@ function (me) {
         await frm_Stock.Show();
     }
 
-    async function sub3E47() {
+    async function openSupply() {
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -1172,14 +1172,14 @@ function (me) {
         await frm_Supply.Show();
     }
 
-    async function sub3ED1(pv0416) {
-        pv0416 = CInt(pv0416);
+    async function openTaxes(mouseButton) {
+        mouseButton = CInt(mouseButton);
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
         }
         b_Tax.BackColor = 0x8000;
-        if (player.quickTaxes == 0 || pv0416 == 2) {
+        if (player.quickTaxes == 0 || mouseButton == 2) {
             FillElastic.Visible = 0;
             await frm_Tax.Show();
         } else {
@@ -1215,12 +1215,12 @@ function (me) {
                 player.passengerTaxOwed = 0;
                 player.tariffsOwed = 0;
             }
-            sub4157();
+            refreshMenu();
             me.MousePointer = ARROW_CURSOR;
         }
     }
 
-    async function sub3F13() {
+    async function openFileOptions() {
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -1230,7 +1230,7 @@ function (me) {
         await Unload(me);
     }
 
-    async function sub3FBD() {
+    async function openViewCity() {
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -1243,7 +1243,7 @@ function (me) {
         await frm_Explore.Show();
     }
 
-    async function sub404D() {
+    async function openWarehouse() {
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -1252,7 +1252,7 @@ function (me) {
         await frm_Warehouse.Show();
     }
 
-    async function sub40C7() {
+    async function openZinnLoan() {
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -1264,17 +1264,17 @@ function (me) {
     function Form_Activate() {
         me.MousePointer = HOURGLASS;
         FillElastic.Visible = -1;
-        sub4157();
+        refreshMenu();
         me.MousePointer = ARROW_CURSOR;
     }
 
     function Form_KeyPress(KeyAscii) {
         if (KeyAscii == 6) {
-            sub0F2D();
+            cheatRerollFuelPrice();
         } else if (KeyAscii == 16) {
-            sub10D5();
+            cheatRerollPassengers();
         } else if (KeyAscii == 22) {
-            sub190A();
+            cheatRerollInsuranceCost();
         }
     }
 
@@ -1310,13 +1310,13 @@ function (me) {
         b_ViewCity_MouseDown, b_ViewCity_MouseUp, b_Warehouse_Click, b_Warehouse_Image_Click,
         b_Warehouse_Image_MouseDown, b_Warehouse_Image_MouseUp, b_Warehouse_MouseDown, b_Warehouse_MouseUp,
         b_ZinnLoan_Click, b_ZinnLoan_Image_Click, b_ZinnLoan_Image_MouseDown, b_ZinnLoan_Image_MouseUp,
-        b_ZinnLoan_MouseDown, b_ZinnLoan_MouseUp, sub3799, sub3810,
-        sub0F2D, sub10D5, sub190A, sub387A,
-        sub38EE, sub3959, sub3A11, sub0AFB,
-        sub3B01, sub3B58, sub3C1F, sub4157,
-        sub3C4F, sub3CBA, sub3D76, sub3DC9,
-        sub3E47, sub3ED1, sub3F13, sub3FBD,
-        sub404D, sub40C7, Form_Activate, Form_KeyPress,
+        b_ZinnLoan_MouseDown, b_ZinnLoan_MouseUp, openAdvertising, openBank,
+        cheatRerollFuelPrice, cheatRerollPassengers, cheatRerollInsuranceCost, openCrew,
+        openExplore, openFuel, openGettingStarted, showMainMenuHelp,
+        openInsurance, openLeavePlanet, openLoan, refreshMenu,
+        openMarket, openMoney, openPassengers, openStockMarket,
+        openSupply, openTaxes, openFileOptions, openViewCity,
+        openWarehouse, openZinnLoan, Form_Activate, Form_KeyPress,
         Form_Load,
     };
 });

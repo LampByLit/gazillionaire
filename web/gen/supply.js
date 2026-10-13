@@ -29,10 +29,10 @@ function (me) {
     const { FillElastic, b_Sound, VSElastic3, b_CargoOnShip, b_Cash, b_Profit, b_Message, GridContainer } = me.controls;
     const { b_Grid, VSElastic2, b_Help, b_GoodsOnShip, b_Market, b_ExitSupply, b_TitleBar, Image2 } = me.controls;
     const { Image3, Image1 } = me.controls;
-    const mc0020 = 1;
-    const mc0022 = 2;
-    const mc0024 = 3;
-    const mc0026 = 4;
+    const VIEW_ALL_COMMODITIES = 1;
+    const VIEW_CARGO = 2;
+    const VIEW_PLANET_GOODS = 3;
+    const VIEW_ALL_GOODS = 4;
     const HOURGLASS = 11;
     const ARROW_CURSOR = 1;
     const YELLOW = 65535;
@@ -40,8 +40,8 @@ function (me) {
     const GREEN = 65280;
     const MAGENTA = 16711935;
     const CYAN = 16776960;
-    let m001A = 0;
-    let m001C = 0;
+    let viewMode = 0;
+    let rowCount = 0;
 
     async function b_ExitSupply_Click() {
         me.MousePointer = HOURGLASS;
@@ -61,28 +61,28 @@ function (me) {
     }
 
     function b_GoodsOnShip_Click() {
-        let l0050 = 0;
+        let row = 0;
         const ARROW_CURSOR = 1;
         me.MousePointer = HOURGLASS;
-        if (m001A == mc0022) {
-            m001A = mc0026;
+        if (viewMode == VIEW_CARGO) {
+            viewMode = VIEW_ALL_GOODS;
             frm_Market.Tag = "Marketplace";
             b_GoodsOnShip.Caption = "Show Cargo";
             b_TitleBar.Caption = "Commodity Supply (All Goods on " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + ")";
         } else {
-            m001A = mc0022;
+            viewMode = VIEW_CARGO;
             frm_Market.Tag = "Show Cargo";
             b_GoodsOnShip.Caption = "Show All";
             b_TitleBar.Caption = "Commodity Supply (Cargo on Ship)";
         }
-        for (l0050 = m001C; l0050 >= 1; l0050--) {
-            if (l0050 == m001C) {
+        for (row = rowCount; row >= 1; row--) {
+            if (row == rowCount) {
                 b_Grid.AddItem(" ");
             }
-            b_Grid.RemoveItem(l0050);
+            b_Grid.RemoveItem(row);
         }
-        sub1C28();
-        sub1C3F();
+        fillGrid();
+        sizeGrid();
         me.MousePointer = ARROW_CURSOR;
     }
 
@@ -95,31 +95,31 @@ function (me) {
     }
 
     function b_Grid_MouseUp(Button, Shift, X, Y) {
-        let l0082 = 0;
-        let l0084 = 0;
-        let l0086 = 0;
+        let clickedCol = 0;
+        let distance = 0;
+        let col = 0;
         const YELLOW = 65535;
         const RED = 255;
         if (Button != 2 && Button != 4) {
             player.supplyChartPlanet = -1;
-            l0082 = CLng(b_Grid.Col);
+            clickedCol = CLng(b_Grid.Col);
             b_Grid.Row = 0;
-            for (l0086 = 1; l0086 <= 7; l0086++) {
-                b_Grid.ColAlignment[l0086] = 2;
-                b_Grid.Col = l0086;
-                b_Grid.Text = Trim(game.planetNames[l0086 - 1]);
-                if ((l0086 - 1) != game.planet[game.currentPlayer]) {
+            for (col = 1; col <= 7; col++) {
+                b_Grid.ColAlignment[col] = 2;
+                b_Grid.Col = col;
+                b_Grid.Text = Trim(game.planetNames[col - 1]);
+                if ((col - 1) != game.planet[game.currentPlayer]) {
                     b_Grid.Picture = LoadPicture("");
                 }
             }
-            b_Grid.Col = l0082;
-            if ((l0082 - 1) != game.planet[game.currentPlayer]) {
+            b_Grid.Col = clickedCol;
+            if ((clickedCol - 1) != game.planet[game.currentPlayer]) {
                 player.supplyChartPlanet = CInt(b_Grid.Col - 1);
                 b_Grid.Picture = Image3.Picture;
                 b_Message.ForeColor = YELLOW;
-                l0084 = CLng(Sqr(((game.planetX[game.planet[game.currentPlayer]] - game.planetX[player.supplyChartPlanet])) ** (2) + ((game.planetY[game.planet[game.currentPlayer]] - game.planetY[player.supplyChartPlanet])) ** (2)));
-                b_Message.Caption = "The distance from " + UCase(Trim(game.planetNames[game.planet[game.currentPlayer]])) + " to " + UCase(Trim(game.planetNames[player.supplyChartPlanet])) + " is " + Format(l0084, "#,#0") + " million kuters.";
-            } else if ((l0082 - 1) == game.planet[game.currentPlayer]) {
+                distance = CLng(Sqr(((game.planetX[game.planet[game.currentPlayer]] - game.planetX[player.supplyChartPlanet])) ** (2) + ((game.planetY[game.planet[game.currentPlayer]] - game.planetY[player.supplyChartPlanet])) ** (2)));
+                b_Message.Caption = "The distance from " + UCase(Trim(game.planetNames[game.planet[game.currentPlayer]])) + " to " + UCase(Trim(game.planetNames[player.supplyChartPlanet])) + " is " + Format(distance, "#,#0") + " million kuters.";
+            } else if ((clickedCol - 1) == game.planet[game.currentPlayer]) {
                 b_Message.ForeColor = RED;
                 b_Message.Caption = "You are currently on planet " + UCase(Trim(game.planetNames[game.planet[game.currentPlayer]])) + ".";
             }
@@ -148,13 +148,13 @@ function (me) {
     }
 
     async function b_Market_Click() {
-        let l00C2 = 0;
+        let row = 0;
         me.MousePointer = HOURGLASS;
-        for (l00C2 = m001C; l00C2 >= 1; l00C2--) {
-            if (l00C2 == m001C) {
+        for (row = rowCount; row >= 1; row--) {
+            if (row == rowCount) {
                 b_Grid.AddItem(" ");
             }
-            b_Grid.RemoveItem(l00C2);
+            b_Grid.RemoveItem(row);
         }
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -170,89 +170,89 @@ function (me) {
         me.b_Market.BackColor = 0x808000;
     }
 
-    function sub1CC5() {
-        let l00D4 = 0;
-        let l00D6 = 0;
-        let l00D8 = 0;
+    function selectPlanetColumn() {
+        let clickedCol = 0;
+        let distance = 0;
+        let col = 0;
         const GREEN = 65280;
         const MAGENTA = 16711935;
         player.supplyChartPlanet = -1;
-        l00D4 = CLng(b_Grid.Col);
+        clickedCol = CLng(b_Grid.Col);
         b_Grid.Row = 0;
-        for (l00D8 = 1; l00D8 <= 7; l00D8++) {
-            b_Grid.ColAlignment[l00D8] = 2;
-            b_Grid.Col = l00D8;
-            b_Grid.Text = Trim(game.planetNames[l00D8 - 1]);
-            if ((l00D8 - 1) != game.planet[game.currentPlayer]) {
+        for (col = 1; col <= 7; col++) {
+            b_Grid.ColAlignment[col] = 2;
+            b_Grid.Col = col;
+            b_Grid.Text = Trim(game.planetNames[col - 1]);
+            if ((col - 1) != game.planet[game.currentPlayer]) {
                 b_Grid.Picture = LoadPicture("");
             }
         }
-        b_Grid.Col = l00D4;
-        if ((l00D4 - 1) != game.planet[game.currentPlayer]) {
+        b_Grid.Col = clickedCol;
+        if ((clickedCol - 1) != game.planet[game.currentPlayer]) {
             player.supplyChartPlanet = CInt(b_Grid.Col - 1);
             b_Grid.Picture = Image3.Picture;
             b_Message.ForeColor = GREEN;
-            l00D6 = CLng(Sqr(((game.planetX[game.planet[game.currentPlayer]] - game.planetX[player.supplyChartPlanet])) ** (2) + ((game.planetY[game.planet[game.currentPlayer]] - game.planetY[player.supplyChartPlanet])) ** (2)));
-            b_Message.Caption = "The distance from " + UCase(Trim(game.planetNames[game.planet[game.currentPlayer]])) + " to " + UCase(Trim(game.planetNames[player.supplyChartPlanet])) + " is " + Format(l00D6, "#,#0") + " million kuters.";
-        } else if ((l00D4 - 1) == game.planet[game.currentPlayer]) {
+            distance = CLng(Sqr(((game.planetX[game.planet[game.currentPlayer]] - game.planetX[player.supplyChartPlanet])) ** (2) + ((game.planetY[game.planet[game.currentPlayer]] - game.planetY[player.supplyChartPlanet])) ** (2)));
+            b_Message.Caption = "The distance from " + UCase(Trim(game.planetNames[game.planet[game.currentPlayer]])) + " to " + UCase(Trim(game.planetNames[player.supplyChartPlanet])) + " is " + Format(distance, "#,#0") + " million kuters.";
+        } else if ((clickedCol - 1) == game.planet[game.currentPlayer]) {
             b_Message.ForeColor = MAGENTA;
             b_Message.Caption = "You are currently on planet " + UCase(Trim(game.planetNames[game.planet[game.currentPlayer]])) + ".";
         }
     }
 
-    function sub1C28() {
-        let l00E2 = 0;
-        let l00E4 = 0;
-        let l00E6 = 0;
-        let l00E8 = 0;
-        let l00EA = 0;
-        let l00EC = 0;
-        let l00EE = 0;
-        m001C = 0;
-        if (m001A == mc0020) {
-            m001C = 18;
-        } else if (m001A == mc0022) {
-            for (l00E2 = 0; l00E2 <= 2; l00E2++) {
-                for (l00E4 = 0; l00E4 <= 5; l00E4++) {
-                    if (player.cargo[l00E2][l00E4] != 0) {
-                        m001C = m001C + 1;
+    function fillGrid() {
+        let col = 0;
+        let category = 0;
+        let item = 0;
+        let row = 0;
+        let planetCol = 0;
+        let lowestSupply = 0;
+        let gridEmpty = 0;
+        rowCount = 0;
+        if (viewMode == VIEW_ALL_COMMODITIES) {
+            rowCount = 18;
+        } else if (viewMode == VIEW_CARGO) {
+            for (col = 0; col <= 2; col++) {
+                for (category = 0; category <= 5; category++) {
+                    if (player.cargo[col][category] != 0) {
+                        rowCount = rowCount + 1;
                     }
                 }
             }
-        } else if (m001A == mc0024) {
-            for (l00E2 = 0; l00E2 <= 2; l00E2++) {
-                for (l00E4 = 0; l00E4 <= 5; l00E4++) {
-                    if (game.available[game.planet[game.currentPlayer]][l00E2][l00E4] != 0) {
-                        m001C = m001C + 1;
+        } else if (viewMode == VIEW_PLANET_GOODS) {
+            for (col = 0; col <= 2; col++) {
+                for (category = 0; category <= 5; category++) {
+                    if (game.available[game.planet[game.currentPlayer]][col][category] != 0) {
+                        rowCount = rowCount + 1;
                     }
                 }
             }
-        } else if (m001A == mc0026) {
-            for (l00E2 = 0; l00E2 <= 2; l00E2++) {
-                for (l00E4 = 0; l00E4 <= 5; l00E4++) {
-                    if (game.available[game.planet[game.currentPlayer]][l00E2][l00E4] != 0 || player.cargo[l00E2][l00E4] != 0) {
-                        m001C = m001C + 1;
+        } else if (viewMode == VIEW_ALL_GOODS) {
+            for (col = 0; col <= 2; col++) {
+                for (category = 0; category <= 5; category++) {
+                    if (game.available[game.planet[game.currentPlayer]][col][category] != 0 || player.cargo[col][category] != 0) {
+                        rowCount = rowCount + 1;
                     }
                 }
             }
         }
         b_Grid.Cols = 8;
-        if (m001C == 0) {
-            m001C = 1;
-            l00EE = -1;
+        if (rowCount == 0) {
+            rowCount = 1;
+            gridEmpty = -1;
         } else {
-            l00EE = 0;
+            gridEmpty = 0;
         }
-        b_Grid.Rows = m001C + 1;
-        for (l00E2 = 0; l00E2 <= 7; l00E2++) {
-            b_Grid.FixedAlignment[l00E2] = 2;
+        b_Grid.Rows = rowCount + 1;
+        for (col = 0; col <= 7; col++) {
+            b_Grid.FixedAlignment[col] = 2;
         }
         b_Grid.Row = 0;
-        for (l00E2 = 1; l00E2 <= 7; l00E2++) {
-            b_Grid.ColAlignment[l00E2] = 2;
-            b_Grid.Col = l00E2;
-            b_Grid.Text = Trim(game.planetNames[l00E2 - 1]);
-            if ((l00E2 - 1) == game.planet[game.currentPlayer]) {
+        for (col = 1; col <= 7; col++) {
+            b_Grid.ColAlignment[col] = 2;
+            b_Grid.Col = col;
+            b_Grid.Text = Trim(game.planetNames[col - 1]);
+            if ((col - 1) == game.planet[game.currentPlayer]) {
                 b_Grid.Picture = Image2.Picture;
             }
         }
@@ -264,65 +264,65 @@ function (me) {
         b_CargoOnShip.FloodPercent = (player.cargoTotal / player.cargoCapacity) * 100;
         b_Cash.Caption = "Cash: " + Format(player.cash, "#,#0");
         b_Profit.Caption = "Profit: " + Format(game.weeklyProfit, "#,#0");
-        for (l00E2 = 0; l00E2 <= 7; l00E2++) {
-            b_Grid.Col = l00E2;
-            l00E8 = 0;
-            for (l00E4 = 0; l00E4 <= 2; l00E4++) {
-                for (l00E6 = 0; l00E6 <= 5; l00E6++) {
-                    if (m001A == mc0020) {
-                        l00E8 = l00E8 + 1;
-                        b_Grid.Row = l00E8;
-                        if (l00E2 == 0) {
-                            b_Grid.Text = Trim(game.commodityNames[l00E4][l00E6]);
+        for (col = 0; col <= 7; col++) {
+            b_Grid.Col = col;
+            row = 0;
+            for (category = 0; category <= 2; category++) {
+                for (item = 0; item <= 5; item++) {
+                    if (viewMode == VIEW_ALL_COMMODITIES) {
+                        row = row + 1;
+                        b_Grid.Row = row;
+                        if (col == 0) {
+                            b_Grid.Text = Trim(game.commodityNames[category][item]);
                         } else {
-                            b_Grid.Text = Format(game.supplyPercent[l00E2 - 1][l00E4][l00E6], "#,#0") + "%";
+                            b_Grid.Text = Format(game.supplyPercent[col - 1][category][item], "#,#0") + "%";
                         }
-                    } else if (player.cargo[l00E4][l00E6] != 0 && m001A == mc0022) {
-                        l00E8 = l00E8 + 1;
-                        b_Grid.Row = l00E8;
-                        if (l00E2 == 0) {
-                            b_Grid.Text = Trim(game.commodityNames[l00E4][l00E6]);
+                    } else if (player.cargo[category][item] != 0 && viewMode == VIEW_CARGO) {
+                        row = row + 1;
+                        b_Grid.Row = row;
+                        if (col == 0) {
+                            b_Grid.Text = Trim(game.commodityNames[category][item]);
                         } else {
-                            b_Grid.Text = Format(game.supplyPercent[l00E2 - 1][l00E4][l00E6], "#,#0") + "%";
+                            b_Grid.Text = Format(game.supplyPercent[col - 1][category][item], "#,#0") + "%";
                         }
-                    } else if (game.available[game.planet[game.currentPlayer]][l00E4][l00E6] != 0 && m001A == mc0024) {
-                        l00E8 = l00E8 + 1;
-                        b_Grid.Row = l00E8;
-                        if (l00E2 == 0) {
-                            b_Grid.Text = Trim(game.commodityNames[l00E4][l00E6]);
+                    } else if (game.available[game.planet[game.currentPlayer]][category][item] != 0 && viewMode == VIEW_PLANET_GOODS) {
+                        row = row + 1;
+                        b_Grid.Row = row;
+                        if (col == 0) {
+                            b_Grid.Text = Trim(game.commodityNames[category][item]);
                         } else {
-                            b_Grid.Text = Format(game.supplyPercent[l00E2 - 1][l00E4][l00E6], "#,#0") + "%";
+                            b_Grid.Text = Format(game.supplyPercent[col - 1][category][item], "#,#0") + "%";
                         }
-                    } else if (game.available[game.planet[game.currentPlayer]][l00E4][l00E6] != 0 || player.cargo[l00E4][l00E6] != 0 && m001A == mc0026) {
-                        l00E8 = l00E8 + 1;
-                        b_Grid.Row = l00E8;
-                        if (l00E2 == 0) {
-                            b_Grid.Text = Trim(game.commodityNames[l00E4][l00E6]);
+                    } else if (game.available[game.planet[game.currentPlayer]][category][item] != 0 || player.cargo[category][item] != 0 && viewMode == VIEW_ALL_GOODS) {
+                        row = row + 1;
+                        b_Grid.Row = row;
+                        if (col == 0) {
+                            b_Grid.Text = Trim(game.commodityNames[category][item]);
                         } else {
-                            b_Grid.Text = Format(game.supplyPercent[l00E2 - 1][l00E4][l00E6], "#,#0") + "%";
+                            b_Grid.Text = Format(game.supplyPercent[col - 1][category][item], "#,#0") + "%";
                         }
                     }
                 }
             }
         }
-        l00E8 = 0;
-        for (l00E4 = 0; l00E4 <= 2; l00E4++) {
-            for (l00E6 = 0; l00E6 <= 5; l00E6++) {
-                if (m001A == mc0020) {
-                    l00E8 = l00E8 + 1;
-                    l00EC = game.supplyPercent[0][l00E4][l00E6];
-                    for (l00EA = 2; l00EA <= 7; l00EA++) {
-                        if (l00EC > game.supplyPercent[l00EA - 1][l00E4][l00E6]) {
-                            l00EC = game.supplyPercent[l00EA - 1][l00E4][l00E6];
+        row = 0;
+        for (category = 0; category <= 2; category++) {
+            for (item = 0; item <= 5; item++) {
+                if (viewMode == VIEW_ALL_COMMODITIES) {
+                    row = row + 1;
+                    lowestSupply = game.supplyPercent[0][category][item];
+                    for (planetCol = 2; planetCol <= 7; planetCol++) {
+                        if (lowestSupply > game.supplyPercent[planetCol - 1][category][item]) {
+                            lowestSupply = game.supplyPercent[planetCol - 1][category][item];
                         }
                     }
-                    b_Grid.Row = l00E8;
-                    for (l00EA = 1; l00EA <= 7; l00EA++) {
-                        if (game.supplyPercent[l00EA - 1][l00E4][l00E6] == l00EC) {
-                            b_Grid.Col = l00EA;
+                    b_Grid.Row = row;
+                    for (planetCol = 1; planetCol <= 7; planetCol++) {
+                        if (game.supplyPercent[planetCol - 1][category][item] == lowestSupply) {
+                            b_Grid.Col = planetCol;
                             b_Grid.Picture = Image1.Picture;
                         } else {
-                            b_Grid.Col = l00EA;
+                            b_Grid.Col = planetCol;
                             if (Val(b_Grid.Text) == 100) {
                                 b_Grid.Text = "     " + b_Grid.Text;
                             } else {
@@ -330,21 +330,21 @@ function (me) {
                             }
                         }
                     }
-                } else if (player.cargo[l00E4][l00E6] != 0 && m001A == mc0022) {
-                    l00E8 = l00E8 + 1;
-                    l00EC = game.supplyPercent[0][l00E4][l00E6];
-                    for (l00EA = 2; l00EA <= 7; l00EA++) {
-                        if (l00EC > game.supplyPercent[l00EA - 1][l00E4][l00E6]) {
-                            l00EC = game.supplyPercent[l00EA - 1][l00E4][l00E6];
+                } else if (player.cargo[category][item] != 0 && viewMode == VIEW_CARGO) {
+                    row = row + 1;
+                    lowestSupply = game.supplyPercent[0][category][item];
+                    for (planetCol = 2; planetCol <= 7; planetCol++) {
+                        if (lowestSupply > game.supplyPercent[planetCol - 1][category][item]) {
+                            lowestSupply = game.supplyPercent[planetCol - 1][category][item];
                         }
                     }
-                    b_Grid.Row = l00E8;
-                    for (l00EA = 1; l00EA <= 7; l00EA++) {
-                        if (game.supplyPercent[l00EA - 1][l00E4][l00E6] == l00EC) {
-                            b_Grid.Col = l00EA;
+                    b_Grid.Row = row;
+                    for (planetCol = 1; planetCol <= 7; planetCol++) {
+                        if (game.supplyPercent[planetCol - 1][category][item] == lowestSupply) {
+                            b_Grid.Col = planetCol;
                             b_Grid.Picture = Image1.Picture;
                         } else {
-                            b_Grid.Col = l00EA;
+                            b_Grid.Col = planetCol;
                             if (Val(b_Grid.Text) == 100) {
                                 b_Grid.Text = "     " + b_Grid.Text;
                             } else {
@@ -352,21 +352,21 @@ function (me) {
                             }
                         }
                     }
-                } else if (game.available[game.planet[game.currentPlayer]][l00E4][l00E6] != 0 && m001A == mc0024) {
-                    l00E8 = l00E8 + 1;
-                    l00EC = game.supplyPercent[0][l00E4][l00E6];
-                    for (l00EA = 2; l00EA <= 7; l00EA++) {
-                        if (l00EC > game.supplyPercent[l00EA - 1][l00E4][l00E6]) {
-                            l00EC = game.supplyPercent[l00EA - 1][l00E4][l00E6];
+                } else if (game.available[game.planet[game.currentPlayer]][category][item] != 0 && viewMode == VIEW_PLANET_GOODS) {
+                    row = row + 1;
+                    lowestSupply = game.supplyPercent[0][category][item];
+                    for (planetCol = 2; planetCol <= 7; planetCol++) {
+                        if (lowestSupply > game.supplyPercent[planetCol - 1][category][item]) {
+                            lowestSupply = game.supplyPercent[planetCol - 1][category][item];
                         }
                     }
-                    b_Grid.Row = l00E8;
-                    for (l00EA = 1; l00EA <= 7; l00EA++) {
-                        if (game.supplyPercent[l00EA - 1][l00E4][l00E6] == l00EC) {
-                            b_Grid.Col = l00EA;
+                    b_Grid.Row = row;
+                    for (planetCol = 1; planetCol <= 7; planetCol++) {
+                        if (game.supplyPercent[planetCol - 1][category][item] == lowestSupply) {
+                            b_Grid.Col = planetCol;
                             b_Grid.Picture = Image1.Picture;
                         } else {
-                            b_Grid.Col = l00EA;
+                            b_Grid.Col = planetCol;
                             if (Val(b_Grid.Text) == 100) {
                                 b_Grid.Text = "     " + b_Grid.Text;
                             } else {
@@ -374,21 +374,21 @@ function (me) {
                             }
                         }
                     }
-                } else if (game.available[game.planet[game.currentPlayer]][l00E4][l00E6] != 0 || player.cargo[l00E4][l00E6] != 0 && m001A == mc0026) {
-                    l00E8 = l00E8 + 1;
-                    l00EC = game.supplyPercent[0][l00E4][l00E6];
-                    for (l00EA = 2; l00EA <= 7; l00EA++) {
-                        if (l00EC > game.supplyPercent[l00EA - 1][l00E4][l00E6]) {
-                            l00EC = game.supplyPercent[l00EA - 1][l00E4][l00E6];
+                } else if (game.available[game.planet[game.currentPlayer]][category][item] != 0 || player.cargo[category][item] != 0 && viewMode == VIEW_ALL_GOODS) {
+                    row = row + 1;
+                    lowestSupply = game.supplyPercent[0][category][item];
+                    for (planetCol = 2; planetCol <= 7; planetCol++) {
+                        if (lowestSupply > game.supplyPercent[planetCol - 1][category][item]) {
+                            lowestSupply = game.supplyPercent[planetCol - 1][category][item];
                         }
                     }
-                    b_Grid.Row = l00E8;
-                    for (l00EA = 1; l00EA <= 7; l00EA++) {
-                        if (game.supplyPercent[l00EA - 1][l00E4][l00E6] == l00EC) {
-                            b_Grid.Col = l00EA;
+                    b_Grid.Row = row;
+                    for (planetCol = 1; planetCol <= 7; planetCol++) {
+                        if (game.supplyPercent[planetCol - 1][category][item] == lowestSupply) {
+                            b_Grid.Col = planetCol;
                             b_Grid.Picture = Image1.Picture;
                         } else {
-                            b_Grid.Col = l00EA;
+                            b_Grid.Col = planetCol;
                             if (Val(b_Grid.Text) == 100) {
                                 b_Grid.Text = "     " + b_Grid.Text;
                             } else {
@@ -399,52 +399,52 @@ function (me) {
                 }
             }
         }
-        if (l00EE == 0) {
+        if (gridEmpty == 0) {
             b_Grid.AddItem(" ");
-            b_Grid.Row = m001C + 1;
+            b_Grid.Row = rowCount + 1;
         }
         b_Grid.Row = 1;
         b_Grid.Col = 1;
     }
 
-    function sub1C3F() {
-        let l010E = 0;
-        let l0112 = 0;
-        let l0116 = 0;
-        if (m001C >= 13) {
+    function sizeGrid() {
+        let gridHeight = 0;
+        let gridWidth = 0;
+        let i = 0;
+        if (rowCount >= 13) {
             b_Grid.ScrollBars = 3;
         } else {
             b_Grid.ScrollBars = 0;
         }
         if (b_Grid.ScrollBars == 3) {
-            l010E = Screen.Height * 0.85;
-            l0112 = Screen.Width * 0.95;
+            gridHeight = Screen.Height * 0.85;
+            gridWidth = Screen.Width * 0.95;
         } else {
-            l010E = Screen.Height * 0.85;
-            l0112 = Screen.Width * 0.99;
+            gridHeight = Screen.Height * 0.85;
+            gridWidth = Screen.Width * 0.99;
         }
-        b_Grid.ColWidth[0] = l0112 / 5;
-        for (l0116 = 0; l0116 <= m001C; l0116++) {
-            b_Grid.RowHeight[l0116] = l010E / 19;
+        b_Grid.ColWidth[0] = gridWidth / 5;
+        for (i = 0; i <= rowCount; i++) {
+            b_Grid.RowHeight[i] = gridHeight / 19;
         }
-        for (l0116 = 1; l0116 <= 7; l0116++) {
-            b_Grid.ColWidth[l0116] = (l0112 - (l0112 / 5)) / 7;
+        for (i = 1; i <= 7; i++) {
+            b_Grid.ColWidth[i] = (gridWidth - (gridWidth / 5)) / 7;
         }
     }
 
     function Form_Activate() {
         me.MousePointer = HOURGLASS;
         if (frm_Market.Tag == "Show Cargo") {
-            m001A = mc0022;
+            viewMode = VIEW_CARGO;
             b_GoodsOnShip.Caption = "Show All";
             b_TitleBar.Caption = "Commodity Supply (Cargo on Ship)";
         } else {
-            m001A = mc0026;
+            viewMode = VIEW_ALL_GOODS;
             b_GoodsOnShip.Caption = "Show Cargo";
             b_TitleBar.Caption = "Commodity Supply (All Goods on " + Trim(game.planetNames[game.planet[game.currentPlayer]]) + ")";
         }
-        sub1C28();
-        sub1C3F();
+        fillGrid();
+        sizeGrid();
         b_Message.ForeColor = CYAN;
         if (player.cargoTotal == 0) {
             b_Message.Caption = "ADVICE: First buy a commodity with a low Market Price before looking at this chart.";
@@ -464,7 +464,7 @@ function (me) {
         b_ExitSupply_Click, b_ExitSupply_MouseDown, b_ExitSupply_MouseUp, b_GoodsOnShip_Click,
         b_GoodsOnShip_MouseDown, b_GoodsOnShip_MouseUp, b_Grid_MouseUp, b_Help_Click,
         b_Help_MouseDown, b_Help_MouseUp, b_Market_Click, b_Market_MouseDown,
-        b_Market_MouseUp, sub1CC5, sub1C28, sub1C3F,
+        b_Market_MouseUp, selectPlanetColumn, fillGrid, sizeGrid,
         Form_Activate, Form_KeyPress,
     };
 });

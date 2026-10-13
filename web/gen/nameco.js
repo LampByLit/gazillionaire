@@ -18,42 +18,42 @@ function (me) {
     const ARROW_CURSOR = 1;
     const HOURGLASS = 11;
     const IBEAM_CURSOR = 3;
-    let m001A = 0;
-    let m001E = 0;
-    let m0054 = 0;
+    let playerNum = 0;
+    let needsDefaultName = 0;
+    let blackBackColor = 0;
 
     async function b_Player_Click() {
-        await sub050F();
+        await saveCompanyName();
     }
 
     function b_Player_MouseMove(Button, Shift, X, Y) {
         me.MousePointer = ARROW_CURSOR;
-        if (m001E == -1) {
-            m001E = 0;
+        if (needsDefaultName == -1) {
+            needsDefaultName = 0;
             if (InputCompanyName.Text == "") {
-                InputCompanyName.Text = "Player " + Format(m001A, "#") + " Inc.";
+                InputCompanyName.Text = "Player " + Format(playerNum, "#") + " Inc.";
                 InputCompanyName.SelStart = 0;
                 InputCompanyName.SelLength = Len(Trim(InputCompanyName.Text));
             }
         }
     }
 
-    async function sub050F() {
+    async function saveCompanyName() {
         me.MousePointer = HOURGLASS;
         if (InputCompanyName.Text == "" || InputCompanyName.Text == " ") {
-            game.companyNames[m001A] = FixStr("Player " + Format(m001A, "#") + " Inc.", 20);
+            game.companyNames[playerNum] = FixStr("Player " + Format(playerNum, "#") + " Inc.", 20);
         } else {
-            game.companyNames[m001A] = FixStr(InputCompanyName.Text, 20);
+            game.companyNames[playerNum] = FixStr(InputCompanyName.Text, 20);
         }
-        storePlayer(m001A);
-        m001A = m001A + 1;
-        if (m001A == game.numPlayers) {
+        storePlayer(playerNum);
+        playerNum = playerNum + 1;
+        if (playerNum == game.numPlayers) {
             me.Tag = "Continue";
         }
-        if (m001A <= game.numPlayers) {
+        if (playerNum <= game.numPlayers) {
             if (settings.soundOn == -1) {
                 b_Sound.Command = "Close";
-                if ((Mod(m001A, 2)) == 0) {
+                if ((Mod(playerNum, 2)) == 0) {
                     b_Sound.FileName = Trim(paths.soundDir) + "ping4.wav";
                 } else {
                     b_Sound.FileName = Trim(paths.soundDir) + "ping3.wav";
@@ -61,14 +61,14 @@ function (me) {
                 b_Sound.Command = "Open";
                 b_Sound.Command = "Play";
             }
-            b_Player.Caption = "Player " + Format(m001A, "#");
-            InputCompanyName.Text = "Player " + Format(m001A, "#") + " Inc.";
+            b_Player.Caption = "Player " + Format(playerNum, "#");
+            InputCompanyName.Text = "Player " + Format(playerNum, "#") + " Inc.";
             InputCompanyName.SelStart = 0;
             InputCompanyName.SelLength = Len(InputCompanyName.Text);
             await me.Show();
             me.MousePointer = ARROW_CURSOR;
         } else {
-            me.BackColor = m0054;
+            me.BackColor = blackBackColor;
             FillElastic.Visible = 0;
             me.MousePointer = HOURGLASS;
             b_Sound.Command = "Close";
@@ -77,27 +77,27 @@ function (me) {
         }
     }
 
-    function sub0929() {
-        let l0062 = 0;
+    function initNetWorth() {
+        let company = 0;
         restockPlanets();
         updatePrices();
-        for (l0062 = 1; l0062 <= 6; l0062++) {
-            game.netWorth[l0062] = player.cash + player.bankBalance - player.loan - player.zinnLoan;
-            rivals.cash[l0062] = player.cash + player.bankBalance - player.loan - player.zinnLoan;
-            rivals.netWorth[l0062] = rivals.cash[l0062];
+        for (company = 1; company <= 6; company++) {
+            game.netWorth[company] = player.cash + player.bankBalance - player.loan - player.zinnLoan;
+            rivals.cash[company] = player.cash + player.bankBalance - player.loan - player.zinnLoan;
+            rivals.netWorth[company] = rivals.cash[company];
         }
-        for (l0062 = 1; l0062 <= game.numPlayers; l0062++) {
-            game.netWorthHistory[l0062][0] = CLng(game.netWorth[l0062] + (0.01 * l0062 * game.netWorth[l0062]));
-            game.netWorthHistory[l0062][1] = game.netWorth[l0062];
+        for (company = 1; company <= game.numPlayers; company++) {
+            game.netWorthHistory[company][0] = CLng(game.netWorth[company] + (0.01 * company * game.netWorth[company]));
+            game.netWorthHistory[company][1] = game.netWorth[company];
         }
-        for (l0062 = 1; l0062 <= game.numRivals; l0062++) {
-            rivals.netWorthHistory[l0062][0] = CLng(rivals.netWorth[l0062] - (0.01 * l0062 * rivals.netWorth[l0062]));
-            rivals.netWorthHistory[l0062][1] = rivals.netWorth[l0062];
+        for (company = 1; company <= game.numRivals; company++) {
+            rivals.netWorthHistory[company][0] = CLng(rivals.netWorth[company] - (0.01 * company * rivals.netWorth[company]));
+            rivals.netWorthHistory[company][1] = rivals.netWorth[company];
         }
     }
 
     async function FillElastic_Click() {
-        await sub050F();
+        await saveCompanyName();
     }
 
     function FillElastic_MouseMove(Button, Shift, X, Y) {
@@ -110,7 +110,7 @@ function (me) {
 
     async function Form_KeyPress(KeyAscii) {
         if (KeyAscii == 13) {
-            await sub050F();
+            await saveCompanyName();
         } else if (KeyAscii == Asc("&")) {
             KeyAscii = 0;
             if (settings.soundOn == -1) {
@@ -129,18 +129,18 @@ function (me) {
             b_Sound.Command = "Open";
             b_Sound.Command = "Play";
         }
-        m001A = 1;
+        playerNum = 1;
         InputCompanyName.Text = "";
-        m001E = -1;
-        sub0929();
+        needsDefaultName = -1;
+        initNetWorth();
     }
 
     function InputCompanyName_MouseMove(Button, Shift, X, Y) {
         me.MousePointer = IBEAM_CURSOR;
-        if (m001E == -1) {
-            m001E = 0;
+        if (needsDefaultName == -1) {
+            needsDefaultName = 0;
             if (InputCompanyName.Text == "") {
-                InputCompanyName.Text = "Player " + Format(m001A, "#") + " Inc.";
+                InputCompanyName.Text = "Player " + Format(playerNum, "#") + " Inc.";
                 InputCompanyName.SelStart = 0;
                 InputCompanyName.SelLength = Len(Trim(InputCompanyName.Text));
             }
@@ -164,15 +164,15 @@ function (me) {
     }
 
     async function VSElastic1_Click() {
-        await sub050F();
+        await saveCompanyName();
     }
 
     function VSElastic1_MouseMove(Button, Shift, X, Y) {
         me.MousePointer = ARROW_CURSOR;
-        if (m001E == -1) {
-            m001E = 0;
+        if (needsDefaultName == -1) {
+            needsDefaultName = 0;
             if (InputCompanyName.Text == "") {
-                InputCompanyName.Text = "Player " + Format(m001A, "#") + " Inc.";
+                InputCompanyName.Text = "Player " + Format(playerNum, "#") + " Inc.";
                 InputCompanyName.SelStart = 0;
                 InputCompanyName.SelLength = Len(Trim(InputCompanyName.Text));
             }
@@ -180,15 +180,15 @@ function (me) {
     }
 
     async function VSElastic3_Click() {
-        await sub050F();
+        await saveCompanyName();
     }
 
     function VSElastic3_MouseMove(Button, Shift, X, Y) {
         me.MousePointer = ARROW_CURSOR;
-        if (m001E == -1) {
-            m001E = 0;
+        if (needsDefaultName == -1) {
+            needsDefaultName = 0;
             if (InputCompanyName.Text == "") {
-                InputCompanyName.Text = "Player " + Format(m001A, "#") + " Inc.";
+                InputCompanyName.Text = "Player " + Format(playerNum, "#") + " Inc.";
                 InputCompanyName.SelStart = 0;
                 InputCompanyName.SelLength = Len(Trim(InputCompanyName.Text));
             }
@@ -196,7 +196,7 @@ function (me) {
     }
 
     return {
-        b_Player_Click, b_Player_MouseMove, sub050F, sub0929,
+        b_Player_Click, b_Player_MouseMove, saveCompanyName, initNetWorth,
         FillElastic_Click, FillElastic_MouseMove, Form_Activate, Form_KeyPress,
         Form_Load, InputCompanyName_MouseMove, Label1_Click, Label1_MouseMove,
         Label2_Click, Label2_MouseMove, VSElastic1_Click, VSElastic1_MouseMove,

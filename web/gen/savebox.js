@@ -17,7 +17,7 @@ function (me) {
     const LIGHT_GRAY = 12632256;
     const IBEAM_CURSOR = 3;
     const ARROW_CURSOR = 1;
-    let m001C = DimArray([5], () => Space(20));
+    let slotNames = DimArray([5], () => Space(20));
 
     async function b_Cancel_Click() {
         me.MousePointer = HOURGLASS;
@@ -40,8 +40,8 @@ function (me) {
     async function b_SaveGame_Click() {
         me.MousePointer = HOURGLASS;
         await Unload(frm_SaveGame);
-        m001C[game.saveSlot] = FixStr(Text1.Text, 20);
-        sub27C6();
+        slotNames[game.saveSlot] = FixStr(Text1.Text, 20);
+        writeSlotNames();
         await saveGame();
         FillElastic.Visible = 0;
         await frm_MainMenu.Show();
@@ -56,20 +56,20 @@ function (me) {
         b_SaveGame.BackColor = 0x400000;
     }
 
-    function sub2792() {
-        let l0092 = 0;
-        for (l0092 = 1; l0092 <= 5; l0092++) {
-            FileOpen(6, Trim(paths.saveDir) + "GAME" + Trim(Format(l0092, "#,#0")));
-            m001C[l0092] = FileGet(6, 1, m001C[l0092]);
+    function readSlotNames() {
+        let slot = 0;
+        for (slot = 1; slot <= 5; slot++) {
+            FileOpen(6, Trim(paths.saveDir) + "GAME" + Trim(Format(slot, "#,#0")));
+            slotNames[slot] = FileGet(6, 1, slotNames[slot]);
             FileClose(6);
         }
     }
 
-    function sub27C6() {
-        let l0098 = 0;
-        for (l0098 = 1; l0098 <= 5; l0098++) {
-            FileOpen(5, Trim(paths.saveDir) + "GAME" + Trim(Format(l0098, "#,#0")));
-            FilePut(5, 1, m001C[l0098]);
+    function writeSlotNames() {
+        let slot = 0;
+        for (slot = 1; slot <= 5; slot++) {
+            FileOpen(5, Trim(paths.saveDir) + "GAME" + Trim(Format(slot, "#,#0")));
+            FilePut(5, 1, slotNames[slot]);
             FileClose(5);
         }
     }
@@ -93,11 +93,11 @@ function (me) {
     function Form_Load() {
         me.MousePointer = HOURGLASS;
         FillElastic.Picture = LoadPicture(Trim(paths.imageDir) + "stars1.bmp");
-        sub2792();
-        if (Trim(m001C[game.saveSlot]) == ".......") {
+        readSlotNames();
+        if (Trim(slotNames[game.saveSlot]) == ".......") {
             Text1.Text = Trim(game.companyNames[game.currentPlayer]);
         } else {
-            Text1.Text = m001C[game.saveSlot];
+            Text1.Text = slotNames[game.saveSlot];
         }
         Text1.SelStart = 0;
         Text1.SelLength = Len(Trim(Text1.Text));
@@ -113,8 +113,8 @@ function (me) {
 
     return {
         b_Cancel_Click, b_Cancel_MouseDown, b_Cancel_MouseUp, b_Rect_MouseMove,
-        b_SaveGame_Click, b_SaveGame_MouseDown, b_SaveGame_MouseUp, sub2792,
-        sub27C6, FillElastic_MouseMove, Form_Activate, Form_KeyPress,
+        b_SaveGame_Click, b_SaveGame_MouseDown, b_SaveGame_MouseUp, readSlotNames,
+        writeSlotNames, FillElastic_MouseMove, Form_Activate, Form_KeyPress,
         Form_Load, Label3_Click, Text1_MouseMove,
     };
 });

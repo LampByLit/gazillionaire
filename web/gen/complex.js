@@ -26,12 +26,12 @@ function (me) {
     const { VSElastic3, b_Message, VSElastic2, Label5, Label4 } = me.controls;
     const HOURGLASS = 11;
     const ARROW_CURSOR = 1;
-    let m0026 = 0;
+    let blackBackColor = 0;
 
     function b_More_Click() {
         me.MousePointer = HOURGLASS;
         me.Tag = "MORE COMPLEX";
-        me.BackColor = m0026;
+        me.BackColor = blackBackColor;
         VSElastic1.Visible = 0;
         me.Hide();
     }
@@ -47,7 +47,7 @@ function (me) {
     function b_NoChange_Click() {
         me.MousePointer = HOURGLASS;
         me.Tag = "NO CHANGE";
-        me.BackColor = m0026;
+        me.BackColor = blackBackColor;
         VSElastic1.Visible = 0;
         me.Hide();
     }
@@ -71,30 +71,30 @@ function (me) {
     }
 
     function Form_Load() {
-        let l0060 = "";
+        let nextFeature = "";
         b_Percent.FloodPercent = (game.complexity / 17) * 100;
         if (game.complexity + 1 == 8) {
-            l0060 = "PASSENGERS";
+            nextFeature = "PASSENGERS";
         } else if (game.complexity + 1 == 9) {
-            l0060 = "CREW";
+            nextFeature = "CREW";
         } else if (game.complexity + 1 == 10) {
-            l0060 = "ADVERTISING";
+            nextFeature = "ADVERTISING";
         } else if (game.complexity + 1 == 11) {
-            l0060 = "TAXES";
+            nextFeature = "TAXES";
         } else if (game.complexity + 1 == 12) {
-            l0060 = "BANK";
+            nextFeature = "BANK";
         } else if (game.complexity + 1 == 13) {
-            l0060 = "WAREHOUSE";
+            nextFeature = "WAREHOUSE";
         } else if (game.complexity + 1 == 14) {
-            l0060 = "EXPLORE PLANETS";
+            nextFeature = "EXPLORE PLANETS";
         } else if (game.complexity + 1 == 15) {
-            l0060 = "DISTANCE CHART";
+            nextFeature = "DISTANCE CHART";
         } else if (game.complexity + 1 == 16) {
-            l0060 = "FACILITIES";
+            nextFeature = "FACILITIES";
         } else if (game.complexity + 1 == 17) {
-            l0060 = "STOCK MARKET";
+            nextFeature = "STOCK MARKET";
         }
-        b_Message.Caption = "The game complexity is currently set at " + Format((game.complexity / 17) * 100, "#,#0") + "%. If you choose to make the game MORE COMPLEX, a new FUNCTION will be added to the game. The next function that will be added is " + l0060 + ".";
+        b_Message.Caption = "The game complexity is currently set at " + Format((game.complexity / 17) * 100, "#,#0") + "%. If you choose to make the game MORE COMPLEX, a new FUNCTION will be added to the game. The next function that will be added is " + nextFeature + ".";
     }
 
     return {

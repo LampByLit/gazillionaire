@@ -19,12 +19,12 @@ function (me) {
     const { Label1 } = me.controls;
     const HOURGLASS = 11;
     const ARROW_CURSOR = 1;
-    let m0022 = 0;
+    let blankColor = 0;
 
     async function b_NewGame_Click() {
         me.MousePointer = HOURGLASS;
-        me.VSElastic1.BackColor = m0022;
-        me.BackColor = m0022;
+        me.VSElastic1.BackColor = blankColor;
+        me.BackColor = blankColor;
         me.VSElastic1.Visible = 0;
         await frm_BeginGame.Show();
         await Unload(me);
@@ -40,8 +40,8 @@ function (me) {
 
     async function b_QuitGame_Click() {
         me.MousePointer = HOURGLASS;
-        me.VSElastic1.BackColor = m0022;
-        me.BackColor = m0022;
+        me.VSElastic1.BackColor = blankColor;
+        me.BackColor = blankColor;
         me.VSElastic1.Visible = 0;
         await Unload(me);
     }

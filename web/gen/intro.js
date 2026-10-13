@@ -17,7 +17,7 @@ function (me) {
     const HOURGLASS = 11;
     const ARROW_CURSOR = 1;
 
-    async function sub050F() {
+    async function goToBeginGame() {
         me.MousePointer = HOURGLASS;
         FillElastic.Visible = 0;
         await frm_BeginGame.Show();
@@ -25,7 +25,7 @@ function (me) {
     }
 
     async function FillElastic_Click() {
-        await sub050F();
+        await goToBeginGame();
     }
 
     function Form_Activate() {
@@ -44,15 +44,15 @@ function (me) {
     }
 
     async function Form_KeyPress(KeyAscii) {
-        await sub050F();
+        await goToBeginGame();
     }
 
     async function Label1_Click() {
-        await sub050F();
+        await goToBeginGame();
     }
 
     async function Label2_Click() {
-        await sub050F();
+        await goToBeginGame();
     }
 
     function Label3_Click() {
@@ -60,19 +60,19 @@ function (me) {
     }
 
     async function Label4_Click() {
-        await sub050F();
+        await goToBeginGame();
     }
 
     async function Label5_Click() {
-        await sub050F();
+        await goToBeginGame();
     }
 
     async function Label6_Click() {
-        await sub050F();
+        await goToBeginGame();
     }
 
     return {
-        sub050F, FillElastic_Click, Form_Activate, Form_KeyPress,
+        goToBeginGame, FillElastic_Click, Form_Activate, Form_KeyPress,
         Label1_Click, Label2_Click, Label3_Click, Label4_Click,
         Label5_Click, Label6_Click,
     };

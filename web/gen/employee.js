@@ -39,8 +39,8 @@ function (me) {
     const WHITE = 16777215;
     const ARROW_CURSOR = 1;
     const RED = 255;
-    let m001A = 0;
-    let m001C = 0;
+    let animFrame = 0;
+    let animTicks = 0;
 
     async function b_ExitEmployee1_Click() {
         me.MousePointer = HOURGLASS;
@@ -77,7 +77,7 @@ function (me) {
     }
 
     async function b_Help1_Click() {
-        await sub0AFB();
+        await showHelp();
     }
 
     function b_Help1_MouseDown(Button, Shift, X, Y) {
@@ -89,7 +89,7 @@ function (me) {
     }
 
     async function b_Help2_Click() {
-        await sub0AFB();
+        await showHelp();
     }
 
     function b_Help2_MouseDown(Button, Shift, X, Y) {
@@ -101,7 +101,7 @@ function (me) {
     }
 
     async function b_Pay1_Click() {
-        await sub16C3();
+        await payCrew();
     }
 
     function b_Pay1_MouseDown(Button, Shift, X, Y) {
@@ -113,7 +113,7 @@ function (me) {
     }
 
     async function b_Pay2_Click() {
-        await sub16C3();
+        await payCrew();
     }
 
     function b_Pay2_MouseDown(Button, Shift, X, Y) {
@@ -125,40 +125,40 @@ function (me) {
     }
 
     function b_Timer_Timer() {
-        if (m001A == 1) {
+        if (animFrame == 1) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "crew.bmp");
-        } else if (m001A == 2) {
+        } else if (animFrame == 2) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "crew2.bmp");
-        } else if (m001A == 3) {
+        } else if (animFrame == 3) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "crew3.bmp");
-        } else if (m001A == 4) {
+        } else if (animFrame == 4) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "crew2.bmp");
-        } else if (m001A == 5) {
+        } else if (animFrame == 5) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "crew.bmp");
         }
-        m001A = m001A + 1;
-        if (m001A == 6) {
-            m001A = 1;
+        animFrame = animFrame + 1;
+        if (animFrame == 6) {
+            animFrame = 1;
         }
-        m001C = m001C + 1;
-        if (m001C == 2) {
+        animTicks = animTicks + 1;
+        if (animTicks == 2) {
             b_Timer.Interval = 100;
         }
-        if (m001C == 6) {
+        if (animTicks == 6) {
             b_Timer.Enabled = 0;
-            m001C = 0;
-            m001A = 1;
+            animTicks = 0;
+            animFrame = 1;
         }
     }
 
-    function sub1731() {
+    function updateDisplay() {
         b_Employee.Caption = "      Number of Employees (Crew):   " + Format(player.crewSize, "#,#0");
         b_Salary.Caption = "      Weekly Salary per Person:   " + Format(player.crewSalary, "#,#0");
         b_Total.Caption = "      Total Wages Owed:   " + Format(player.wagesOwed, "#,#0");
         b_Cash.Caption = "      Cash:   " + Format(player.cash, "#,#0");
     }
 
-    async function sub16C3() {
+    async function payCrew() {
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -196,11 +196,11 @@ function (me) {
             }
             b_Timer.Enabled = -1;
         }
-        sub1731();
+        updateDisplay();
         me.MousePointer = ARROW_CURSOR;
     }
 
-    async function sub0AFB() {
+    async function showHelp() {
         me.MousePointer = HOURGLASS;
         if (settings.soundOn == -1) {
             b_Sound.Command = "Close";
@@ -213,13 +213,13 @@ function (me) {
         await frm_Box1.Show(1);
     }
 
-    function sub174A() {
-        if (m001A == -1) {
+    function toggleCrewPicture() {
+        if (animFrame == -1) {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "crew.bmp");
-            m001A = 0;
+            animFrame = 0;
         } else {
             Image1.Picture = LoadPicture(Trim(paths.imageDir) + "crew2.bmp");
-            m001A = -1;
+            animFrame = -1;
         }
     }
 
@@ -234,8 +234,8 @@ function (me) {
     }
 
     function Form_Load() {
-        m001C = 0;
-        m001A = 1;
+        animTicks = 0;
+        animFrame = 1;
         b_Message.Caption = "";
         Image1.Picture = LoadPicture(Trim(paths.imageDir) + "crew.bmp");
         if (player.wagesOwed >= player.crewSize * player.crewSalary * 4) {
@@ -248,7 +248,7 @@ function (me) {
         } else if (player.wagesOwed < (player.crewSize * player.crewSalary * 2)) {
             b_Message.Caption = "Your crew's morale is high and everyone seems to be happy.";
         }
-        sub1731();
+        updateDisplay();
     }
 
     return {
@@ -256,8 +256,8 @@ function (me) {
         b_ExitEmployee2_MouseDown, b_ExitEmployee2_MouseUp, b_Help1_Click, b_Help1_MouseDown,
         b_Help1_MouseUp, b_Help2_Click, b_Help2_MouseDown, b_Help2_MouseUp,
         b_Pay1_Click, b_Pay1_MouseDown, b_Pay1_MouseUp, b_Pay2_Click,
-        b_Pay2_MouseDown, b_Pay2_MouseUp, b_Timer_Timer, sub1731,
-        sub16C3, sub0AFB, sub174A, Form_Activate,
+        b_Pay2_MouseDown, b_Pay2_MouseUp, b_Timer_Timer, updateDisplay,
+        payCrew, showHelp, toggleCrewPicture, Form_Activate,
         Form_KeyPress, Form_Load,
     };
 });
