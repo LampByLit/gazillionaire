@@ -1,0 +1,11 @@
+/*
+!/.gitignore
+!/package.json
+!/server.js
+!/play-web.cmd
+!/web/
+!/src/
+!/tools/
+/tools/*
+!/tools/vb2js.py
+!/tools/assets.ps1
