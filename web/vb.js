@@ -604,6 +604,7 @@ class Control {
         const el = this.el;
         el.addEventListener("pointerdown", (e) => {
             if (e.target.closest(".vbctl") !== el || !this.$live()) return;
+            this.onPointerDown(e);
             this.fire("MouseDown", ...this.mouseArgs(e));
         });
         el.addEventListener("pointerup", (e) => {
@@ -628,6 +629,7 @@ class Control {
         return this.$f.$acceptsInput();
     }
     onClick() { this.fire("Click"); }
+    onPointerDown() { }
     mouseArgs(e) {
         const rect = this.el.getBoundingClientRect();
         const k = rect.width ? this.r.w / rect.width : 1;
@@ -1096,7 +1098,8 @@ class Grid extends Control {
         this.$f.$dirty();
     }
     Clear() { this.$cells = []; this.$pics = []; this.$f.$dirty(); }
-    onClick(e) {
+    // VB grids move the selection on mouse-down, so MouseDown/MouseUp handlers already see the clicked Row/Col.
+    onPointerDown(e) {
         const cell = e.target.closest("[data-r]");
         if (cell) {
             const r = +cell.dataset.r, c = +cell.dataset.c;
@@ -1104,7 +1107,6 @@ class Grid extends Control {
             if (c >= this.p.FixedCols) this.p.Col = c;
             this.$f.$dirty();
         }
-        this.fire("Click");
     }
     paint() {
         const p = this.p, t = this.$table;
